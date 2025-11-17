@@ -1,6 +1,7 @@
 // src/components/layout/Navbar.tsx
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 export function Navbar() {
   return (
@@ -8,14 +9,14 @@ export function Navbar() {
       <Container className="flex h-16 items-center justify-between gap-4">
         {/* Left: Logo + language */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-bold text-white">
               SF
             </div>
             <span className="text-lg font-semibold tracking-tight">
               Skill<span className="text-[#2563EB]">Find</span>
             </span>
-          </div>
+          </Link>
 
           {/* Language/region dropdown */}
           <select
@@ -30,26 +31,34 @@ export function Navbar() {
 
         {/* Middle: navigation (desktop only) */}
         <nav className="hidden items-center gap-6 text-sm font-medium text-[#7C7373] md:flex">
-          <a href="#how-it-works" className="hover:text-[#333333]">
+          <Link href="/#how-it-works" className="hover:text-[#333333]">
             How it works
-          </a>
-          <a href="#categories" className="hover:text-[#333333]">
+          </Link>
+          <Link href="/#categories" className="hover:text-[#333333]">
             Categories
-          </a>
-          <a href="#top-professionals" className="hover:text-[#333333]">
+          </Link>
+          <Link href="/#top-professionals" className="hover:text-[#333333]">
             Top professionals
-          </a>
-          <a href="#for-professionals" className="hover:text-[#333333]">
+          </Link>
+          <Link href="/#for-professionals" className="hover:text-[#333333]">
             For professionals
-          </a>
+          </Link>
         </nav>
 
         {/* Right: auth buttons */}
         <div className="flex items-center gap-3">
-          <Button variant="ghost" className="hidden md:inline-flex">
+          <Link
+            href="/login"
+            className="hidden items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-[#333333] transition hover:bg-[#F3F4F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#E5E5E5] border border-transparent hover:border-[#E5E7EB] md:inline-flex"
+          >
             Log in
-          </Button>
-          <Button>Sign up</Button>
+          </Link>
+          <Link
+            href="/signup"
+            className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
+          >
+            Sign up
+          </Link>
         </div>
       </Container>
     </header>

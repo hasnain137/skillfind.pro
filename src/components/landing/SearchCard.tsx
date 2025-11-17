@@ -21,7 +21,7 @@ export function SearchCard() {
         {/* Location input */}
         <div className="flex-1">
           <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-            City or online
+            Where?
           </label>
           <input
             type="text"
