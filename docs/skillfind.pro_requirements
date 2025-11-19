@@ -1,0 +1,411 @@
+# 📘 SkillFind.pro — Complete Requirements Specification
+_Last updated: Based on uploaded PDF_
+
+---
+
+# 1. Project Overview
+
+SkillFind.pro is a multilingual marketplace platform connecting clients with vetted professionals across categories such as coaching, tutoring, wellness, tech, creative, home services, and more.
+
+Inspired by **Profi.ru**, the platform includes:
+
+- Service request posting system  
+- Offer responses from professionals  
+- Pay-per-click professional billing  
+- Profile verification system  
+- Full admin panel  
+- Multilingual support  
+- Search and matching systems  
+- Wallet and billing system  
+
+---
+
+# 2. Core Website Structure
+
+## 2.1 Home Page
+- Search bar (“What do you need?”)
+- Popular categories
+- “How it works” section
+- Language selector dropdown
+
+## 2.2 Category Pages
+- Categories (e.g., Tutors, Coaches)
+- Subcategories (e.g., English Tutors, Life Coaches)
+- Filters: price, rating, location
+- Featured professionals
+
+## 2.3 Professional Profile Pages
+- Name, photo, location
+- Services offered
+- Pricing (hourly or flat)
+- Bio / Experience
+- Reviews & Ratings
+- Contact / “Request Service” button
+
+## 2.4 Client Dashboard
+- Post service request
+- View offers
+- Manage communication
+- Leave reviews
+
+## 2.5 Professional Dashboard
+- Profile setup
+- Service management
+- Incoming requests
+- Messaging
+- Wallet + billing history
+
+## 2.6 Admin Panel
+- User management
+- Category + service management
+- Content moderation
+- Reports & analytics
+- Advertising management
+
+---
+
+# 3. Multilingual Support
+
+- Default: English  
+- Auto-detect user location (via IP)  
+- Auto-translate content using AI (ChatGPT 4o)  
+- Manual language switcher  
+- Use translation key system (i18n)  
+- All text content must be stored as keys  
+
+---
+
+# 4. User Roles
+
+1. **Client**  
+2. **Professional**  
+3. **Admin**
+
+---
+
+# 5. System Overview
+
+Flow summary:
+
+- Client submits a service request
+- Verified professionals receive matching requests
+- First 10 professionals may send offers
+- When client clicks a pro’s offer → **pro is charged €0.10**
+- If client chooses a pro → both phone numbers revealed
+- Service is completed offline
+
+---
+
+# 6. Client Flow
+
+### Requirements:
+- **+18 only**
+- Registration with **phone & email verification**
+
+## 6.1 Submit Request
+Fields:
+- Category, Subcategory  
+- Description  
+- Preferred time/days (optional)  
+- Budget (optional)  
+- Location or Online  
+
+## 6.2 Receive Offers
+Clients see:
+- Message
+- Proposed price/time
+- Preview of rating & location
+
+## 6.3 Click Offer → triggers billing
+- Opens full profile
+- Pro is charged **€0.10**
+
+## 6.4 Chat System
+- Web chat between client and pro
+
+## 6.5 Choose a Pro
+- Phone numbers revealed to both sides  
+- They finalize appointment privately
+
+---
+
+# 7. Professional Flow
+
+### Requirements:
+- **+18 only**
+- Registration with phone + email verification
+
+## 7.1 Mandatory Verification Steps  
+(Count toward profile completion %)
+
+| Step | Required | Notes |
+|------|----------|--------|
+| Email verification | ✔ | Firebase |
+| Phone verification | ✔ | Firebase |
+| Wallet connected | ✔ | Stripe or PayPal (min €2 balance) |
+| ID Verification | ✔ | iDenfy |
+| Profile photo | ✔ | Required |
+| Bio filled | ✔ | Required |
+| Services selected | ✔ | Minimum 1 |
+| Remote availability | ✔ | yes/no/only remote |
+| Terms of use accepted | ✔ | Required |
+
+## Optional Uploads
+- Diplomas, certificates  
+- Project photos  
+
+## Pro Profile Includes:
+- Personal data (email, phone, location, bio)
+- Services
+- Completed projects
+- Reviews
+- Wallet & billing history
+
+## 7.2 Receive Matching Requests
+Pro dashboard displays all matching requests based on:
+- Category  
+- Subcategory  
+- Location / Remote availability  
+
+## 7.3 Send Offers
+Includes:
+- Price
+- Time slots
+- Custom message
+
+## 7.4 Pay-Per-Click Billing
+- When client views pro profile → €0.10 deducted  
+- Daily budget limit (e.g., max 10 clicks)
+
+## 7.5 Chat
+
+## 7.6 If chosen
+- Phone numbers revealed
+
+---
+
+# 8. Matching Logic
+
+Matching based on:
+
+- Category  
+- Subcategory  
+- City / region  
+- Remote toggle  
+- Verified tags  
+- Service metadata  
+
+---
+
+# 9. Advertising System
+
+Admin creates ad campaigns with:
+
+- Target location  
+- Category  
+- Duration  
+- Budget  
+- Stats dashboard  
+
+---
+
+# 10. Ratings & Reviews System
+
+## 10.1 Trigger Conditions
+Review allowed only if:
+- Client clicked “Job completed”
+- Client was verified
+- Job originated on SkillFind
+
+## 10.2 Review Form
+- 1–5 stars  
+- Title (optional)  
+- Feedback (min 30 chars)  
+- Tags (optional)  
+- “Would recommend” toggle  
+
+## 10.3 Anti-spam
+- One review per job  
+- No anonymous reviews  
+- Admin moderation required for flagged content  
+- Pros may publicly reply  
+
+---
+
+# 11. Identity Verification (iDenfy)
+
+- Mandatory for pro account activation  
+- Verified badge: **“Verified Professional”**  
+
+---
+
+# 12. Billing System (Professionals)
+
+Integrations:
+- Stripe  
+- PayPal  
+
+Features include:
+- Wallet  
+- Pay-per-click billing  
+- Transaction logs  
+- Daily limits  
+- Balance top-up  
+
+---
+
+# 13. Search System (Elasticsearch)
+
+Search by:
+- Task  
+- Service title  
+- Keywords  
+- Category  
+- Location  
+- Remote availability  
+
+Supports:
+- Typo tolerance  
+- Partial match  
+- Future: semantic search  
+
+---
+
+# 14. Content Moderation (Google Perspective API)
+
+Moderates:
+- Reviews  
+- Bios  
+- Descriptions  
+- Optional: chat messages  
+
+Filters for:
+- Hate speech  
+- Toxicity  
+- Threats  
+- Profanity
+
+Threshold logic:
+- Block highly toxic  
+- Flag medium-risk for admin  
+
+---
+
+# 15. Email Notifications (SendGrid)
+
+Used for:
+- Welcome emails  
+- Verification alerts  
+- Review confirmations  
+- Mass announcements  
+- Automated system messages  
+
+---
+
+# 16. Admin Panel Requirements
+
+## 16.1 User Management
+### Professionals
+- Filter by: verified/unverified, category, location, profile completion
+- Actions: view/edit/delete, suspend, reverify, adjust balance
+
+### Clients
+- Filter by city/active  
+- Actions: view requests, suspend/reactivate  
+
+---
+
+## 16.2 Content Moderation
+### Reviews
+- Flagged queue via Perspective API  
+- Approve/reject/edit  
+- Filter by category or rating  
+
+### Bios & Descriptions
+- Auto-flagged queue  
+- Manual moderation  
+
+### ID Verification
+- Full iDenfy logs  
+- Admin override  
+
+---
+
+## 16.3 Click & Wallet Tracking
+- Pro wallet logs  
+- Filters  
+- Click history  
+- Exportable CSV/PDF  
+
+---
+
+## 16.4 Request & Offer Management
+- List all client requests  
+- List all offers by professionals  
+- Remove spam  
+- Flag suspicious activity  
+
+---
+
+## 16.5 Services & Category Manager
+- Add/edit/delete categories + subcategories  
+- Tag groups  
+- Display order
+- Icons  
+- Suggested services  
+
+---
+
+## 16.6 Advertising Management
+- Create campaigns  
+- Duration, budget, location, category  
+- Generate Stripe payment links  
+- Click statistics  
+
+---
+
+## 16.7 Platform Communications
+- Mass emails via SendGrid  
+- Triggered emails:
+  - Welcome  
+  - Suspension  
+  - Verification failed  
+  - Review received  
+
+---
+
+## 16.8 Analytics & Reports
+- Daily signups  
+- Daily requests  
+- Booking trends  
+- Most active categories  
+- Export CSV/PDF  
+- Optional Google Analytics  
+
+---
+
+## 16.9 Global Settings
+- Per-click fee default: €0.10  
+- Minimum wallet threshold: €2  
+- Moderation thresholds  
+- Chatbot fallback settings  
+
+---
+
+# 17. Support Chatbot (Chatbase)
+
+Features:
+- Guides users  
+- Helps with registration, hiring, payment  
+- Auto-adjusts language by IP/browser  
+- Escalates complex issues to human support  
+
+---
+
+# 18. Data Points to Display by Category/Location
+- “Professionals available in this location”
+- Auto-updated from live DB filters  
+
+---
+
+# 📌 End of Requirements Document
