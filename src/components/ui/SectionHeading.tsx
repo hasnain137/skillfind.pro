@@ -18,7 +18,7 @@ export function SectionHeading({
   variant = "page",
   className = "",
 }: SectionHeadingProps) {
-  const TitleTag = (variant === "page" ? "h1" : "h2") as const;
+  const TitleTag: "h1" | "h2" = variant === "page" ? "h1" : "h2";
 
   return (
     <div
@@ -48,4 +48,3 @@ export function SectionHeading({
     </div>
   );
 }
-
