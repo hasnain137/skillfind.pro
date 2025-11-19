@@ -1,8 +1,10 @@
 // src/components/landing/FeaturedProfessionals.tsx
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 type Professional = {
+  id: string;
   name: string;
   role: string;
   location: string;
@@ -14,6 +16,7 @@ type Professional = {
 
 const FEATURED_PROFESSIONALS: Professional[] = [
   {
+    id: "1",
     name: "Anna Keller",
     role: "Math & exam prep tutor",
     location: "Berlin, Germany",
@@ -23,6 +26,7 @@ const FEATURED_PROFESSIONALS: Professional[] = [
     priceFrom: "€30/hour",
   },
   {
+    id: "2",
     name: "David Meyer",
     role: "Full-stack web developer",
     location: "Remote",
@@ -32,6 +36,7 @@ const FEATURED_PROFESSIONALS: Professional[] = [
     priceFrom: "from €250/project",
   },
   {
+    id: "3",
     name: "Sara Novak",
     role: "Fitness & nutrition coach",
     location: "Vienna, Austria",
@@ -41,7 +46,8 @@ const FEATURED_PROFESSIONALS: Professional[] = [
     priceFrom: "€45/session",
   },
   {
-    name: "Luis Fernández",
+    id: "4",
+    name: "Luis Fernandez",
     role: "English & Spanish language tutor",
     location: "Online",
     isOnline: true,
@@ -50,6 +56,7 @@ const FEATURED_PROFESSIONALS: Professional[] = [
     priceFrom: "€25/hour",
   },
   {
+    id: "5",
     name: "Marta Rossi",
     role: "Logo & brand designer",
     location: "Milan, Italy",
@@ -59,6 +66,7 @@ const FEATURED_PROFESSIONALS: Professional[] = [
     priceFrom: "from €180/project",
   },
   {
+    id: "6",
     name: "Jonas Weber",
     role: "Career & CV coach",
     location: "Hamburg, Germany",
@@ -78,18 +86,12 @@ function getInitials(name: string) {
     .slice(0, 2);
 }
 
-function ProfessionalCard({
-  name,
-  role,
-  location,
-  isOnline,
-  rating,
-  reviews,
-  priceFrom,
-}: Professional) {
+function ProfessionalCard(pro: Professional) {
+  const { id, name, role, location, isOnline, rating, reviews, priceFrom } =
+    pro;
+
   return (
     <div className="flex min-w-[260px] flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
-      {/* Top: avatar + name */}
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#2563EBB3] text-xs font-semibold text-white">
           {getInitials(name)}
@@ -100,18 +102,14 @@ function ProfessionalCard({
         </div>
       </div>
 
-      {/* Rating + reviews */}
       <div className="flex items-center gap-2 text-xs text-[#7C7373]">
         <span className="text-[#F59E0B]">★</span>
         <span className="font-semibold text-[#333333]">{rating.toFixed(1)}</span>
         <span>({reviews} reviews)</span>
       </div>
 
-      {/* Location + availability */}
       <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#7C7373]">
-        <span className="rounded-full bg-[#F3F4F6] px-2 py-0.5">
-          {location}
-        </span>
+        <span className="rounded-full bg-[#F3F4F6] px-2 py-0.5">{location}</span>
         {isOnline && (
           <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] text-[#166534]">
             Online available
@@ -119,16 +117,14 @@ function ProfessionalCard({
         )}
       </div>
 
-      {/* Price */}
-      <p className="mt-1 text-xs font-medium text-[#333333]">
-        {priceFrom}
-      </p>
+      <p className="mt-1 text-xs font-medium text-[#333333]">{priceFrom}</p>
 
-      {/* Button */}
       <div className="mt-1">
-        <Button className="w-full justify-center text-xs py-2.5">
-          View profile
-        </Button>
+        <Link href={`/pro/${id}`}>
+          <Button className="w-full justify-center py-2.5 text-xs">
+            View profile
+          </Button>
+        </Link>
       </div>
     </div>
   );
@@ -141,7 +137,6 @@ export function FeaturedProfessionals() {
       className="border-b border-[#E5E7EB] bg-[#FAFAFA] py-12 md:py-16"
     >
       <Container>
-        {/* Section heading */}
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C7373]">
             Featured professionals
@@ -155,17 +150,16 @@ export function FeaturedProfessionals() {
           </p>
         </div>
 
-        {/* Horizontal scroll on mobile, grid on desktop */}
         <div className="mt-8">
           <div className="flex gap-4 overflow-x-auto pb-2 sm:hidden">
             {FEATURED_PROFESSIONALS.map((pro) => (
-              <ProfessionalCard key={pro.name} {...pro} />
+              <ProfessionalCard key={pro.id} {...pro} />
             ))}
           </div>
 
           <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {FEATURED_PROFESSIONALS.map((pro) => (
-              <ProfessionalCard key={pro.name} {...pro} />
+              <ProfessionalCard key={pro.id} {...pro} />
             ))}
           </div>
         </div>
@@ -173,3 +167,4 @@ export function FeaturedProfessionals() {
     </section>
   );
 }
+
