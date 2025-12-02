@@ -9,6 +9,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCard } from "@/components/ui/StatCard";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
+import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
+import { calculateProfileCompletion } from "@/lib/profile-completion";
 
 const QUICK_ACTIONS = [
   {
@@ -73,6 +75,12 @@ export default async function ClientDashboardPage() {
     { label: "Completed requests", value: completedRequests },
   ];
 
+  // Calculate profile completion
+  const { completion, missingFields } = calculateProfileCompletion(
+    dbUser!,
+    dbUser?.clientProfile || null
+  );
+
   // Generate activity feed
   const activities = requests.flatMap(request => {
     const items: any[] = [];
@@ -123,6 +131,13 @@ export default async function ClientDashboardPage() {
         description="You're in control of every service request, from posting details to choosing the best professional."
         action={{ label: "New request", href: "/client/requests/new" }}
         highlights={HERO_HIGHLIGHTS}
+      />
+
+      {/* Profile Completion Banner */}
+      <ProfileCompletionBanner
+        profileCompletion={completion}
+        userRole="CLIENT"
+        missingFields={missingFields}
       />
 
       <section className="grid gap-3 sm:grid-cols-3">

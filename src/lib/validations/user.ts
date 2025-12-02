@@ -6,11 +6,11 @@ import { UserRole } from '@prisma/client';
 // Complete signup (role selection after Clerk signup)
 export const completeSignupSchema = z.object({
   role: z.enum(['CLIENT', 'PROFESSIONAL']),
-  dateOfBirth: dateSchema,
-  phoneNumber: phoneSchema,
-  city: z.string().min(2, 'City is required'),
-  country: z.string().length(2, 'Country code must be 2 characters (e.g., AT, DE)'),
-  termsAccepted: z.literal(true),
+  dateOfBirth: dateSchema.optional(),
+  phoneNumber: phoneSchema.optional(),
+  city: z.string().min(2, 'City is required').optional(),
+  country: z.string().length(2, 'Country code must be 2 characters (e.g., FR, US)').optional(),
+  termsAccepted: z.literal(true).optional(),
 });
 
 // Update user profile
