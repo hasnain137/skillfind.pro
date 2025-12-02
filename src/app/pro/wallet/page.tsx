@@ -47,7 +47,7 @@ export default async function WalletPage() {
     const clicksRemaining = Math.max(0, dailyLimit - clicksToday);
 
     const totalSpent = recentTransactions
-        .filter(tx => tx.type === 'CLICK_CHARGE')
+        .filter(tx => tx.type === 'DEBIT')
         .reduce((sum, tx) => sum + tx.amount, 0) / 100;
 
     const isLowBalance = balanceEuros < 2;
@@ -76,7 +76,7 @@ export default async function WalletPage() {
                         </div>
                         <div className="text-4xl">💰</div>
                     </div>
-                    
+
                     <div className="grid grid-cols-3 gap-4 border-t border-white/20 pt-4">
                         <div>
                             <p className="text-xs text-blue-200">Clicks Today</p>
@@ -142,14 +142,12 @@ export default async function WalletPage() {
                     <div className="divide-y divide-[#E5E7EB]">
                         {recentTransactions.map((tx) => {
                             const isDeposit = tx.type === 'DEPOSIT';
-                            const isClick = tx.type === 'CLICK_CHARGE';
-                            
+
                             return (
                                 <div key={tx.id} className="group flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors">
                                     <div className="flex items-center gap-3">
-                                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-xl ${
-                                            isDeposit ? 'bg-green-100' : 'bg-blue-100'
-                                        }`}>
+                                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-xl ${isDeposit ? 'bg-green-100' : 'bg-blue-100'
+                                            }`}>
                                             {isDeposit ? '💰' : '👁️'}
                                         </div>
                                         <div>
@@ -162,13 +160,12 @@ export default async function WalletPage() {
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className={`text-base font-bold ${
-                                            isDeposit ? 'text-green-600' : 'text-red-600'
-                                        }`}>
+                                        <p className={`text-base font-bold ${isDeposit ? 'text-green-600' : 'text-red-600'
+                                            }`}>
                                             {isDeposit ? '+' : '-'}€{(tx.amount / 100).toFixed(2)}
                                         </p>
-                                        <Badge variant={tx.status === 'COMPLETED' ? 'success' : 'gray'}>
-                                            {tx.status}
+                                        <Badge variant="success">
+                                            Completed
                                         </Badge>
                                     </div>
                                 </div>

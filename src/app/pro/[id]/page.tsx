@@ -117,7 +117,7 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
             {/* Avatar */}
             <div className="flex-shrink-0">
               <div className="flex h-32 w-32 items-center justify-center rounded-full bg-white text-blue-600 font-bold text-4xl shadow-xl border-4 border-white">
-                {professional.user.firstName[0]}{professional.user.lastName[0]}
+                {(professional.user.firstName || 'P')[0]}{(professional.user.lastName || '')[0]}
               </div>
             </div>
 
@@ -274,7 +274,7 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <p className="font-semibold text-[#333333]">
-                            {review.client.user.firstName} {review.client.user.lastName[0]}.
+                            {review.client.user.firstName} {(review.client.user.lastName || '')[0]}.
                           </p>
                           <p className="text-xs text-[#7C7373]">
                             {new Date(review.createdAt).toLocaleDateString()}
@@ -294,7 +294,7 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
                         </h4>
                       )}
                       <p className="text-sm text-[#4B5563] mb-2">
-                        {review.comment}
+                        {review.content}
                       </p>
                       {review.wouldRecommend && (
                         <div className="flex items-center gap-1 text-xs text-green-600">

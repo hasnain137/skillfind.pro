@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Card } from "@/components/ui/Card";
 import ProfileForm from "./ProfileForm";
 
 export default async function ProProfilePage() {
@@ -15,6 +16,7 @@ export default async function ProProfilePage() {
   const professional = await prisma.professional.findUnique({
     where: { userId },
     include: {
+      profile: true,
       services: {
         include: {
           subcategory: {
@@ -47,7 +49,7 @@ export default async function ProProfilePage() {
   if (professional.services.length > 0) profileCompletion += 25;
   if (professional.city) profileCompletion += 15;
   if (professional.isVerified) profileCompletion += 20;
-  if (professional.hourlyRateMin) profileCompletion += 15;
+  if (professional.profile?.hourlyRateMin) profileCompletion += 15;
 
   return (
     <div className="space-y-6">
@@ -72,10 +74,10 @@ export default async function ProProfilePage() {
             <p className="text-3xl font-bold text-[#2563EB]">{profileCompletion}%</p>
           </div>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="relative h-3 rounded-full bg-gray-200 overflow-hidden">
-          <div 
+          <div
             className="absolute h-full bg-gradient-to-r from-[#2563EB] to-[#1D4FD8] transition-all duration-500"
             style={{ width: `${profileCompletion}%` }}
           />
@@ -89,7 +91,7 @@ export default async function ProProfilePage() {
               {professional.services.length === 0 && <p>• Add at least one service</p>}
               {!professional.city && <p>• Set your location</p>}
               {!professional.isVerified && <p>• Complete verification</p>}
-              {!professional.hourlyRateMin && <p>• Set your pricing</p>}
+              {!professional.profile?.hourlyRateMin && <p>• Set your pricing</p>}
             </div>
           </div>
         )}
@@ -102,4 +104,3 @@ export default async function ProProfilePage() {
     </div>
   );
 }
-

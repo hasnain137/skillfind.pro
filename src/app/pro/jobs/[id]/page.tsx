@@ -150,8 +150,8 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
                   ))}
                   <span className="text-sm font-bold text-yellow-700">{job.review.rating}/5</span>
                 </div>
-                {job.review.comment && (
-                  <p className="text-sm text-gray-700 leading-relaxed mb-2">"{job.review.comment}"</p>
+                {job.review.content && (
+                  <p className="text-sm text-gray-700 leading-relaxed mb-2">"{job.review.content}"</p>
                 )}
                 {!job.review.professionalResponse && (
                   <Link href={`/pro/reviews/${job.review.id}/respond`}>
@@ -171,7 +171,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
               <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
                 <span className="text-[#7C7373]">Budget Range:</span>
                 <span className="font-medium text-[#333333]">
-                  {job.request.budgetMin && job.request.budgetMax 
+                  {job.request.budgetMin && job.request.budgetMax
                     ? `€${job.request.budgetMin} - €${job.request.budgetMax}`
                     : 'Not specified'}
                 </span>
@@ -214,10 +214,10 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
             <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
               <span>👤</span> Client
             </h2>
-            
+
             <div className="flex items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white font-bold text-lg shadow-md">
-                {job.request.client.user.firstName[0]}{job.request.client.user.lastName[0]}
+                {(job.request.client.user.firstName || 'C')[0]}{(job.request.client.user.lastName || '')[0]}
               </div>
               <div>
                 <p className="text-sm font-bold text-[#333333]">

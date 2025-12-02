@@ -87,7 +87,7 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
             <span>📋</span> Request Details
           </h2>
-          
+
           {request.description && (
             <div className="bg-[#F9FAFB] p-4 rounded-xl border border-[#E5E7EB]">
               <p className="text-sm text-[#4B5563] leading-relaxed whitespace-pre-wrap">
@@ -123,23 +123,23 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
             <span>📊</span> Overview
           </h2>
-          
+
           <div className="space-y-3">
             <div className={`rounded-lg ${statusConfig.bgColor} border border-[#E5E7EB] p-4 text-center`}>
               <div className="text-2xl mb-1">{statusConfig.icon}</div>
               <p className={`text-xl font-bold ${statusConfig.color} mb-1`}>{statusConfig.label}</p>
               <p className="text-xs text-[#7C7373]">Current Status</p>
             </div>
-            
+
             <div className={`rounded-lg ${hasOffers ? 'bg-green-50' : 'bg-gray-50'} border border-[#E5E7EB] p-4 text-center`}>
               <div className="text-2xl mb-1">📬</div>
               <p className={`text-xl font-bold ${hasOffers ? 'text-green-600' : 'text-gray-600'} mb-1`}>{request.offers.length}</p>
               <p className="text-xs text-[#7C7373]">Offers Received</p>
             </div>
-            
+
             <div className="rounded-lg bg-purple-50 border border-[#E5E7EB] p-4 text-center">
               <div className="text-2xl mb-1">👁️</div>
-              <p className="text-xl font-bold text-purple-600 mb-1">{request.viewCount || 0}</p>
+              <p className="text-xl font-bold text-purple-600 mb-1">0</p>
               <p className="text-xs text-[#7C7373]">Profile Views</p>
             </div>
           </div>

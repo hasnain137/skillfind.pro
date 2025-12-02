@@ -37,6 +37,7 @@ export default async function ProOffersPage() {
               client: { include: { user: true } },
             },
           },
+          clickEvent: true,
         },
         orderBy: { createdAt: 'desc' },
       },
@@ -49,7 +50,7 @@ export default async function ProOffersPage() {
   const pendingOffers = offers.filter(o => o.status === 'PENDING');
   const acceptedOffers = offers.filter(o => o.status === 'ACCEPTED');
   const rejectedOffers = offers.filter(o => o.status === 'REJECTED');
-  const clickedOffers = offers.filter(o => o.clickedAt);
+  const clickedOffers = offers.filter(o => o.clickEvent?.clickedAt);
   const successRate = offers.length > 0 ? Math.round((acceptedOffers.length / offers.length) * 100) : 0;
 
   return (

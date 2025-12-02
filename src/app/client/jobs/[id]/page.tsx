@@ -24,7 +24,7 @@ const STATUS_CONFIG = {
 export default async function ClientJobDetailPage({ params }: JobDetailPageProps) {
   const resolvedParams = await params;
   const { userId } = await auth();
-  
+
   if (!userId) {
     redirect('/login');
   }
@@ -140,8 +140,8 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
                   ))}
                   <span className="text-sm font-bold text-yellow-700">{job.review.rating}/5</span>
                 </div>
-                {job.review.comment && (
-                  <p className="text-sm text-gray-700 leading-relaxed">"{job.review.comment}"</p>
+                {job.review.content && (
+                  <p className="text-sm text-gray-700 leading-relaxed">"{job.review.content}"</p>
                 )}
               </div>
             </div>
@@ -155,14 +155,14 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
             <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
               <span>👤</span> Professional
             </h2>
-            
+
             <div className="flex items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white font-bold text-lg shadow-md">
-                {job.professional.user.firstName[0]}{job.professional.user.lastName[0]}
+                {(job.professional.user.firstName || 'P')[0]}{(job.professional.user.lastName || 'P')[0]}
               </div>
               <div>
                 <p className="text-sm font-bold text-[#333333]">
-                  {job.professional.user.firstName} {job.professional.user.lastName}
+                  {job.professional.user.firstName || 'Professional'} {job.professional.user.lastName || ''}
                 </p>
                 {job.professional.averageRating > 0 && (
                   <div className="flex items-center gap-1 text-xs text-[#7C7373] mt-1">
@@ -218,7 +218,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
         <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
           <span>⚡</span> Actions
         </h3>
-        
+
         <div className="flex flex-wrap gap-3">
           {canComplete && (
             <CompleteJobButton jobId={job.id} />

@@ -77,7 +77,7 @@ export default async function ProRequestsPage() {
     return daysSincePosted === 0;
   });
 
-  const urgentRequests = requests.filter(r => r.urgency === 'URGENT' || r.urgency === 'ASAP');
+  const urgentRequests = requests.filter(r => r.urgency === 'URGENT');
 
   return (
     <div className="space-y-6">
@@ -126,109 +126,109 @@ export default async function ProRequestsPage() {
         <section className="space-y-4">
           {requests.map((request) => {
             const isNew = (Date.now() - new Date(request.createdAt).getTime()) < 24 * 60 * 60 * 1000;
-            const isUrgent = request.urgency === 'URGENT' || request.urgency === 'ASAP';
+            const isUrgent = request.urgency === 'URGENT';
             const hasMultipleOffers = request._count.offers >= 3;
-            
+
             return (
-            <Card
-              key={request.id}
-              className="group relative overflow-hidden hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer"
-              padding="lg"
-            >
-              {/* Badges */}
-              {isNew && (
-                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                  🔥 NEW
-                </div>
-              )}
-              {isUrgent && !isNew && (
-                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                  ⚡ URGENT
-                </div>
-              )}
-
-              <div className="space-y-3">
-                {/* Header */}
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors">
-                      {request.title}
-                    </h3>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
-                      <span className="flex items-center gap-1">
-                        📂 {request.category.nameEn}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        📅 Posted {new Date(request.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
+              <Card
+                key={request.id}
+                className="group relative overflow-hidden hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer"
+                padding="lg"
+              >
+                {/* Badges */}
+                {isNew && (
+                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                    🔥 NEW
                   </div>
-                  {hasMultipleOffers && (
-                    <Badge variant="neutral">
-                      {request._count.offers} offers
-                    </Badge>
-                  )}
-                </div>
-
-                {/* Description */}
-                {request.description && (
-                  <p className="text-sm text-[#4B5563] line-clamp-2 leading-relaxed">
-                    {request.description}
-                  </p>
+                )}
+                {isUrgent && !isNew && (
+                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                    ⚡ URGENT
+                  </div>
                 )}
 
-                {/* Details */}
-                <div className="flex flex-wrap items-center gap-3 text-xs">
-                  <span className="flex items-center gap-1 rounded-lg bg-[#EEF2FF] px-2.5 py-1 font-semibold text-[#2563EB]">
-                    <span>💰</span> {formatBudget(request)}
-                  </span>
-                  
-                  {request.city && (
-                    <span className="flex items-center gap-1 text-[#7C7373]">
-                      <span>📍</span> {request.city}
-                    </span>
-                  )}
-
-                  {request.remotePreference !== 'NO_REMOTE' && (
-                    <span className="flex items-center gap-1 rounded-lg bg-[#DCFCE7] px-2.5 py-1 font-semibold text-[#166534]">
-                      <span>💻</span> Remote
-                    </span>
-                  )}
-
-                  {request.preferredStartDate && (
-                    <span className="flex items-center gap-1 text-[#7C7373]">
-                      <span>📅</span> Start: {new Date(request.preferredStartDate).toLocaleDateString()}
-                    </span>
-                  )}
-
-                  {request.urgency && (
-                    <span className="flex items-center gap-1 rounded-lg bg-[#FEF3C7] px-2.5 py-1 font-semibold text-[#92400E]">
-                      <span>⏱️</span> {request.urgency}
-                    </span>
-                  )}
-                </div>
-
-                {/* Client Info */}
-                <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white text-xs font-bold">
-                      {request.client.user.firstName[0]}
+                <div className="space-y-3">
+                  {/* Header */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors">
+                        {request.title}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
+                        <span className="flex items-center gap-1">
+                          📂 {request.category.nameEn}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          📅 Posted {new Date(request.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
                     </div>
-                    <span className="text-xs text-[#7C7373]">
-                      Client: {request.client.user.firstName}
-                    </span>
+                    {hasMultipleOffers && (
+                      <Badge variant="neutral">
+                        {request._count.offers} offers
+                      </Badge>
+                    )}
                   </div>
-                  <Link
-                    href={`/pro/requests/${request.id}/offer`}
-                    className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
-                  >
-                    Send Offer →
-                  </Link>
+
+                  {/* Description */}
+                  {request.description && (
+                    <p className="text-sm text-[#4B5563] line-clamp-2 leading-relaxed">
+                      {request.description}
+                    </p>
+                  )}
+
+                  {/* Details */}
+                  <div className="flex flex-wrap items-center gap-3 text-xs">
+                    <span className="flex items-center gap-1 rounded-lg bg-[#EEF2FF] px-2.5 py-1 font-semibold text-[#2563EB]">
+                      <span>💰</span> {formatBudget(request)}
+                    </span>
+
+                    {request.city && (
+                      <span className="flex items-center gap-1 text-[#7C7373]">
+                        <span>📍</span> {request.city}
+                      </span>
+                    )}
+
+                    {request.locationType === 'REMOTE' && (
+                      <span className="flex items-center gap-1 rounded-lg bg-[#DCFCE7] px-2.5 py-1 font-semibold text-[#166534]">
+                        <span>💻</span> Remote
+                      </span>
+                    )}
+
+                    {request.preferredStartDate && (
+                      <span className="flex items-center gap-1 text-[#7C7373]">
+                        <span>📅</span> Start: {new Date(request.preferredStartDate).toLocaleDateString()}
+                      </span>
+                    )}
+
+                    {request.urgency && (
+                      <span className="flex items-center gap-1 rounded-lg bg-[#FEF3C7] px-2.5 py-1 font-semibold text-[#92400E]">
+                        <span>⏱️</span> {request.urgency}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Client Info */}
+                  <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white text-xs font-bold">
+                        {(request.client.user.firstName || 'C')[0]}
+                      </div>
+                      <span className="text-xs text-[#7C7373]">
+                        Client: {request.client.user.firstName || 'Client'}
+                      </span>
+                    </div>
+                    <Link
+                      href={`/pro/requests/${request.id}/offer`}
+                      className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
+                    >
+                      Send Offer →
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          );
+              </Card>
+            );
           })}
         </section>
       )}
@@ -244,4 +244,3 @@ function formatBudget(request: any) {
   if (request.budgetMax) return `Up to €${request.budgetMax}`;
   return 'Budget TBD';
 }
-

@@ -52,7 +52,7 @@ export default async function ClientJobsPage() {
 
   const jobs = dbUser?.clientProfile?.requests
     .map(r => r.job)
-    .filter(j => j !== null) || [];
+    .filter((j): j is NonNullable<typeof j> => j !== null) || [];
 
   const activeJobs = jobs.filter(j => j.status === 'PENDING' || j.status === 'IN_PROGRESS');
   const completedJobs = jobs.filter(j => j.status === 'COMPLETED');
@@ -112,7 +112,7 @@ export default async function ClientJobsPage() {
               {activeJobs.map((job) => {
                 const statusConfig = STATUS_VARIANT[job.status];
                 const canComplete = job.status === 'IN_PROGRESS';
-                
+
                 return (
                   <Link key={job.id} href={`/client/jobs/${job.id}`}>
                     <Card className="group hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
@@ -124,7 +124,7 @@ export default async function ClientJobsPage() {
                             </h3>
                             <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
                               <span className="flex items-center gap-1">
-                                👤 {job.professional.user.firstName} {job.professional.user.lastName}
+                                👤 {job.professional.user.firstName || 'Professional'} {job.professional.user.lastName || ''}
                               </span>
                               <span>•</span>
                               <span className="flex items-center gap-1">
