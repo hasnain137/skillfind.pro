@@ -20,6 +20,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/professionals/[id]/reviews(.*)',
   '/api/webhooks(.*)', // Stripe webhooks
   '/api/auth/complete-signup(.*)', // Initial signup completion
+  '/search(.*)', // Public search page
 ]);
 
 // Define routes that require specific roles

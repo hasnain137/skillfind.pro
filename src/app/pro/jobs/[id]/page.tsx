@@ -14,12 +14,12 @@ type ProJobDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const STATUS_VARIANT: Record<string, "primary" | "warning" | "success" | "gray"> = {
-  ACCEPTED: "primary",
-  IN_PROGRESS: "warning",
-  COMPLETED: "success",
-  CANCELLED: "gray",
-  DISPUTED: "gray",
+const STATUS_CONFIG = {
+  ACCEPTED: { variant: "primary" as const, label: "Ready to Start", icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
+  IN_PROGRESS: { variant: "warning" as const, label: "In Progress", icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+  COMPLETED: { variant: "success" as const, label: "Completed", icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
+  CANCELLED: { variant: "gray" as const, label: "Cancelled", icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
+  DISPUTED: { variant: "gray" as const, label: "Disputed", icon: "⚠️", color: "text-orange-600", bgColor: "bg-orange-50" },
 };
 
 export default async function ProJobDetailPage({ params }: ProJobDetailPageProps) {
@@ -73,153 +73,224 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
     redirect('/pro/jobs');
   }
 
+  const statusConfig = STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.ACCEPTED;
+  const canStart = job.status === 'ACCEPTED';
+  const canComplete = job.status === 'IN_PROGRESS';
+  const isCompleted = job.status === 'COMPLETED';
+
   return (
     <div className="space-y-6">
-      <SectionHeading
-        eyebrow="Job details"
-        title={job.request.title}
-        description={`Job ID #${job.id.substring(0, 8)}`}
-      />
-
-      {/* Status Card */}
-      <Card padding="lg" className="space-y-4">
-        <div className="flex items-center gap-3">
-          <Badge variant={STATUS_VARIANT[job.status]}>
-            {job.status === 'ACCEPTED' && 'Ready to Start'}
-            {job.status === 'IN_PROGRESS' && 'In Progress'}
-            {job.status === 'COMPLETED' && 'Completed'}
-            {job.status === 'CANCELLED' && 'Cancelled'}
-            {job.status === 'DISPUTED' && 'Disputed'}
-          </Badge>
-          <p className="text-xs text-[#7C7373]">
-            Created {new Date(job.createdAt).toLocaleDateString()}
-          </p>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-2">
-          <InfoRow label="Category" value={job.request.category.nameEn} />
-          <InfoRow label="Agreed Price" value={`€${job.agreedPrice?.toFixed(2) || '0.00'}`} />
-          <InfoRow label="Client" value={`${job.request.client.user.firstName} ${job.request.client.user.lastName}`} />
-          <InfoRow label="Status" value={job.status} />
-          {job.startedAt && (
-            <InfoRow label="Started" value={new Date(job.startedAt).toLocaleDateString()} />
-          )}
-          {job.completedAt && (
-            <InfoRow label="Completed" value={new Date(job.completedAt).toLocaleDateString()} />
-          )}
-        </div>
-
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
-            Request Description
-          </p>
-          <p className="mt-2 text-sm text-[#4B5563]">
-            {job.request.description}
-          </p>
+      {/* Enhanced Header */}
+      <Card className={`bg-gradient-to-br ${isCompleted ? 'from-green-50 to-white border-green-200' : 'from-blue-50 to-white border-blue-200'}`} padding="lg">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">{statusConfig.icon}</span>
+              <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight text-[#333333] mb-2">
+              {job.request.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
+              <span className="flex items-center gap-1">📂 {job.request.category.nameEn}</span>
+              <span>•</span>
+              <span className="flex items-center gap-1">🆔 Job #{job.id.substring(0, 8)}</span>
+              {job.startedAt && (
+                <>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">📅 Started {new Date(job.startedAt).toLocaleDateString()}</span>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </Card>
 
+      {/* Main Content Grid */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Job Details */}
+        <Card className="lg:col-span-2 space-y-4" padding="lg">
+          <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
+            <span>📋</span> Job Details
+          </h2>
+
+          {job.request.description && (
+            <div className="bg-[#F9FAFB] p-4 rounded-xl border border-[#E5E7EB]">
+              <p className="text-xs font-medium text-[#7C7373] mb-2">Project Description</p>
+              <p className="text-sm text-[#4B5563] leading-relaxed whitespace-pre-wrap">
+                {job.request.description}
+              </p>
+            </div>
+          )}
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <InfoBox icon="📂" label="Category" value={job.request.category.nameEn} />
+            <InfoBox icon="💰" label="Agreed Price" value={job.agreedPrice ? `€${job.agreedPrice.toFixed(2)}` : 'Not specified'} />
+            <InfoBox icon="📅" label="Created" value={new Date(job.createdAt).toLocaleDateString()} />
+            {job.startedAt && (
+              <InfoBox icon="🚀" label="Started" value={new Date(job.startedAt).toLocaleDateString()} />
+            )}
+            {job.completedAt && (
+              <InfoBox icon="✅" label="Completed" value={new Date(job.completedAt).toLocaleDateString()} />
+            )}
+          </div>
+
+          {/* Review Display */}
+          {job.review && (
+            <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
+              <h3 className="text-sm font-bold text-[#333333] flex items-center gap-2 mb-3">
+                <span>⭐</span> Client Review
+              </h3>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className={`text-base ${i < job.review!.rating ? 'text-yellow-500' : 'text-gray-300'}`}>
+                      ★
+                    </span>
+                  ))}
+                  <span className="text-sm font-bold text-yellow-700">{job.review.rating}/5</span>
+                </div>
+                {job.review.comment && (
+                  <p className="text-sm text-gray-700 leading-relaxed mb-2">"{job.review.comment}"</p>
+                )}
+                {!job.review.professionalResponse && (
+                  <Link href={`/pro/reviews/${job.review.id}/respond`}>
+                    <Button variant="ghost" className="text-xs mt-2 border border-yellow-300">
+                      💬 Respond to Review
+                    </Button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Additional Request Details */}
+          <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
+            <h3 className="text-sm font-bold text-[#333333] mb-3">Original Request Details</h3>
+            <div className="grid gap-2 text-sm">
+              <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
+                <span className="text-[#7C7373]">Budget Range:</span>
+                <span className="font-medium text-[#333333]">
+                  {job.request.budgetMin && job.request.budgetMax 
+                    ? `€${job.request.budgetMin} - €${job.request.budgetMax}`
+                    : 'Not specified'}
+                </span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
+                <span className="text-[#7C7373]">Location Type:</span>
+                <span className="font-medium text-[#333333]">{job.request.locationType || 'Not specified'}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
+                <span className="text-[#7C7373]">Urgency:</span>
+                <span className="font-medium text-[#333333]">{job.request.urgency || 'Not specified'}</span>
+              </div>
+              {job.request.preferredStartDate && (
+                <div className="flex justify-between py-2">
+                  <span className="text-[#7C7373]">Preferred Start:</span>
+                  <span className="font-medium text-[#333333]">
+                    {new Date(job.request.preferredStartDate).toLocaleDateString()}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </Card>
+
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Status Card */}
+          <Card className={`${statusConfig.bgColor} border-2`} padding="lg">
+            <div className="text-center">
+              <div className="text-3xl mb-2">{statusConfig.icon}</div>
+              <p className={`text-lg font-bold ${statusConfig.color} mb-1`}>
+                {statusConfig.label}
+              </p>
+              <p className="text-xs text-[#7C7373]">Current Status</p>
+            </div>
+          </Card>
+
+          {/* Client Card */}
+          <Card className="space-y-4" padding="lg">
+            <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
+              <span>👤</span> Client
+            </h2>
+            
+            <div className="flex items-center gap-3">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white font-bold text-lg shadow-md">
+                {job.request.client.user.firstName[0]}{job.request.client.user.lastName[0]}
+              </div>
+              <div>
+                <p className="text-sm font-bold text-[#333333]">
+                  {job.request.client.user.firstName} {job.request.client.user.lastName}
+                </p>
+                <p className="text-xs text-[#7C7373] mt-1">Client</p>
+              </div>
+            </div>
+
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2 text-[#7C7373]">
+                <span>📧</span>
+                <span className="text-xs">{job.request.client.user.email}</span>
+              </div>
+              {job.request.client.user.phoneNumber && (
+                <div className="flex items-center gap-2 text-[#7C7373]">
+                  <span>📱</span>
+                  <span className="text-xs">{job.request.client.user.phoneNumber}</span>
+                </div>
+              )}
+              {job.request.city && (
+                <div className="flex items-center gap-2 text-[#7C7373]">
+                  <span>📍</span>
+                  <span className="text-xs">{job.request.city}, {job.request.country}</span>
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
+      </div>
+
       {/* Actions */}
       <Card padding="lg" className="space-y-3">
-        <h3 className="font-semibold text-[#333333]">Actions</h3>
+        <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
+          <span>⚡</span> Actions
+        </h3>
 
-        {job.status === 'ACCEPTED' && (
+        {canStart && (
           <div className="space-y-2">
             <p className="text-sm text-[#7C7373]">
-              This job has been accepted by the client. Start working when you're ready!
+              🎉 This job has been accepted by the client. Start working when you're ready!
             </p>
             <StartJobButton jobId={job.id} />
           </div>
         )}
 
-        {job.status === 'IN_PROGRESS' && (
+        {canComplete && (
           <div className="space-y-2">
             <p className="text-sm text-[#7C7373]">
-              You're currently working on this job. Mark it as complete when finished.
+              🔨 You're currently working on this job. Mark it as complete when finished.
             </p>
             <CompleteJobButton jobId={job.id} />
           </div>
         )}
 
-        {job.status === 'COMPLETED' && !job.review && (
-          <div className="text-sm text-[#7C7373]">
-            ✅ Job completed! Waiting for client to leave a review.
+        {isCompleted && !job.review && (
+          <div className="flex items-center gap-2 rounded-lg bg-green-100 border border-green-200 px-4 py-3 text-sm text-green-700">
+            <span>✅</span>
+            <span>Job completed! Waiting for client to leave a review.</span>
           </div>
         )}
-
-        {job.review && (
-          <div className="space-y-2">
-            <p className="text-sm text-[#7C7373]">
-              ⭐ Client left a review: {job.review.rating}/5
-            </p>
-            <p className="text-sm text-[#4B5563] italic">
-              "{job.review.content}"
-            </p>
-            {!job.review.professionalResponse && (
-              <Link href={`/api/reviews/${job.review.id}/respond`}>
-                <Button variant="ghost">Respond to Review</Button>
-              </Link>
-            )}
-          </div>
-        )}
-      </Card>
-
-      {/* Client Contact Info (revealed after job accepted) */}
-      <Card padding="lg" className="space-y-3">
-        <h3 className="font-semibold text-[#333333]">Client Contact Information</h3>
-        <p className="text-xs text-[#7C7373] mb-3">
-          Contact details are shared once the offer is accepted.
-        </p>
-        <div className="text-sm text-[#4B5563] space-y-1">
-          <p><strong>Name:</strong> {job.request.client.user.firstName} {job.request.client.user.lastName}</p>
-          <p><strong>Email:</strong> {job.request.client.user.email}</p>
-          {job.request.client.user.phoneNumber && (
-            <p><strong>Phone:</strong> {job.request.client.user.phoneNumber}</p>
-          )}
-          {job.request.city && (
-            <p><strong>Location:</strong> {job.request.city}, {job.request.country}</p>
-          )}
-        </div>
-      </Card>
-
-      {/* Request Details */}
-      <Card padding="lg" className="space-y-3">
-        <h3 className="font-semibold text-[#333333]">Original Request Details</h3>
-        <div className="grid gap-2 text-sm">
-          <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-            <span className="text-[#7C7373]">Budget Range:</span>
-            <span className="font-medium text-[#333333]">
-              {job.request.budgetMin && job.request.budgetMax 
-                ? `€${job.request.budgetMin} - €${job.request.budgetMax}`
-                : 'Not specified'}
-            </span>
-          </div>
-          <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-            <span className="text-[#7C7373]">Location Type:</span>
-            <span className="font-medium text-[#333333]">{job.request.locationType || 'Not specified'}</span>
-          </div>
-          <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-            <span className="text-[#7C7373]">Urgency:</span>
-            <span className="font-medium text-[#333333]">{job.request.urgency || 'Not specified'}</span>
-          </div>
-          {job.request.preferredStartDate && (
-            <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-              <span className="text-[#7C7373]">Preferred Start:</span>
-              <span className="font-medium text-[#333333]">
-                {new Date(job.request.preferredStartDate).toLocaleDateString()}
-              </span>
-            </div>
-          )}
-        </div>
       </Card>
     </div>
   );
 }
 
-function InfoRow({ label, value }: { label: string; value: string }) {
+function InfoBox({ icon, label, value }: { icon: string; label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] px-4 py-3">
-      <p className="text-[11px] text-[#7C7373]">{label}</p>
+    <div className="rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] p-3">
+      <div className="flex items-center gap-2 mb-1">
+        <span className="text-base">{icon}</span>
+        <p className="text-xs font-medium text-[#7C7373]">{label}</p>
+      </div>
       <p className="text-sm font-semibold text-[#333333]">{value}</p>
     </div>
   );
