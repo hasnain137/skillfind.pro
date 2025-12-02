@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { SearchFilters } from './SearchFilters';
+import { MobileFilterDrawer } from './MobileFilterDrawer';
 import { ProfessionalCard } from './ProfessionalCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Spinner } from '@/components/ui/Spinner';
@@ -95,14 +96,20 @@ export function SearchResults() {
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-4">
-      {/* Filters Sidebar */}
-      <div className="lg:col-span-1">
-        <SearchFilters />
+    <div>
+      {/* Mobile Filter Button */}
+      <div className="mb-4 lg:hidden">
+        <MobileFilterDrawer />
       </div>
 
-      {/* Results */}
-      <div className="lg:col-span-3">
+      <div className="grid gap-6 lg:grid-cols-4">
+        {/* Filters Sidebar - Desktop Only */}
+        <div className="hidden lg:col-span-1 lg:block">
+          <SearchFilters />
+        </div>
+
+        {/* Results */}
+        <div className="lg:col-span-3">
         {/* Results header */}
         <div className="mb-4 flex items-center justify-between">
           <p className="text-sm text-[#7C7373]">

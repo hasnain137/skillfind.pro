@@ -1,6 +1,7 @@
 // src/components/layout/Navbar.tsx
 import { Container } from "@/components/ui/Container";
 import { UserMenu } from "./UserMenu";
+import { MobileNav } from "./MobileNav";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
@@ -49,7 +50,7 @@ export async function Navbar() {
         </nav>
 
         {/* Right: auth section */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {userId ? (
             // Show user menu when authenticated
             <UserMenu />
@@ -64,12 +65,15 @@ export async function Navbar() {
               </Link>
               <Link
                 href="/signup"
-                className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
+                className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
               >
                 Sign up
               </Link>
             </>
           )}
+          
+          {/* Mobile Navigation */}
+          <MobileNav />
         </div>
       </Container>
     </header>

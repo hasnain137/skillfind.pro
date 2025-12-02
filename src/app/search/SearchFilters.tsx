@@ -12,7 +12,7 @@ interface Category {
   slug: string;
 }
 
-export function SearchFilters() {
+export function SearchFilters({ onApply }: { onApply?: () => void }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -49,6 +49,7 @@ export function SearchFilters() {
       if (value) params.set(key, value);
     });
     router.push(`/search?${params.toString()}`);
+    onApply?.(); // Close drawer on mobile
   };
 
   const clearFilters = () => {
