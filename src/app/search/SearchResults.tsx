@@ -177,6 +177,7 @@ export function SearchResults() {
             }}
           />
         )}
+        </div>
       </div>
     </div>
   );
