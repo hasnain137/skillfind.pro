@@ -2,6 +2,8 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
+export const runtime = 'nodejs'; // Force Node.js runtime instead of Edge
+
 // Define public routes that don't require authentication
 const isPublicRoute = createRouteMatcher([
   '/',
