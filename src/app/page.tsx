@@ -5,6 +5,7 @@ import { PopularCategories } from "@/components/landing/PopularCategories";
 import { FeaturedProfessionalsServer } from "@/components/landing/FeaturedProfessionalsServer";
 import { SuggestedSkills } from "@/components/landing/SuggestedSkills";
 import { TrustSection } from "@/components/landing/TrustSection";
+import { Testimonials } from "@/components/landing/Testimonials";
 import { DualCTA } from "@/components/landing/DualCTA";
 import { CategoryDirectory } from "@/components/landing/CategoryDirectory";
 import { Footer } from "@/components/landing/Footer";
@@ -75,6 +76,7 @@ export default async function HomePage() {
         <Suspense fallback={<FeaturedProfessionalsSkeleton />}>
           <FeaturedProfessionalsServer />
         </Suspense>
+        <Testimonials />
         <SuggestedSkills />
         <TrustSection />
         <DualCTA />
