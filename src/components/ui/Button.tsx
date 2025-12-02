@@ -20,11 +20,12 @@ export function Button({
       "text-[#333333] hover:bg-[#F3F4F6] focus-visible:ring-[#E5E7EB] border border-transparent hover:border-[#E5E7EB]",
   };
 
-  const padding = "px-4 py-2";
+  const padding = "px-4 py-2.5";
 
   return (
     <button
-      className={`${base} ${padding} ${variants[variant]} ${className}`}
+      className={`${base} ${padding} ${variants[variant]} active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+      style={{ minHeight: '44px' }} // Ensure minimum 44px touch target
       {...props}
     />
   );
