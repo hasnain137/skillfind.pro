@@ -39,7 +39,7 @@ export default function LoginPage() {
                 routing="path"
                 path="/login"
                 signUpUrl="/signup"
-                afterSignInUrl="/complete-profile"
+                afterSignInUrl="/auth-redirect"
               />
             </div>
           </div>

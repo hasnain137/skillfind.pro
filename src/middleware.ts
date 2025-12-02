@@ -9,6 +9,7 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/login(.*)',
   '/signup(.*)',
+  '/auth-redirect(.*)', // Smart redirect handler after authentication
   '/complete-profile(.*)', // Profile completion after signup
   '/forgot-password(.*)',
   '/api/categories(.*)',

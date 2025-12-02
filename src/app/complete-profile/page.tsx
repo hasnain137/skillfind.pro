@@ -25,29 +25,12 @@ export default function CompleteProfilePage() {
     termsAccepted: false,
   });
 
-  // Check if user already has a profile
+  // Check if user already has a profile - just stop checking, don't redirect
   useEffect(() => {
-    async function checkExistingProfile() {
-      if (!isLoaded || !user) {
-        return;
-      }
-
-      const role = user.publicMetadata?.role as string | undefined;
-      
-      if (role) {
-        // User already has a role, redirect to appropriate dashboard
-        if (role === 'CLIENT') {
-          router.push('/client');
-        } else if (role === 'PROFESSIONAL') {
-          router.push('/pro');
-        }
-      } else {
-        setChecking(false);
-      }
+    if (isLoaded && user) {
+      setChecking(false);
     }
-
-    checkExistingProfile();
-  }, [user, isLoaded, router]);
+  }, [user, isLoaded]);
 
   const handleRoleSelect = (role: 'CLIENT' | 'PROFESSIONAL') => {
     setFormData({ ...formData, role });
@@ -68,8 +51,13 @@ export default function CompleteProfilePage() {
 
       const data = await response.json();
 
+      console.log('API Response:', { status: response.status, data });
+
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to complete profile');
+        console.error('API Error:', data);
+        // Extract error message from API response structure
+        const errorMessage = data.error?.message || data.message || 'Failed to complete profile';
+        throw new Error(errorMessage);
       }
 
       // Redirect based on role
@@ -79,7 +67,8 @@ export default function CompleteProfilePage() {
         router.push('/pro');
       }
     } catch (err: any) {
-      setError(err.message);
+      console.error('Form submission error:', err);
+      setError(err.message || 'Failed to complete profile');
     } finally {
       setLoading(false);
     }
