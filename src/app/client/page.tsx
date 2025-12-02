@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCard } from "@/components/ui/StatCard";
+import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
+import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 
 const QUICK_ACTIONS = [
   {
@@ -63,12 +65,55 @@ export default async function ClientDashboardPage() {
   const openRequests = requests.filter(r => r.status === 'OPEN').length;
   const requestsWithOffers = requests.filter(r => r.offers.length > 0).length;
   const completedRequests = requests.filter(r => r.status === 'COMPLETED').length;
+  const totalOffers = requests.reduce((sum, r) => sum + r.offers.length, 0);
 
   const stats = [
     { label: "Open requests", value: openRequests },
-    { label: "Requests with offers", value: requestsWithOffers },
+    { label: "Total offers received", value: totalOffers },
     { label: "Completed requests", value: completedRequests },
   ];
+
+  // Generate activity feed
+  const activities = requests.flatMap(request => {
+    const items: any[] = [];
+    
+    // Request created
+    items.push({
+      id: `request-${request.id}`,
+      type: 'request_created' as const,
+      title: 'Request created',
+      description: request.title,
+      timestamp: request.createdAt,
+      href: `/client/requests/${request.id}`,
+    });
+
+    // Offers received
+    if (request.offers.length > 0) {
+      items.push({
+        id: `offers-${request.id}`,
+        type: 'offer_received' as const,
+        title: `${request.offers.length} offer${request.offers.length > 1 ? 's' : ''} received`,
+        description: `Professionals are interested in: ${request.title}`,
+        timestamp: request.offers[0].createdAt,
+        href: `/client/requests/${request.id}`,
+      });
+    }
+
+    return items;
+  }).sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(0, 5);
+
+  // Format requests for timeline
+  const timelineRequests = requests
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .slice(0, 5)
+    .map(r => ({
+      id: r.id,
+      title: r.title,
+      status: r.status as any,
+      offerCount: r.offers.length,
+      createdAt: r.createdAt,
+      budget: r.budgetMax || undefined,
+    }));
 
   return (
     <div className="space-y-6">
@@ -90,17 +135,40 @@ export default async function ClientDashboardPage() {
         ))}
       </section>
 
-      <Card variant="muted" padding="lg" className="space-y-4">
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Quick Actions */}
+        <Card variant="muted" padding="lg" className="space-y-4">
+          <SectionHeading
+            variant="section"
+            title="Quick actions"
+            description="Shortcuts to the most common tasks."
+          />
+          <div className="space-y-3">
+            {QUICK_ACTIONS.map((action) => (
+              <ActionCard key={action.href} {...action} />
+            ))}
+          </div>
+        </Card>
+
+        {/* Activity Feed */}
+        <Card variant="default" padding="lg" className="space-y-4">
+          <SectionHeading
+            variant="section"
+            title="Recent activity"
+            description="Your latest updates and notifications."
+          />
+          <ActivityFeed activities={activities} />
+        </Card>
+      </div>
+
+      {/* Request Timeline */}
+      <Card variant="default" padding="lg" className="space-y-4">
         <SectionHeading
           variant="section"
-          title="Quick actions"
-          description="Shortcuts to the most common tasks."
+          title="Your requests"
+          description="Track the progress of all your service requests."
         />
-        <div className="grid gap-3 md:grid-cols-2">
-          {QUICK_ACTIONS.map((action) => (
-            <ActionCard key={action.href} {...action} />
-          ))}
-        </div>
+        <RequestTimeline requests={timelineRequests} />
       </Card>
     </div>
   );

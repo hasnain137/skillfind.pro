@@ -9,6 +9,9 @@ import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCard } from "@/components/ui/StatCard";
 import { ActionCard } from "@/components/ui/ActionCard";
+import { EarningsChart } from "@/components/dashboard/EarningsChart";
+import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
+import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
 
 const QUICK_ACTIONS = [
   {
@@ -164,6 +167,80 @@ export default async function ProDashboardPage() {
 
   const timeOfDay = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening';
 
+  // Get earnings data
+  const completedJobs = await prisma.job.findMany({
+    where: {
+      professionalId: professional.id,
+      status: 'COMPLETED',
+    },
+    include: {
+      request: true,
+    },
+  });
+
+  const totalEarnings = completedJobs.reduce((sum, job) => {
+    const amount = job.request.budgetMax || job.request.budgetMin || 0;
+    return sum + amount;
+  }, 0);
+
+  const thisMonth = new Date();
+  const lastMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() - 1, 1);
+  
+  const thisMonthEarnings = completedJobs
+    .filter(job => job.completedAt && job.completedAt >= new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
+    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+
+  const lastMonthEarnings = completedJobs
+    .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
+    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+
+  const earningsData = {
+    totalEarnings,
+    thisMonth: thisMonthEarnings,
+    lastMonth: lastMonthEarnings,
+    pendingPayouts: balanceEuros,
+    completedJobs: completedJobs.length,
+  };
+
+  // Get matching requests
+  const matchingRequests = await prisma.request.findMany({
+    where: {
+      status: 'OPEN',
+      categoryId: {
+        in: uniqueCategoryIds,
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 5,
+  });
+
+  // Get profile views and clicks
+  const profileViews = await prisma.professionalClick.count({
+    where: {
+      professionalId: professional.id,
+    },
+  });
+
+  const allOffers = await prisma.offer.findMany({
+    where: {
+      professionalId: professional.id,
+    },
+  });
+
+  const acceptedOffers = allOffers.filter(o => o.status === 'ACCEPTED').length;
+  const acceptanceRate = allOffers.length > 0 ? Math.round((acceptedOffers / allOffers.length) * 100) : 0;
+
+  const metricsData = {
+    profileViews,
+    offersSent: allOffers.length,
+    acceptanceRate,
+    averageRating: professional.averageRating,
+    totalReviews: professional.totalReviews,
+    responseTime: '< 2 hours', // This would need real calculation
+  };
+
   return (
     <div className="space-y-6">
       <DashboardHero
@@ -174,36 +251,76 @@ export default async function ProDashboardPage() {
         highlights={highlights}
       />
 
-      <section className="grid gap-3 sm:grid-cols-3">
-        {stats.map((stat) => (
-          <StatCard key={stat.label} label={stat.label} value={stat.value} />
-        ))}
-      </section>
-
-      <Card variant="muted" padding="lg" className="space-y-3">
-        <h2 className="text-sm font-semibold text-[#333333]">Next steps</h2>
-        <ul className="space-y-2 text-xs text-[#4B5563]">
-          {nextSteps.map((step) => (
-            <li key={step} className="flex items-start gap-2">
-              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-[#2563EB]" />
-              <span>{step}</span>
-            </li>
-          ))}
-        </ul>
-      </Card>
-
-      <Card variant="muted" padding="lg" className="space-y-4">
-        <SectionHeading
-          variant="section"
-          title="Quick actions"
-          description="Shortcuts to the most common tasks."
-        />
-        <div className="grid gap-3 md:grid-cols-2">
-          {QUICK_ACTIONS.map((action) => (
-            <ActionCard key={action.href} {...action} />
-          ))}
+      {/* Earnings Overview */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-1">
+          <EarningsChart data={earningsData} />
         </div>
+        
+        {/* Performance Metrics */}
+        <div className="lg:col-span-2">
+          <Card variant="default" padding="lg" className="space-y-4 h-full">
+            <SectionHeading
+              variant="section"
+              title="Performance metrics"
+              description="Track your success and visibility on the platform."
+            />
+            <PerformanceMetrics data={metricsData} />
+          </Card>
+        </div>
+      </div>
+
+      {/* Matching Requests */}
+      <Card variant="default" padding="lg" className="space-y-4">
+        <div className="flex items-center justify-between">
+          <SectionHeading
+            variant="section"
+            title="Matching requests"
+            description="New opportunities that match your services."
+          />
+          <Link 
+            href="/pro/requests"
+            className="text-xs font-semibold text-[#2563EB] hover:text-[#1D4FD8] transition-colors"
+          >
+            View all →
+          </Link>
+        </div>
+        <MatchingRequests requests={matchingRequests as any} />
       </Card>
+
+      {/* Quick Actions & Next Steps */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card variant="muted" padding="lg" className="space-y-4">
+          <SectionHeading
+            variant="section"
+            title="Quick actions"
+            description="Shortcuts to the most common tasks."
+          />
+          <div className="space-y-3">
+            {QUICK_ACTIONS.map((action) => (
+              <ActionCard key={action.href} {...action} />
+            ))}
+          </div>
+        </Card>
+
+        <Card variant="muted" padding="lg" className="space-y-4">
+          <SectionHeading
+            variant="section"
+            title="Next steps"
+            description="Suggested actions to grow your business."
+          />
+          <ul className="space-y-3">
+            {nextSteps.map((step, index) => (
+              <li key={index} className="flex items-start gap-3 rounded-lg bg-white p-3 shadow-sm">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-xs font-bold text-white">
+                  {index + 1}
+                </div>
+                <span className="text-sm text-[#333333]">{step}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </div>
     </div>
   );
 }

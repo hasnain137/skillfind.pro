@@ -94,44 +94,79 @@ function ProfessionalCard({
     : 'Contact for pricing';
 
   const primaryService = services[0]?.description || 'Professional';
+  const additionalServices = services.length > 1 ? services.length - 1 : 0;
 
   return (
-    <div className="flex min-w-[260px] flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#2563EBB3] text-xs font-semibold text-white">
+    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm shadow-[#E5E7EB]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#2563EB]/20">
+      {/* Top Badge - Verified */}
+      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-gradient-to-r from-[#2563EB] to-[#1D4FD8] px-3 py-1 text-[10px] font-semibold text-white shadow-md">
+        <span>✓</span> Verified
+      </div>
+
+      {/* Profile Header */}
+      <div className="flex items-start gap-3 pt-2">
+        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-base font-bold text-white shadow-md ring-2 ring-white">
           {getInitials(user.firstName, user.lastName)}
+          <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-[#10B981] border-2 border-white" title="Available now" />
         </div>
-        <div>
-          <h3 className="text-sm font-semibold text-[#333333]">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-base font-bold text-[#333333] truncate group-hover:text-[#2563EB] transition-colors">
             {user.firstName} {user.lastName}
           </h3>
-          <p className="text-xs text-[#7C7373]">{primaryService}</p>
+          <p className="text-xs text-[#7C7373] mt-0.5">{primaryService}</p>
+          {additionalServices > 0 && (
+            <p className="text-[10px] text-[#2563EB] font-medium mt-1">
+              +{additionalServices} more {additionalServices === 1 ? 'service' : 'services'}
+            </p>
+          )}
         </div>
       </div>
 
-      <div className="flex items-center gap-2 text-xs text-[#7C7373]">
-        <span className="text-[#F59E0B]">★</span>
-        <span className="font-semibold text-[#333333]">{averageRating.toFixed(1)}</span>
-        <span>({totalReviews} reviews)</span>
+      {/* Rating */}
+      <div className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#FEF3C7] to-[#FDE68A] px-3 py-2">
+        <div className="flex items-center gap-1">
+          {[...Array(5)].map((_, i) => (
+            <span key={i} className={`text-sm ${i < Math.round(averageRating) ? 'text-[#F59E0B]' : 'text-[#D1D5DB]'}`}>
+              ★
+            </span>
+          ))}
+        </div>
+        <span className="text-xs font-bold text-[#92400E]">{averageRating.toFixed(1)}</span>
+        <span className="text-xs text-[#78350F]">({totalReviews})</span>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#7C7373]">
+      {/* Bio snippet */}
+      {bio && (
+        <p className="text-xs text-[#7C7373] leading-relaxed line-clamp-2">
+          {bio}
+        </p>
+      )}
+
+      {/* Location & Remote */}
+      <div className="flex flex-wrap items-center gap-2">
         {city && (
-          <span className="rounded-full bg-[#F3F4F6] px-2 py-0.5">{city}</span>
+          <span className="flex items-center gap-1 rounded-lg bg-[#F3F4F6] px-2.5 py-1.5 text-[11px] font-medium text-[#374151]">
+            <span>📍</span> {city}
+          </span>
         )}
         {remoteAvailability !== 'NO_REMOTE' && (
-          <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] text-[#166534]">
-            Online available
+          <span className="flex items-center gap-1 rounded-lg bg-[#DCFCE7] px-2.5 py-1.5 text-[11px] font-semibold text-[#166534]">
+            <span>💻</span> Remote
           </span>
         )}
       </div>
 
-      <p className="mt-1 text-xs font-medium text-[#333333]">{priceDisplay}</p>
+      {/* Price */}
+      <div className="border-t border-[#E5E7EB] pt-4 mt-auto">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs text-[#7C7373]">Starting at</span>
+          <span className="text-base font-bold text-[#2563EB]">{priceDisplay}</span>
+        </div>
 
-      <div className="mt-1">
+        {/* CTA Button */}
         <Link href={`/pro/${professional.userId}`}>
-          <Button className="w-full justify-center py-2.5 text-xs">
-            View profile
+          <Button className="w-full justify-center py-3 text-sm font-semibold shadow-md hover:shadow-lg transition-all">
+            View Full Profile →
           </Button>
         </Link>
       </div>
