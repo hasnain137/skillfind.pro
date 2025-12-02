@@ -14,18 +14,11 @@ type RequestDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const STATUS_LABEL: Record<string, string> = {
-  OPEN: "Open",
-  IN_PROGRESS: "In Progress",
-  COMPLETED: "Completed",
-  CLOSED: "Closed",
-};
-
-const STATUS_VARIANT: Record<string, "primary" | "warning" | "success" | "gray"> = {
-  OPEN: "primary",
-  IN_PROGRESS: "warning",
-  COMPLETED: "success",
-  CLOSED: "gray",
+const STATUS_CONFIG = {
+  OPEN: { variant: "primary" as const, label: "Open", icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
+  IN_PROGRESS: { variant: "warning" as const, label: "In Progress", icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+  COMPLETED: { variant: "success" as const, label: "Completed", icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
+  CLOSED: { variant: "gray" as const, label: "Closed", icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
 };
 
 export default async function ClientRequestDetailPage({
@@ -91,18 +84,39 @@ export default async function ClientRequestDetailPage({
     return 'Not specified';
   };
 
+  const statusConfig = STATUS_CONFIG[request.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.OPEN;
+  const hasOffers = request.offers.length > 0;
+  
   return (
     <div className="space-y-6">
-      <SectionHeading
-        eyebrow="Request detail"
-        title={request.title}
-        description={`Request ID #${request.id.substring(0, 8)}`}
-        actions={
-          request.status === 'OPEN' ? (
+      {/* Enhanced Header */}
+      <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="lg">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">{statusConfig.icon}</span>
+              <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight text-[#333333] mb-2">
+              {request.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
+              <span className="flex items-center gap-1">📂 {request.category.nameEn}</span>
+              <span>•</span>
+              <span className="flex items-center gap-1">📅 Posted {new Date(request.createdAt).toLocaleDateString()}</span>
+              {request.city && (
+                <>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">📍 {request.city}</span>
+                </>
+              )}
+            </div>
+          </div>
+          {request.status === 'OPEN' && (
             <CloseRequestButton requestId={request.id} />
-          ) : undefined
-        }
-      />
+          )}
+        </div>
+      </Card>
 
       <Card padding="lg" className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
@@ -232,10 +246,13 @@ export default async function ClientRequestDetailPage({
   );
 }
 
-function InfoRow({ label, value }: { label: string; value: string }) {
+function InfoBox({ icon, label, value }: { icon: string; label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] px-4 py-3">
-      <p className="text-[11px] text-[#7C7373]">{label}</p>
+    <div className="rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] p-3">
+      <div className="flex items-center gap-2 mb-1">
+        <span className="text-base">{icon}</span>
+        <p className="text-xs font-medium text-[#7C7373]">{label}</p>
+      </div>
       <p className="text-sm font-semibold text-[#333333]">{value}</p>
     </div>
   );

@@ -72,6 +72,13 @@ export default async function ProRequestsPage() {
     },
   });
 
+  const newRequests = requests.filter(r => {
+    const daysSincePosted = Math.floor((Date.now() - r.createdAt.getTime()) / (1000 * 60 * 60 * 24));
+    return daysSincePosted === 0;
+  });
+
+  const urgentRequests = requests.filter(r => r.urgency === 'URGENT' || r.urgency === 'ASAP');
+
   return (
     <div className="space-y-6">
       <SectionHeading
@@ -80,80 +87,149 @@ export default async function ProRequestsPage() {
         description="These requests match your services. Respond quickly to increase your chances."
       />
 
+      {/* Stats Overview */}
+      {requests.length > 0 && (
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+            <p className="text-2xl font-bold text-blue-600">{requests.length}</p>
+            <p className="text-xs text-blue-700 font-medium">Total Matches</p>
+          </Card>
+          <Card padding="lg" className="text-center bg-gradient-to-br from-red-50 to-red-100 border-red-200">
+            <p className="text-2xl font-bold text-red-600">{newRequests.length}</p>
+            <p className="text-xs text-red-700 font-medium">New Today</p>
+          </Card>
+          <Card padding="lg" className="text-center bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+            <p className="text-2xl font-bold text-orange-600">{urgentRequests.length}</p>
+            <p className="text-xs text-orange-700 font-medium">Urgent</p>
+          </Card>
+          <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+            <p className="text-2xl font-bold text-green-600">{professional.services.length}</p>
+            <p className="text-xs text-green-700 font-medium">Your Services</p>
+          </Card>
+        </div>
+      )}
+
       {requests.length === 0 ? (
         <Card variant="dashed" padding="lg" className="text-center py-12">
-          <p className="text-sm text-[#7C7373] mb-2">
-            No matching requests found right now.
-          </p>
-          <p className="text-xs text-[#7C7373]">
+          <div className="text-5xl mb-4">🔍</div>
+          <h3 className="text-lg font-semibold text-[#333333] mb-2">No matching requests</h3>
+          <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">
             Try adding more services to your profile to see more opportunities.
           </p>
-          <div className="mt-4">
-            <Link href="/pro/profile">
-              <span className="text-sm font-semibold text-[#2563EB] hover:underline">
-                Update Services
-              </span>
-            </Link>
-          </div>
+          <Link href="/pro/profile">
+            <span className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2563EB] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg">
+              <span>⚙️</span> Update Services
+            </span>
+          </Link>
         </Card>
       ) : (
-        <section className="space-y-3">
-          {requests.map((request) => (
+        <section className="space-y-4">
+          {requests.map((request) => {
+            const isNew = (Date.now() - new Date(request.createdAt).getTime()) < 24 * 60 * 60 * 1000;
+            const isUrgent = request.urgency === 'URGENT' || request.urgency === 'ASAP';
+            const hasMultipleOffers = request._count.offers >= 3;
+            
+            return (
             <Card
               key={request.id}
-              variant="muted"
+              className="group relative overflow-hidden hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer"
               padding="lg"
-              className="space-y-3 transition-colors hover:border-[#2563EB]/30"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-[#333333]">
-                    {request.title}
-                  </h3>
-                  <p className="text-xs text-[#7C7373] mt-1">
-                    {request.category.nameEn} · {request.city || 'Location not specified'}
-                  </p>
+              {/* Badges */}
+              {isNew && (
+                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                  🔥 NEW
                 </div>
-                {request._count.offers > 0 && (
-                  <Badge variant="neutral">
-                    {request._count.offers} offer{request._count.offers !== 1 ? 's' : ''}
-                  </Badge>
+              )}
+              {isUrgent && !isNew && (
+                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                  ⚡ URGENT
+                </div>
+              )}
+
+              <div className="space-y-3">
+                {/* Header */}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors">
+                      {request.title}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
+                      <span className="flex items-center gap-1">
+                        📂 {request.category.nameEn}
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1">
+                        📅 Posted {new Date(request.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                  {hasMultipleOffers && (
+                    <Badge variant="neutral">
+                      {request._count.offers} offers
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Description */}
+                {request.description && (
+                  <p className="text-sm text-[#4B5563] line-clamp-2 leading-relaxed">
+                    {request.description}
+                  </p>
                 )}
-              </div>
 
-              <p className="text-sm text-[#4B5563] line-clamp-2">
-                {request.description}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 text-[11px] text-[#7C7373]">
-                <span className="flex items-center gap-1">
-                  🕒 Posted {new Date(request.createdAt).toLocaleDateString()}
-                </span>
-                <span className="flex items-center gap-1">
-                  💰 {formatBudget(request)}
-                </span>
-                {request.preferredStartDate && (
-                  <span className="flex items-center gap-1">
-                    📅 {new Date(request.preferredStartDate).toLocaleDateString()}
+                {/* Details */}
+                <div className="flex flex-wrap items-center gap-3 text-xs">
+                  <span className="flex items-center gap-1 rounded-lg bg-[#EEF2FF] px-2.5 py-1 font-semibold text-[#2563EB]">
+                    <span>💰</span> {formatBudget(request)}
                   </span>
-                )}
-                {request.urgency && (
-                  <span className="flex items-center gap-1">
-                    ⏱️ {request.urgency}
-                  </span>
-                )}
-              </div>
+                  
+                  {request.city && (
+                    <span className="flex items-center gap-1 text-[#7C7373]">
+                      <span>📍</span> {request.city}
+                    </span>
+                  )}
 
-              <div className="pt-2">
-                <Link
-                  href={`/pro/requests/${request.id}/offer`}
-                  className="inline-flex w-full items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#1D4FD8] sm:w-auto"
-                >
-                  View details & send offer
-                </Link>
+                  {request.remotePreference !== 'NO_REMOTE' && (
+                    <span className="flex items-center gap-1 rounded-lg bg-[#DCFCE7] px-2.5 py-1 font-semibold text-[#166534]">
+                      <span>💻</span> Remote
+                    </span>
+                  )}
+
+                  {request.preferredStartDate && (
+                    <span className="flex items-center gap-1 text-[#7C7373]">
+                      <span>📅</span> Start: {new Date(request.preferredStartDate).toLocaleDateString()}
+                    </span>
+                  )}
+
+                  {request.urgency && (
+                    <span className="flex items-center gap-1 rounded-lg bg-[#FEF3C7] px-2.5 py-1 font-semibold text-[#92400E]">
+                      <span>⏱️</span> {request.urgency}
+                    </span>
+                  )}
+                </div>
+
+                {/* Client Info */}
+                <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white text-xs font-bold">
+                      {request.client.user.firstName[0]}
+                    </div>
+                    <span className="text-xs text-[#7C7373]">
+                      Client: {request.client.user.firstName}
+                    </span>
+                  </div>
+                  <Link
+                    href={`/pro/requests/${request.id}/offer`}
+                    className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
+                  >
+                    Send Offer →
+                  </Link>
+                </div>
               </div>
             </Card>
-          ))}
+          );
+          })}
         </section>
       )}
     </div>
@@ -162,10 +238,10 @@ export default async function ProRequestsPage() {
 
 function formatBudget(request: any) {
   if (request.budgetMin && request.budgetMax) {
-    return `€${request.budgetMin} - €${request.budgetMax}`;
+    return `€${request.budgetMin}-€${request.budgetMax}`;
   }
   if (request.budgetMin) return `From €${request.budgetMin}`;
   if (request.budgetMax) return `Up to €${request.budgetMax}`;
-  return 'Budget not specified';
+  return 'Budget TBD';
 }
 

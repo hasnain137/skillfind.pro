@@ -63,6 +63,10 @@ export default async function ProJobsPage() {
   const activeJobs = jobs.filter(j => j.status === 'ACCEPTED' || j.status === 'IN_PROGRESS');
   const completedJobs = jobs.filter(j => j.status === 'COMPLETED');
 
+  const totalEarnings = jobs.reduce((sum, j) => sum + (j.agreedPrice || 0), 0);
+  const pendingJobs = jobs.filter(j => j.status === 'ACCEPTED');
+  const inProgressJobs = jobs.filter(j => j.status === 'IN_PROGRESS');
+
   return (
     <div className="space-y-6">
       <SectionHeading
@@ -71,80 +75,125 @@ export default async function ProJobsPage() {
         description="Track your hired jobs, start work, and mark them complete when finished."
       />
 
-      {/* Stats */}
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Card padding="lg" className="text-center">
-          <p className="text-2xl font-bold text-[#333333]">{activeJobs.length}</p>
-          <p className="text-xs text-[#7C7373]">Active Jobs</p>
+      {/* Enhanced Stats */}
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Card padding="lg" className="text-center bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+          <p className="text-2xl font-bold text-yellow-600">{pendingJobs.length}</p>
+          <p className="text-xs text-yellow-700 font-medium">Ready to Start</p>
         </Card>
-        <Card padding="lg" className="text-center">
-          <p className="text-2xl font-bold text-[#333333]">{completedJobs.length}</p>
-          <p className="text-xs text-[#7C7373]">Completed</p>
+        <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+          <p className="text-2xl font-bold text-blue-600">{inProgressJobs.length}</p>
+          <p className="text-xs text-blue-700 font-medium">In Progress</p>
         </Card>
-        <Card padding="lg" className="text-center">
-          <p className="text-2xl font-bold text-[#333333]">
-            €{jobs.reduce((sum, j) => sum + (j.agreedPrice || 0), 0).toFixed(2)}
-          </p>
-          <p className="text-xs text-[#7C7373]">Total Earnings</p>
+        <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+          <p className="text-2xl font-bold text-green-600">{completedJobs.length}</p>
+          <p className="text-xs text-green-700 font-medium">Completed</p>
+        </Card>
+        <Card padding="lg" className="text-center bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+          <p className="text-2xl font-bold text-purple-600">€{totalEarnings.toFixed(0)}</p>
+          <p className="text-xs text-purple-700 font-medium">Total Earned</p>
         </Card>
       </div>
 
       {/* Active Jobs */}
       {activeJobs.length > 0 && (
-        <section className="space-y-3">
-          <h2 className="text-sm font-semibold text-[#333333]">Active Jobs</h2>
-          {activeJobs.map((job) => (
+        <section className="space-y-4">
+          <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
+            <span>⚡</span> Active Jobs ({activeJobs.length})
+          </h2>
+          {activeJobs.map((job) => {
+            const statusConfig = STATUS_VARIANT[job.status];
+            const isReadyToStart = job.status === 'ACCEPTED';
+            
+            return (
             <Link key={job.id} href={`/pro/jobs/${job.id}`}>
-              <Card padding="lg" className="hover:border-[#2563EB] transition-colors cursor-pointer">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-[#333333] mb-1">
-                      {job.request.title}
-                    </h3>
-                    <p className="text-xs text-[#7C7373]">
-                      {job.request.category.nameEn} · Client: {job.request.client.user.firstName}
-                    </p>
+              <Card className="group relative hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
+                {isReadyToStart && (
+                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                    ✅ Ready
                   </div>
-                  <Badge variant={STATUS_VARIANT[job.status]}>
-                    {STATUS_LABEL[job.status]}
-                  </Badge>
-                </div>
+                )}
+                
+                <div className="space-y-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors truncate">
+                        {job.request.title}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
+                        <span className="flex items-center gap-1">
+                          📂 {job.request.category.nameEn}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          👤 {job.request.client.user.firstName}
+                        </span>
+                      </div>
+                    </div>
+                    <Badge variant={statusConfig}>
+                      {STATUS_LABEL[job.status]}
+                    </Badge>
+                  </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
-                  <div className="flex items-center gap-4 text-xs text-[#7C7373]">
-                    <span>💰 €{job.agreedPrice?.toFixed(2) || '0.00'}</span>
-                    <span>📅 {new Date(job.createdAt).toLocaleDateString()}</span>
+                  <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
+                    <div className="flex items-center gap-4 text-xs">
+                      <span className="flex items-center gap-1 font-semibold text-green-600">
+                        💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
+                      </span>
+                      <span className="flex items-center gap-1 text-[#7C7373]">
+                        📅 {new Date(job.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
+                      View details →
+                    </span>
                   </div>
-                  <span className="text-xs font-semibold text-[#2563EB] hover:underline">
-                    View details →
-                  </span>
                 </div>
               </Card>
             </Link>
-          ))}
+          );
+          })}
         </section>
       )}
 
       {/* Completed Jobs */}
       {completedJobs.length > 0 && (
-        <section className="space-y-3">
-          <h2 className="text-sm font-semibold text-[#333333]">Completed Jobs</h2>
+        <section className="space-y-4">
+          <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
+            <span>🟢</span> Completed Jobs ({completedJobs.length})
+          </h2>
           {completedJobs.map((job) => (
             <Link key={job.id} href={`/pro/jobs/${job.id}`}>
-              <Card padding="lg" variant="muted" className="hover:border-[#2563EB] transition-colors cursor-pointer">
+              <Card className="group hover:border-green-500 hover:shadow-md transition-all duration-200 cursor-pointer bg-gradient-to-br from-green-50 to-white border-green-200" padding="lg">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-sm font-semibold text-[#333333]">
+                      <h3 className="text-base font-bold text-[#333333] group-hover:text-green-600 transition-colors truncate">
                         {job.request.title}
                       </h3>
                       {job.review && (
-                        <span className="text-xs text-green-600">✓ Reviewed</span>
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
+                          ✓ Reviewed
+                        </span>
                       )}
                     </div>
-                    <p className="text-xs text-[#7C7373]">
-                      Completed {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'} · €{job.agreedPrice?.toFixed(2) || '0.00'}
-                    </p>
+                    <div className="flex items-center gap-3 text-xs text-[#7C7373]">
+                      <span className="flex items-center gap-1">
+                        ✅ {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'}
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1 font-semibold text-green-600">
+                        💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
+                      </span>
+                      {job.review && (
+                        <>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            ⭐ {job.review.rating}/5
+                          </span>
+                        </>
+                      )}
+                    </div>
                   </div>
                   <Badge variant="success">Completed</Badge>
                 </div>
@@ -157,14 +206,15 @@ export default async function ProJobsPage() {
       {/* Empty State */}
       {jobs.length === 0 && (
         <Card variant="dashed" padding="lg" className="text-center py-12">
-          <p className="text-sm text-[#7C7373] mb-2">
-            No jobs yet. Start sending offers to get hired!
-          </p>
-          <p className="text-xs text-[#7C7373] mb-4">
-            Browse matching requests and send competitive offers to win jobs.
+          <div className="text-5xl mb-4">💼</div>
+          <h3 className="text-lg font-semibold text-[#333333] mb-2">No jobs yet</h3>
+          <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">
+            Browse matching requests and send competitive offers to win your first job!
           </p>
           <Link href="/pro/requests">
-            <Button>Browse Requests</Button>
+            <Button className="shadow-md hover:shadow-lg">
+              Browse Requests →
+            </Button>
           </Link>
         </Card>
       )}

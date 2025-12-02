@@ -5,7 +5,8 @@ import { Container } from '@/components/ui/Container';
 import { Navbar } from '@/components/layout/Navbar';
 import { SkeletonProfessionalCard } from '@/components/ui/Skeleton';
 
-export const dynamic = 'force-dynamic';
+// No need for force-dynamic - the page wrapper is static,
+// only SearchResults is dynamic (client component with useSearchParams)
 
 export default function SearchPage() {
   return (
