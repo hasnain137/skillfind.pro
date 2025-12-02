@@ -256,9 +256,15 @@ export async function GET(request: NextRequest) {
         offerAcceptanceRate: offerAcceptanceRate.toFixed(1) + '%',
         jobCompletionRate: jobCompletionRate.toFixed(1) + '%',
       },
-      topProfessionals: topProfessionals.map((pro) => ({
+      topProfessionals: topProfessionals.map((pro: { 
+        id: string; 
+        averageRating: number; 
+        totalReviews: number; 
+        user: { firstName: string | null; lastName: string | null; email: string }; 
+        _count: { jobs: number } 
+      }) => ({
         id: pro.id,
-        name: `${pro.user.firstName} ${pro.user.lastName}`,
+        name: `${pro.user.firstName || 'Unknown'} ${pro.user.lastName || 'User'}`,
         email: pro.user.email,
         averageRating: pro.averageRating,
         totalReviews: pro.totalReviews,
