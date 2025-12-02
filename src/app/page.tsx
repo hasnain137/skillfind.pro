@@ -12,8 +12,9 @@ import { Suspense } from "react";
 import { SkeletonProfessionalCard } from "@/components/ui/Skeleton";
 import { Container } from "@/components/ui/Container";
 
-// Force dynamic rendering since we use auth() in Navbar
-export const dynamic = 'force-dynamic';
+// Use ISR (Incremental Static Regeneration) for better performance
+// Revalidate every 60 seconds - balances freshness with performance
+export const revalidate = 60;
 
 // Server Component to fetch categories
 async function getCategories() {

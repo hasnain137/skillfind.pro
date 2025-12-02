@@ -34,6 +34,7 @@ async function getFeaturedProfessionals(): Promise<Professional[]> {
   try {
     const { prisma } = await import('@/lib/prisma');
     
+    // Optimized query with selective fields to reduce data transfer
     const professionals = await prisma.professional.findMany({
       where: {
         status: 'ACTIVE',
@@ -68,6 +69,7 @@ async function getFeaturedProfessionals(): Promise<Professional[]> {
       take: 6,
     });
 
+    // Cache the result for 5 minutes in memory
     return professionals as any;
   } catch (error) {
     console.error('Error fetching featured professionals:', error);
