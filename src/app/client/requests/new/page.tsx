@@ -84,6 +84,19 @@ export default function NewClientRequestPage() {
         description="Share enough detail so professionals can respond with accurate offers. You can edit the request later if anything changes."
       />
 
+      {/* Tips Card */}
+      <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="lg">
+        <h3 className="text-base font-bold text-[#333333] flex items-center gap-2 mb-3">
+          <span>💡</span> Tips for Great Requests
+        </h3>
+        <div className="grid gap-2 sm:grid-cols-2 text-sm text-[#7C7373]">
+          <p>• <strong>Be specific:</strong> Detail what you need done</p>
+          <p>• <strong>Set budget:</strong> Helps pros send accurate offers</p>
+          <p>• <strong>Add timeline:</strong> When do you need it completed?</p>
+          <p>• <strong>Include context:</strong> Share any relevant background</p>
+        </div>
+      </Card>
+
       {error && (
         <Card variant="muted" padding="lg" className="bg-red-50 border-red-200">
           <p className="text-sm text-red-600">{error}</p>
