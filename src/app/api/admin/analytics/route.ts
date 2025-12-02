@@ -178,7 +178,7 @@ export async function GET(request: NextRequest) {
     });
 
     const topCategoriesWithNames = await Promise.all(
-      topCategories.map(async (cat) => {
+      topCategories.map(async (cat: { categoryId: string; _count: { id: number } }) => {
         const category = await prisma.category.findUnique({
           where: { id: cat.categoryId },
         });
