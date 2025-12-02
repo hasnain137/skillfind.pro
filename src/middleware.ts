@@ -67,9 +67,11 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.redirect(signInUrl);
   }
 
-  // Get user role from session claims (you'll need to set this in Clerk)
+  // Get user role from session claims
+  // Clerk stores it in sessionClaims.metadata (not publicMetadata)
   const metadata = sessionClaims?.metadata as { role?: string } | undefined;
-  const userRole = metadata?.role;
+  const publicMetadata = sessionClaims?.publicMetadata as { role?: string } | undefined;
+  const userRole = metadata?.role || publicMetadata?.role;
 
   // Check role-based access
   if (isClientRoute(req) && userRole !== 'CLIENT') {
