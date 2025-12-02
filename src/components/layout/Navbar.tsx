@@ -1,9 +1,12 @@
 // src/components/layout/Navbar.tsx
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
+import { UserMenu } from "./UserMenu";
+import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
-export function Navbar() {
+export async function Navbar() {
+  const { userId } = await auth();
+
   return (
     <header className="sticky top-0 z-30 border-b border-[#E5E7EB] bg-white/90 backdrop-blur">
       <Container className="flex h-16 items-center justify-between gap-4">
@@ -45,32 +48,28 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* Right: auth buttons */}
+        {/* Right: auth section */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/client"
-            className="inline-flex items-center justify-center rounded-full border border-[#2563EB]/30 bg-white px-4 py-2 text-sm font-semibold text-[#2563EB] transition hover:border-[#2563EB]/60 hover:bg-[#EFF6FF]"
-          >
-            Client area
-          </Link>
-          <Link
-            href="/pro"
-            className="hidden items-center justify-center rounded-full border border-[#2563EB]/30 bg-white px-4 py-2 text-sm font-semibold text-[#2563EB] transition hover:border-[#2563EB]/60 hover:bg-[#EFF6FF] lg:inline-flex"
-          >
-            Professional area
-          </Link>
-          <Link
-            href="/login"
-            className="hidden items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-[#333333] transition hover:bg-[#F3F4F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#E5E5E5] border border-transparent hover:border-[#E5E7EB] md:inline-flex"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/signup"
-            className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
-          >
-            Sign up
-          </Link>
+          {userId ? (
+            // Show user menu when authenticated
+            <UserMenu />
+          ) : (
+            // Show login/signup buttons when not authenticated
+            <>
+              <Link
+                href="/login"
+                className="hidden items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-[#333333] transition hover:bg-[#F3F4F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#E5E5E5] border border-transparent hover:border-[#E5E7EB] md:inline-flex"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </Container>
     </header>

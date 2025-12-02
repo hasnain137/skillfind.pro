@@ -1,9 +1,81 @@
 // src/app/client/requests/new/page.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export default function NewClientRequestPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [categories, setCategories] = useState<Array<{ id: string; nameEn: string }>>([]);
+  
+  const [formData, setFormData] = useState({
+    categoryId: '',
+    title: '',
+    description: '',
+    location: '',
+    preferredFormat: 'ONLINE_OR_OFFLINE',
+    timing: '',
+    budgetMin: '',
+    budgetMax: '',
+  });
+
+  // Fetch categories on mount
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch('/api/categories');
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data.data || []);
+        }
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      }
+    }
+    fetchCategories();
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          categoryId: formData.categoryId,
+          title: formData.title,
+          description: formData.description,
+          location: formData.location,
+          preferredFormat: formData.preferredFormat,
+          timing: formData.timing,
+          budgetMin: formData.budgetMin ? parseFloat(formData.budgetMin) : undefined,
+          budgetMax: formData.budgetMax ? parseFloat(formData.budgetMax) : undefined,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Success! Redirect to requests list
+        router.push('/client/requests');
+      } else {
+        setError(data.message || 'Failed to create request');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+      console.error('Error creating request:', err);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <div className="space-y-5">
       <SectionHeading
@@ -12,7 +84,13 @@ export default function NewClientRequestPage() {
         description="Share enough detail so professionals can respond with accurate offers. You can edit the request later if anything changes."
       />
 
-      <form className="space-y-4">
+      {error && (
+        <Card variant="muted" padding="lg" className="bg-red-50 border-red-200">
+          <p className="text-sm text-red-600">{error}</p>
+        </Card>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Card className="space-y-4" padding="lg">
           <SectionHeading
             variant="section"
@@ -22,25 +100,32 @@ export default function NewClientRequestPage() {
           <div className="grid gap-3 md:grid-cols-2">
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                Category
+                Category *
               </label>
-              <select className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15">
+              <select 
+                required
+                value={formData.categoryId}
+                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+              >
                 <option value="">Select a category</option>
-                <option value="tutoring">Tutoring & Education</option>
-                <option value="tech">Software & Tech</option>
-                <option value="design">Design & Creative</option>
-                <option value="wellness">Health & Wellness</option>
-                <option value="home">Home & Everyday</option>
-                <option value="business">Business & Career</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nameEn}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                What exactly do you need?
+                What exactly do you need? *
               </label>
               <input
                 type="text"
+                required
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
                 placeholder="e.g. Math tutor for 10th grade algebra"
               />
@@ -56,10 +141,13 @@ export default function NewClientRequestPage() {
           />
           <div>
             <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              Describe your task
+              Describe your task *
             </label>
             <textarea
               rows={4}
+              required
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
               placeholder="Add any details that will help professionals understand what you need, your expectations, and any important context."
             />
@@ -79,10 +167,13 @@ export default function NewClientRequestPage() {
           <div className="grid gap-3 md:grid-cols-2">
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                Location (city)
+                Location (city) *
               </label>
               <input
                 type="text"
+                required
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
                 placeholder="e.g. Berlin, Vienna, online only"
               />
@@ -91,12 +182,16 @@ export default function NewClientRequestPage() {
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
                 Preferred format
               </label>
-              <select className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15">
-                <option value="online_or_offline">
+              <select 
+                value={formData.preferredFormat}
+                onChange={(e) => setFormData({ ...formData, preferredFormat: e.target.value })}
+                className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+              >
+                <option value="ONLINE_OR_OFFLINE">
                   Online or in person is fine
                 </option>
-                <option value="online_only">Online only</option>
-                <option value="in_person_only">In person only</option>
+                <option value="ONLINE_ONLY">Online only</option>
+                <option value="IN_PERSON_ONLY">In person only</option>
               </select>
             </div>
           </div>
@@ -114,6 +209,8 @@ export default function NewClientRequestPage() {
             </label>
             <input
               type="text"
+              value={formData.timing}
+              onChange={(e) => setFormData({ ...formData, timing: e.target.value })}
               className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
               placeholder="e.g. Evenings, weekends, this week, next month"
             />
@@ -128,14 +225,20 @@ export default function NewClientRequestPage() {
           />
           <div className="grid gap-3 md:grid-cols-2">
             <input
-              type="text"
+              type="number"
+              step="0.01"
+              value={formData.budgetMin}
+              onChange={(e) => setFormData({ ...formData, budgetMin: e.target.value })}
               className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-              placeholder="e.g. 30 EUR/hour"
+              placeholder="Min budget (EUR)"
             />
             <input
-              type="text"
+              type="number"
+              step="0.01"
+              value={formData.budgetMax}
+              onChange={(e) => setFormData({ ...formData, budgetMax: e.target.value })}
               className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-              placeholder="or total budget e.g. up to 300 EUR"
+              placeholder="Max budget (EUR)"
             />
           </div>
           <p className="text-[11px] text-[#7C7373]">
@@ -144,8 +247,8 @@ export default function NewClientRequestPage() {
         </Card>
 
         <Card variant="dashed" className="text-center" padding="lg">
-          <Button className="w-full sm:w-auto" type="submit">
-            Publish request
+          <Button className="w-full sm:w-auto" type="submit" disabled={loading}>
+            {loading ? 'Publishing...' : 'Publish request'}
           </Button>
           <p className="mt-1 text-[11px] text-[#7C7373]">
             Once published, matching professionals will start receiving your

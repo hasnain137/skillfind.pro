@@ -107,6 +107,7 @@ model Professional {
   
   // Business info
   businessName      String?
+  title             String?
   bio               String?  @db.Text
   yearsOfExperience Int?
   
@@ -138,7 +139,6 @@ model Professional {
   jobs              Job[]
   services          ProfessionalService[]
   documents         VerificationDocument[]
-  reviews           Review[]     @relation("ReceivedReviews")
   
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -285,6 +285,7 @@ model Category {
   slug            String        @unique
   nameEn          String
   nameFr          String?
+  description     String?       @db.Text
   icon            String?
   sortOrder       Int           @default(0)
   isActive        Boolean       @default(true)
@@ -308,6 +309,7 @@ model Subcategory {
   slug            String        @unique
   nameEn          String
   nameFr          String?
+  description     String?       @db.Text
   sortOrder       Int           @default(0)
   isActive        Boolean       @default(true)
   
@@ -562,6 +564,7 @@ model Job {
   
   // Review
   review            Review?
+  disputes          Dispute[]
   
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
@@ -580,45 +583,103 @@ enum JobStatus {
   DISPUTED
 }
 
+// ============================================
+// DISPUTES
+// ============================================
+
+model Dispute {
+  id           String         @id @default(cuid())
+  jobId        String
+  job          Job            @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  reason       DisputeReason
+  description  String         @db.Text
+  evidenceUrls String[]
+
+  status       DisputeStatus  @default(OPEN)
+  raisedBy     DisputeRaisedBy
+  resolution   String?        @db.Text
+  resolvedAt   DateTime?
+
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([jobId])
+  @@index([status])
+  @@map("disputes")
+}
+
+enum DisputeReason {
+  WORK_NOT_COMPLETED
+  WORK_NOT_SATISFACTORY
+  PAYMENT_ISSUE
+  COMMUNICATION_BREAKDOWN
+  OTHER
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+}
+
+enum DisputeRaisedBy {
+  CLIENT
+  PROFESSIONAL
+}
+
 model Review {
-  id                String       @id @default(cuid())
-  jobId             String       @unique
-  job               Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  id                  String              @id @default(cuid())
+  jobId               String              @unique
+  job                 Job                 @relation(fields: [jobId], references: [id], onDelete: Cascade)
   
-  clientId          String
-  client            Client       @relation(fields: [clientId], references: [id])
-  
-  professionalId    String
-  professional      Professional @relation("ReceivedReviews", fields: [professionalId], references: [id])
+  clientId            String
+  client              Client              @relation(fields: [clientId], references: [id])
   
   // Review content
-  rating            Int
-  comment           String?      @db.Text
-  tags              String[]
-  wouldRecommend    Boolean      @default(true)
+  rating              Int
+  title               String?
+  content             String              @db.Text
+  tags                String[]
+  wouldRecommend      Boolean             @default(true)
   
-  // Moderation (Google Perspective API)
-  isModerated       Boolean      @default(false)
-  toxicityScore     Float?
-  isFlagged         Boolean      @default(false)
-  moderatedBy       String?
-  moderationNote    String?
+  // Moderation
+  moderationStatus    ModerationStatus    @default(PENDING)
+  moderatedBy         String?
+  moderatedAt         DateTime?
+  moderationNote      String?             @db.Text
   
   // Professional response
-  proResponse       String?      @db.Text
-  proRespondedAt    DateTime?
+  professionalResponse ReviewResponse?
   
-  // Visibility
-  isPublished       Boolean      @default(true)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  
+  @@index([clientId])
+  @@index([rating])
+  @@index([moderationStatus])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+model ReviewResponse {
+  id                String       @id @default(cuid())
+  reviewId          String       @unique
+  review            Review       @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  
+  response          String       @db.Text
   
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
   
-  @@index([clientId])
-  @@index([professionalId])
-  @@index([rating])
-  @@index([isFlagged])
-  @@map("reviews")
+  @@index([reviewId])
+  @@map("review_responses")
+}
+
+enum ModerationStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 // ============================================

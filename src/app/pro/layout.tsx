@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ClientUserButton } from "@/components/layout/ClientUserButton";
 
 export const metadata: Metadata = {
   title: "Professional Area | SkillFind",
@@ -11,7 +12,10 @@ export const metadata: Metadata = {
 const NAV_LINKS = [
   { label: "Dashboard", href: "/pro" },
   { label: "Matching requests", href: "/pro/requests" },
+  { label: "My offers", href: "/pro/offers" },
+  { label: "My jobs", href: "/pro/jobs" },
   { label: "My profile", href: "/pro/profile" },
+  { label: "Wallet", href: "/pro/wallet" },
 ];
 
 export default function ProLayout({
@@ -23,13 +27,16 @@ export default function ProLayout({
     <div className="min-h-screen bg-[#F3F4F6] py-10">
       <Container className="flex flex-col gap-6 lg:flex-row">
         <aside className="rounded-2xl border border-[#DDE7FF] bg-gradient-to-b from-white via-[#F7FAFF] to-[#EEF2FF] p-5 shadow-sm lg:w-64">
-          <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
-              Professional area
-            </p>
-            <h2 className="text-lg font-semibold text-[#333333]">
-              Manage your work
-            </h2>
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
+                Professional area
+              </p>
+              <h2 className="text-lg font-semibold text-[#333333]">
+                Manage your work
+              </h2>
+            </div>
+            <ClientUserButton />
           </div>
 
           <nav className="mt-6 flex flex-col gap-2 text-sm font-semibold text-[#7C7373]">

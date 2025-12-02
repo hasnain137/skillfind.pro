@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ClientUserButton } from "@/components/layout/ClientUserButton";
 
 export const metadata: Metadata = {
   title: "Client Dashboard | SkillFind",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 const NAV_LINKS = [
   { label: "Dashboard", href: "/client" },
   { label: "My requests", href: "/client/requests" },
+  { label: "My jobs", href: "/client/jobs" },
   { label: "Create request", href: "/client/requests/new" },
 ];
 
@@ -22,13 +24,16 @@ export default function ClientLayout({
     <div className="min-h-screen bg-[#F3F4F6] py-10">
       <Container className="flex flex-col gap-6 lg:flex-row">
         <aside className="rounded-2xl border border-[#DDE7FF] bg-gradient-to-b from-white via-[#F7FAFF] to-[#EEF2FF] p-5 shadow-sm lg:w-64">
-          <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
-              Client area
-            </p>
-            <h2 className="text-lg font-semibold text-[#333333]">
-              Plan your projects
-            </h2>
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
+                Client area
+              </p>
+              <h2 className="text-lg font-semibold text-[#333333]">
+                Plan your projects
+              </h2>
+            </div>
+            <ClientUserButton />
           </div>
 
           <nav className="mt-6 flex flex-col gap-2 text-sm font-semibold text-[#7C7373]">

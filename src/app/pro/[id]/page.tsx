@@ -3,15 +3,17 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 type ProProfilePageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default function ProPublicProfilePage({ params }: ProProfilePageProps) {
+export default async function ProPublicProfilePage({ params }: ProProfilePageProps) {
+  const resolvedParams = await params;
+
   return (
     <div className="space-y-6">
       <SectionHeading
         eyebrow="Professional profile"
-        title={`Profile #${params.id}`}
+        title={`Profile #${resolvedParams.id}`}
         description="Public-facing profile details will be rendered here once connected to real data."
       />
 
@@ -29,4 +31,3 @@ export default function ProPublicProfilePage({ params }: ProProfilePageProps) {
     </div>
   );
 }
-

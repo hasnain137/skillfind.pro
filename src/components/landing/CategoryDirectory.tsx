@@ -1,4 +1,6 @@
 // src/components/landing/CategoryDirectory.tsx
+'use client';
+
 import { Container } from "@/components/ui/Container";
 
 type CategoryGroup = {

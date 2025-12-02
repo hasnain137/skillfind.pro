@@ -1,17 +1,67 @@
 // src/app/pro/requests/[id]/offer/page.tsx
+import { auth } from "@clerk/nextjs/server";
+import { notFound, redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Button } from "@/components/ui/Button";
+import OfferForm from "./OfferForm";
 
-const MOCK_REQUEST = {
-  title: "Algebra tutor for 11th grade",
-  category: "Tutoring & Education",
-  location: "Vienna · Online",
-  description:
-    "Student needs structured help twice a week before the semester exams. Prefers evening sessions and actionable homework.",
+type OfferPageProps = {
+  params: Promise<{ id: string }>;
 };
 
-export default function ProOfferPage() {
+export default async function ProOfferPage({ params }: OfferPageProps) {
+  const resolvedParams = await params;
+  const { userId } = await auth();
+
+  if (!userId) {
+    redirect('/login');
+  }
+
+  // Verify professional role
+  const professional = await prisma.professional.findUnique({
+    where: { userId },
+  });
+
+  if (!professional) {
+    redirect('/complete-profile');
+  }
+
+  // Fetch request details
+  const request = await prisma.request.findUnique({
+    where: { id: resolvedParams.id },
+    include: {
+      category: true,
+      client: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  });
+
+  if (!request) {
+    notFound();
+  }
+
+  // Check if request is open
+  if (request.status !== 'OPEN') {
+    return (
+      <div className="space-y-6">
+        <SectionHeading
+          eyebrow="Send offer"
+          title="Request Closed"
+          description="This request is no longer accepting offers."
+        />
+        <Card padding="lg" variant="muted">
+          <p className="text-sm text-[#7C7373]">
+            The client has closed this request or accepted another offer.
+          </p>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <SectionHeading
@@ -21,78 +71,34 @@ export default function ProOfferPage() {
       />
 
       <Card padding="lg" className="space-y-3" variant="muted">
-        <p className="text-sm font-semibold text-[#333333]">
-          {MOCK_REQUEST.title}
-        </p>
-        <p className="text-xs text-[#7C7373]">
-          {MOCK_REQUEST.category} · {MOCK_REQUEST.location}
-        </p>
-        <p className="text-sm text-[#333333]">{MOCK_REQUEST.description}</p>
+        <div className="flex justify-between items-start">
+          <div>
+            <p className="text-sm font-semibold text-[#333333]">
+              {request.title}
+            </p>
+            <p className="text-xs text-[#7C7373]">
+              {request.category.nameEn} · {request.city ? `${request.city}, ${request.country}` : request.locationType}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-xs font-medium text-[#333333]">
+              {request.budgetMin ? `€${request.budgetMin}` : ''}
+              {request.budgetMin && request.budgetMax ? ' - ' : ''}
+              {request.budgetMax ? `€${request.budgetMax}` : ''}
+              {!request.budgetMin && !request.budgetMax ? 'Budget not specified' : ''}
+            </p>
+          </div>
+        </div>
+        <p className="text-sm text-[#333333]">{request.description}</p>
+        <div className="flex gap-4 text-xs text-[#7C7373]">
+          {request.preferredStartDate && (
+            <p><strong>Start:</strong> {new Date(request.preferredStartDate).toLocaleDateString()}</p>
+          )}
+          <p><strong>Urgency:</strong> {request.urgency}</p>
+        </div>
       </Card>
 
-      <Card padding="lg" className="space-y-4">
-        <h2 className="text-sm font-semibold text-[#333333]">Offer details</h2>
-        <div className="grid gap-3 md:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              Proposed price
-            </label>
-            <input
-              type="text"
-              className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-              placeholder="e.g. €35/hour"
-            />
-          </div>
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              Pricing type
-            </label>
-            <select className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15">
-              <option value="hourly">Hourly</option>
-              <option value="fixed">Fixed price</option>
-              <option value="discussion">Needs discussion</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-            Message to client
-          </label>
-          <textarea
-            rows={5}
-            className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-            placeholder="Introduce yourself, explain how you can help, and mention any relevant experience."
-          />
-        </div>
-
-        <div className="grid gap-3 md:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              Earliest availability (optional)
-            </label>
-            <input
-              type="text"
-              className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-              placeholder="e.g. Next Monday evening"
-            />
-          </div>
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              Estimated duration or sessions (optional)
-            </label>
-            <input
-              type="text"
-              className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-              placeholder="e.g. 6 sessions over 3 weeks"
-            />
-          </div>
-        </div>
-
-        <Button type="button" className="w-full sm:w-auto">
-          Send offer
-        </Button>
-      </Card>
+      <OfferForm requestId={request.id} requestTitle={request.title} />
     </div>
   );
 }

@@ -7,7 +7,8 @@ type Category = {
   icon: string;
 };
 
-const POPULAR_CATEGORIES: Category[] = [
+// Default fallback categories for when database is unavailable
+const FALLBACK_CATEGORIES: Category[] = [
   {
     name: "Tutoring & Education",
     description: "Math, languages, exam prep, school support and more.",
@@ -40,9 +41,14 @@ const POPULAR_CATEGORIES: Category[] = [
   },
 ];
 
-function CategoryCard({ name, description, icon }: Category) {
+function CategoryCard({ name, description, icon, id }: Category & { id?: string }) {
+  const searchUrl = id ? `/search?category=${id}` : '/search';
+  
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
+    <a 
+      href={searchUrl}
+      className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+    >
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#2563EB]/10 text-xl">
           <span>{icon}</span>
@@ -50,18 +56,38 @@ function CategoryCard({ name, description, icon }: Category) {
         <h3 className="text-sm font-semibold text-[#333333]">{name}</h3>
       </div>
       <p className="text-xs leading-relaxed text-[#7C7373]">{description}</p>
-      <button
-        type="button"
-        className="mt-1 inline-flex w-fit items-center gap-1 text-xs font-semibold text-[#2563EB]"
-      >
+      <span className="mt-1 inline-flex w-fit items-center gap-1 text-xs font-semibold text-[#2563EB]">
         Explore
         <span aria-hidden>→</span>
-      </button>
-    </div>
+      </span>
+    </a>
   );
 }
 
-export function PopularCategories() {
+interface DatabaseCategory {
+  id: string;
+  nameEn: string;
+  nameFr: string | null;
+  description: string | null;
+  icon: string | null;
+  slug: string;
+}
+
+interface PopularCategoriesProps {
+  categories?: DatabaseCategory[];
+}
+
+// Map database categories to display format
+function mapDatabaseCategories(dbCategories: DatabaseCategory[]): (Category & { id: string })[] {
+  return dbCategories.map((cat) => ({
+    id: cat.id,
+    name: cat.nameEn, // Use English name as default
+    description: cat.description || "Explore this category",
+    icon: cat.icon || "🔧", // default icon
+  }));
+}
+
+export function PopularCategories({ categories = [] }: PopularCategoriesProps) {
   return (
     <section
       id="categories"
@@ -85,7 +111,10 @@ export function PopularCategories() {
 
         {/* Category grid */}
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {POPULAR_CATEGORIES.map((category) => (
+          {(categories.length > 0 
+            ? mapDatabaseCategories(categories).slice(0, 6)
+            : FALLBACK_CATEGORIES
+          ).map((category) => (
             <CategoryCard key={category.name} {...category} />
           ))}
         </div>
