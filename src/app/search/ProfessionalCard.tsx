@@ -107,7 +107,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
       <p className="text-xs font-medium text-[#333333]">{priceDisplay}</p>
 
       {/* Action */}
-      <Link href={`/professionals/${professional.userId}`}>
+      <Link href={`/professionals/${professional.id}`}>
         <Button className="w-full justify-center py-2.5 text-xs">
           View Profile
         </Button>

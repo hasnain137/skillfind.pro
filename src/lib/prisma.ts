@@ -8,9 +8,9 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 // Optimized connection pool for Vercel serverless
-const pool = new Pool({ 
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  max: 1, // Use single connection per serverless function
+  max: process.env.NODE_ENV === 'production' ? 1 : 10, // Use single connection per serverless function in prod, more in dev
   idleTimeoutMillis: 0, // Don't close connections
   connectionTimeoutMillis: 30000, // Increase timeout to 30s
   allowExitOnIdle: true, // Allow process to exit when idle

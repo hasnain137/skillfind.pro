@@ -130,6 +130,9 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
+  // Admin route protection is handled by layout.tsx and API auth checks
+  // This allows users to access admin immediately after DB role update without waiting for Clerk sync
+  /*
   if (isAdminRoute(req) && userRole !== 'ADMIN') {
     if (req.nextUrl.pathname.startsWith('/api/')) {
       return NextResponse.json(
@@ -143,6 +146,7 @@ export default clerkMiddleware(async (auth, req) => {
     }
     return NextResponse.redirect(new URL('/', req.url));
   }
+  */
 
   return NextResponse.next();
 }, {

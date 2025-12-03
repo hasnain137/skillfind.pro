@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import AcceptOfferButton from './AcceptOfferButton';
 import CloseRequestButton from './CloseRequestButton';
+import ViewOfferProfileButton from './ViewOfferProfileButton';
 
 type RequestDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -153,6 +154,30 @@ export default async function ClientRequestDetailPage({
               <h3 className="text-sm font-bold text-[#333333] flex items-center gap-2 mb-3">
                 <span>✅</span> Active Job
               </h3>
+
+              {/* Contact Information Card */}
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
+                <h4 className="text-sm font-bold text-green-800 mb-2">Contact Information</h4>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <p className="text-xs text-green-600 font-medium">Professional</p>
+                    <p className="text-sm font-bold text-[#333333]">
+                      {request.job.professional.user.firstName} {request.job.professional.user.lastName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-green-600 font-medium">Email</p>
+                    <p className="text-sm text-[#333333]">{request.job.professional.user.email}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-green-600 font-medium">Phone</p>
+                    <p className="text-sm text-[#333333]">
+                      {request.job.professional.user.phoneNumber || 'Not provided'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <Link href={`/client/jobs/${request.job.id}`}>
                 <Button variant="ghost" className="w-full sm:w-auto border border-[#E5E7EB]">
                   View Job Details →
@@ -289,14 +314,11 @@ export default async function ClientRequestDetailPage({
 
                   {/* Actions */}
                   <div className="flex flex-wrap gap-2 pt-2 border-t border-[#E5E7EB]">
-                    <Link href={`/professionals/${offer.professionalId}`}>
-                      <Button
-                        variant="ghost"
-                        className="border border-[#E5E7EB] px-4 py-2 text-xs hover:bg-gray-50"
-                      >
-                        👤 View Profile
-                      </Button>
-                    </Link>
+                    <ViewOfferProfileButton
+                      offerId={offer.id}
+                      professionalId={offer.professionalId}
+                      className="border border-[#E5E7EB] px-4 py-2 text-xs hover:bg-gray-50"
+                    />
                     {offer.status === 'PENDING' && request.status === 'OPEN' && (
                       <AcceptOfferButton
                         offerId={offer.id}

@@ -212,6 +212,17 @@ export async function POST(request: NextRequest) {
       throw new NotFoundError('Professional profile');
     }
 
+    // Check wallet balance (min €2.00 required to send offers)
+    // const wallet = await prisma.wallet.findUnique({
+    //   where: { professionalId: professional.id },
+    // });
+
+    // if (!wallet || wallet.balance < 200) {
+    //   throw new ForbiddenError(
+    //     'Insufficient balance. You need at least €2.00 in your wallet to send offers.'
+    //   );
+    // }
+
     // Note: Terms acceptance is handled during signup/profile completion
     // Professional profile wouldn't exist if terms weren't accepted
 
