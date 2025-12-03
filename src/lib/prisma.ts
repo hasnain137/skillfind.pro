@@ -10,10 +10,17 @@ const globalForPrisma = globalThis as unknown as {
 // Optimized connection pool for Vercel serverless
 const pool = new Pool({ 
   connectionString: process.env.DATABASE_URL,
-  max: 10, // Limit connections per serverless instance
-  idleTimeoutMillis: 30000, // Close idle connections after 30s
-  connectionTimeoutMillis: 10000, // Timeout if connection takes >10s
+  max: 1, // Use single connection per serverless function
+  idleTimeoutMillis: 0, // Don't close connections
+  connectionTimeoutMillis: 30000, // Increase timeout to 30s
+  allowExitOnIdle: true, // Allow process to exit when idle
 });
+
+// Log connection errors
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle Prisma client', err);
+});
+
 const adapter = new PrismaPg(pool);
 
 export const prisma =
