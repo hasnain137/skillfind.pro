@@ -6,8 +6,8 @@ import { paginationSchema } from './common';
 export const createRequestSchema = z.object({
   categoryId: z.string().min(1, 'Category is required'),
   subcategoryId: z.string().min(1, 'Subcategory is required'),
-  title: z.string().min(10, 'Title must be at least 10 characters').max(100, 'Title too long'),
-  description: z.string().min(20, 'Description must be at least 20 characters').max(2000, 'Description too long'),
+  title: z.string().min(3, 'Title must be at least 3 characters').max(100, 'Title too long'),
+  description: z.string().min(3, 'Description must be at least 3 characters').max(2000, 'Description too long'),
   budgetMin: z.number().int().min(0).optional(),
   budgetMax: z.number().int().min(0).optional(),
   locationType: z.enum(['ON_SITE', 'REMOTE']),

@@ -32,7 +32,7 @@ export const createClientProfileSchema = z.object({
 // Professional profile creation
 export const createProfessionalProfileSchema = z.object({
   title: z.string().min(5, 'Title too short').max(100, 'Title too long'),
-  bio: z.string().min(50, 'Bio must be at least 50 characters').max(2000, 'Bio too long'),
+  bio: z.string().min(10, 'Bio must be at least 10 characters').max(2000, 'Bio too long'),
   yearsOfExperience: z.number().int().min(0).max(50).optional(),
   remoteAvailability: z.enum(['YES_AND_ONSITE', 'ONLY_REMOTE', 'NO_REMOTE']).default('YES_AND_ONSITE'),
   termsAccepted: z.literal(true),
@@ -41,7 +41,7 @@ export const createProfessionalProfileSchema = z.object({
 // Update professional profile
 export const updateProfessionalProfileSchema = z.object({
   title: z.string().min(5).max(100).optional(),
-  bio: z.string().min(50).max(2000).optional(),
+  bio: z.string().min(10).max(2000).optional(),
   yearsOfExperience: z.number().int().min(0).max(50).optional(),
   city: z.string().min(2).max(100).optional(),
   country: z.string().length(2).optional(),

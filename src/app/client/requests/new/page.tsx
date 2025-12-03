@@ -11,10 +11,15 @@ export default function NewClientRequestPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [categories, setCategories] = useState<Array<{ id: string; nameEn: string }>>([]);
-  
+  const [categories, setCategories] = useState<Array<{
+    id: string;
+    nameEn: string;
+    subcategories: Array<{ id: string; nameEn: string }>;
+  }>>([]);
+
   const [formData, setFormData] = useState({
     categoryId: '',
+    subcategoryId: '',
     title: '',
     description: '',
     location: '',
@@ -40,6 +45,9 @@ export default function NewClientRequestPage() {
     fetchCategories();
   }, []);
 
+  // Get subcategories for selected category
+  const activeSubcategories = categories.find(c => c.id === formData.categoryId)?.subcategories || [];
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -47,18 +55,26 @@ export default function NewClientRequestPage() {
 
     try {
       // Map form data to API schema
-      const requestData = {
+      const requestData: any = {
         categoryId: formData.categoryId,
-        subcategoryId: formData.categoryId, // TODO: Add subcategory selection to form
+        subcategoryId: formData.subcategoryId,
         title: formData.title,
         description: formData.description,
-        budgetMin: formData.budgetMin ? parseInt(formData.budgetMin) : undefined,
-        budgetMax: formData.budgetMax ? parseInt(formData.budgetMax) : undefined,
         locationType: formData.preferredFormat === 'ONLINE' ? 'REMOTE' : 'ON_SITE',
         city: formData.location,
         country: 'FR', // Default country
         urgency: formData.timing === 'URGENT' ? 'URGENT' : formData.timing === 'SOON' ? 'SOON' : 'FLEXIBLE',
       };
+
+      // Only include budget fields if they have values
+      if (formData.budgetMin) {
+        requestData.budgetMin = parseInt(formData.budgetMin);
+      }
+      if (formData.budgetMax) {
+        requestData.budgetMax = parseInt(formData.budgetMax);
+      }
+
+      console.log('Submitting request data:', requestData);
 
       const response = await fetch('/api/requests', {
         method: 'POST',
@@ -121,10 +137,14 @@ export default function NewClientRequestPage() {
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
                 Category *
               </label>
-              <select 
+              <select
                 required
                 value={formData.categoryId}
-                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  categoryId: e.target.value,
+                  subcategoryId: '' // Reset subcategory when category changes
+                })}
                 className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
               >
                 <option value="">Select a category</option>
@@ -137,6 +157,26 @@ export default function NewClientRequestPage() {
             </div>
 
             <div>
+              <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
+                Subcategory *
+              </label>
+              <select
+                required
+                value={formData.subcategoryId}
+                onChange={(e) => setFormData({ ...formData, subcategoryId: e.target.value })}
+                disabled={!formData.categoryId}
+                className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15 disabled:bg-gray-50 disabled:text-gray-400"
+              >
+                <option value="">Select a subcategory</option>
+                {activeSubcategories.map((sub) => (
+                  <option key={sub.id} value={sub.id}>
+                    {sub.nameEn}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
                 What exactly do you need? *
               </label>
@@ -201,7 +241,7 @@ export default function NewClientRequestPage() {
               <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
                 Preferred format
               </label>
-              <select 
+              <select
                 value={formData.preferredFormat}
                 onChange={(e) => setFormData({ ...formData, preferredFormat: e.target.value })}
                 className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"

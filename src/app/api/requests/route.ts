@@ -3,6 +3,7 @@
 import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth, requireClient } from '@/lib/auth';
+import { getClientByClerkId } from '@/lib/get-professional';
 import { successResponse, handleApiError, createdResponse } from '@/lib/api-response';
 import { createRequestSchema, listRequestsSchema } from '@/lib/validations/request';
 import { NotFoundError, BadRequestError } from '@/lib/errors';
@@ -28,10 +29,8 @@ export async function GET(request: NextRequest) {
 
     if (role === 'CLIENT') {
       // Clients see only their own requests
-      const client = await prisma.client.findUnique({
-        where: { userId },
-      });
-      
+      const client = await getClientByClerkId(userId);
+
       if (!client) {
         throw new NotFoundError('Client profile');
       }
@@ -151,15 +150,17 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = await requireClient();
+    const { clerkId } = await requireClient();
 
-    // Get client profile
-    const client = await prisma.client.findUnique({
-      where: { userId },
-    });
+    console.log('🔍 Looking up client with Clerk ID:', clerkId);
+
+    // Use helper function to get client by Clerk ID
+    const client = await getClientByClerkId(clerkId);
+
+    console.log('👤 Found client:', client ? { id: client.id, userId: client.userId } : 'NOT FOUND');
 
     if (!client) {
-      throw new NotFoundError('Client profile');
+      throw new NotFoundError('Client profile - Please complete your profile at /auth-redirect');
     }
 
     // Parse and validate request body

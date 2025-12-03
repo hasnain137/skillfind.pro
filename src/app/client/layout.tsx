@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ClientUserButton } from "@/components/layout/ClientUserButton";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Client Dashboard | SkillFind",
@@ -16,11 +19,29 @@ const NAV_LINKS = [
   { label: "My profile", href: "/client/profile" },
 ];
 
-export default function ClientLayout({
+export default async function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    redirect("/login");
+  }
+
+  // Verify that the user has a Client profile
+  const user = await prisma.user.findUnique({
+    where: { clerkId: userId },
+    include: { clientProfile: true },
+  });
+
+  if (!user || !user.clientProfile) {
+    // User exists in Clerk but not in DB, or has no client profile
+    // Redirect to onboarding to complete setup
+    redirect("/auth-redirect");
+  }
+
   return (
     <div className="min-h-screen bg-[#F3F4F6] py-10">
       <Container className="flex flex-col gap-6 lg:flex-row">

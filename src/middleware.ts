@@ -35,7 +35,11 @@ const isClientRoute = createRouteMatcher([
 
 const isProRoute = createRouteMatcher([
   '/pro(.*)',
-  '/api/pro(.*)',
+  '/api/professionals/profile(.*)',
+  '/api/professionals/services(.*)',
+  '/api/professionals/documents(.*)',
+  '/api/professionals/matching-requests(.*)',
+  '/api/professionals/clicks(.*)',
 ]);
 
 const isAdminRoute = createRouteMatcher([
