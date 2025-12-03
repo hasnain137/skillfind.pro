@@ -114,6 +114,14 @@ export async function PATCH(request: NextRequest) {
     // Build update data object only with provided fields
     const updateData: any = {};
     
+    if (body.firstName !== undefined) {
+      updateData.firstName = body.firstName || null;
+    }
+    
+    if (body.lastName !== undefined) {
+      updateData.lastName = body.lastName || null;
+    }
+    
     if (body.dateOfBirth !== undefined) {
       updateData.dateOfBirth = body.dateOfBirth ? new Date(body.dateOfBirth) : null;
     }

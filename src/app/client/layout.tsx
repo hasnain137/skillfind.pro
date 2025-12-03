@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { label: "My requests", href: "/client/requests" },
   { label: "My jobs", href: "/client/jobs" },
   { label: "Create request", href: "/client/requests/new" },
+  { label: "My profile", href: "/client/profile" },
 ];
 
 export default function ClientLayout({

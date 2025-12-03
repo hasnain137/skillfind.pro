@@ -1,0 +1,137 @@
+feat: Implement comprehensive profile management for professionals and clients
+
+## Major Features Added
+
+### 1. Professional Profile Management
+- Added personal information section (DOB, phone number)
+- Enhanced location section with country dropdown
+- Fixed remote availability (enum instead of boolean)
+- Created dual API calls for User + Professional data updates
+- Added profile completion tracking with skip option
+
+### 2. Client Profile Management
+- Created complete client profile page at /client/profile
+- Sections: Basic Info, Personal Info, Location, Preferences
+- Added preferred language selection
+- Region/state field for better location tracking
+- Consistent UX with professional profile
+
+### 3. Profile Completion Flow
+- Smart detection of missing basic info (DOB, phone, city)
+- Redirects incomplete profiles to onboarding form
+- Skip option allows users to complete later
+- Works for both new and existing users
+- Updates existing user data during onboarding
+
+### 4. Helper Functions
+- Created getClientByClerkId() and getClientWithRelations()
+- Created getProfessionalByClerkId() and getProfessionalWithRelations()
+- Proper Clerk ID → DB User ID → Profile lookups
+- Prevents 404 errors from incorrect database queries
+
+### 5. Bug Fixes
+- Fixed pro dashboard 404 errors (moved /pro/[id] to /pro/profile-view/[id])
+- Fixed complete-profile not saving data for existing users
+- Fixed remoteAvailability validation (boolean → enum)
+- Fixed profile completion check logic
+- Updated all redirects from /complete-profile to /auth-redirect
+
+## Files Created (7)
+
+### Professional Profile
+- src/lib/get-professional.ts (helper functions)
+
+### Client Profile  
+- src/app/client/profile/page.tsx
+- src/app/client/profile/ClientProfileForm.tsx
+- src/app/api/client/profile/route.ts
+
+## Files Modified (20+)
+
+### Profile Pages
+- src/app/pro/profile/page.tsx (added user data fetch)
+- src/app/pro/profile/ProfileForm.tsx (added personal info fields)
+- src/app/pro/requests/page.tsx (use helper function)
+- src/app/pro/offers/page.tsx (use helper function)
+- src/app/pro/jobs/page.tsx (use helper function)
+- src/app/pro/wallet/page.tsx (use helper function)
+- src/app/pro/jobs/[id]/page.tsx (use helper function)
+- src/app/pro/requests/[id]/offer/page.tsx (use helper function)
+
+### API Endpoints
+- src/app/api/auth/check-profile/route.ts (stricter validation)
+- src/app/api/auth/complete-signup/route.ts (update existing users)
+- src/app/api/user/profile/route.ts (added PATCH, firstName/lastName)
+
+### Validation & Utils
+- src/lib/validations/user.ts (fixed remoteAvailability enum)
+
+### Layouts
+- src/app/client/layout.tsx (added "My profile" link)
+- src/app/pro/layout.tsx (navigation working)
+
+### Auth Flow
+- src/app/auth-redirect/page.tsx (skip functionality + info banner)
+
+### Profile Links (7 files)
+- src/app/search/ProfessionalCard.tsx
+- src/app/client/jobs/[id]/page.tsx
+- src/app/client/requests/[id]/page.tsx
+- src/app/client/requests/[id]/page_enhanced.tsx
+- src/components/landing/FeaturedProfessionalsServer.tsx
+- src/components/landing/FeaturedProfessionals.tsx
+
+### Route Restructure
+- Moved: src/app/pro/[id]/ → src/app/pro/profile-view/[id]/
+- Deleted: src/app/complete-profile/ (replaced by /auth-redirect)
+
+## Technical Improvements
+
+### Database Layer
+- Proper ID mapping: Clerk ID → User ID → Client/Professional ID
+- Dual table updates (User + Client/Professional) in single transaction
+- Age validation (18+) for existing users
+- Optional field handling
+
+### API Design
+- RESTful PATCH endpoints for partial updates
+- Proper error handling and validation
+- Consistent response format
+- Update only provided fields
+
+### UX Improvements
+- Clear section organization
+- Informative field labels and hints
+- Success/error messages
+- Skip option with clear messaging
+- Profile completion percentage tracking
+- Consistent design across client/pro
+
+## Breaking Changes
+None - All changes are backward compatible
+
+## Migration Notes
+- Users with incomplete profiles will be prompted to complete on next login
+- Existing users can skip and complete later
+- All profile data accessible from dashboard
+
+## Testing
+✅ Professional profile update (all fields)
+✅ Client profile update (all fields)
+✅ Profile completion detection
+✅ Skip onboarding flow
+✅ Existing user data updates
+✅ New user complete flow
+✅ API endpoint validation
+✅ Navigation links
+✅ Data persistence
+
+## Dependencies
+No new dependencies added
+
+## Database Schema
+No schema changes required - uses existing fields
+
+---
+
+Co-authored-by: Rovo Dev <ai@rovoai.com>
