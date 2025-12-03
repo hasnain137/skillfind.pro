@@ -46,19 +46,24 @@ export default function NewClientRequestPage() {
     setError('');
 
     try {
+      // Map form data to API schema
+      const requestData = {
+        categoryId: formData.categoryId,
+        subcategoryId: formData.categoryId, // TODO: Add subcategory selection to form
+        title: formData.title,
+        description: formData.description,
+        budgetMin: formData.budgetMin ? parseInt(formData.budgetMin) : undefined,
+        budgetMax: formData.budgetMax ? parseInt(formData.budgetMax) : undefined,
+        locationType: formData.preferredFormat === 'ONLINE' ? 'REMOTE' : 'ON_SITE',
+        city: formData.location,
+        country: 'FR', // Default country
+        urgency: formData.timing === 'URGENT' ? 'URGENT' : formData.timing === 'SOON' ? 'SOON' : 'FLEXIBLE',
+      };
+
       const response = await fetch('/api/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          categoryId: formData.categoryId,
-          title: formData.title,
-          description: formData.description,
-          location: formData.location,
-          preferredFormat: formData.preferredFormat,
-          timing: formData.timing,
-          budgetMin: formData.budgetMin ? parseFloat(formData.budgetMin) : undefined,
-          budgetMax: formData.budgetMax ? parseFloat(formData.budgetMax) : undefined,
-        }),
+        body: JSON.stringify(requestData),
       });
 
       const data = await response.json();
@@ -67,7 +72,8 @@ export default function NewClientRequestPage() {
         // Success! Redirect to requests list
         router.push('/client/requests');
       } else {
-        setError(data.message || 'Failed to create request');
+        setError(data.message || data.error?.message || 'Failed to create request');
+        console.error('API Error:', data);
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
