@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { getProfessionalWithRelations } from "@/lib/get-professional";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -26,25 +27,22 @@ export default async function ProOffersPage() {
   const { userId } = await auth();
   if (!userId) redirect('/login');
 
-  const professional = await prisma.professional.findUnique({
-    where: { userId },
-    include: {
-      offers: {
-        include: {
-          request: {
-            include: {
-              category: true,
-              client: { include: { user: true } },
-            },
+  const professional = await getProfessionalWithRelations(userId, {
+    offers: {
+      include: {
+        request: {
+          include: {
+            category: true,
+            client: { include: { user: true } },
           },
-          clickEvent: true,
         },
-        orderBy: { createdAt: 'desc' },
+        clickEvent: true,
       },
+      orderBy: { createdAt: 'desc' },
     },
   });
 
-  if (!professional) redirect('/complete-profile');
+  if (!professional) redirect('/auth-redirect');
 
   const offers = professional.offers;
   const pendingOffers = offers.filter(o => o.status === 'PENDING');

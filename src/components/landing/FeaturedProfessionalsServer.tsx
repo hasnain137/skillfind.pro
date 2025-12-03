@@ -164,7 +164,7 @@ function ProfessionalCard({
         </div>
 
         {/* CTA Button */}
-        <Link href={`/pro/${professional.userId}`}>
+        <Link href={`/pro/profile-view/${professional.userId}`}>
           <Button className="w-full justify-center py-3 text-sm font-semibold shadow-md hover:shadow-lg transition-all">
             View Full Profile →
           </Button>

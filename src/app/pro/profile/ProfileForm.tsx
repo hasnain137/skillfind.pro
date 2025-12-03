@@ -39,6 +39,10 @@ type Profile = {
     isAvailable: boolean;
     remoteAvailability: boolean;
     services: Service[];
+    user?: {
+        dateOfBirth: Date | string | null;
+        phoneNumber: string | null;
+    };
 };
 
 type ProfileFormProps = {
@@ -59,8 +63,19 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
         bio: initialProfile.bio || '',
         yearsOfExperience: initialProfile.yearsOfExperience || 0,
         city: initialProfile.city || '',
+        country: initialProfile.country || 'FR',
         isAvailable: initialProfile.isAvailable,
         remoteAvailability: initialProfile.remoteAvailability,
+    });
+
+    // Personal Information State (User table fields)
+    const [personalData, setPersonalData] = useState({
+        dateOfBirth: initialProfile.user?.dateOfBirth 
+            ? (typeof initialProfile.user.dateOfBirth === 'string' 
+                ? initialProfile.user.dateOfBirth.split('T')[0] 
+                : new Date(initialProfile.user.dateOfBirth).toISOString().split('T')[0])
+            : '',
+        phoneNumber: initialProfile.user?.phoneNumber || '',
     });
 
     // Service State
@@ -79,13 +94,23 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
         setSuccess('');
 
         try {
-            const response = await fetch('/api/professionals/profile', {
+            // Update professional profile
+            const profileResponse = await fetch('/api/professionals/profile', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(profileData),
             });
 
-            if (!response.ok) throw new Error('Failed to update profile');
+            if (!profileResponse.ok) throw new Error('Failed to update profile');
+
+            // Update personal information (user table fields)
+            const userResponse = await fetch('/api/user/profile', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(personalData),
+            });
+
+            if (!userResponse.ok) throw new Error('Failed to update personal information');
 
             setSuccess('Profile updated successfully');
             router.refresh();
@@ -195,17 +220,81 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                             />
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2">
-                            <div>
-                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">City</label>
-                                <input
-                                    type="text"
-                                    value={profileData.city}
-                                    onChange={e => setProfileData({ ...profileData, city: e.target.value })}
-                                    className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
-                                />
+                        {/* Personal Information Section */}
+                        <div className="border-t border-[#E5E7EB] pt-6 mt-6">
+                            <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
+                                <span>👤</span> Personal Information
+                            </h4>
+                            
+                            <div className="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label htmlFor="dob" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
+                                        Date of Birth
+                                    </label>
+                                    <input
+                                        id="dob"
+                                        type="date"
+                                        value={personalData.dateOfBirth}
+                                        onChange={e => setPersonalData({ ...personalData, dateOfBirth: e.target.value })}
+                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="phone" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        id="phone"
+                                        type="tel"
+                                        placeholder="+33612345678"
+                                        value={personalData.phoneNumber}
+                                        onChange={e => setPersonalData({ ...personalData, phoneNumber: e.target.value })}
+                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                    />
+                                    <p className="mt-1 text-xs text-[#B0B0B0]">
+                                        International format: +[country code][number]
+                                    </p>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-4 pt-6">
+                        </div>
+
+                        {/* Location & Availability Section */}
+                        <div className="border-t border-[#E5E7EB] pt-6 mt-6">
+                            <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
+                                <span>📍</span> Location & Availability
+                            </h4>
+                            
+                            <div className="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">City</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Paris"
+                                        value={profileData.city}
+                                        onChange={e => setProfileData({ ...profileData, city: e.target.value })}
+                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Country</label>
+                                    <select
+                                        value={profileData.country}
+                                        onChange={e => setProfileData({ ...profileData, country: e.target.value })}
+                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                    >
+                                        <option value="FR">France</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="IT">Italy</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="OTHER">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-4 mt-4">
                                 <label className="flex items-center gap-2 text-sm text-[#333333]">
                                     <input
                                         type="checkbox"

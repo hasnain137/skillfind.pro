@@ -1,4 +1,4 @@
-// src/app/pro/[id]/page.tsx
+// src/app/pro/profile-view/[id]/page.tsx
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { Card } from '@/components/ui/Card';

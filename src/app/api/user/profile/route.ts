@@ -103,3 +103,46 @@ export async function PUT(request: NextRequest) {
     return handleApiError(error);
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const { userId } = await requireAuth();
+
+    // Parse request body
+    const body = await request.json();
+    
+    // Build update data object only with provided fields
+    const updateData: any = {};
+    
+    if (body.dateOfBirth !== undefined) {
+      updateData.dateOfBirth = body.dateOfBirth ? new Date(body.dateOfBirth) : null;
+    }
+    
+    if (body.phoneNumber !== undefined) {
+      updateData.phoneNumber = body.phoneNumber || null;
+    }
+
+    // Update user with only the provided fields
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+    });
+
+    return successResponse(
+      {
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          dateOfBirth: user.dateOfBirth,
+          phoneNumber: user.phoneNumber,
+          avatar: user.avatar,
+        },
+      },
+      'Personal information updated successfully'
+    );
+  } catch (error) {
+    return handleApiError(error);
+  }
+}

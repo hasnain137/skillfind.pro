@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { getProfessionalWithRelations } from "@/lib/get-professional";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
@@ -15,15 +16,12 @@ export default async function ProRequestsPage() {
   }
 
   // 1. Get Professional Profile & Services
-  const professional = await prisma.professional.findUnique({
-    where: { userId },
-    include: {
-      services: {
-        include: {
-          subcategory: {
-            include: {
-              category: true,
-            },
+  const professional = await getProfessionalWithRelations(userId, {
+    services: {
+      include: {
+        subcategory: {
+          include: {
+            category: true,
           },
         },
       },
@@ -32,7 +30,7 @@ export default async function ProRequestsPage() {
 
   if (!professional) {
     // If user is logged in but not a professional, redirect to role selection or home
-    redirect('/complete-profile');
+    redirect('/auth-redirect');
   }
 
   // 2. Get Category IDs from Professional's Services

@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect, notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { getProfessionalByClerkId } from "@/lib/get-professional";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -30,12 +31,10 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
     redirect('/login');
   }
 
-  const professional = await prisma.professional.findUnique({
-    where: { userId },
-  });
+  const professional = await getProfessionalByClerkId(userId);
 
   if (!professional) {
-    redirect('/complete-profile');
+    redirect('/auth-redirect');
   }
 
   const job = await prisma.job.findUnique({

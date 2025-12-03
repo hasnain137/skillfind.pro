@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { getProfessionalWithRelations } from "@/lib/get-professional";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import ProfileForm from "./ProfileForm";
@@ -13,16 +14,19 @@ export default async function ProProfilePage() {
     redirect('/login');
   }
 
-  const professional = await prisma.professional.findUnique({
-    where: { userId },
-    include: {
-      profile: true,
-      services: {
-        include: {
-          subcategory: {
-            include: {
-              category: true,
-            },
+  const professional = await getProfessionalWithRelations(userId, {
+    user: {
+      select: {
+        dateOfBirth: true,
+        phoneNumber: true,
+      },
+    },
+    profile: true,
+    services: {
+      include: {
+        subcategory: {
+          include: {
+            category: true,
           },
         },
       },
@@ -30,7 +34,7 @@ export default async function ProProfilePage() {
   });
 
   if (!professional) {
-    redirect('/complete-profile');
+    redirect('/auth-redirect');
   }
 
   // Fetch categories for the service adder

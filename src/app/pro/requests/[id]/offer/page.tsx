@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { getProfessionalByClerkId } from "@/lib/get-professional";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import OfferForm from "./OfferForm";
@@ -19,12 +20,10 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
   }
 
   // Verify professional role
-  const professional = await prisma.professional.findUnique({
-    where: { userId },
-  });
+  const professional = await getProfessionalByClerkId(userId);
 
   if (!professional) {
-    redirect('/complete-profile');
+    redirect('/auth-redirect');
   }
 
   // Fetch request details

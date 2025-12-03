@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { getProfessionalByClerkId } from "@/lib/get-professional";
 import { getOrCreateWallet } from "@/lib/services/wallet";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -15,12 +16,10 @@ export default async function WalletPage() {
         redirect('/login');
     }
 
-    const professional = await prisma.professional.findUnique({
-        where: { userId },
-    });
+    const professional = await getProfessionalByClerkId(userId);
 
     if (!professional) {
-        redirect('/complete-profile');
+        redirect('/auth-redirect');
     }
 
     // Get wallet and stats directly (mirroring API logic)
