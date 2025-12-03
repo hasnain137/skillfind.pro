@@ -30,52 +30,57 @@ function getInitials(firstName: string, lastName: string) {
   return `${firstName[0]}${lastName[0]}`.toUpperCase();
 }
 
-async function getFeaturedProfessionals(): Promise<Professional[]> {
-  try {
-    const { prisma } = await import('@/lib/prisma');
+import { unstable_cache } from 'next/cache';
 
-    // Optimized query with selective fields to reduce data transfer
-    const professionals = await prisma.professional.findMany({
-      where: {
-        status: 'ACTIVE',
-        averageRating: {
-          gt: 0, // Only professionals with rating
-        },
-      },
-      include: {
-        user: {
-          select: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        profile: {
-          select: {
-            hourlyRateMin: true,
-            hourlyRateMax: true,
-          },
-        },
-        services: {
-          select: {
-            id: true,
-            description: true,
-          },
-          take: 3,
-        },
-      },
-      orderBy: {
-        averageRating: 'desc',
-      },
-      take: 6,
-    });
+const getFeaturedProfessionals = unstable_cache(
+  async (): Promise<Professional[]> => {
+    try {
+      const { prisma } = await import('@/lib/prisma');
 
-    // Cache the result for 5 minutes in memory
-    return professionals as any;
-  } catch (error) {
-    console.error('Error fetching featured professionals:', error);
-    return [];
-  }
-}
+      // Optimized query with selective fields to reduce data transfer
+      const professionals = await prisma.professional.findMany({
+        where: {
+          status: 'ACTIVE',
+          averageRating: {
+            gt: 0, // Only professionals with rating
+          },
+        },
+        include: {
+          user: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+          profile: {
+            select: {
+              hourlyRateMin: true,
+              hourlyRateMax: true,
+            },
+          },
+          services: {
+            select: {
+              id: true,
+              description: true,
+            },
+            take: 3,
+          },
+        },
+        orderBy: {
+          averageRating: 'desc',
+        },
+        take: 6,
+      });
+
+      return professionals as any;
+    } catch (error) {
+      console.error('Error fetching featured professionals:', error);
+      return [];
+    }
+  },
+  ['featured-professionals'],
+  { revalidate: 3600, tags: ['featured-professionals'] }
+);
 
 function ProfessionalCard({
   professional,

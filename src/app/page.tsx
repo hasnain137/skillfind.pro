@@ -18,31 +18,38 @@ import { Container } from "@/components/ui/Container";
 export const revalidate = 60;
 
 // Server Component to fetch categories
-async function getCategories() {
-  try {
-    // Dynamic import to ensure it's only loaded on server
-    const { prisma } = await import('@/lib/prisma');
-    
-    const categories = await prisma.category.findMany({
-      select: {
-        id: true,
-        nameEn: true,
-        nameFr: true,
-        description: true,
-        icon: true,
-        slug: true,
-      },
-      orderBy: {
-        nameEn: 'asc',
-      },
-    });
+import { unstable_cache } from 'next/cache';
 
-    return categories;
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return []; // Return empty array on error, component will use fallback
-  }
-}
+// Server Component to fetch categories
+const getCategories = unstable_cache(
+  async () => {
+    try {
+      // Dynamic import to ensure it's only loaded on server
+      const { prisma } = await import('@/lib/prisma');
+
+      const categories = await prisma.category.findMany({
+        select: {
+          id: true,
+          nameEn: true,
+          nameFr: true,
+          description: true,
+          icon: true,
+          slug: true,
+        },
+        orderBy: {
+          nameEn: 'asc',
+        },
+      });
+
+      return categories;
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      return []; // Return empty array on error, component will use fallback
+    }
+  },
+  ['categories'],
+  { revalidate: 86400, tags: ['categories'] }
+);
 
 function FeaturedProfessionalsSkeleton() {
   return (
