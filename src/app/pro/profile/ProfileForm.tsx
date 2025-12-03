@@ -37,7 +37,7 @@ type Profile = {
     city: string | null;
     country: string | null;
     isAvailable: boolean;
-    remoteAvailability: boolean;
+    remoteAvailability: 'YES_AND_ONSITE' | 'ONLY_REMOTE' | 'NO_REMOTE';
     services: Service[];
     user?: {
         dateOfBirth: Date | string | null;
@@ -65,7 +65,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
         city: initialProfile.city || '',
         country: initialProfile.country || 'FR',
         isAvailable: initialProfile.isAvailable,
-        remoteAvailability: initialProfile.remoteAvailability,
+        remoteAvailability: initialProfile.remoteAvailability || 'YES_AND_ONSITE',
     });
 
     // Personal Information State (User table fields)
@@ -294,25 +294,30 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-4 mt-4">
-                                <label className="flex items-center gap-2 text-sm text-[#333333]">
-                                    <input
-                                        type="checkbox"
-                                        checked={profileData.isAvailable}
-                                        onChange={e => setProfileData({ ...profileData, isAvailable: e.target.checked })}
-                                        className="rounded border-gray-300 text-[#2563EB] focus:ring-[#2563EB]"
-                                    />
-                                    Available for work
-                                </label>
-                                <label className="flex items-center gap-2 text-sm text-[#333333]">
-                                    <input
-                                        type="checkbox"
-                                        checked={profileData.remoteAvailability}
-                                        onChange={e => setProfileData({ ...profileData, remoteAvailability: e.target.checked })}
-                                        className="rounded border-gray-300 text-[#2563EB] focus:ring-[#2563EB]"
-                                    />
-                                    Remote work
-                                </label>
+                            <div className="grid gap-4 md:grid-cols-2 mt-4">
+                                <div>
+                                    <label className="flex items-center gap-2 text-sm text-[#333333]">
+                                        <input
+                                            type="checkbox"
+                                            checked={profileData.isAvailable}
+                                            onChange={e => setProfileData({ ...profileData, isAvailable: e.target.checked })}
+                                            className="rounded border-gray-300 text-[#2563EB] focus:ring-[#2563EB]"
+                                        />
+                                        Available for work
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Remote Work</label>
+                                    <select
+                                        value={profileData.remoteAvailability}
+                                        onChange={e => setProfileData({ ...profileData, remoteAvailability: e.target.value as 'YES_AND_ONSITE' | 'ONLY_REMOTE' | 'NO_REMOTE' })}
+                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                    >
+                                        <option value="YES_AND_ONSITE">Yes, and on-site</option>
+                                        <option value="ONLY_REMOTE">Only remote</option>
+                                        <option value="NO_REMOTE">No remote</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

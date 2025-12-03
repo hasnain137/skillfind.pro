@@ -81,7 +81,14 @@ export default function AuthRedirectPage() {
             } else {
               // User needs to complete profile - show profile form
               console.log('User needs to complete profile');
+              console.log('Missing fields:', profileData.missingFields);
               setSelectedRole(role as 'CLIENT' | 'PROFESSIONAL');
+              
+              // Pre-fill form with existing data if available
+              if (profileData.user) {
+                // We'll pre-fill what we have, user only needs to fill missing fields
+              }
+              
               setStep('complete-profile');
             }
           } else {
@@ -242,46 +249,28 @@ export default function AuthRedirectPage() {
     }
   };
 
-  // Handle skip - creates minimal user with just role
+  // Handle skip - redirect to dashboard without completing profile
   const handleSkip = async () => {
     setLoading(true);
     setError('');
 
     try {
-      console.log('⏭️ Skipping profile completion, creating minimal profile...');
+      console.log('⏭️ Skipping profile completion, redirecting to dashboard...');
 
-      // Create minimal user profile with just the role
-      // Note: We don't send dateOfBirth to avoid validation issues
-      const response = await fetch('/api/auth/complete-signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          role: selectedRole,
-          // Minimal data - no DOB to avoid age validation
-          phoneNumber: undefined,
-          city: undefined,
-          country: 'FR',
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        console.error('❌ Skip profile failed:', data);
-        throw new Error(data.error?.message || data.message || 'Failed to create profile');
-      }
-
-      const result = await response.json();
-      console.log('✅ Profile created:', result);
-
-      // Redirect to dashboard
+      // User can skip filling basic info and complete it later from their dashboard
+      // Just redirect them to the appropriate dashboard
       if (selectedRole) {
-        await redirectToDashboard(selectedRole, 1000);
+        const dashboardUrl = selectedRole === 'CLIENT' ? '/client' :
+          selectedRole === 'PROFESSIONAL' ? '/pro' : '/';
+        
+        console.log('✅ Redirecting to:', dashboardUrl);
+        window.location.href = dashboardUrl;
       } else {
         window.location.href = '/';
       }
     } catch (err: any) {
       console.error('❌ Error during skip:', err);
-      setError(err.message || 'Failed to skip profile. Please try again.');
+      setError(err.message || 'Failed to skip. Please try again.');
       setLoading(false);
     }
   };
@@ -440,6 +429,19 @@ export default function AuthRedirectPage() {
             {/* Step 2: Profile Completion */}
             {step === 'complete-profile' && (
               <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm md:p-8">
+                {/* Info banner */}
+                <div className="mb-5 rounded-xl bg-blue-50 border border-blue-200 p-4">
+                  <div className="flex items-start gap-3">
+                    <span className="text-blue-600 text-lg">ℹ️</span>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-blue-900 mb-1">Complete Your Profile</p>
+                      <p className="text-sm text-blue-700">
+                        Fill in your basic information to get the best experience. You can also skip for now and complete it later from your dashboard.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {error && (
                     <div className="rounded-xl bg-red-50 border border-red-200 p-4">

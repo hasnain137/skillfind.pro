@@ -48,6 +48,36 @@ export async function POST(request: NextRequest) {
     if (existingUser) {
       console.log(`✅ User exists in database: ${existingUser.id}, Role: ${existingUser.role}`);
 
+      // Update user table with DOB and phone if provided
+      if (data.dateOfBirth || data.phoneNumber) {
+        console.log('📝 Updating user personal information...');
+        
+        const updateData: any = {};
+        
+        if (data.dateOfBirth) {
+          try {
+            requireAge18Plus(data.dateOfBirth);
+            updateData.dateOfBirth = data.dateOfBirth;
+            updateData.isOver18 = true;
+            console.log('✅ Age validation passed');
+          } catch (ageError) {
+            console.error('❌ Age validation failed:', ageError);
+            throw ageError;
+          }
+        }
+        
+        if (data.phoneNumber) {
+          updateData.phoneNumber = data.phoneNumber;
+        }
+        
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: updateData,
+        });
+        
+        console.log('✅ User personal information updated');
+      }
+
       // User already exists - check if they have the required profile
       const isProfessional = existingUser.role === 'PROFESSIONAL';
       const isClient = existingUser.role === 'CLIENT';
@@ -74,6 +104,17 @@ export async function POST(request: NextRequest) {
         });
 
         console.log('✅ Professional profile and wallet created');
+      } else if (isProfessional && existingUser.professionalProfile && data.city) {
+        // Update existing professional profile with city/country if provided
+        console.log('📝 Updating existing professional profile location...');
+        await prisma.professional.update({
+          where: { id: existingUser.professionalProfile.id },
+          data: {
+            city: data.city,
+            country: data.country || 'FR',
+          },
+        });
+        console.log('✅ Professional profile location updated');
       }
 
       // If client but no client profile, create it
@@ -89,6 +130,17 @@ export async function POST(request: NextRequest) {
         });
 
         console.log('✅ Client profile created');
+      } else if (isClient && existingUser.clientProfile && data.city) {
+        // Update existing client profile with city/country if provided
+        console.log('📝 Updating existing client profile location...');
+        await prisma.client.update({
+          where: { id: existingUser.clientProfile.id },
+          data: {
+            city: data.city,
+            country: data.country || 'FR',
+          },
+        });
+        console.log('✅ Client profile location updated');
       }
 
       // Ensure Clerk metadata is in sync

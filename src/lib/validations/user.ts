@@ -46,7 +46,7 @@ export const updateProfessionalProfileSchema = z.object({
   city: z.string().min(2).max(100).optional(),
   country: z.string().length(2).optional(),
   isAvailable: z.boolean().optional(),
-  remoteAvailability: z.boolean().optional(),
+  remoteAvailability: z.enum(['YES_AND_ONSITE', 'ONLY_REMOTE', 'NO_REMOTE']).optional(),
 });
 
 // Professional service

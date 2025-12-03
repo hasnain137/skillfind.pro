@@ -48,10 +48,28 @@ export async function GET(request: NextRequest) {
     const hasProfessionalProfile = dbUser.role === 'PROFESSIONAL' && !!dbUser.professionalProfile;
     const isAdmin = dbUser.role === 'ADMIN';
 
+    // Check if basic profile information is complete
+    const hasBasicInfo = !!(
+      dbUser.dateOfBirth &&
+      dbUser.phoneNumber &&
+      (dbUser.clientProfile?.city || dbUser.professionalProfile?.city)
+    );
+
+    // Profile is complete if:
+    // 1. They have role-specific profile (client/professional/admin), AND
+    // 2. They have basic info (DOB, phone, city) OR they're an admin (admins don't need these)
+    const profileComplete = (hasClientProfile || hasProfessionalProfile || isAdmin) && 
+                           (hasBasicInfo || isAdmin);
+
     return successResponse({
       exists: true,
-      hasProfile: hasClientProfile || hasProfessionalProfile || isAdmin,
+      hasProfile: profileComplete,
       role: dbUser.role,
+      missingFields: !hasBasicInfo && !isAdmin ? {
+        dateOfBirth: !dbUser.dateOfBirth,
+        phoneNumber: !dbUser.phoneNumber,
+        city: !(dbUser.clientProfile?.city || dbUser.professionalProfile?.city),
+      } : undefined,
       user: {
         id: dbUser.id,
         email: dbUser.email,
