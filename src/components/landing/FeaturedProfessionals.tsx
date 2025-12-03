@@ -122,7 +122,7 @@ function ProfessionalCard(pro: Professional) {
       <p className="mt-1 text-xs font-medium text-[#333333]">{priceFrom}</p>
 
       <div className="mt-1">
-        <Link href={`/pro/profile-view/${id}`}>
+        <Link href={`/professionals/${id}`}>
           <Button className="w-full justify-center py-2.5 text-xs">
             View profile
           </Button>

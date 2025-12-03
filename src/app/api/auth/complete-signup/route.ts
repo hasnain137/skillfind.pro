@@ -51,9 +51,9 @@ export async function POST(request: NextRequest) {
       // Update user table with DOB and phone if provided
       if (data.dateOfBirth || data.phoneNumber) {
         console.log('📝 Updating user personal information...');
-        
+
         const updateData: any = {};
-        
+
         if (data.dateOfBirth) {
           try {
             requireAge18Plus(data.dateOfBirth);
@@ -65,16 +65,16 @@ export async function POST(request: NextRequest) {
             throw ageError;
           }
         }
-        
+
         if (data.phoneNumber) {
           updateData.phoneNumber = data.phoneNumber;
         }
-        
+
         await prisma.user.update({
           where: { id: existingUser.id },
           data: updateData,
         });
-        
+
         console.log('✅ User personal information updated');
       }
 
@@ -92,6 +92,7 @@ export async function POST(request: NextRequest) {
             city: data.city || '',
             country: data.country || 'FR',
             profileCompletion: data.city && data.country ? 20 : 10,
+            status: 'ACTIVE',
           },
         });
 
@@ -212,6 +213,7 @@ export async function POST(request: NextRequest) {
           city: data.city || '',
           country: data.country || 'FR',
           profileCompletion: data.city && data.country ? 20 : 10,
+          status: 'ACTIVE',
         },
       });
 

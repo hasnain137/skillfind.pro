@@ -33,12 +33,12 @@ function getInitials(firstName: string, lastName: string) {
 
 export function ProfessionalCard({ professional }: { professional: Professional }) {
   const { user, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services } = professional;
-  
+
   const priceDisplay = hourlyRateMin && hourlyRateMax
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
     : hourlyRateMin
-    ? `From €${hourlyRateMin}/hr`
-    : 'Contact for pricing';
+      ? `From €${hourlyRateMin}/hr`
+      : 'Contact for pricing';
 
   const primaryService = services[0]?.title || 'Professional';
 
@@ -107,7 +107,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
       <p className="text-xs font-medium text-[#333333]">{priceDisplay}</p>
 
       {/* Action */}
-      <Link href={`/pro/profile-view/${professional.userId}`}>
+      <Link href={`/professionals/${professional.userId}`}>
         <Button className="w-full justify-center py-2.5 text-xs">
           View Profile
         </Button>

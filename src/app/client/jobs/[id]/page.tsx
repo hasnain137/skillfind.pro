@@ -193,7 +193,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
               )}
             </div>
 
-            <Link href={`/pro/profile-view/${job.professionalId}`}>
+            <Link href={`/professionals/${job.professionalId}`}>
               <Button variant="ghost" className="w-full text-xs border border-[#E5E7EB]">
                 View Full Profile
               </Button>
@@ -239,7 +239,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
             </div>
           )}
 
-          <Link href={`/pro/profile-view/${job.professionalId}`}>
+          <Link href={`/professionals/${job.professionalId}`}>
             <Button variant="ghost" className="border border-[#E5E7EB]">
               👤 View Professional Profile
             </Button>

@@ -25,6 +25,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/auth/check-profile', // Exact match
   '/api/auth/check-profile(.*)', // Wildcard match
   '/search(.*)', // Public search page
+  '/professionals(.*)', // Public professional profiles
 ]);
 
 // Define routes that require specific roles

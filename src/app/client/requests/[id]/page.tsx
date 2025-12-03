@@ -25,7 +25,7 @@ export default async function ClientRequestDetailPage({
   params,
 }: RequestDetailPageProps) {
   const resolvedParams = await params;
-  
+
   // Get authenticated user
   const { userId } = await auth();
   if (!userId) {
@@ -86,7 +86,7 @@ export default async function ClientRequestDetailPage({
 
   const statusConfig = STATUS_CONFIG[request.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.OPEN;
   const hasOffers = request.offers.length > 0;
-  
+
   return (
     <div className="space-y-6">
       {/* Enhanced Header */}
@@ -289,7 +289,7 @@ export default async function ClientRequestDetailPage({
 
                   {/* Actions */}
                   <div className="flex flex-wrap gap-2 pt-2 border-t border-[#E5E7EB]">
-                    <Link href={`/pro/profile-view/${offer.professionalId}`}>
+                    <Link href={`/professionals/${offer.professionalId}`}>
                       <Button
                         variant="ghost"
                         className="border border-[#E5E7EB] px-4 py-2 text-xs hover:bg-gray-50"
@@ -298,8 +298,8 @@ export default async function ClientRequestDetailPage({
                       </Button>
                     </Link>
                     {offer.status === 'PENDING' && request.status === 'OPEN' && (
-                      <AcceptOfferButton 
-                        offerId={offer.id} 
+                      <AcceptOfferButton
+                        offerId={offer.id}
                         requestId={request.id}
                       />
                     )}

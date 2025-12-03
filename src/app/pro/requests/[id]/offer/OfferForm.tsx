@@ -58,7 +58,7 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                     proposedPrice: parseFloat(formData.proposedPrice),
                     message: formData.message,
                     estimatedDuration: formData.estimatedDuration,
-                    availableTimeSlots: formData.availableTimeSlots ? [formData.availableTimeSlots] : [],
+                    availableTimeSlots: formData.availableTimeSlots || undefined,
                 }),
             });
 
@@ -232,8 +232,8 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                     >
                         Cancel
                     </Button>
-                    <Button 
-                        type="submit" 
+                    <Button
+                        type="submit"
                         disabled={loading || !isFormValid}
                         className="flex-1 sm:flex-none shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >

@@ -33,7 +33,7 @@ function getInitials(firstName: string, lastName: string) {
 async function getFeaturedProfessionals(): Promise<Professional[]> {
   try {
     const { prisma } = await import('@/lib/prisma');
-    
+
     // Optimized query with selective fields to reduce data transfer
     const professionals = await prisma.professional.findMany({
       where: {
@@ -83,15 +83,15 @@ function ProfessionalCard({
   professional: Professional;
 }) {
   const { user, bio, profile, city, remoteAvailability, averageRating, totalReviews, services } = professional;
-  
+
   const hourlyRateMin = profile?.hourlyRateMin;
   const hourlyRateMax = profile?.hourlyRateMax;
-  
+
   const priceDisplay = hourlyRateMin && hourlyRateMax
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
     : hourlyRateMin
-    ? `From €${hourlyRateMin}/hr`
-    : 'Contact for pricing';
+      ? `From €${hourlyRateMin}/hr`
+      : 'Contact for pricing';
 
   const primaryService = services[0]?.description || 'Professional';
   const additionalServices = services.length > 1 ? services.length - 1 : 0;
@@ -164,7 +164,7 @@ function ProfessionalCard({
         </div>
 
         {/* CTA Button */}
-        <Link href={`/pro/profile-view/${professional.userId}`}>
+        <Link href={`/professionals/${professional.userId}`}>
           <Button className="w-full justify-center py-3 text-sm font-semibold shadow-md hover:shadow-lg transition-all">
             View Full Profile →
           </Button>

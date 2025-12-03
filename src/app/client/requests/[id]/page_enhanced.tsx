@@ -214,7 +214,7 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
                   </div>
 
                   <div className="flex flex-wrap gap-2 pt-3 border-t border-[#E5E7EB]">
-                    <Link href={`/pro/profile-view/${offer.professionalId}`}>
+                    <Link href={`/professionals/${offer.professionalId}`}>
                       <Button variant="ghost" className="border border-[#E5E7EB] px-4 py-2 text-xs hover:border-[#2563EB]">
                         View Full Profile
                       </Button>
