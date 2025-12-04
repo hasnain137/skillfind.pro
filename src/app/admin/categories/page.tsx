@@ -14,7 +14,7 @@ export default async function AdminCategoriesPage() {
             },
         },
         orderBy: { sortOrder: 'asc' },
-    });
+    }) as any;
 
     return (
         <div className="space-y-6">
@@ -28,7 +28,7 @@ export default async function AdminCategoriesPage() {
             </div>
 
             <div className="grid gap-6">
-                {categories.map((category) => (
+                {categories.map((category: any) => (
                     <Card key={category.id} padding="lg">
                         <div className="mb-4 flex items-start justify-between">
                             <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export default async function AdminCategoriesPage() {
                                 Subcategories
                             </h4>
                             <div className="flex flex-wrap gap-2">
-                                {category.subcategories.map((sub) => (
+                                {category.subcategories.map((sub: any) => (
                                     <Badge key={sub.id} variant="gray" className="bg-gray-50">
                                         {sub.nameEn}
                                     </Badge>

@@ -57,7 +57,7 @@ export default async function ProJobsPage() {
     redirect('/auth-redirect');
   }
 
-  const jobs = professional.jobs;
+  const jobs = professional.jobs as any[];
   const activeJobs = jobs.filter(j => j.status === 'ACCEPTED' || j.status === 'IN_PROGRESS');
   const completedJobs = jobs.filter(j => j.status === 'COMPLETED');
 
@@ -102,54 +102,54 @@ export default async function ProJobsPage() {
           {activeJobs.map((job) => {
             const statusConfig = STATUS_VARIANT[job.status];
             const isReadyToStart = job.status === 'ACCEPTED';
-            
+
             return (
-            <Link key={job.id} href={`/pro/jobs/${job.id}`}>
-              <Card className="group relative hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
-                {isReadyToStart && (
-                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                    ✅ Ready
-                  </div>
-                )}
-                
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors truncate">
-                        {job.request.title}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
-                        <span className="flex items-center gap-1">
-                          📂 {job.request.category.nameEn}
+              <Link key={job.id} href={`/pro/jobs/${job.id}`}>
+                <Card className="group relative hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
+                  {isReadyToStart && (
+                    <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                      ✅ Ready
+                    </div>
+                  )}
+
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors truncate">
+                          {job.request.title}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
+                          <span className="flex items-center gap-1">
+                            📂 {job.request.category.nameEn}
+                          </span>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            👤 {job.request.client.user.firstName}
+                          </span>
+                        </div>
+                      </div>
+                      <Badge variant={statusConfig}>
+                        {STATUS_LABEL[job.status]}
+                      </Badge>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
+                      <div className="flex items-center gap-4 text-xs">
+                        <span className="flex items-center gap-1 font-semibold text-green-600">
+                          💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
                         </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          👤 {job.request.client.user.firstName}
+                        <span className="flex items-center gap-1 text-[#7C7373]">
+                          📅 {new Date(job.createdAt).toLocaleDateString()}
                         </span>
                       </div>
-                    </div>
-                    <Badge variant={statusConfig}>
-                      {STATUS_LABEL[job.status]}
-                    </Badge>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
-                    <div className="flex items-center gap-4 text-xs">
-                      <span className="flex items-center gap-1 font-semibold text-green-600">
-                        💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
-                      </span>
-                      <span className="flex items-center gap-1 text-[#7C7373]">
-                        📅 {new Date(job.createdAt).toLocaleDateString()}
+                      <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
+                        View details →
                       </span>
                     </div>
-                    <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
-                      View details →
-                    </span>
                   </div>
-                </div>
-              </Card>
-            </Link>
-          );
+                </Card>
+              </Link>
+            );
           })}
         </section>
       )}

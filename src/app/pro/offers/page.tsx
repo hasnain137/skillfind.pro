@@ -44,7 +44,7 @@ export default async function ProOffersPage() {
 
   if (!professional) redirect('/auth-redirect');
 
-  const offers = professional.offers;
+  const offers = professional.offers as any[];
   const pendingOffers = offers.filter(o => o.status === 'PENDING');
   const acceptedOffers = offers.filter(o => o.status === 'ACCEPTED');
   const rejectedOffers = offers.filter(o => o.status === 'REJECTED');

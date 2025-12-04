@@ -10,36 +10,21 @@ import { Badge } from "@/components/ui/Badge";
 
 export default async function ProRequestsPage() {
   const { userId } = await auth();
+  if (!userId) redirect('/login');
 
-  if (!userId) {
-    redirect('/login');
-  }
-
-  // 1. Get Professional Profile & Services
-  const professional = await getProfessionalWithRelations(userId, {
-    services: {
-      include: {
-        subcategory: {
-          include: {
-            category: true,
-          },
-        },
-      },
-    },
+  const professional: any = await getProfessionalWithRelations(userId, {
+    services: { include: { subcategory: { include: { category: true } } } },
   });
 
-  if (!professional) {
-    // If user is logged in but not a professional, redirect to role selection or home
-    redirect('/auth-redirect');
-  }
+  if (!professional) redirect('/auth-redirect');
 
   // 2. Get Category IDs from Professional's Services
   const serviceCategoryIds = professional.services.map(
-    (s) => s.subcategory.category.id
+    (s: any) => s.subcategory.category.id
   );
 
   // Remove duplicates
-  const uniqueCategoryIds = [...new Set(serviceCategoryIds)];
+  const uniqueCategoryIds = [...new Set(serviceCategoryIds)] as string[];
 
   // 3. Fetch Matching Open Requests
   const requests = await prisma.request.findMany({
@@ -68,7 +53,7 @@ export default async function ProRequestsPage() {
     orderBy: {
       createdAt: 'desc',
     },
-  });
+  }) as any[];
 
   const newRequests = requests.filter(r => {
     const daysSincePosted = Math.floor((Date.now() - r.createdAt.getTime()) / (1000 * 60 * 60 * 24));

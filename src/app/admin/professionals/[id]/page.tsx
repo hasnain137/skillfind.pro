@@ -5,6 +5,23 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import AdminProfessionalActions from './AdminProfessionalActions';
 
+import { Prisma } from '@prisma/client';
+
+type ProfessionalWithDetails = Prisma.ProfessionalGetPayload<{
+    include: {
+        user: true;
+        wallet: true;
+        documents: true;
+        services: {
+            include: {
+                subcategory: {
+                    include: { category: true }
+                }
+            }
+        }
+    }
+}>;
+
 export default async function AdminProfessionalDetailPage({
     params,
 }: {
@@ -26,7 +43,7 @@ export default async function AdminProfessionalDetailPage({
                 }
             }
         },
-    });
+    }) as any;
 
     if (!professional) {
         notFound();
@@ -78,9 +95,9 @@ export default async function AdminProfessionalDetailPage({
                     <Card padding="lg">
                         <h3 className="mb-4 text-lg font-bold text-[#333333]">Services</h3>
                         <div className="flex flex-wrap gap-2">
-                            {professional.services.map((service) => (
+                            {professional.services.map((service: any) => (
                                 <Badge key={service.id} variant="gray">
-                                    {service.subcategory.category.nameEn} › {service.subcategory.nameEn}
+                                    {service.subcategory?.category?.nameEn} › {service.subcategory?.nameEn}
                                 </Badge>
                             ))}
                             {professional.services.length === 0 && (
@@ -92,7 +109,7 @@ export default async function AdminProfessionalDetailPage({
                     <AdminProfessionalActions
                         professionalId={professional.id}
                         currentStatus={professional.status}
-                        documents={professional.documents.map(d => ({
+                        documents={professional.documents.map((d: any) => ({
                             id: d.id,
                             type: d.type,
                             status: d.status,

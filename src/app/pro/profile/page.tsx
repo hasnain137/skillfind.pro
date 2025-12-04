@@ -9,35 +9,16 @@ import ProfileForm from "./ProfileForm";
 
 export default async function ProProfilePage() {
   const { userId } = await auth();
+  if (!userId) redirect('/login');
 
-  if (!userId) {
-    redirect('/login');
-  }
-
-  const professional = await getProfessionalWithRelations(userId, {
-    user: {
-      select: {
-        dateOfBirth: true,
-        phoneNumber: true,
-      },
-    },
+  const professional: any = await getProfessionalWithRelations(userId, {
+    user: { select: { dateOfBirth: true, phoneNumber: true } },
     profile: true,
-    services: {
-      include: {
-        subcategory: {
-          include: {
-            category: true,
-          },
-        },
-      },
-    },
+    services: { include: { subcategory: { include: { category: true } } } },
   });
 
-  if (!professional) {
-    redirect('/auth-redirect');
-  }
+  if (!professional) redirect('/auth-redirect');
 
-  // Fetch categories for the service adder
   const categories = await prisma.category.findMany({
     include: {
       subcategories: true,

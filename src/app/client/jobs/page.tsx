@@ -54,8 +54,8 @@ export default async function ClientJobsPage() {
     .map(r => r.job)
     .filter((j): j is NonNullable<typeof j> => j !== null) || [];
 
-  const activeJobs = jobs.filter(j => j.status === 'PENDING' || j.status === 'IN_PROGRESS');
-  const completedJobs = jobs.filter(j => j.status === 'COMPLETED');
+  const activeJobs = jobs.filter(j => (j.status as string) === 'PENDING' || (j.status as string) === 'IN_PROGRESS');
+  const completedJobs = jobs.filter(j => (j.status as string) === 'COMPLETED');
   const totalSpent = jobs.reduce((sum, j) => sum + (j.agreedPrice || 0), 0);
 
   return (
@@ -110,8 +110,8 @@ export default async function ClientJobsPage() {
                 <span>⚡</span> Active Jobs ({activeJobs.length})
               </h2>
               {activeJobs.map((job) => {
-                const statusConfig = STATUS_VARIANT[job.status];
-                const canComplete = job.status === 'IN_PROGRESS';
+                const statusConfig = STATUS_VARIANT[job.status as string] || "gray";
+                const canComplete = (job.status as string) === 'IN_PROGRESS';
 
                 return (
                   <Link key={job.id} href={`/client/jobs/${job.id}`}>

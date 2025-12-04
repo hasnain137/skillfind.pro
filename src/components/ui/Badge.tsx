@@ -6,7 +6,8 @@ export type BadgeVariant =
   | "primary"
   | "success"
   | "warning"
-  | "neutral";
+  | "neutral"
+  | "destructive";
 
 type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
   variant?: BadgeVariant;
@@ -18,6 +19,7 @@ const VARIANTS: Record<BadgeVariant, string> = {
   success: "bg-[#ECFDF3] text-[#166534]",
   warning: "bg-[#FEF9C3] text-[#92400E]",
   neutral: "bg-[#F9FAFB] text-[#6B7280]",
+  destructive: "bg-[#FEF2F2] text-[#991B1B]",
 };
 
 export function Badge({

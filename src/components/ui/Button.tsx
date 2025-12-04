@@ -2,7 +2,7 @@
 import { ButtonHTMLAttributes } from "react";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "ghost" | "outline";
+  variant?: "primary" | "ghost" | "outline" | "success" | "warning" | "destructive";
 };
 
 export function Button({
@@ -20,6 +20,12 @@ export function Button({
       "text-[#333333] hover:bg-[#F3F4F6] focus-visible:ring-[#E5E7EB] border border-transparent hover:border-[#E5E7EB]",
     outline:
       "bg-white text-[#333333] border border-[#E5E7EB] hover:bg-[#F9FAFB] hover:border-[#D1D5DB] focus-visible:ring-[#E5E7EB]",
+    success:
+      "bg-[#ECFDF3] text-[#166534] hover:bg-[#D1FAE5] focus-visible:ring-[#166534]",
+    warning:
+      "bg-[#FEF9C3] text-[#92400E] hover:bg-[#FEF08A] focus-visible:ring-[#92400E]",
+    destructive:
+      "bg-[#FEF2F2] text-[#991B1B] hover:bg-[#FEE2E2] focus-visible:ring-[#991B1B]",
   };
 
   const padding = "px-4 py-2.5";
