@@ -26,9 +26,7 @@ interface Professional {
   }>;
 }
 
-function getInitials(firstName: string, lastName: string) {
-  return `${firstName[0]}${lastName[0]}`.toUpperCase();
-}
+
 
 import { unstable_cache } from 'next/cache';
 
@@ -110,8 +108,13 @@ function ProfessionalCard({
 
       {/* Profile Header */}
       <div className="flex items-start gap-3 pt-2">
-        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-base font-bold text-white shadow-md ring-2 ring-white">
-          {getInitials(user.firstName, user.lastName)}
+        <div className="relative">
+          <Avatar
+            firstName={user.firstName}
+            lastName={user.lastName}
+            size="lg"
+            className="h-14 w-14 border-2 border-white shadow-md"
+          />
           <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-[#10B981] border-2 border-white" title="Available now" />
         </div>
         <div className="flex-1 min-w-0">

@@ -98,9 +98,7 @@ export function SearchResults() {
   return (
     <div>
       {/* Mobile Filter Button */}
-      <div className="mb-4 lg:hidden">
-        <MobileFilterDrawer />
-      </div>
+      <MobileFilterDrawer />
 
       <div className="grid gap-6 lg:grid-cols-4">
         {/* Filters Sidebar - Desktop Only */}
@@ -110,73 +108,73 @@ export function SearchResults() {
 
         {/* Results */}
         <div className="lg:col-span-3">
-        {/* Results header */}
-        <div className="mb-4 flex items-center justify-between">
-          <p className="text-sm text-[#7C7373]">
-            {loading ? (
-              <span>Searching...</span>
-            ) : (
-              <span>
-                {total} professional{total !== 1 ? 's' : ''} found
-                {query && <span> for &quot;{query}&quot;</span>}
-              </span>
-            )}
-          </p>
-        </div>
-
-        {/* Loading state */}
-        {loading && (
-          <div className="flex justify-center py-12">
-            <Spinner size="lg" />
-          </div>
-        )}
-
-        {/* Results grid */}
-        {!loading && professionals.length > 0 && (
-          <>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-              {professionals.map((professional) => (
-                <ProfessionalCard key={professional.id} professional={professional} />
-              ))}
-            </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="mt-8 flex items-center justify-center gap-2">
-                <Button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                  className="px-4 py-2"
-                >
-                  Previous
-                </Button>
-                <span className="text-sm text-[#7C7373]">
-                  Page {page} of {totalPages}
+          {/* Results header */}
+          <div className="mb-4 flex items-center justify-between">
+            <p className="text-sm text-[#7C7373]">
+              {loading ? (
+                <span>Searching...</span>
+              ) : (
+                <span>
+                  {total} professional{total !== 1 ? 's' : ''} found
+                  {query && <span> for &quot;{query}&quot;</span>}
                 </span>
-                <Button
-                  onClick={() => setPage((p) => p + 1)}
-                  disabled={!hasMore}
-                  className="px-4 py-2"
-                >
-                  Next
-                </Button>
-              </div>
-            )}
-          </>
-        )}
+              )}
+            </p>
+          </div>
 
-        {/* Empty state */}
-        {!loading && professionals.length === 0 && (
-          <EmptyState
-            icon="🔍"
-            title="No professionals found"
-            description="Try adjusting your search filters or browse all categories to find the right professional for your needs."
-            action={{
-              label: 'Clear filters',
-              href: '/search',
-            }}
-          />
-        )}
+          {/* Loading state */}
+          {loading && (
+            <div className="flex justify-center py-12">
+              <Spinner size="lg" />
+            </div>
+          )}
+
+          {/* Results grid */}
+          {!loading && professionals.length > 0 && (
+            <>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+                {professionals.map((professional) => (
+                  <ProfessionalCard key={professional.id} professional={professional} />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-8 flex items-center justify-center gap-2">
+                  <Button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className="px-4 py-2"
+                  >
+                    Previous
+                  </Button>
+                  <span className="text-sm text-[#7C7373]">
+                    Page {page} of {totalPages}
+                  </span>
+                  <Button
+                    onClick={() => setPage((p) => p + 1)}
+                    disabled={!hasMore}
+                    className="px-4 py-2"
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Empty state */}
+          {!loading && professionals.length === 0 && (
+            <EmptyState
+              icon="🔍"
+              title="No professionals found"
+              description="Try adjusting your search filters or browse all categories to find the right professional for your needs."
+              action={{
+                label: 'Clear filters',
+                href: '/search',
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

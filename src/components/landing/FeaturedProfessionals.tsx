@@ -4,6 +4,7 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import { Avatar } from "@/components/ui/Avatar";
 
 type Professional = {
   id: string;
@@ -79,14 +80,7 @@ const FEATURED_PROFESSIONALS: Professional[] = [
   },
 ];
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-}
+
 
 function ProfessionalCard(pro: Professional) {
   const { id, name, role, location, isOnline, rating, reviews, priceFrom } =
@@ -95,9 +89,12 @@ function ProfessionalCard(pro: Professional) {
   return (
     <div className="flex min-w-[260px] flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#2563EBB3] text-xs font-semibold text-white">
-          {getInitials(name)}
-        </div>
+        <Avatar
+          firstName={name.split(' ')[0]}
+          lastName={name.split(' ')[1]}
+          size="md"
+          className="h-10 w-10"
+        />
         <div>
           <h3 className="text-sm font-semibold text-[#333333]">{name}</h3>
           <p className="text-xs text-[#7C7373]">{role}</p>

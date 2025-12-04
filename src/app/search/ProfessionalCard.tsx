@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
+import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 
 interface Professional {
@@ -27,9 +28,7 @@ interface Professional {
   }>;
 }
 
-function getInitials(firstName: string, lastName: string) {
-  return `${firstName[0]}${lastName[0]}`.toUpperCase();
-}
+
 
 export function ProfessionalCard({ professional }: { professional: Professional }) {
   const { user, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services } = professional;
@@ -46,9 +45,12 @@ export function ProfessionalCard({ professional }: { professional: Professional 
     <div className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#2563EBB3] text-sm font-semibold text-white">
-          {getInitials(user.firstName, user.lastName)}
-        </div>
+        <Avatar
+          firstName={user.firstName}
+          lastName={user.lastName}
+          size="lg"
+          className="h-12 w-12 border-2 border-white shadow-sm"
+        />
         <div className="flex-1 min-w-0">
           <h3 className="text-sm font-semibold text-[#333333] truncate">
             {user.firstName} {user.lastName}
