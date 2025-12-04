@@ -17,14 +17,20 @@ interface MatchingRequestsProps {
   requests: Request[];
 }
 
+import { EmptyState } from "@/components/ui/EmptyState";
+
 export function MatchingRequests({ requests }: MatchingRequestsProps) {
   if (requests.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-[#D1D5DB] bg-[#F9FAFB] p-8 text-center">
-        <div className="text-4xl mb-3">🔍</div>
-        <p className="text-sm font-medium text-[#7C7373]">No matching requests</p>
-        <p className="text-xs text-[#B0B0B0] mt-1">Complete your profile to get matched with clients</p>
-      </div>
+      <EmptyState
+        icon={<span className="text-4xl">🔍</span>}
+        title="No matching requests"
+        description="Complete your profile and add more services to get matched with clients."
+        action={{
+          label: "Update Profile",
+          href: "/pro/profile",
+        }}
+      />
     );
   }
 
@@ -34,8 +40,8 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
         const budgetDisplay = request.budgetMin && request.budgetMax
           ? `€${request.budgetMin}-${request.budgetMax}`
           : request.budgetMin
-          ? `From €${request.budgetMin}`
-          : 'Budget not specified';
+            ? `From €${request.budgetMin}`
+            : 'Budget not specified';
 
         const daysAgo = Math.floor((Date.now() - request.createdAt.getTime()) / (1000 * 60 * 60 * 24));
         const timeDisplay = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
@@ -67,7 +73,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
                 <span className="flex items-center gap-1 rounded-lg bg-[#EEF2FF] px-2.5 py-1 font-semibold text-[#2563EB]">
                   <span>💰</span> {budgetDisplay}
                 </span>
-                
+
                 {request.location && (
                   <span className="flex items-center gap-1 text-[#7C7373]">
                     <span>📍</span> {request.location}

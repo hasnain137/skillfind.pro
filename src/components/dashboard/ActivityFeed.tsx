@@ -42,14 +42,16 @@ function formatTimeAgo(date: Date): string {
   return date.toLocaleDateString();
 }
 
+import { EmptyState } from "@/components/ui/EmptyState";
+
 export function ActivityFeed({ activities }: ActivityFeedProps) {
   if (activities.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-[#D1D5DB] bg-[#F9FAFB] p-8 text-center">
-        <div className="text-4xl mb-3">📭</div>
-        <p className="text-sm font-medium text-[#7C7373]">No recent activity</p>
-        <p className="text-xs text-[#B0B0B0] mt-1">Your activity will appear here</p>
-      </div>
+      <EmptyState
+        icon={<span className="text-4xl">📭</span>}
+        title="No recent activity"
+        description="Your activity will appear here once you start interacting with requests and offers."
+      />
     );
   }
 

@@ -14,6 +14,7 @@ import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { calculateProfileCompletion } from "@/lib/profile-completion";
+import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 
 const QUICK_ACTIONS = [
   {
@@ -339,6 +340,7 @@ export default async function ProDashboardPage() {
           </ul>
         </Card>
       </div>
+      <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />
     </div>
   );
 }

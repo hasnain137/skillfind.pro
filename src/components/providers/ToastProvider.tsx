@@ -1,28 +1,15 @@
-// src/components/providers/ToastProvider.tsx
 'use client';
 
-import { createContext, useContext, ReactNode } from 'react';
-import { useToast, ToastContainer } from '@/components/ui/Toast';
+import { Toaster } from 'sonner';
 
-type ToastContextType = ReturnType<typeof useToast>;
-
-const ToastContext = createContext<ToastContextType | null>(null);
-
-export function ToastProvider({ children }: { children: ReactNode }) {
-  const toast = useToast();
-
+export function ToastProvider() {
   return (
-    <ToastContext.Provider value={toast}>
-      {children}
-      <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
-    </ToastContext.Provider>
+    <Toaster
+      position="bottom-right"
+      richColors
+      closeButton
+      theme="light"
+      className="font-sans"
+    />
   );
-}
-
-export function useToastContext() {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToastContext must be used within ToastProvider');
-  }
-  return context;
 }

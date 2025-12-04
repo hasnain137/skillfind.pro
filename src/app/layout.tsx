@@ -14,6 +14,9 @@ export const viewport = {
   maximumScale: 5,
 };
 
+import { ToastProvider } from "@/components/providers/ToastProvider";
+import { ProgressBarProvider } from "@/components/providers/ProgressBarProvider";
+
 export default function RootLayout({
   children,
 }: {
@@ -26,6 +29,8 @@ export default function RootLayout({
           className="bg-[#FAFAFA] text-[#333333] antialiased"
           suppressHydrationWarning
         >
+          <ProgressBarProvider />
+          <ToastProvider />
           {children}
         </body>
       </html>

@@ -11,6 +11,7 @@ import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { calculateProfileCompletion } from "@/lib/profile-completion";
+import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 
 const QUICK_ACTIONS = [
   {
@@ -84,7 +85,7 @@ export default async function ClientDashboardPage() {
   // Generate activity feed
   const activities = requests.flatMap(request => {
     const items: any[] = [];
-    
+
     // Request created
     items.push({
       id: `request-${request.id}`,
@@ -185,6 +186,8 @@ export default async function ClientDashboardPage() {
         />
         <RequestTimeline requests={timelineRequests} />
       </Card>
+
+      <WelcomeModal userRole="CLIENT" firstName={firstName} />
     </div>
   );
 }

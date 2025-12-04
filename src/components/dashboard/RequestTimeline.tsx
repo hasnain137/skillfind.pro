@@ -37,20 +37,20 @@ const STATUS_CONFIG = {
   },
 };
 
+import { EmptyState } from "@/components/ui/EmptyState";
+
 export function RequestTimeline({ requests }: RequestTimelineProps) {
   if (requests.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-[#D1D5DB] bg-[#F9FAFB] p-8 text-center">
-        <div className="text-4xl mb-3">📋</div>
-        <p className="text-sm font-medium text-[#7C7373]">No requests yet</p>
-        <p className="text-xs text-[#B0B0B0] mt-1">Create your first request to get started</p>
-        <Link 
-          href="/client/requests/new"
-          className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1D4FD8] transition-colors"
-        >
-          Create Request
-        </Link>
-      </div>
+      <EmptyState
+        icon={<span className="text-4xl">📋</span>}
+        title="No requests yet"
+        description="Create your first request to get started and receive offers from professionals."
+        action={{
+          label: "Create Request",
+          href: "/client/requests/new",
+        }}
+      />
     );
   }
 
