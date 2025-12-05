@@ -135,9 +135,9 @@ export default async function ProDashboardPage() {
     : 'N/A';
 
   const stats = [
-    { label: "New matching requests", value: matchingRequestsToday },
-    { label: "Active jobs", value: professional.jobs.length },
-    { label: "Average rating", value: avgRating },
+    { label: "New matching requests", value: matchingRequestsToday, icon: "🔍" },
+    { label: "Active jobs", value: professional.jobs.length, icon: "💼" },
+    { label: "Average rating", value: avgRating, icon: "⭐" },
   ];
 
   const highlights = [

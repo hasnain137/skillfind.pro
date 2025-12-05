@@ -91,9 +91,9 @@ export default async function ClientDashboardPage() {
   ];
 
   const stats = [
-    { label: "Open requests", value: openRequests },
-    { label: "Total offers received", value: totalOffers },
-    { label: "Completed requests", value: completedRequests },
+    { label: "Open requests", value: openRequests, icon: "📝" },
+    { label: "Total offers received", value: totalOffers, icon: "📬" },
+    { label: "Completed requests", value: completedRequests, icon: "✅" },
   ];
 
   // Calculate profile completion
@@ -168,6 +168,7 @@ export default async function ClientDashboardPage() {
             key={stat.label}
             label={stat.label}
             value={stat.value}
+            icon={stat.icon}
           />
         ))}
       </section>
