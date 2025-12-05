@@ -26,19 +26,19 @@ export function DashboardHero({
   highlights = [],
 }: DashboardHeroProps) {
   return (
-    <div className="rounded-3xl border border-[#DDE7FF] bg-gradient-to-r from-[#EEF2FF] via-white to-white p-6 shadow-sm">
+    <div className="rounded-3xl bg-gradient-to-r from-primary-50 via-white to-white p-6 shadow-soft ring-1 ring-primary-100/50">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#7C7373]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-surface-500">
             {eyebrow}
           </p>
-          <h1 className="text-2xl font-semibold text-[#1F2937]">{title}</h1>
-          <p className="text-sm text-[#4B5563]">{description}</p>
+          <h1 className="text-2xl font-semibold text-surface-900">{title}</h1>
+          <p className="text-sm text-surface-600">{description}</p>
         </div>
         {action ? (
           <Link
             href={action.href}
-            className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1D4FD8]"
+            className="inline-flex items-center justify-center rounded-full bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-primary-700"
           >
             <span className="leading-none">{action.label}</span>
           </Link>
@@ -50,14 +50,14 @@ export function DashboardHero({
           {highlights.map((item) => (
             <div
               key={item.label}
-              className="rounded-2xl border border-white/70 bg-white/60 p-4 shadow-[0_1px_3px_rgba(15,23,42,0.08)] backdrop-blur"
+              className="rounded-2xl bg-white/70 p-4 shadow-soft-xs ring-1 ring-black/[0.02] backdrop-blur"
             >
-              <p className="text-[11px] text-[#7C7373]">{item.label}</p>
-              <p className="text-xl font-semibold text-[#1F2937]">
+              <p className="text-[11px] text-surface-500">{item.label}</p>
+              <p className="text-xl font-semibold text-surface-900">
                 {item.value}
               </p>
               {item.helper ? (
-                <p className="text-[11px] text-[#9CA3AF]">{item.helper}</p>
+                <p className="text-[11px] text-surface-400">{item.helper}</p>
               ) : null}
             </div>
           ))}

@@ -101,9 +101,9 @@ function ProfessionalCard({
   const additionalServices = services.length > 1 ? services.length - 1 : 0;
 
   return (
-    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm shadow-[#E5E7EB]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#2563EB]/20">
+    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-soft ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg hover:ring-primary-500/20">
       {/* Top Badge - Verified */}
-      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1 text-[10px] font-bold text-white shadow-md">
+      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-primary-600 px-3 py-1 text-[10px] font-bold text-white shadow-soft">
         <span>✓</span> Verified
       </div>
 
@@ -114,17 +114,17 @@ function ProfessionalCard({
             firstName={user.firstName}
             lastName={user.lastName}
             size="lg"
-            className="h-16 w-16 border-2 border-white shadow-md ring-2 ring-blue-50"
+            className="h-16 w-16 border-2 border-white shadow-soft ring-2 ring-primary-50"
           />
-          <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-green-500 border-2 border-white ring-2 ring-green-100" title="Available now" />
+          <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-success border-2 border-white ring-2 ring-success-light" title="Available now" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-bold text-[#333333] truncate group-hover:text-blue-600 transition-colors">
+          <h3 className="text-lg font-bold text-surface-900 truncate group-hover:text-primary-600 transition-colors">
             {user.firstName} {user.lastName}
           </h3>
-          <p className="text-sm font-medium text-[#7C7373] mt-0.5">{primaryService}</p>
+          <p className="text-sm font-medium text-surface-500 mt-0.5">{primaryService}</p>
           {additionalServices > 0 && (
-            <p className="text-xs text-blue-600 font-bold mt-1">
+            <p className="text-xs text-primary-600 font-bold mt-1">
               +{additionalServices} more {additionalServices === 1 ? 'service' : 'services'}
             </p>
           )}
@@ -132,10 +132,10 @@ function ProfessionalCard({
       </div>
 
       {/* Rating */}
-      <div className="flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 border border-amber-100">
+      <div className="flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 ring-1 ring-amber-100/50">
         <div className="flex items-center gap-0.5">
           {[...Array(5)].map((_, i) => (
-            <span key={i} className={`text-sm ${i < Math.round(averageRating) ? 'text-amber-400' : 'text-slate-200'}`}>
+            <span key={i} className={`text-sm ${i < Math.round(averageRating) ? 'text-amber-400' : 'text-surface-200'}`}>
               ★
             </span>
           ))}
@@ -146,7 +146,7 @@ function ProfessionalCard({
 
       {/* Bio snippet */}
       {bio && (
-        <p className="text-sm text-[#7C7373] leading-relaxed line-clamp-2">
+        <p className="text-sm text-surface-500 leading-relaxed line-clamp-2">
           {bio}
         </p>
       )}
@@ -154,27 +154,27 @@ function ProfessionalCard({
       {/* Location & Remote */}
       <div className="flex flex-wrap items-center gap-2">
         {city && (
-          <span className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+          <span className="flex items-center gap-1.5 rounded-full bg-surface-100 px-3 py-1 text-xs font-semibold text-surface-700">
             <span>📍</span> {city}
           </span>
         )}
         {remoteAvailability !== 'NO_REMOTE' && (
-          <span className="flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+          <span className="flex items-center gap-1.5 rounded-full bg-success-light px-3 py-1 text-xs font-semibold text-success-dark">
             <span>💻</span> Remote
           </span>
         )}
       </div>
 
       {/* Price */}
-      <div className="border-t border-slate-100 pt-4 mt-auto">
+      <div className="border-t border-surface-100 pt-4 mt-auto">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Starting from</span>
-          <span className="text-lg font-bold text-blue-600">{priceDisplay}</span>
+          <span className="text-xs font-medium text-surface-500 uppercase tracking-wide">Starting from</span>
+          <span className="text-lg font-bold text-primary-600">{priceDisplay}</span>
         </div>
 
         {/* CTA Button */}
         <Link href={`/professionals/${professional.id}`}>
-          <Button className="w-full justify-center py-2.5 text-sm font-bold shadow-sm hover:shadow-md transition-all">
+          <Button className="w-full justify-center py-2.5 text-sm font-bold transition-all">
             View Profile
           </Button>
         </Link>
@@ -191,17 +191,17 @@ export async function FeaturedProfessionalsServer() {
     return (
       <section
         id="top-professionals"
-        className="py-20 md:py-24 bg-white border-b border-slate-200"
+        className="py-20 md:py-24 bg-white border-b border-surface-200"
       >
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+            <p className="text-sm font-bold uppercase tracking-wider text-primary-600">
               Featured professionals
             </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
               Our top-rated professionals will appear here soon.
             </h2>
-            <p className="mt-4 text-lg text-[#7C7373]">
+            <p className="mt-4 text-lg text-surface-500">
               Start exploring by searching for the service you need or browse by category.
             </p>
           </div>
@@ -213,17 +213,17 @@ export async function FeaturedProfessionalsServer() {
   return (
     <section
       id="top-professionals"
-      className="py-20 md:py-24 bg-white border-b border-slate-200"
+      className="py-20 md:py-24 bg-white border-b border-surface-200"
     >
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+          <p className="text-sm font-bold uppercase tracking-wider text-primary-600">
             Featured professionals
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
             Meet highly rated experts.
           </h2>
-          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-surface-500 max-w-2xl mx-auto">
             These professionals have been vetted and reviewed by clients just like you.
           </p>
         </div>
@@ -248,7 +248,7 @@ export async function FeaturedProfessionalsServer() {
 
         <div className="mt-12 text-center">
           <Link href="/search">
-            <Button variant="outline" className="px-8 py-3 h-auto text-base font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:text-slate-900">
+            <Button variant="outline" className="px-8 py-3 h-auto text-base font-semibold">
               View All Professionals
             </Button>
           </Link>

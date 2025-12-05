@@ -25,19 +25,19 @@ export function LiveStats() {
 
   return (
     <div className="mt-8 animate-fade-in-up-delay-2">
-      <div className="mx-auto max-w-4xl rounded-2xl border border-[#E5E7EB] bg-white/80 backdrop-blur-sm p-6 shadow-sm">
+      <div className="mx-auto max-w-4xl rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-soft ring-1 ring-black/[0.03]">
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {statItems.map((stat, index) => (
-            <div 
-              key={stat.label} 
+            <div
+              key={stat.label}
               className="text-center animate-scale-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className="text-2xl font-bold text-[#2563EB] mb-0.5">
+              <div className="text-2xl font-bold text-primary-600 mb-0.5">
                 {stat.value}
               </div>
-              <div className="text-xs text-[#7C7373] font-medium">
+              <div className="text-xs text-surface-500 font-medium">
                 {stat.label}
               </div>
             </div>

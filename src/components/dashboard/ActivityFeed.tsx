@@ -22,10 +22,10 @@ const ACTIVITY_ICONS = {
 };
 
 const ACTIVITY_COLORS = {
-  offer_received: 'from-blue-50 to-blue-100 border-blue-200',
-  request_created: 'from-green-50 to-green-100 border-green-200',
-  job_completed: 'from-purple-50 to-purple-100 border-purple-200',
-  review_left: 'from-yellow-50 to-yellow-100 border-yellow-200',
+  offer_received: 'from-primary-50 to-primary-100',
+  request_created: 'from-green-50 to-green-100',
+  job_completed: 'from-purple-50 to-purple-100',
+  review_left: 'from-yellow-50 to-yellow-100',
 };
 
 function formatTimeAgo(date: Date): string {
@@ -59,23 +59,23 @@ export function ActivityFeed({ activities }: ActivityFeedProps) {
     <div className="space-y-3">
       {activities.map((activity) => {
         const Content = (
-          <div className={`group flex items-start gap-4 rounded-xl border bg-gradient-to-br p-4 transition-all duration-200 ${ACTIVITY_COLORS[activity.type]} ${activity.href ? 'hover:shadow-md hover:-translate-y-0.5 cursor-pointer' : ''}`}>
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm text-xl">
+          <div className={`group flex items-start gap-4 rounded-xl bg-gradient-to-br p-4 shadow-soft-xs ring-1 ring-black/[0.02] transition-all duration-200 ${ACTIVITY_COLORS[activity.type]} ${activity.href ? 'hover:shadow-soft hover:-translate-y-0.5 cursor-pointer' : ''}`}>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-soft-xs text-xl">
               {ACTIVITY_ICONS[activity.type]}
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-[#333333] group-hover:text-[#2563EB] transition-colors">
+              <h4 className="text-sm font-semibold text-surface-900 group-hover:text-primary-600 transition-colors">
                 {activity.title}
               </h4>
-              <p className="text-xs text-[#7C7373] mt-1 line-clamp-2">
+              <p className="text-xs text-surface-500 mt-1 line-clamp-2">
                 {activity.description}
               </p>
-              <p className="text-[10px] text-[#B0B0B0] mt-2 font-medium">
+              <p className="text-[10px] text-surface-400 mt-2 font-medium">
                 {formatTimeAgo(activity.timestamp)}
               </p>
             </div>
             {activity.href && (
-              <div className="flex items-center text-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex items-center text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-sm">→</span>
               </div>
             )}
