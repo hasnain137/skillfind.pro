@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 
@@ -76,11 +77,17 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                 throw new Error(data.message || data.error?.message || 'Failed to send offer');
             }
 
-            // Success! Redirect to offers list
+            // Success! Show toast and redirect
+            toast.success('Offer sent successfully!', {
+                description: 'The client will be notified of your offer.',
+            });
             router.push('/pro/offers');
             router.refresh();
         } catch (err: any) {
             setError(err.message || 'An error occurred. Please try again.');
+            toast.error('Failed to send offer', {
+                description: err.message,
+            });
         } finally {
             setLoading(false);
         }

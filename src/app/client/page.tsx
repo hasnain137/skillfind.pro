@@ -30,12 +30,6 @@ const QUICK_ACTIONS = [
 ];
 
 
-const HERO_HIGHLIGHTS = [
-  { label: "Next steps", value: "Review offers", helper: "2 tasks awaiting" },
-  { label: "Verification", value: "Phone verified", helper: "Email pending" },
-  { label: "Messages", value: "New chat", helper: "1 unread conversation" },
-];
-
 export default async function ClientDashboardPage() {
   // Get authenticated user
   const { userId } = await auth();
@@ -66,9 +60,35 @@ export default async function ClientDashboardPage() {
   // Calculate stats
   const requests = dbUser?.clientProfile?.requests || [];
   const openRequests = requests.filter(r => r.status === 'OPEN').length;
-  const requestsWithOffers = requests.filter(r => r.offers.length > 0).length;
+  const requestsWithOffers = requests.filter(r => r.offers.length > 0);
+  const pendingOffers = requestsWithOffers.reduce((sum, r) =>
+    sum + r.offers.filter(o => o.status === 'PENDING').length, 0
+  );
   const completedRequests = requests.filter(r => r.status === 'COMPLETED').length;
   const totalOffers = requests.reduce((sum, r) => sum + r.offers.length, 0);
+
+  // Build dynamic highlights based on actual user state
+  const heroHighlights = [
+    {
+      label: "Next steps",
+      value: pendingOffers > 0 ? "Review offers" : openRequests > 0 ? "Waiting for offers" : "Create a request",
+      helper: pendingOffers > 0
+        ? `${pendingOffers} offer${pendingOffers > 1 ? 's' : ''} to review`
+        : openRequests > 0
+          ? `${openRequests} open request${openRequests > 1 ? 's' : ''}`
+          : "Get started now"
+    },
+    {
+      label: "Verification",
+      value: user?.emailAddresses[0]?.verification?.status === 'verified' ? "Email verified" : "Email pending",
+      helper: user?.phoneNumbers?.[0]?.verification?.status === 'verified' ? "Phone verified ✓" : "Add phone for trust"
+    },
+    {
+      label: "Activity",
+      value: `${totalOffers} offer${totalOffers !== 1 ? 's' : ''}`,
+      helper: completedRequests > 0 ? `${completedRequests} completed` : "No jobs yet"
+    },
+  ];
 
   const stats = [
     { label: "Open requests", value: openRequests },
@@ -132,7 +152,7 @@ export default async function ClientDashboardPage() {
         title={`Welcome back, ${firstName}`}
         description="You're in control of every service request, from posting details to choosing the best professional."
         action={{ label: "New request", href: "/client/requests/new" }}
-        highlights={HERO_HIGHLIGHTS}
+        highlights={heroHighlights}
       />
 
       {/* Profile Completion Banner */}

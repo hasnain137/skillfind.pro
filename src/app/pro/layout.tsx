@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ClientUserButton } from "@/components/layout/ClientUserButton";
 import { Navbar } from "@/components/layout/Navbar";
+import { SidebarNav } from "@/components/layout/SidebarNav";
+import { MobileDashboardNav } from "@/components/layout/MobileDashboardNav";
 
 export const metadata: Metadata = {
   title: "Professional Area | SkillFind",
@@ -11,12 +12,21 @@ export const metadata: Metadata = {
 };
 
 const NAV_LINKS = [
-  { label: "Dashboard", href: "/pro" },
-  { label: "Matching requests", href: "/pro/requests" },
-  { label: "My offers", href: "/pro/offers" },
-  { label: "My jobs", href: "/pro/jobs" },
-  { label: "My profile", href: "/pro/profile" },
-  { label: "Wallet", href: "/pro/wallet" },
+  { label: "Dashboard", href: "/pro", icon: "🏠" },
+  { label: "Requests", href: "/pro/requests", icon: "🔍" },
+  { label: "Offers", href: "/pro/offers", icon: "📤" },
+  { label: "Jobs", href: "/pro/jobs", icon: "💼" },
+  { label: "Wallet", href: "/pro/wallet", icon: "💰" },
+];
+
+// Separate full nav links for sidebar (includes profile)
+const SIDEBAR_LINKS = [
+  { label: "Dashboard", href: "/pro", icon: "🏠" },
+  { label: "Matching requests", href: "/pro/requests", icon: "🔍" },
+  { label: "My offers", href: "/pro/offers", icon: "📤" },
+  { label: "My jobs", href: "/pro/jobs", icon: "💼" },
+  { label: "My profile", href: "/pro/profile", icon: "👤" },
+  { label: "Wallet", href: "/pro/wallet", icon: "💰" },
 ];
 
 export default function ProLayout({
@@ -25,11 +35,12 @@ export default function ProLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#F3F4F6]">
+    <div className="min-h-screen bg-[#F3F4F6] pb-20 lg:pb-0">
       <Navbar />
-      <div className="py-10">
+      <div className="py-6 lg:py-10">
         <Container className="flex flex-col gap-6 lg:flex-row">
-          <aside className="rounded-2xl border border-[#DDE7FF] bg-gradient-to-b from-white via-[#F7FAFF] to-[#EEF2FF] p-5 shadow-sm lg:w-64">
+          {/* Desktop Sidebar - Hidden on mobile */}
+          <aside className="hidden lg:block rounded-2xl border border-[#DDE7FF] bg-gradient-to-b from-white via-[#F7FAFF] to-[#EEF2FF] p-5 shadow-sm lg:w-64">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
@@ -42,17 +53,7 @@ export default function ProLayout({
               <ClientUserButton />
             </div>
 
-            <nav className="mt-6 flex flex-col gap-2 text-sm font-semibold text-[#7C7373]">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="rounded-xl px-3 py-2 text-left hover:bg-[#F3F4F6] hover:text-[#333333]"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+            <SidebarNav links={SIDEBAR_LINKS} />
 
             <p className="mt-8 text-xs text-[#7C7373]">
               This space is for professionals to discover matching client
@@ -61,12 +62,15 @@ export default function ProLayout({
           </aside>
 
           <div className="flex-1">
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4 lg:p-6 shadow-sm">
               {children}
             </div>
           </div>
         </Container>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileDashboardNav links={NAV_LINKS} />
     </div>
   );
 }

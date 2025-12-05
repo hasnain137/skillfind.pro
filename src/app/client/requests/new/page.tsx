@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -85,7 +86,10 @@ export default function NewClientRequestPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Success! Redirect to requests list
+        // Success! Show toast and redirect
+        toast.success('Request published!', {
+          description: 'Matching professionals will start sending you offers.',
+        });
         router.push('/client/requests');
       } else {
         // Handle structured validation errors
@@ -98,10 +102,16 @@ export default function NewClientRequestPage() {
         }
 
         setError(errorMessage);
+        toast.error('Failed to create request', {
+          description: errorMessage,
+        });
         console.error('API Error:', data);
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
+      toast.error('Something went wrong', {
+        description: 'Please try again.',
+      });
       console.error('Error creating request:', err);
     } finally {
       setLoading(false);

@@ -4,6 +4,7 @@ import { HTMLAttributes } from "react";
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   variant?: "default" | "muted" | "dashed";
   padding?: "none" | "sm" | "md" | "lg";
+  interactive?: boolean;
 };
 
 const VARIANTS: Record<NonNullable<CardProps["variant"]>, string> = {
@@ -22,14 +23,18 @@ const PADDING: Record<NonNullable<CardProps["padding"]>, string> = {
 export function Card({
   variant = "default",
   padding = "md",
+  interactive = false,
   className = "",
   ...props
 }: CardProps) {
+  const interactiveStyles = interactive
+    ? "cursor-pointer transition-all duration-200 hover:border-[#2563EB] hover:shadow-md active:scale-[0.99]"
+    : "";
+
   return (
     <div
-      className={`rounded-2xl border ${VARIANTS[variant]} ${PADDING[padding]} ${className}`}
+      className={`rounded-2xl border ${VARIANTS[variant]} ${PADDING[padding]} ${interactiveStyles} ${className}`}
       {...props}
     />
   );
 }
-
