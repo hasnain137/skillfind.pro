@@ -1,32 +1,36 @@
 // src/components/ui/StatCard.tsx
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, HTMLAttributes } from 'react';
 import { Card } from "./Card";
 
 type TrendDirection = 'up' | 'down' | 'neutral';
 
-type StatCardProps = {
+interface TrendData {
+  value: number;
+  direction: TrendDirection;
+  label?: string;
+}
+
+interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   label: string;
   value: string | number;
   helperText?: string;
-  icon?: string;
-  trend?: {
-    value: number; // percentage change
-    direction: TrendDirection;
-    label?: string; // e.g., "vs last week"
-  };
+  icon?: React.ReactNode;
+  trend?: TrendData;
   animate?: boolean;
-};
+  variant?: 'default' | 'gradient';
+  gradientColor?: 'blue' | 'green' | 'orange' | 'purple' | 'red';
+}
 
 // Animated counter hook
-function useAnimatedCounter(end: number, duration: number = 1000, animate: boolean = true) {
+function useAnimatedCounter(end: number, duration: number = 800, animate: boolean = true) {
   const [count, setCount] = useState(animate ? 0 : end);
   const countRef = useRef(0);
   const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!animate || typeof end !== 'number') {
+    if (!animate || typeof end !== 'number' || isNaN(end)) {
       setCount(end);
       return;
     }
@@ -35,7 +39,7 @@ function useAnimatedCounter(end: number, duration: number = 1000, animate: boole
       if (!startTimeRef.current) startTimeRef.current = timestamp;
       const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
 
-      // Easing function for smooth animation
+      // Easing function - ease out quart for smooth deceleration
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       countRef.current = Math.floor(easeOutQuart * end);
       setCount(countRef.current);
@@ -57,22 +61,32 @@ function useAnimatedCounter(end: number, duration: number = 1000, animate: boole
   return count;
 }
 
-const TREND_STYLES = {
+// Trend indicator styles using design tokens
+const TREND_STYLES: Record<TrendDirection, { bg: string; text: string; icon: string }> = {
   up: {
-    bg: 'bg-green-50',
-    text: 'text-green-600',
+    bg: 'bg-success-light',
+    text: 'text-success-dark',
     icon: '↑',
   },
   down: {
-    bg: 'bg-red-50',
-    text: 'text-red-600',
+    bg: 'bg-error-light',
+    text: 'text-error-dark',
     icon: '↓',
   },
   neutral: {
-    bg: 'bg-gray-50',
-    text: 'text-gray-500',
+    bg: 'bg-surface-100',
+    text: 'text-surface-500',
     icon: '→',
   },
+};
+
+// Gradient backgrounds
+const GRADIENT_COLORS: Record<string, string> = {
+  blue: 'from-primary-50 to-primary-100 border-primary-200',
+  green: 'from-green-50 to-green-100 border-green-200',
+  orange: 'from-orange-50 to-orange-100 border-orange-200',
+  purple: 'from-purple-50 to-purple-100 border-purple-200',
+  red: 'from-red-50 to-red-100 border-red-200',
 };
 
 export function StatCard({
@@ -81,47 +95,68 @@ export function StatCard({
   helperText,
   icon,
   trend,
-  animate = true
+  animate = true,
+  variant = 'default',
+  gradientColor,
+  className = "",
+  ...props
 }: StatCardProps) {
   const numericValue = typeof value === 'number' ? value : parseFloat(String(value));
   const isNumeric = !isNaN(numericValue) && typeof value === 'number';
   const displayValue = isNumeric ? useAnimatedCounter(numericValue, 800, animate) : value;
 
+  const cardClass = variant === 'gradient' && gradientColor
+    ? `bg-gradient-to-br ${GRADIENT_COLORS[gradientColor]}`
+    : '';
+
   return (
-    <Card className="p-4 hover:shadow-md transition-shadow" variant="default">
+    <Card
+      variant={variant === 'gradient' ? 'default' : 'default'}
+      className={`
+        hover:shadow-soft transition-shadow duration-200
+        animate-fade-in-up
+        ${cardClass}
+        ${className}
+      `.trim().replace(/\s+/g, ' ')}
+      padding="lg"
+      {...props}
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-[11px] font-medium text-[#7C7373] uppercase tracking-wide">
+          {/* Label */}
+          <p className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider">
             {label}
           </p>
-          <p className="mt-1.5 text-2xl font-bold text-[#333333] tabular-nums">
+
+          {/* Value */}
+          <p className="mt-1.5 text-2xl font-bold text-surface-900 tabular-nums">
             {displayValue}
           </p>
 
           {/* Trend Indicator */}
           {trend && (
-            <div className="mt-2 flex items-center gap-1.5">
+            <div className="mt-2.5 flex items-center gap-1.5">
               <span className={`
-                inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold
+                inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold
                 ${TREND_STYLES[trend.direction].bg} ${TREND_STYLES[trend.direction].text}
               `}>
                 {TREND_STYLES[trend.direction].icon} {Math.abs(trend.value)}%
               </span>
               {trend.label && (
-                <span className="text-[10px] text-[#9CA3AF]">{trend.label}</span>
+                <span className="text-[10px] text-surface-400">{trend.label}</span>
               )}
             </div>
           )}
 
           {/* Helper Text */}
           {helperText && !trend && (
-            <p className="mt-1 text-[11px] text-[#9CA3AF]">{helperText}</p>
+            <p className="mt-1.5 text-[11px] text-surface-400">{helperText}</p>
           )}
         </div>
 
         {/* Icon */}
         {icon && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F3F4F6] text-lg">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-100 text-lg shrink-0">
             {icon}
           </div>
         )}
@@ -129,3 +164,5 @@ export function StatCard({
     </Card>
   );
 }
+
+export default StatCard;
