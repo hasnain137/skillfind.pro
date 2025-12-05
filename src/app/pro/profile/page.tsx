@@ -3,6 +3,8 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getProfessionalWithRelations } from "@/lib/get-professional";
+import { calculateProfessionalCompletion } from "@/lib/profile-completion";
+import Link from 'next/link';
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import ProfileForm from "./ProfileForm";
@@ -29,12 +31,8 @@ export default async function ProProfilePage() {
   });
 
   // Calculate profile completion
-  let profileCompletion = 0;
-  if (professional.bio) profileCompletion += 25;
-  if (professional.services.length > 0) profileCompletion += 25;
-  if (professional.city) profileCompletion += 15;
-  if (professional.isVerified) profileCompletion += 20;
-  if (professional.profile?.hourlyRateMin) profileCompletion += 15;
+  const completionData = calculateProfessionalCompletion(professional);
+  const profileCompletion = completionData.percentage;
 
   return (
     <div className="space-y-6">
@@ -72,11 +70,13 @@ export default async function ProProfilePage() {
           <div className="mt-4 space-y-2">
             <p className="text-xs font-semibold text-[#333333]">Complete these to reach 100%:</p>
             <div className="grid gap-2 sm:grid-cols-2 text-xs text-[#7C7373]">
-              {!professional.bio && <p>• Add a compelling bio</p>}
-              {professional.services.length === 0 && <p>• Add at least one service</p>}
-              {!professional.city && <p>• Set your location</p>}
-              {!professional.isVerified && <p>• Complete verification</p>}
-              {!professional.profile?.hourlyRateMin && <p>• Set your pricing</p>}
+              {completionData.missingSteps.map((step) => (
+                <Link key={step.id} href={step.actionUrl || '#'}>
+                  <p className="hover:text-blue-600 hover:underline cursor-pointer">
+                    • {step.label} {step.weight > 0 && <span className="text-gray-400">({step.weight}%)</span>}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         )}

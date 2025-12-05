@@ -33,9 +33,9 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
     const [personalData, setPersonalData] = useState({
         firstName: initialClient.user?.firstName || '',
         lastName: initialClient.user?.lastName || '',
-        dateOfBirth: initialClient.user?.dateOfBirth 
-            ? (typeof initialClient.user.dateOfBirth === 'string' 
-                ? initialClient.user.dateOfBirth.split('T')[0] 
+        dateOfBirth: initialClient.user?.dateOfBirth
+            ? (typeof initialClient.user.dateOfBirth === 'string'
+                ? initialClient.user.dateOfBirth.split('T')[0]
                 : new Date(initialClient.user.dateOfBirth).toISOString().split('T')[0])
             : '',
         phoneNumber: initialClient.user?.phoneNumber || '',
@@ -107,7 +107,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 <h3 className="text-base font-bold text-[#333333] mb-4 flex items-center gap-2">
                     <span>👤</span> Basic Information
                 </h3>
-                
+
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label htmlFor="firstName" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
@@ -158,7 +158,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                     <span>📋</span> Personal Information
                 </h4>
-                
+
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label htmlFor="dob" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
@@ -196,7 +196,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                     <span>📍</span> Location
                 </h4>
-                
+
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">City</label>
@@ -232,6 +232,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                             <option value="GB">United Kingdom</option>
                             <option value="US">United States</option>
                             <option value="CA">Canada</option>
+                            <option value="AU">Australia</option>
                             <option value="OTHER">Other</option>
                         </select>
                     </div>
@@ -243,7 +244,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                     <span>⚙️</span> Preferences
                 </h4>
-                
+
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">

@@ -88,7 +88,16 @@ export default function NewClientRequestPage() {
         // Success! Redirect to requests list
         router.push('/client/requests');
       } else {
-        setError(data.message || data.error?.message || 'Failed to create request');
+        // Handle structured validation errors
+        let errorMessage = data.message || data.error?.message || 'Failed to create request';
+
+        if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
+          errorMessage = data.error.details
+            .map((d: any) => d.message)
+            .join('. ');
+        }
+
+        setError(errorMessage);
         console.error('API Error:', data);
       }
     } catch (err) {

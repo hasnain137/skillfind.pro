@@ -35,7 +35,16 @@ export default function AcceptOfferButton({
         router.refresh();
       } else {
         // Display the specific error message from the API
-        toast.error(data.message || 'Failed to accept offer');
+        let errorMessage = data.error?.message || data.message || 'Failed to accept offer';
+
+        // Handle structured validation errors if present
+        if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
+          errorMessage = data.error.details
+            .map((d: any) => d.message)
+            .join('. ');
+        }
+
+        toast.error(errorMessage);
       }
     } catch (err) {
       toast.error('An error occurred. Please try again.');

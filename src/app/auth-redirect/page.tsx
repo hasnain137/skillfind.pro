@@ -83,12 +83,12 @@ export default function AuthRedirectPage() {
               console.log('User needs to complete profile');
               console.log('Missing fields:', profileData.missingFields);
               setSelectedRole(role as 'CLIENT' | 'PROFESSIONAL');
-              
+
               // Pre-fill form with existing data if available
               if (profileData.user) {
                 // We'll pre-fill what we have, user only needs to fill missing fields
               }
-              
+
               setStep('complete-profile');
             }
           } else {
@@ -262,7 +262,7 @@ export default function AuthRedirectPage() {
       if (selectedRole) {
         const dashboardUrl = selectedRole === 'CLIENT' ? '/client' :
           selectedRole === 'PROFESSIONAL' ? '/pro' : '/';
-        
+
         console.log('✅ Redirecting to:', dashboardUrl);
         window.location.href = dashboardUrl;
       } else {
@@ -544,6 +544,7 @@ export default function AuthRedirectPage() {
                       <option value="GB">United Kingdom</option>
                       <option value="US">United States</option>
                       <option value="CA">Canada</option>
+                      <option value="AU">Australia</option>
                     </select>
                   </div>
 

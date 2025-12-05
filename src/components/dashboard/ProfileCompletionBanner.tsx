@@ -3,30 +3,26 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
+interface ProfileStep {
+  id: string;
+  label: string;
+  actionUrl?: string;
+}
+
 interface ProfileCompletionBannerProps {
   profileCompletion: number;
   userRole: 'CLIENT' | 'PROFESSIONAL';
-  missingFields?: {
-    dateOfBirth?: boolean;
-    phoneNumber?: boolean;
-    city?: boolean;
-    country?: boolean;
-  };
+  missingSteps?: ProfileStep[];
 }
 
-export function ProfileCompletionBanner({ 
-  profileCompletion, 
+export function ProfileCompletionBanner({
+  profileCompletion,
   userRole,
-  missingFields = {}
+  missingSteps = []
 }: ProfileCompletionBannerProps) {
   const router = useRouter();
 
-  // Don't show banner if profile is complete enough (>80%)
-  if (profileCompletion > 80) return null;
-
-  const missingFieldsList = Object.entries(missingFields)
-    .filter(([_, missing]) => missing)
-    .map(([field]) => field.replace(/([A-Z])/g, ' $1').toLowerCase());
+  if (profileCompletion === 100) return null;
 
   const profileUrl = userRole === 'PROFESSIONAL' ? '/pro/profile' : '/client/profile';
 
@@ -41,26 +37,26 @@ export function ProfileCompletionBanner({
             </h3>
           </div>
           <p className="text-sm text-[#7C7373] mb-3">
-            Your profile is <strong>{profileCompletion}% complete</strong>. 
-            {missingFieldsList.length > 0 && (
-              <> Add {missingFieldsList.join(', ')} to improve your experience.</>
+            Your profile is <strong>{profileCompletion}% complete</strong>.
+            {missingSteps.length > 0 && (
+              <> Next steps: {missingSteps.slice(0, 3).map(s => s.label).join(', ')}...</>
             )}
           </p>
-          
+
           {/* Progress Bar */}
           <div className="w-full bg-[#E5E7EB] rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="bg-[#FFA500] h-full transition-all duration-500 ease-out"
               style={{ width: `${profileCompletion}%` }}
             />
           </div>
         </div>
-        
+
         <Button
-          onClick={() => router.push(profileUrl)}
+          onClick={() => router.push(missingSteps[0]?.actionUrl || profileUrl)}
           className="whitespace-nowrap"
         >
-          Complete Profile
+          {missingSteps.length > 0 ? `Fix: ${missingSteps[0].label}` : 'Complete Profile'}
         </Button>
       </div>
     </div>

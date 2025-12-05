@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/Card';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import AdminProfessionalActions from './AdminProfessionalActions';
+import WalletTopUp from './WalletTopUp';
 
 import { Prisma } from '@prisma/client';
 
@@ -168,6 +169,9 @@ export default async function AdminProfessionalDetailPage({
                                 <p className="text-sm font-medium text-[#333333]">
                                     €{((professional.wallet?.totalSpent || 0) / 100).toFixed(2)}
                                 </p>
+                            </div>
+                            <div className="pt-2 border-t border-gray-100">
+                                <WalletTopUp professionalId={professional.id} />
                             </div>
                         </div>
                     </Card>

@@ -10,7 +10,7 @@ import { StatCard } from "@/components/ui/StatCard";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
-import { calculateProfileCompletion } from "@/lib/profile-completion";
+import { calculateClientCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 
 const QUICK_ACTIONS = [
@@ -77,7 +77,8 @@ export default async function ClientDashboardPage() {
   ];
 
   // Calculate profile completion
-  const { completion, missingFields } = calculateProfileCompletion(
+  // Calculate profile completion
+  const { percentage: completion, missingSteps } = calculateClientCompletion(
     dbUser!,
     dbUser?.clientProfile || null
   );
@@ -138,7 +139,7 @@ export default async function ClientDashboardPage() {
       <ProfileCompletionBanner
         profileCompletion={completion}
         userRole="CLIENT"
-        missingFields={missingFields}
+        missingSteps={missingSteps}
       />
 
       <section className="grid gap-3 sm:grid-cols-3">

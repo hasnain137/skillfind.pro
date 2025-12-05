@@ -13,7 +13,7 @@ import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
-import { calculateProfileCompletion } from "@/lib/profile-completion";
+import { calculateProfessionalCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 
 const QUICK_ACTIONS = [
@@ -63,9 +63,12 @@ export default async function ProDashboardPage() {
   }
 
   // Now fetch professional profile using the internal user ID
-  const professional = await prisma.professional.findUnique({
+  const professional: any = await prisma.professional.findUnique({
     where: { userId: dbUser.id },
     include: {
+      user: true,
+      profile: true,
+      wallet: true,
       services: {
         include: {
           subcategory: {
@@ -98,24 +101,23 @@ export default async function ProDashboardPage() {
   }
 
   // Get wallet balance
-  const wallet = await getOrCreateWallet(professional.id);
-  const balanceEuros = wallet.balance / 100;
+  // We already included wallet in the query above, but keeping getOrCreateWallet for safety if it's missing (though it should be created on signup)
+  // Actually, let's rely on the query if possible, but getOrCreateWallet handles creation if missing.
+  // For simplicity and to match new types, we'll use the queried wallet if present.
+  const balanceEuros = (professional.wallet?.balance || 0) / 100;
 
   // Calculate profile completion using the shared helper
-  const { completion: profileCompletion, missingFields } = calculateProfileCompletion(
-    dbUser,
-    professional
-  );
+  const { percentage: profileCompletion, missingSteps } = calculateProfessionalCompletion(professional);
 
   // Get matching requests count (today)
-  const serviceCategoryIds = professional.services.map(s => s.subcategory.category.id);
+  const serviceCategoryIds = professional.services.map((s: any) => s.subcategory.category.id);
   const uniqueCategoryIds = [...new Set(serviceCategoryIds)];
 
   const matchingRequestsToday = await prisma.request.count({
     where: {
       status: 'OPEN',
       categoryId: {
-        in: uniqueCategoryIds,
+        in: uniqueCategoryIds as string[],
       },
       createdAt: {
         gte: new Date(new Date().setHours(0, 0, 0, 0)),
@@ -125,11 +127,11 @@ export default async function ProDashboardPage() {
 
   // Calculate average rating from job reviews
   const allReviews = professional.jobs
-    .map(job => job.review)
-    .filter(review => review !== null);
+    .map((job: any) => job.review)
+    .filter((review: any) => review !== null);
 
   const avgRating = allReviews.length > 0
-    ? (allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length).toFixed(1)
+    ? (allReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / allReviews.length).toFixed(1)
     : 'N/A';
 
   const stats = [
@@ -219,7 +221,7 @@ export default async function ProDashboardPage() {
     where: {
       status: 'OPEN',
       categoryId: {
-        in: uniqueCategoryIds,
+        in: uniqueCategoryIds as string[],
       },
     },
     orderBy: {
@@ -258,8 +260,8 @@ export default async function ProDashboardPage() {
       {/* Status Banner */}
       {professional.status !== 'ACTIVE' && (
         <Card padding="lg" className={`border-l-4 ${professional.status === 'PENDING_REVIEW' ? 'border-yellow-400 bg-yellow-50' :
-            professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'border-red-500 bg-red-50' :
-              'border-blue-400 bg-blue-50'
+          professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'border-red-500 bg-red-50' :
+            'border-blue-400 bg-blue-50'
           }`}>
           <div className="flex items-start gap-4">
             <div className="text-2xl">
@@ -268,8 +270,8 @@ export default async function ProDashboardPage() {
             </div>
             <div>
               <h3 className={`font-bold ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-800' :
-                  professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-800' :
-                    'text-blue-800'
+                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-800' :
+                  'text-blue-800'
                 }`}>
                 {professional.status === 'PENDING_REVIEW' ? 'Account Under Review' :
                   professional.status === 'SUSPENDED' ? 'Account Suspended' :
@@ -277,8 +279,8 @@ export default async function ProDashboardPage() {
                       'Complete Your Profile'}
               </h3>
               <p className={`mt-1 text-sm ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-700' :
-                  professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-700' :
-                    'text-blue-700'
+                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-700' :
+                  'text-blue-700'
                 }`}>
                 {professional.status === 'PENDING_REVIEW'
                   ? "Your profile is currently being reviewed by our team. You can't send offers yet, but you can still update your profile."
@@ -303,7 +305,7 @@ export default async function ProDashboardPage() {
       <ProfileCompletionBanner
         profileCompletion={profileCompletion}
         userRole="PROFESSIONAL"
-        missingFields={missingFields}
+        missingSteps={missingSteps}
       />
 
       {/* Earnings Overview */}

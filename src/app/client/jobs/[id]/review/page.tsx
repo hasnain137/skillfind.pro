@@ -10,7 +10,7 @@ export default function ReviewJobPage() {
   const router = useRouter();
   const params = useParams();
   const jobId = params.id as string;
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [jobInfo, setJobInfo] = useState<any>(null);
@@ -57,7 +57,16 @@ export default function ReviewJobPage() {
         // Success! Redirect to job detail
         router.push(`/client/jobs/${jobId}`);
       } else {
-        setError(data.message || 'Failed to submit review');
+        // Handle structured validation errors
+        let errorMessage = data.message || 'Failed to submit review';
+
+        if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
+          errorMessage = data.error.details
+            .map((d: any) => d.message)
+            .join('. ');
+        }
+
+        setError(errorMessage);
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -124,9 +133,8 @@ export default function ReviewJobPage() {
                     key={star}
                     type="button"
                     onClick={() => setFormData({ ...formData, rating: star })}
-                    className={`text-5xl transition-all transform ${
-                      star <= formData.rating ? 'text-yellow-400 scale-110' : 'text-gray-300'
-                    } hover:text-yellow-400 hover:scale-125`}
+                    className={`text-5xl transition-all transform ${star <= formData.rating ? 'text-yellow-400 scale-110' : 'text-gray-300'
+                      } hover:text-yellow-400 hover:scale-125`}
                   >
                     ★
                   </button>
@@ -193,8 +201,8 @@ export default function ReviewJobPage() {
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={loading || !formData.comment.trim()}
               className="flex-1 sm:flex-none shadow-md hover:shadow-lg"
             >

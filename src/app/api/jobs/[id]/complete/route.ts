@@ -56,13 +56,25 @@ export async function POST(
       throw new BadRequestError('Cannot complete a disputed job');
     }
 
-    // Complete the job
-    const updatedJob = await prisma.job.update({
-      where: { id },
-      data: {
-        status: 'COMPLETED',
-        completedAt: new Date(),
-      },
+    // Complete the job and request in a transaction
+    const updatedJob = await prisma.$transaction(async (tx) => {
+      const job = await tx.job.update({
+        where: { id },
+        data: {
+          status: 'COMPLETED',
+          completedAt: new Date(),
+        },
+      });
+
+      // Also mark request as completed so client sees it correctly
+      await tx.request.update({
+        where: { id: job.requestId },
+        data: {
+          status: 'COMPLETED',
+        },
+      });
+
+      return job;
     });
 
     // TODO: Send notification to client asking for review

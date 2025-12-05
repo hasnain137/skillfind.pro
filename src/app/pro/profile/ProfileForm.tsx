@@ -70,9 +70,9 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
 
     // Personal Information State (User table fields)
     const [personalData, setPersonalData] = useState({
-        dateOfBirth: initialProfile.user?.dateOfBirth 
-            ? (typeof initialProfile.user.dateOfBirth === 'string' 
-                ? initialProfile.user.dateOfBirth.split('T')[0] 
+        dateOfBirth: initialProfile.user?.dateOfBirth
+            ? (typeof initialProfile.user.dateOfBirth === 'string'
+                ? initialProfile.user.dateOfBirth.split('T')[0]
                 : new Date(initialProfile.user.dateOfBirth).toISOString().split('T')[0])
             : '',
         phoneNumber: initialProfile.user?.phoneNumber || '',
@@ -138,7 +138,19 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
             });
 
             const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Failed to add service');
+
+            if (!response.ok) {
+                // Handle structured validation errors
+                if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
+                    const validationMessages = data.error.details
+                        .map((d: any) => d.message)
+                        .join('. ');
+                    throw new Error(validationMessages);
+                }
+
+                // Handle generic API errors
+                throw new Error(data.message || data.error?.message || 'Failed to add service');
+            }
 
             setSuccess('Service added successfully');
             setIsAddingService(false);
@@ -151,6 +163,87 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
         }
     }
 
+    // Edit Service State
+    const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
+
+    async function handleUpdateService(e: React.FormEvent) {
+        e.preventDefault();
+        if (!editingServiceId) return;
+
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = await fetch(`/api/professionals/services/${editingServiceId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    priceFrom: parseFloat(newService.priceFrom),
+                    description: newService.description,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
+                    const validationMessages = data.error.details
+                        .map((d: any) => d.message)
+                        .join('. ');
+                    throw new Error(validationMessages);
+                }
+                throw new Error(data.message || data.error?.message || 'Failed to update service');
+            }
+
+            setSuccess('Service updated successfully');
+            setIsAddingService(false);
+            setEditingServiceId(null);
+            setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
+            router.refresh();
+        } catch (err: any) {
+            setError(err.message || 'Failed to update service');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function handleDeleteService(serviceId: string) {
+        if (!confirm('Are you sure you want to delete this service?')) return;
+
+        setLoading(true);
+        try {
+            const response = await fetch(`/api/professionals/services/${serviceId}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) throw new Error('Failed to delete service');
+
+            setSuccess('Service deleted successfully');
+            router.refresh();
+        } catch (err) {
+            setError('Failed to delete service');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const startEditing = (service: Service) => {
+        setEditingServiceId(service.id);
+        setNewService({
+            categoryId: service.subcategory.category.nameEn, // Note: This is just for display/logic, strict ID might be needed if we allowed changing category
+            subcategoryId: service.subcategory.id,
+            priceFrom: service.priceFrom?.toString() || '',
+            description: service.description || '',
+        });
+        setIsAddingService(true);
+    };
+
+    const cancelEdit = () => {
+        setIsAddingService(false);
+        setEditingServiceId(null);
+        setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
+    };
+
     const selectedCategory = categories.find(c => c.id === newService.categoryId);
 
     return (
@@ -160,8 +253,8 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 <button
                     onClick={() => setActiveTab('info')}
                     className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'info'
-                            ? 'border-[#2563EB] text-[#2563EB]'
-                            : 'border-transparent text-[#7C7373] hover:text-[#333333]'
+                        ? 'border-[#2563EB] text-[#2563EB]'
+                        : 'border-transparent text-[#7C7373] hover:text-[#333333]'
                         }`}
                 >
                     Profile Info
@@ -169,8 +262,8 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 <button
                     onClick={() => setActiveTab('services')}
                     className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'services'
-                            ? 'border-[#2563EB] text-[#2563EB]'
-                            : 'border-transparent text-[#7C7373] hover:text-[#333333]'
+                        ? 'border-[#2563EB] text-[#2563EB]'
+                        : 'border-transparent text-[#7C7373] hover:text-[#333333]'
                         }`}
                 >
                     Services ({initialProfile.services.length})
@@ -225,7 +318,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                             <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                                 <span>👤</span> Personal Information
                             </h4>
-                            
+
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
                                     <label htmlFor="dob" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
@@ -263,7 +356,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                             <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                                 <span>📍</span> Location & Availability
                             </h4>
-                            
+
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
                                     <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">City</label>
@@ -289,6 +382,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                         <option value="GB">United Kingdom</option>
                                         <option value="US">United States</option>
                                         <option value="CA">Canada</option>
+                                        <option value="AU">Australia</option>
                                         <option value="OTHER">Other</option>
                                     </select>
                                 </div>
@@ -331,11 +425,17 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
             ) : (
                 <div className="space-y-4">
                     {!isAddingService ? (
-                        <Button onClick={() => setIsAddingService(true)}>Add New Service</Button>
+                        <Button onClick={() => {
+                            setEditingServiceId(null);
+                            setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
+                            setIsAddingService(true);
+                        }}>Add New Service</Button>
                     ) : (
                         <Card padding="lg" className="space-y-4 border-[#2563EB]">
-                            <h3 className="font-semibold text-[#333333]">Add New Service</h3>
-                            <form onSubmit={handleAddService} className="space-y-4">
+                            <h3 className="font-semibold text-[#333333]">
+                                {editingServiceId ? 'Edit Service' : 'Add New Service'}
+                            </h3>
+                            <form onSubmit={editingServiceId ? handleUpdateService : handleAddService} className="space-y-4">
                                 <div className="grid gap-4 md:grid-cols-2">
                                     <div>
                                         <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Category</label>
@@ -344,11 +444,16 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                             onChange={e => setNewService({ ...newService, categoryId: e.target.value, subcategoryId: '' })}
                                             className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3 py-2 text-sm"
                                             required
+                                            disabled={!!editingServiceId} // Cannot change category when editing
                                         >
                                             <option value="">Select Category</option>
                                             {categories.map(c => (
                                                 <option key={c.id} value={c.id}>{c.nameEn}</option>
                                             ))}
+                                            {/* Fallback for editing if category not in list (edge case) */}
+                                            {editingServiceId && !categories.find(c => c.id === newService.categoryId) && (
+                                                <option value={newService.categoryId}>{newService.categoryId}</option>
+                                            )}
                                         </select>
                                     </div>
                                     <div>
@@ -357,13 +462,17 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                             value={newService.subcategoryId}
                                             onChange={e => setNewService({ ...newService, subcategoryId: e.target.value })}
                                             className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3 py-2 text-sm"
-                                            disabled={!newService.categoryId}
+                                            disabled={!newService.categoryId || !!editingServiceId} // Cannot change subcategory when editing
                                             required
                                         >
                                             <option value="">Select Subcategory</option>
                                             {selectedCategory?.subcategories.map(s => (
                                                 <option key={s.id} value={s.id}>{s.nameEn}</option>
                                             ))}
+                                            {/* Fallback for editing */}
+                                            {editingServiceId && !selectedCategory?.subcategories.find(s => s.id === newService.subcategoryId) && (
+                                                <option value={newService.subcategoryId}>Current Subcategory</option>
+                                            )}
                                         </select>
                                     </div>
                                 </div>
@@ -389,11 +498,14 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                         placeholder="Describe what you offer..."
                                         rows={3}
                                     />
+                                    <p className="mt-1 text-xs text-[#B0B0B0]">min 50 characters</p>
                                 </div>
 
                                 <div className="flex gap-2">
-                                    <Button type="submit" disabled={loading}>Add Service</Button>
-                                    <Button type="button" variant="ghost" onClick={() => setIsAddingService(false)}>Cancel</Button>
+                                    <Button type="submit" disabled={loading}>
+                                        {editingServiceId ? 'Update Service' : 'Add Service'}
+                                    </Button>
+                                    <Button type="button" variant="ghost" onClick={cancelEdit}>Cancel</Button>
                                 </div>
                             </form>
                         </Card>
@@ -410,7 +522,22 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                         Starts from €{service.priceFrom}
                                     </p>
                                 </div>
-                                {/* Delete button could go here */}
+                                <div className="flex flex-col gap-2">
+                                    <Button
+                                        variant="ghost"
+                                        onClick={() => startEditing(service)}
+                                        className="text-xs px-2 py-1 h-auto"
+                                    >
+                                        ✏️ Edit
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        onClick={() => handleDeleteService(service.id)}
+                                        className="text-xs px-2 py-1 h-auto text-red-600 hover:text-red-700 hover:bg-red-50"
+                                    >
+                                        🗑️ Delete
+                                    </Button>
+                                </div>
                             </Card>
                         ))}
                         {initialProfile.services.length === 0 && (

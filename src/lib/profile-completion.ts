@@ -1,51 +1,137 @@
-import { User, Professional, Client } from '@prisma/client';
+import { User, Professional, ProfessionalService, ProfessionalProfile, Wallet, Client } from '@prisma/client';
 
-interface ProfileCompletionResult {
-  completion: number;
-  missingFields: {
-    dateOfBirth: boolean;
-    phoneNumber: boolean;
-    city: boolean;
-    country: boolean;
+export interface ProfileStep {
+  id: string;
+  label: string;
+  isComplete: boolean;
+  weight: number;
+  actionUrl?: string;
+}
+
+export type ProfessionalWithRelations = Professional & {
+  user: User;
+  services: ProfessionalService[];
+  profile: ProfessionalProfile | null;
+  wallet: Wallet | null;
+};
+
+export function calculateProfessionalCompletion(professional: ProfessionalWithRelations) {
+  const steps: ProfileStep[] = [
+    {
+      id: 'email',
+      label: 'Verify Email',
+      isComplete: professional.user.emailVerified,
+      weight: 10,
+      actionUrl: '/settings/account'
+    },
+    {
+      id: 'phone',
+      label: 'Verify Phone Number',
+      isComplete: Boolean(professional.user.phoneNumber && professional.user.phoneVerified),
+      weight: 10,
+      actionUrl: '/settings/account'
+    },
+    {
+      id: 'avatar',
+      label: 'Upload Profile Photo',
+      isComplete: Boolean(professional.user.avatar),
+      weight: 10,
+      actionUrl: '/pro/profile'
+    },
+    {
+      id: 'location',
+      label: 'Set Location',
+      isComplete: Boolean(professional.city && professional.country),
+      weight: 10,
+      actionUrl: '/pro/profile'
+    },
+    {
+      id: 'bio',
+      label: 'Add Bio',
+      isComplete: Boolean(professional.bio && professional.bio.length > 50),
+      weight: 10,
+      actionUrl: '/pro/profile'
+    },
+    {
+      id: 'services',
+      label: 'Add Services',
+      isComplete: professional.services.length > 0,
+      weight: 20,
+      actionUrl: '/pro/profile'
+    },
+    {
+      id: 'pricing',
+      label: 'Set Hourly Rate',
+      isComplete: Boolean(professional.profile?.hourlyRateMin),
+      weight: 10,
+      actionUrl: '/pro/profile'
+    },
+    {
+      id: 'verification',
+      label: 'Identity Verification',
+      isComplete: professional.isVerified,
+      weight: 20,
+      actionUrl: '/pro/verification'
+    }
+  ];
+
+  const totalWeight = steps.reduce((sum, step) => sum + step.weight, 0);
+  const completedWeight = steps.reduce((sum, step) => step.isComplete ? sum + step.weight : sum, 0);
+  const percentage = Math.round((completedWeight / totalWeight) * 100);
+
+  return {
+    percentage,
+    steps,
+    missingSteps: steps.filter(s => !s.isComplete)
   };
 }
 
-export function calculateProfileCompletion(
-  user: User,
-  profile: (Professional | Client) | null
-): ProfileCompletionResult {
-  const missingFields = {
-    dateOfBirth: !user.dateOfBirth,
-    phoneNumber: !user.phoneNumber,
-    city: !profile?.city,
-    country: !profile?.country || profile.country === 'FR', // Default FR means not filled
-  };
+export function calculateClientCompletion(user: User, client: Client | null) {
+  const steps: ProfileStep[] = [
+    {
+      id: 'email',
+      label: 'Verify Email',
+      isComplete: user.emailVerified,
+      weight: 20,
+      actionUrl: '/settings/account'
+    },
+    {
+      id: 'phone',
+      label: 'Verify Phone Number',
+      isComplete: Boolean(user.phoneNumber && user.phoneVerified),
+      weight: 20,
+      actionUrl: '/settings/account'
+    },
+    {
+      id: 'name',
+      label: 'Complete Name',
+      isComplete: Boolean(user.firstName && user.lastName),
+      weight: 20,
+      actionUrl: '/client/profile'
+    },
+    {
+      id: 'dob',
+      label: 'Date of Birth',
+      isComplete: Boolean(user.dateOfBirth),
+      weight: 20,
+      actionUrl: '/client/profile'
+    },
+    {
+      id: 'location',
+      label: 'Set City',
+      isComplete: Boolean(client?.city),
+      weight: 20,
+      actionUrl: '/client/profile'
+    }
+  ];
 
-  // Base completion from user fields
-  let completion = 0;
-  
-  // Basic user fields (40% total)
-  if (user.dateOfBirth) completion += 10;
-  if (user.phoneNumber) completion += 10;
-  if (user.emailVerified) completion += 10;
-  if (user.phoneVerified) completion += 10;
-
-  // Location fields (20% total)
-  if (profile?.city) completion += 10;
-  if (profile?.country && profile.country !== 'FR') completion += 10;
-
-  // Role-specific completion (40% total)
-  if (profile && 'profileCompletion' in profile) {
-    // Professional - use their calculated profileCompletion
-    const professionalProfile = profile as Professional;
-    completion += Math.floor((professionalProfile.profileCompletion / 100) * 40);
-  } else {
-    // Client - simpler completion (just having the profile adds 40%)
-    if (profile) completion += 40;
-  }
+  const totalWeight = steps.reduce((sum, step) => sum + step.weight, 0);
+  const completedWeight = steps.reduce((sum, step) => step.isComplete ? sum + step.weight : sum, 0);
+  const percentage = Math.round((completedWeight / totalWeight) * 100);
 
   return {
-    completion: Math.min(completion, 100),
-    missingFields,
+    percentage,
+    steps,
+    missingSteps: steps.filter(s => !s.isComplete)
   };
 }

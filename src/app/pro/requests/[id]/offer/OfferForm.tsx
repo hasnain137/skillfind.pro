@@ -65,7 +65,15 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to send offer');
+                // Handle structured validation errors
+                if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
+                    const validationMessages = data.error.details
+                        .map((d: any) => d.message)
+                        .join('. ');
+                    throw new Error(validationMessages);
+                }
+
+                throw new Error(data.message || data.error?.message || 'Failed to send offer');
             }
 
             // Success! Redirect to offers list

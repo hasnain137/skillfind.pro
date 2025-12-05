@@ -54,7 +54,8 @@ export const createServiceSchema = z.object({
   subcategoryId: z.string().min(1, 'Subcategory is required'),
   priceFrom: z.number().int().min(0).optional(),
   priceTo: z.number().int().min(0).optional(),
-  description: z.string().max(500).optional(),
+
+  description: z.string().min(50, 'Description must be at least 50 characters').max(500).optional().or(z.literal('')),
 }).refine(
   (data) => data.priceFrom !== undefined || data.priceTo !== undefined,
   {
