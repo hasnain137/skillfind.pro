@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import AcceptOfferButton from './AcceptOfferButton';
 import CloseRequestButton from './CloseRequestButton';
 import ViewOfferProfileButton from './ViewOfferProfileButton';
@@ -90,6 +91,13 @@ export default async function ClientRequestDetailPage({
 
   return (
     <div className="space-y-6">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb items={[
+        { label: 'Dashboard', href: '/client' },
+        { label: 'Requests', href: '/client/requests' },
+        { label: request.title },
+      ]} />
+
       {/* Enhanced Header */}
       <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="lg">
         <div className="flex flex-wrap items-start justify-between gap-4">

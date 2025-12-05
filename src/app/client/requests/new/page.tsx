@@ -275,23 +275,43 @@ export default function NewClientRequestPage() {
           </div>
         </Card>
 
-        <Card className="space-y-3" padding="lg">
+        <Card className="space-y-4" padding="lg">
           <SectionHeading
             variant="section"
             title="Timing"
-            description="Let professionals know when you'd like to start or any time preferences."
+            description="How urgently do you need this completed?"
           />
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              When do you need this?
-            </label>
-            <input
-              type="text"
-              value={formData.timing}
-              onChange={(e) => setFormData({ ...formData, timing: e.target.value })}
-              className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-              placeholder="e.g. Evenings, weekends, this week, next month"
-            />
+          <div className="grid gap-2 sm:grid-cols-2">
+            {[
+              { value: 'URGENT', label: '🔥 Urgent', desc: 'Within 24-48 hours' },
+              { value: 'SOON', label: '⚡ Soon', desc: 'Within a week' },
+              { value: 'FLEXIBLE', label: '📅 Flexible', desc: 'No rush, take your time' },
+              { value: 'SCHEDULED', label: '🗓️ Specific date', desc: 'I have a deadline' },
+            ].map((option) => (
+              <label
+                key={option.value}
+                className={`
+                  flex items-start gap-3 rounded-xl border-2 p-3.5 cursor-pointer transition-all
+                  ${formData.timing === option.value
+                    ? 'border-[#2563EB] bg-[#EEF2FF] shadow-sm'
+                    : 'border-[#E5E7EB] hover:border-[#D1D5DB] hover:bg-[#F9FAFB]'
+                  }
+                `}
+              >
+                <input
+                  type="radio"
+                  name="timing"
+                  value={option.value}
+                  checked={formData.timing === option.value}
+                  onChange={(e) => setFormData({ ...formData, timing: e.target.value })}
+                  className="mt-0.5 h-4 w-4 text-[#2563EB] focus:ring-[#2563EB]"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-[#333333]">{option.label}</p>
+                  <p className="text-xs text-[#7C7373]">{option.desc}</p>
+                </div>
+              </label>
+            ))}
           </div>
         </Card>
 
