@@ -7,6 +7,7 @@ import { getProfessionalWithRelations } from "@/lib/get-professional";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
+import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/StatusBanner";
 
 export default async function ProRequestsPage() {
   const { userId } = await auth();
@@ -62,42 +63,16 @@ export default async function ProRequestsPage() {
 
   const urgentRequests = requests.filter(r => r.urgency === 'URGENT');
 
+  // Get status banner for non-active professionals
+  const statusBannerProps = professional.status !== 'ACTIVE'
+    ? getProfessionalStatusBanner(professional.status)
+    : null;
+
   return (
     <div className="space-y-6">
-      {/* Status Banner */}
-      {professional.status !== 'ACTIVE' && (
-        <Card padding="lg" className={`border-l-4 ${professional.status === 'PENDING_REVIEW' ? 'border-yellow-400 bg-yellow-50' :
-          professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'border-red-500 bg-red-50' :
-            'border-blue-400 bg-blue-50'
-          }`}>
-          <div className="flex items-start gap-4">
-            <div className="text-2xl">
-              {professional.status === 'PENDING_REVIEW' ? '⏳' :
-                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? '⛔' : 'ℹ️'}
-            </div>
-            <div>
-              <h3 className={`font-bold ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-800' :
-                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-800' :
-                  'text-blue-800'
-                }`}>
-                {professional.status === 'PENDING_REVIEW' ? 'Account Under Review' :
-                  professional.status === 'SUSPENDED' ? 'Account Suspended' :
-                    professional.status === 'BANNED' ? 'Account Banned' :
-                      'Complete Your Profile'}
-              </h3>
-              <p className={`mt-1 text-sm ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-700' :
-                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-700' :
-                  'text-blue-700'
-                }`}>
-                {professional.status === 'PENDING_REVIEW'
-                  ? "You can browse requests, but you cannot send offers until your profile is approved."
-                  : professional.status === 'SUSPENDED' || professional.status === 'BANNED'
-                    ? "Your account is deactivated. You cannot send offers."
-                    : "Complete your profile to start sending offers."}
-              </p>
-            </div>
-          </div>
-        </Card>
+      {/* Status Banner - Using reusable component */}
+      {statusBannerProps && (
+        <StatusBanner {...statusBannerProps} />
       )}
 
       <SectionHeading
