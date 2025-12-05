@@ -1,5 +1,8 @@
 // src/components/landing/Testimonials.tsx
+'use client';
+
 import { Container } from "@/components/ui/Container";
+import { motion } from "framer-motion";
 
 interface Review {
   id: string;
@@ -18,49 +21,6 @@ interface Review {
       lastName: string;
     };
   };
-}
-
-// Using static testimonials for instant page load
-// TODO: Fetch real reviews from API endpoint with caching
-function getFeaturedReviews(): Review[] {
-  return FALLBACK_TESTIMONIALS as any;
-}
-
-function TestimonialCard({ review }: { review: Review }) {
-  const clientInitials = `${review.client.user.firstName[0]}${review.client.user.lastName[0]}`.toUpperCase();
-  
-  return (
-    <div className="group flex flex-col gap-4 rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#2563EB]/20">
-      {/* Rating Stars */}
-      <div className="flex items-center gap-1">
-        {[...Array(5)].map((_, i) => (
-          <span key={i} className={`text-base ${i < review.rating ? 'text-[#F59E0B]' : 'text-[#D1D5DB]'}`}>
-            ★
-          </span>
-        ))}
-      </div>
-
-      {/* Review Text */}
-      <p className="text-sm text-[#333333] leading-relaxed line-clamp-4">
-        "{review.comment}"
-      </p>
-
-      {/* Reviewer Info */}
-      <div className="flex items-center gap-3 pt-3 border-t border-[#E5E7EB]">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-xs font-bold text-white">
-          {clientInitials}
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-[#333333]">
-            {review.client.user.firstName} {review.client.user.lastName[0]}.
-          </p>
-          <p className="text-xs text-[#7C7373]">
-            Worked with {review.professional.user.firstName} {review.professional.user.lastName[0]}.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 // Fallback testimonials when no real reviews exist
@@ -91,28 +51,74 @@ const FALLBACK_TESTIMONIALS = [
   },
 ];
 
+function getFeaturedReviews(): Review[] {
+  return FALLBACK_TESTIMONIALS as any;
+}
+
+function TestimonialCard({ review }: { review: Review }) {
+  const clientInitials = `${review.client.user.firstName[0]}${review.client.user.lastName[0]}`.toUpperCase();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="group flex flex-col justify-between rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+    >
+      <div>
+        <div className="flex items-center gap-1 mb-4">
+          {[...Array(5)].map((_, i) => (
+            <span key={i} className={`text-lg ${i < review.rating ? 'text-amber-400' : 'text-slate-200'}`}>
+              ★
+            </span>
+          ))}
+        </div>
+
+        <div className="relative">
+          <span className="absolute -top-4 -left-2 text-6xl text-slate-100 font-serif leading-none select-none">"</span>
+          <p className="relative text-base text-slate-700 leading-relaxed font-medium">
+            {review.comment}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 pt-6 mt-6 border-t border-slate-100">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#333333] text-white font-bold text-sm shadow-md">
+          {clientInitials}
+        </div>
+        <div>
+          <p className="font-bold text-[#333333]">
+            {review.client.user.firstName} {review.client.user.lastName[0]}.
+          </p>
+          <p className="text-xs text-[#7C7373] font-medium">
+            Hired a pro for <span className="text-blue-600">Services</span>
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export function Testimonials() {
   const reviews = getFeaturedReviews();
 
   return (
-    <section className="border-b border-[#E5E7EB] bg-gradient-to-b from-white to-[#FAFAFA] py-12 md:py-16">
+    <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-slate-200">
       <Container>
-        {/* Section heading */}
-        <div className="mx-auto max-w-3xl text-center mb-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2563EB]">
-            Client testimonials
+        <div className="mx-auto max-w-3xl text-center mb-16">
+          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+            Client Success Stories
           </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
-            Trusted by clients and professionals worldwide.
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+            Trusted by clients and professionals.
           </h2>
-          <p className="mt-3 text-sm text-[#7C7373] md:text-base">
-            Real reviews from real people who found success on SkillFind.
+          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
+            See what our community has to say about their experience on SkillFind.
           </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {reviews.slice(0, 6).map((review) => (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {reviews.slice(0, 3).map((review) => (
             <TestimonialCard key={review.id} review={review} />
           ))}
         </div>

@@ -3,55 +3,58 @@
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import Link from 'next/link';
 
 export function DualCTA() {
   return (
-    <section
-      id="for-professionals"
-      className="border-b border-[#E5E7EB] bg-[#FAFAFA] py-16 md:py-20"
-    >
+    <section id="for-professionals" className="py-20 md:py-24 bg-white">
       <Container>
-        <div className="mx-auto max-w-3xl text-center mb-10">
-          <h2 className="text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
-            Choose your path on SkillFind.
-          </h2>
-          <p className="mt-3 text-sm text-[#7C7373] md:text-base">
-            Whether you’re looking for help or offering your skills, SkillFind
-            makes it simple and fair for everyone.
-          </p>
-        </div>
+        <div className="grid gap-8 md:grid-cols-2">
 
-        {/* Two cards grid */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Client Card */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm shadow-[#E5E7EB]/40 border border-[#E5E7EB] bg-gradient-to-br from-white to-[#2563EB0A]">
-            <div className="text-4xl mb-4">🔍</div>
-            <h3 className="text-lg font-semibold text-[#333333]">
-              For Clients
-            </h3>
-            <p className="mt-2 text-sm text-[#7C7373] leading-relaxed">
-              Find verified professionals for tutoring, design, tech help, home
-              services, coaching and more.
-            </p>
-            <Button className="mt-4 w-full justify-center py-2.5 text-sm">
-              Find professionals
-            </Button>
+          {/* Client CTA */}
+          <div className="relative overflow-hidden rounded-3xl bg-[#333333] p-8 md:p-12 text-center md:text-left">
+            <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-blue-600/20 blur-3xl" />
+
+            <div className="relative z-10 flex flex-col h-full items-start">
+              <span className="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400 ring-1 ring-inset ring-blue-500/20 mb-6">
+                For Clients
+              </span>
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Need help with a project?
+              </h3>
+              <p className="text-gray-300 mb-8 max-w-sm leading-relaxed">
+                Find trusted professionals for any task. From tutoring to home repairs, we have you covered.
+              </p>
+              <Link href="/search" className="mt-auto">
+                <Button className="bg-white text-[#333333] hover:bg-gray-100 border-none font-bold px-8">
+                  Find a Professional
+                </Button>
+              </Link>
+            </div>
           </div>
 
-          {/* Professional Card */}
-          <div className="rounded-2xl bg-white p-6 shadow-sm shadow-[#E5E7EB]/40 border border-[#E5E7EB] bg-gradient-to-br from-white to-[#2563EB0A]">
-            <div className="text-4xl mb-4">💼</div>
-            <h3 className="text-lg font-semibold text-[#333333]">
-              For Professionals
-            </h3>
-            <p className="mt-2 text-sm text-[#7C7373] leading-relaxed">
-              Offer your skills, respond to client requests, and grow your
-              business online or locally.
-            </p>
-            <Button className="mt-4 w-full justify-center py-2.5 text-sm">
-              Become a professional
-            </Button>
+          {/* Professional CTA */}
+          <div className="relative overflow-hidden rounded-3xl bg-blue-600 p-8 md:p-12 text-center md:text-left">
+            <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+
+            <div className="relative z-10 flex flex-col h-full items-start">
+              <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white ring-1 ring-inset ring-white/20 mb-6">
+                For Professionals
+              </span>
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Grow your business
+              </h3>
+              <p className="text-blue-100 mb-8 max-w-sm leading-relaxed">
+                Join 5,000+ experts receiving quality leads daily. Set your rates and work on your terms.
+              </p>
+              <Link href="/signup" className="mt-auto">
+                <Button className="bg-[#333333] text-white hover:bg-gray-800 border-none font-bold px-8">
+                  Join as a Pro
+                </Button>
+              </Link>
+            </div>
           </div>
+
         </div>
       </Container>
     </section>

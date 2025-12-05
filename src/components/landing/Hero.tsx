@@ -29,10 +29,10 @@ export function Hero() {
               >
                 🚀 The #1 Marketplace for Professional Services
               </motion.div>
-              <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+              <h1 className="text-4xl font-bold tracking-tight text-[#333333] sm:text-5xl md:text-6xl">
                 Find the perfect <span className="text-[#2563EB]">expert</span> for any task.
               </h1>
-              <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0">
+              <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto lg:mx-0">
                 Connect with verified tutors, developers, cleaners, and coaches in minutes.
                 Trusted by 10,000+ clients worldwide.
               </p>
@@ -42,7 +42,7 @@ export function Hero() {
               <SearchCard />
             </div>
 
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-sm text-slate-500">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-sm text-[#7C7373]">
               <span className="flex items-center gap-1.5">
                 <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -97,8 +97,8 @@ export function Hero() {
                   ))}
                 </div>
                 <div className="text-xs">
-                  <p className="font-bold text-slate-900">500+ New Pros</p>
-                  <p className="text-slate-500">joined this week</p>
+                  <p className="font-bold text-[#333333]">500+ New Pros</p>
+                  <p className="text-[#7C7373]">joined this week</p>
                 </div>
               </motion.div>
             </div>

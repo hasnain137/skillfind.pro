@@ -103,28 +103,28 @@ function ProfessionalCard({
   return (
     <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm shadow-[#E5E7EB]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#2563EB]/20">
       {/* Top Badge - Verified */}
-      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-gradient-to-r from-[#2563EB] to-[#1D4FD8] px-3 py-1 text-[10px] font-semibold text-white shadow-md">
+      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1 text-[10px] font-bold text-white shadow-md">
         <span>✓</span> Verified
       </div>
 
       {/* Profile Header */}
-      <div className="flex items-start gap-3 pt-2">
+      <div className="flex items-start gap-4 pt-2">
         <div className="relative">
           <Avatar
             firstName={user.firstName}
             lastName={user.lastName}
             size="lg"
-            className="h-14 w-14 border-2 border-white shadow-md"
+            className="h-16 w-16 border-2 border-white shadow-md ring-2 ring-blue-50"
           />
-          <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-[#10B981] border-2 border-white" title="Available now" />
+          <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-green-500 border-2 border-white ring-2 ring-green-100" title="Available now" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-bold text-[#333333] truncate group-hover:text-[#2563EB] transition-colors">
+          <h3 className="text-lg font-bold text-[#333333] truncate group-hover:text-blue-600 transition-colors">
             {user.firstName} {user.lastName}
           </h3>
-          <p className="text-xs text-[#7C7373] mt-0.5">{primaryService}</p>
+          <p className="text-sm font-medium text-[#7C7373] mt-0.5">{primaryService}</p>
           {additionalServices > 0 && (
-            <p className="text-[10px] text-[#2563EB] font-medium mt-1">
+            <p className="text-xs text-blue-600 font-bold mt-1">
               +{additionalServices} more {additionalServices === 1 ? 'service' : 'services'}
             </p>
           )}
@@ -132,21 +132,21 @@ function ProfessionalCard({
       </div>
 
       {/* Rating */}
-      <div className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#FEF3C7] to-[#FDE68A] px-3 py-2">
-        <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 border border-amber-100">
+        <div className="flex items-center gap-0.5">
           {[...Array(5)].map((_, i) => (
-            <span key={i} className={`text-sm ${i < Math.round(averageRating) ? 'text-[#F59E0B]' : 'text-[#D1D5DB]'}`}>
+            <span key={i} className={`text-sm ${i < Math.round(averageRating) ? 'text-amber-400' : 'text-slate-200'}`}>
               ★
             </span>
           ))}
         </div>
-        <span className="text-xs font-bold text-[#92400E]">{averageRating.toFixed(1)}</span>
-        <span className="text-xs text-[#78350F]">({totalReviews})</span>
+        <span className="text-sm font-bold text-amber-900">{averageRating.toFixed(1)}</span>
+        <span className="text-xs text-amber-700 font-medium">({totalReviews} reviews)</span>
       </div>
 
       {/* Bio snippet */}
       {bio && (
-        <p className="text-xs text-[#7C7373] leading-relaxed line-clamp-2">
+        <p className="text-sm text-[#7C7373] leading-relaxed line-clamp-2">
           {bio}
         </p>
       )}
@@ -154,28 +154,28 @@ function ProfessionalCard({
       {/* Location & Remote */}
       <div className="flex flex-wrap items-center gap-2">
         {city && (
-          <span className="flex items-center gap-1 rounded-lg bg-[#F3F4F6] px-2.5 py-1.5 text-[11px] font-medium text-[#374151]">
+          <span className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
             <span>📍</span> {city}
           </span>
         )}
         {remoteAvailability !== 'NO_REMOTE' && (
-          <span className="flex items-center gap-1 rounded-lg bg-[#DCFCE7] px-2.5 py-1.5 text-[11px] font-semibold text-[#166534]">
+          <span className="flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
             <span>💻</span> Remote
           </span>
         )}
       </div>
 
       {/* Price */}
-      <div className="border-t border-[#E5E7EB] pt-4 mt-auto">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs text-[#7C7373]">Starting at</span>
-          <span className="text-base font-bold text-[#2563EB]">{priceDisplay}</span>
+      <div className="border-t border-slate-100 pt-4 mt-auto">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Starting from</span>
+          <span className="text-lg font-bold text-blue-600">{priceDisplay}</span>
         </div>
 
         {/* CTA Button */}
         <Link href={`/professionals/${professional.id}`}>
-          <Button className="w-full justify-center py-3 text-sm font-semibold shadow-md hover:shadow-lg transition-all">
-            View Full Profile →
+          <Button className="w-full justify-center py-2.5 text-sm font-bold shadow-sm hover:shadow-md transition-all">
+            View Profile
           </Button>
         </Link>
       </div>
@@ -191,17 +191,17 @@ export async function FeaturedProfessionalsServer() {
     return (
       <section
         id="top-professionals"
-        className="border-b border-[#E5E7EB] bg-[#FAFAFA] py-12 md:py-16"
+        className="py-20 md:py-24 bg-white border-b border-slate-200"
       >
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C7373]">
+            <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
               Featured professionals
             </p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
               Our top-rated professionals will appear here soon.
             </h2>
-            <p className="mt-3 text-sm text-[#7C7373] md:text-base">
+            <p className="mt-4 text-lg text-[#7C7373]">
               Start exploring by searching for the service you need or browse by category.
             </p>
           </div>
@@ -213,39 +213,44 @@ export async function FeaturedProfessionalsServer() {
   return (
     <section
       id="top-professionals"
-      className="border-b border-[#E5E7EB] bg-[#FAFAFA] py-12 md:py-16"
+      className="py-20 md:py-24 bg-white border-b border-slate-200"
     >
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C7373]">
+        <div className="mx-auto max-w-3xl text-center mb-16">
+          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
             Featured professionals
           </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
-            Meet some of the experts clients are hiring on SkillFind.
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+            Meet highly rated experts.
           </h2>
-          <p className="mt-3 text-sm text-[#7C7373] md:text-base">
-            These are just a few examples. You&apos;ll see even more matching
-            professionals once you post a request or search by category.
+          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
+            These professionals have been vetted and reviewed by clients just like you.
           </p>
         </div>
 
-        <div className="mt-8">
-          <div className="flex gap-4 overflow-x-auto pb-2 sm:hidden">
+        <div className="mt-12">
+          {/* Mobile Scroll */}
+          <div className="flex gap-6 overflow-x-auto pb-6 sm:hidden snap-x px-4 -mx-4">
             {professionals.map((pro) => (
-              <ProfessionalCard key={pro.id} professional={pro} />
+              <div key={pro.id} className="snap-center">
+                <ProfessionalCard professional={pro} />
+              </div>
             ))}
           </div>
 
-          <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+          {/* Desktop Grid */}
+          <div className="hidden sm:grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {professionals.map((pro) => (
               <ProfessionalCard key={pro.id} professional={pro} />
             ))}
           </div>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-12 text-center">
           <Link href="/search">
-            <Button className="px-6 py-2.5">View All Professionals</Button>
+            <Button variant="outline" className="px-8 py-3 h-auto text-base font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:text-slate-900">
+              View All Professionals
+            </Button>
           </Link>
         </div>
       </Container>

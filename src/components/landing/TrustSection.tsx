@@ -54,10 +54,10 @@ export function TrustSection() {
             viewport={{ once: true }}
             className="md:pr-12"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+            <h2 className="text-3xl font-bold tracking-tight text-[#333333] sm:text-4xl mb-6">
               Why 10,000+ clients trust SkillFind
             </h2>
-            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+            <p className="text-lg text-[#7C7373] mb-8 leading-relaxed">
               We've built a marketplace where trust isn't an option—it's the foundation.
               From verified identities to secure transactions, we protect every step of your journey.
             </p>
@@ -68,8 +68,8 @@ export function TrustSection() {
                 ))}
               </div>
               <div className="text-sm font-medium">
-                <p className="text-slate-900">4.9/5 Average Rating</p>
-                <p className="text-slate-500">from trusted reviews</p>
+                <p className="text-[#333333]">4.9/5 Average Rating</p>
+                <p className="text-[#7C7373]">from trusted reviews</p>
               </div>
             </div>
           </motion.div>
@@ -88,8 +88,8 @@ export function TrustSection() {
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                  <h3 className="font-bold text-[#333333]">{item.title}</h3>
+                  <p className="mt-2 text-sm text-[#7C7373] leading-relaxed">
                     {item.description}
                   </p>
                 </div>

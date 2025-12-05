@@ -7,7 +7,7 @@ type Category = {
   icon: string;
 };
 
-// Default fallback categories for when database is unavailable
+// Default fallback categories
 const FALLBACK_CATEGORIES: Category[] = [
   {
     name: "Tutoring & Education",
@@ -43,22 +43,21 @@ const FALLBACK_CATEGORIES: Category[] = [
 
 function CategoryCard({ name, description, icon, id }: Category & { id?: string }) {
   const searchUrl = id ? `/search?category=${id}` : '/search';
-  
+
   return (
-    <a 
+    <a
       href={searchUrl}
-      className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+      className="group flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#2563EB]/10 text-xl">
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
           <span>{icon}</span>
         </div>
-        <h3 className="text-sm font-semibold text-[#333333]">{name}</h3>
+        <h3 className="font-bold text-[#333333] group-hover:text-blue-600 transition-colors">{name}</h3>
       </div>
-      <p className="text-xs leading-relaxed text-[#7C7373]">{description}</p>
-      <span className="mt-1 inline-flex w-fit items-center gap-1 text-xs font-semibold text-[#2563EB]">
-        Explore
-        <span aria-hidden>→</span>
+      <p className="text-sm text-[#7C7373] leading-relaxed">{description}</p>
+      <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-blue-600 uppercase tracking-wide opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+        Explore Category <span aria-hidden>→</span>
       </span>
     </a>
   );
@@ -77,44 +76,37 @@ interface PopularCategoriesProps {
   categories?: DatabaseCategory[];
 }
 
-// Map database categories to display format
 function mapDatabaseCategories(dbCategories: DatabaseCategory[]): (Category & { id: string })[] {
   return dbCategories.map((cat) => ({
     id: cat.id,
-    name: cat.nameEn, // Use English name as default
+    name: cat.nameEn,
     description: cat.description || "Explore this category",
-    icon: cat.icon || "🔧", // default icon
+    icon: cat.icon || "🔍",
   }));
 }
 
-export function PopularCategories({ categories = [] }: PopularCategoriesProps) {
+export function PopularCategories({ categories }: PopularCategoriesProps) {
+  const displayCategories = categories && categories.length > 0
+    ? mapDatabaseCategories(categories).slice(0, 6)
+    : FALLBACK_CATEGORIES;
+
   return (
-    <section
-      id="categories"
-      className="border-b border-[#E5E7EB] bg-[#FAFAFA] py-12 md:py-16"
-    >
+    <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-slate-200">
       <Container>
-        {/* Section heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C7373]">
-            Popular categories
+        <div className="mx-auto max-w-3xl text-center mb-16">
+          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+            Most In-Demand
           </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
-            Find the right expert faster by starting with a category.
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+            Popular services this week.
           </h2>
-          <p className="mt-3 text-sm text-[#7C7373] md:text-base">
-            Whether you need help with school, your career, your home, or your
-            next big idea, SkillFind connects you with verified professionals in
-            the right category.
+          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
+            Find help for your daily needs or long-term projects.
           </p>
         </div>
 
-        {/* Category grid */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {(categories.length > 0 
-            ? mapDatabaseCategories(categories).slice(0, 6)
-            : FALLBACK_CATEGORIES
-          ).map((category) => (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {displayCategories.map((category) => (
             <CategoryCard key={category.name} {...category} />
           ))}
         </div>

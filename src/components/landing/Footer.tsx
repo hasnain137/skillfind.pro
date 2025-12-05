@@ -1,98 +1,93 @@
 // src/components/layout/Footer.tsx
 import { Container } from "@/components/ui/Container";
+import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#E5E7EB] bg-[#FAFAFA] py-8 md:py-10">
+    <footer className="border-t border-slate-200 bg-[#FAFAFA] py-12 md:py-16">
       <Container>
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
           {/* Brand + short text */}
           <div className="max-w-xs">
             <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#2563EB] text-[11px] font-bold text-white">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-xs font-bold text-white shadow-sm">
                 SF
               </div>
-              <span className="text-sm font-semibold text-[#333333]">
-                Skill<span className="text-[#2563EB]">Find</span>
+              <span className="text-base font-bold text-[#333333]">
+                Skill<span className="text-blue-600">Find</span>
               </span>
             </div>
-            <p className="mt-3 text-xs text-[#7C7373] leading-relaxed">
-              A marketplace for clients and professionals to connect for
-              tutoring, tech help, design, wellness, and everyday services.
+            <p className="mt-4 text-sm text-[#7C7373] leading-relaxed">
+              A trusted marketplace connecting clients with verified professionals
+              for tutoring, tech, home services, and more.
             </p>
           </div>
 
           {/* Links */}
-          <div className="grid grid-cols-2 gap-6 text-xs text-[#7C7373] md:grid-cols-3">
-            <div className="space-y-2">
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#333333]">
+          <div className="grid grid-cols-2 gap-8 text-sm text-[#7C7373] md:grid-cols-3">
+            <div className="space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#333333]">
                 For clients
               </h4>
-              <ul className="space-y-1">
+              <ul className="space-y-3">
                 <li>
-                  <a href="#categories" className="hover:text-[#2563EB]">
+                  <Link href="/search" className="hover:text-blue-600 transition-colors">
                     Browse categories
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#top-professionals" className="hover:text-[#2563EB]">
+                  <Link href="#top-professionals" className="hover:text-blue-600 transition-colors">
                     Featured professionals
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#how-it-works" className="hover:text-[#2563EB]">
+                  <Link href="#how-it-works" className="hover:text-blue-600 transition-colors">
                     How it works
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
 
-            <div className="space-y-2">
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#333333]">
+            <div className="space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#333333]">
                 For professionals
               </h4>
-              <ul className="space-y-1">
+              <ul className="space-y-3">
                 <li>
-                  <a href="#for-professionals" className="hover:text-[#2563EB]">
+                  <Link href="/signup" className="hover:text-blue-600 transition-colors">
                     Become a professional
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    className="hover:text-[#2563EB]"
-                  >
+                  <button type="button" className="hover:text-blue-600 transition-colors">
                     Pricing & visibility
                   </button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    className="hover:text-[#2563EB]"
-                  >
+                  <button type="button" className="hover:text-blue-600 transition-colors">
                     Help & support
                   </button>
                 </li>
               </ul>
             </div>
 
-            <div className="space-y-2">
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#333333]">
+            <div className="space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#333333]">
                 Company
               </h4>
-              <ul className="space-y-1">
+              <ul className="space-y-3">
                 <li>
-                  <button type="button" className="hover:text-[#2563EB]">
+                  <button type="button" className="hover:text-blue-600 transition-colors">
                     About
                   </button>
                 </li>
                 <li>
-                  <button type="button" className="hover:text-[#2563EB]">
+                  <button type="button" className="hover:text-blue-600 transition-colors">
                     Terms
                   </button>
                 </li>
                 <li>
-                  <button type="button" className="hover:text-[#2563EB]">
+                  <button type="button" className="hover:text-blue-600 transition-colors">
                     Privacy
                   </button>
                 </li>
@@ -102,18 +97,18 @@ export function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#E5E7EB] pt-4 text-[11px] text-[#7C7373] md:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 text-xs text-[#7C7373] md:flex-row">
           <p>© {new Date().getFullYear()} SkillFind. All rights reserved.</p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <select
-              className="rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-[11px] text-[#7C7373] shadow-sm hover:border-[#D1D5DB]"
+              className="rounded-lg border border-slate-200 bg-white py-1.5 pl-3 pr-8 text-xs text-[#7C7373] shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               defaultValue="en"
             >
               <option value="en">English</option>
               {/* Add more locales later */}
             </select>
-            <span>Made for clients & professionals.</span>
+            <span>Made with ❤️ for the community.</span>
           </div>
         </div>
       </Container>

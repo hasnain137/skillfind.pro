@@ -39,35 +39,18 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="border-b border-[#E5E7EB] bg-slate-50 py-20">
+    <section id="how-it-works" className="py-20 md:py-24 bg-white border-b border-slate-200">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-sm font-bold uppercase tracking-wider text-blue-600"
-          >
-            How SkillFind Works
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="mt-3 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl"
-          >
-            Get it done in 3 simple steps
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto"
-          >
-            We've streamlined the process so you can focus on getting results.
-          </motion.p>
+          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+            Simple & Transparent
+          </p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+            How SkillFind works.
+          </h2>
+          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
+            Get the job done in three easy steps. No hidden fees, no hassle.
+          </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -83,8 +66,8 @@ export function HowItWorks() {
               <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                 {step.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-              <p className="text-slate-600 leading-relaxed text-sm">
+              <h3 className="text-xl font-bold text-[#333333] mb-3">{step.title}</h3>
+              <p className="text-[#7C7373] leading-relaxed text-sm">
                 {step.description}
               </p>
 
