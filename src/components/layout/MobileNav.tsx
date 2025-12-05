@@ -65,11 +65,20 @@ export function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 z-50 h-full w-72 bg-white shadow-2xl"
+              className="fixed right-0 top-0 z-50 h-full w-[85vw] max-w-sm bg-white/90 backdrop-blur-3xl shadow-2xl border-l border-white/50 supports-[backdrop-filter]:bg-white/60"
             >
               <div className="flex h-16 items-center justify-between border-b border-[#E5E7EB] px-4">
-                <span className="text-lg font-semibold">Menu</span>
-                {/* Close button is handled by the hamburger toggle which stays visible */}
+                <span className="text-lg font-semibold text-slate-900">Menu</span>
+                <button
+                  onClick={closeMenu}
+                  className="rounded-full p-2 text-[#7C7373] hover:bg-[#F3F4F6] focus:outline-none"
+                  aria-label="Close menu"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
               </div>
 
               <nav className="flex flex-col gap-1 p-4">
@@ -79,8 +88,8 @@ export function MobileNav() {
                     href={link.href}
                     onClick={closeMenu}
                     className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${pathname === link.href
-                        ? 'bg-[#2563EB]/10 text-[#2563EB]'
-                        : 'text-[#7C7373] hover:bg-[#F3F4F6] hover:text-[#333333]'
+                      ? 'bg-[#2563EB]/10 text-[#2563EB]'
+                      : 'text-[#7C7373] hover:bg-[#F3F4F6] hover:text-[#333333]'
                       }`}
                   >
                     {link.label}
