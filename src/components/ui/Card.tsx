@@ -11,18 +11,19 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   hoverEffect?: "lift" | "glow" | "border" | "none";
 };
 
-// Using design system tokens
+// Using design system tokens - SUBTLE SHADOW-BASED 3D LOOK
+// Removed heavy borders, using soft shadows for depth
 const VARIANTS: Record<CardVariant, string> = {
   default:
-    "bg-white border border-surface-200 shadow-soft-xs",
+    "bg-white shadow-soft ring-1 ring-black/[0.03]",
   elevated:
-    "bg-white border border-surface-100 shadow-soft-md",
+    "bg-white shadow-soft-md ring-1 ring-black/[0.02]",
   muted:
-    "bg-surface-50 border border-surface-200",
+    "bg-surface-50/80 shadow-soft-xs ring-1 ring-black/[0.02]",
   dashed:
-    "bg-surface-50 border-2 border-dashed border-surface-300",
+    "bg-surface-50/50 border-2 border-dashed border-surface-200",
   gradient:
-    "bg-gradient-to-br from-white to-surface-50 border border-surface-200 shadow-soft-xs",
+    "bg-gradient-to-br from-white to-surface-50 shadow-soft ring-1 ring-black/[0.03]",
 };
 
 const PADDING: Record<CardPadding, string> = {
@@ -34,9 +35,9 @@ const PADDING: Record<CardPadding, string> = {
 };
 
 const HOVER_EFFECTS: Record<string, string> = {
-  lift: "hover:-translate-y-0.5 hover:shadow-soft-lg",
+  lift: "hover:-translate-y-0.5 hover:shadow-soft-lg hover:ring-black/[0.05]",
   glow: "hover:shadow-glow-sm",
-  border: "hover:border-primary-400",
+  border: "hover:ring-primary-500/30 hover:shadow-soft-md",
   none: "",
 };
 
@@ -56,7 +57,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     const baseStyles = [
       // Shape
       "rounded-2xl",
-      // Transitions
+      // Transitions - smooth for that premium feel
       "transition-all duration-200 ease-out",
     ].join(" ");
 
@@ -148,7 +149,7 @@ export const CardFooter = ({
   ...props
 }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={`flex items-center gap-3 pt-4 border-t border-surface-200 ${className}`}
+    className={`flex items-center gap-3 pt-4 border-t border-surface-100 ${className}`}
     {...props}
   >
     {children}

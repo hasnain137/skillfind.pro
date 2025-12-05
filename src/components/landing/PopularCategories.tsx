@@ -47,16 +47,16 @@ function CategoryCard({ name, description, icon, id }: Category & { id?: string 
   return (
     <a
       href={searchUrl}
-      className="group flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className="group flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-soft ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg"
     >
       <div className="flex items-center gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-2xl group-hover:bg-primary-600 group-hover:text-white transition-colors duration-300">
           <span>{icon}</span>
         </div>
-        <h3 className="font-bold text-[#333333] group-hover:text-blue-600 transition-colors">{name}</h3>
+        <h3 className="font-bold text-surface-900 group-hover:text-primary-600 transition-colors">{name}</h3>
       </div>
-      <p className="text-sm text-[#7C7373] leading-relaxed">{description}</p>
-      <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-blue-600 uppercase tracking-wide opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+      <p className="text-sm text-surface-500 leading-relaxed">{description}</p>
+      <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-primary-600 uppercase tracking-wide opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
         Explore Category <span aria-hidden>→</span>
       </span>
     </a>
@@ -91,16 +91,16 @@ export function PopularCategories({ categories }: PopularCategoriesProps) {
     : FALLBACK_CATEGORIES;
 
   return (
-    <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-slate-200">
+    <section className="py-20 md:py-24 bg-surface-50 border-b border-surface-200">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+          <p className="text-sm font-bold uppercase tracking-wider text-primary-600">
             Most In-Demand
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
             Popular services this week.
           </h2>
-          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-surface-500 max-w-2xl mx-auto">
             Find help for your daily needs or long-term projects.
           </p>
         </div>
