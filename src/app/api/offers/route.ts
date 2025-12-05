@@ -212,6 +212,11 @@ export async function POST(request: NextRequest) {
       throw new NotFoundError('Professional profile');
     }
 
+    // Check if professional is active
+    if (professional.status !== 'ACTIVE') {
+      throw new ForbiddenError('Your account is not active. Please complete verification or contact support.');
+    }
+
     // Check wallet balance (min €2.00 required to send offers)
     // const wallet = await prisma.wallet.findUnique({
     //   where: { professionalId: professional.id },

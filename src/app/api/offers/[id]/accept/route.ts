@@ -57,6 +57,11 @@ export async function POST(
       throw new BadRequestError('This request is no longer accepting offers');
     }
 
+    // Check if professional is active
+    if (offer.professional.status !== 'ACTIVE') {
+      throw new BadRequestError('This professional is no longer active on the platform');
+    }
+
     // Accept offer and create job in transaction
     const result = await prisma.$transaction(async (tx) => {
       // Update offer status

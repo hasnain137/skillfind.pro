@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { requireProfessional } from '@/lib/auth';
 import { successResponse, handleApiError, createdResponse } from '@/lib/api-response';
 import { createServiceSchema } from '@/lib/validations/user';
-import { updateProfileCompletionPercentage } from '@/lib/services/profile-completion';
+import { updateProfileCompletionPercentage, canProfessionalBeActive } from '@/lib/services/profile-completion';
 import { NotFoundError, ConflictError } from '@/lib/errors';
 
 export async function GET() {
@@ -112,6 +112,17 @@ export async function POST(request: NextRequest) {
 
     // Update profile completion
     const completionPercent = await updateProfileCompletionPercentage(professional.id);
+
+    // Auto-activate if requirements are met
+    if (professional.status === 'INCOMPLETE' || professional.status === 'PENDING_REVIEW') {
+      const { canBeActive } = await canProfessionalBeActive(professional.id);
+      if (canBeActive) {
+        await prisma.professional.update({
+          where: { id: professional.id },
+          data: { status: 'ACTIVE' },
+        });
+      }
+    }
 
     return createdResponse(
       {

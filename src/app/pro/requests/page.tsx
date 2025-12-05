@@ -64,6 +64,42 @@ export default async function ProRequestsPage() {
 
   return (
     <div className="space-y-6">
+      {/* Status Banner */}
+      {professional.status !== 'ACTIVE' && (
+        <Card padding="lg" className={`border-l-4 ${professional.status === 'PENDING_REVIEW' ? 'border-yellow-400 bg-yellow-50' :
+          professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'border-red-500 bg-red-50' :
+            'border-blue-400 bg-blue-50'
+          }`}>
+          <div className="flex items-start gap-4">
+            <div className="text-2xl">
+              {professional.status === 'PENDING_REVIEW' ? '⏳' :
+                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? '⛔' : 'ℹ️'}
+            </div>
+            <div>
+              <h3 className={`font-bold ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-800' :
+                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-800' :
+                  'text-blue-800'
+                }`}>
+                {professional.status === 'PENDING_REVIEW' ? 'Account Under Review' :
+                  professional.status === 'SUSPENDED' ? 'Account Suspended' :
+                    professional.status === 'BANNED' ? 'Account Banned' :
+                      'Complete Your Profile'}
+              </h3>
+              <p className={`mt-1 text-sm ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-700' :
+                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-700' :
+                  'text-blue-700'
+                }`}>
+                {professional.status === 'PENDING_REVIEW'
+                  ? "You can browse requests, but you cannot send offers until your profile is approved."
+                  : professional.status === 'SUSPENDED' || professional.status === 'BANNED'
+                    ? "Your account is deactivated. You cannot send offers."
+                    : "Complete your profile to start sending offers."}
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
+
       <SectionHeading
         eyebrow="Matching requests"
         title="Newest opportunities"
@@ -202,12 +238,21 @@ export default async function ProRequestsPage() {
                         Client: {request.client.user.firstName || 'Client'}
                       </span>
                     </div>
-                    <Link
-                      href={`/pro/requests/${request.id}/offer`}
-                      className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
-                    >
-                      Send Offer →
-                    </Link>
+                    {professional.status === 'ACTIVE' ? (
+                      <Link
+                        href={`/pro/requests/${request.id}/offer`}
+                        className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
+                      >
+                        Send Offer →
+                      </Link>
+                    ) : (
+                      <button
+                        disabled
+                        className="inline-flex items-center justify-center gap-1 rounded-full bg-gray-100 px-4 py-2 text-xs font-semibold text-gray-400 cursor-not-allowed"
+                      >
+                        {professional.status === 'PENDING_REVIEW' ? 'Pending Approval' : 'Account Inactive'}
+                      </button>
+                    )}
                   </div>
                 </div>
               </Card>

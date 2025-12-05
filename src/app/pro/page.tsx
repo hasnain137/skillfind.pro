@@ -255,6 +255,42 @@ export default async function ProDashboardPage() {
 
   return (
     <div className="space-y-6">
+      {/* Status Banner */}
+      {professional.status !== 'ACTIVE' && (
+        <Card padding="lg" className={`border-l-4 ${professional.status === 'PENDING_REVIEW' ? 'border-yellow-400 bg-yellow-50' :
+            professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'border-red-500 bg-red-50' :
+              'border-blue-400 bg-blue-50'
+          }`}>
+          <div className="flex items-start gap-4">
+            <div className="text-2xl">
+              {professional.status === 'PENDING_REVIEW' ? '⏳' :
+                professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? '⛔' : 'ℹ️'}
+            </div>
+            <div>
+              <h3 className={`font-bold ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-800' :
+                  professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-800' :
+                    'text-blue-800'
+                }`}>
+                {professional.status === 'PENDING_REVIEW' ? 'Account Under Review' :
+                  professional.status === 'SUSPENDED' ? 'Account Suspended' :
+                    professional.status === 'BANNED' ? 'Account Banned' :
+                      'Complete Your Profile'}
+              </h3>
+              <p className={`mt-1 text-sm ${professional.status === 'PENDING_REVIEW' ? 'text-yellow-700' :
+                  professional.status === 'SUSPENDED' || professional.status === 'BANNED' ? 'text-red-700' :
+                    'text-blue-700'
+                }`}>
+                {professional.status === 'PENDING_REVIEW'
+                  ? "Your profile is currently being reviewed by our team. You can't send offers yet, but you can still update your profile."
+                  : professional.status === 'SUSPENDED' || professional.status === 'BANNED'
+                    ? "Your account has been deactivated. Please contact support to resolve this issue."
+                    : "Please complete your profile details to get verified and start receiving requests."}
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
+
       <DashboardHero
         eyebrow="Professional dashboard"
         title={`Good ${timeOfDay}, ${firstName}`}
