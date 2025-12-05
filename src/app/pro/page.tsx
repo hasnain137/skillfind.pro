@@ -15,6 +15,7 @@ import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { calculateProfessionalCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
+import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
 
 const QUICK_ACTIONS = [
   {
@@ -309,13 +310,13 @@ export default async function ProDashboardPage() {
       />
 
       {/* Earnings Overview */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-3" data-tour="earnings">
         <div className="lg:col-span-1">
           <EarningsChart data={earningsData} />
         </div>
 
         {/* Performance Metrics */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2" data-tour="stats">
           <Card variant="default" padding="lg" className="space-y-4 h-full">
             <SectionHeading
               variant="section"
@@ -328,7 +329,7 @@ export default async function ProDashboardPage() {
       </div>
 
       {/* Matching Requests */}
-      <Card variant="default" padding="lg" className="space-y-4">
+      <Card variant="default" padding="lg" className="space-y-4" data-tour="matching-requests">
         <div className="flex items-center justify-between">
           <SectionHeading
             variant="section"
@@ -379,6 +380,7 @@ export default async function ProDashboardPage() {
         </Card>
       </div>
       <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />
+      <ProDashboardTour />
     </div>
   );
 }

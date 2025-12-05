@@ -12,6 +12,7 @@ import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { calculateClientCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
+import { ClientDashboardTour } from "@/components/onboarding/ClientDashboardTour";
 
 const QUICK_ACTIONS = [
   {
@@ -162,7 +163,7 @@ export default async function ClientDashboardPage() {
         missingSteps={missingSteps}
       />
 
-      <section className="grid gap-3 sm:grid-cols-3">
+      <section className="grid gap-3 sm:grid-cols-3" data-tour="stats">
         {stats.map((stat) => (
           <StatCard
             key={stat.label}
@@ -175,7 +176,7 @@ export default async function ClientDashboardPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Quick Actions */}
-        <Card variant="muted" padding="lg" className="space-y-4">
+        <Card variant="muted" padding="lg" className="space-y-4" data-tour="quick-actions">
           <SectionHeading
             variant="section"
             title="Quick actions"
@@ -189,7 +190,7 @@ export default async function ClientDashboardPage() {
         </Card>
 
         {/* Activity Feed */}
-        <Card variant="default" padding="lg" className="space-y-4">
+        <Card variant="default" padding="lg" className="space-y-4" data-tour="activity">
           <SectionHeading
             variant="section"
             title="Recent activity"
@@ -210,6 +211,7 @@ export default async function ClientDashboardPage() {
       </Card>
 
       <WelcomeModal userRole="CLIENT" firstName={firstName} />
+      <ClientDashboardTour />
     </div>
   );
 }
