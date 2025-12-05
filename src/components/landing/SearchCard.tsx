@@ -5,25 +5,25 @@ import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function SearchCard() {
+export function SearchCard({ className = "" }: { className?: string }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const params = new URLSearchParams();
     if (query) params.set('search', query);
     if (location) params.set('location', location);
-    
+
     router.push(`/search?${params.toString()}`);
   };
 
   return (
-    <div className="mx-auto mt-7 w-full max-w-2xl rounded-2xl bg-gradient-to-br from-white to-[#2563EB0D] p-5 shadow-md shadow-[#E5E7EB]/40">
+    <div className={`w-full rounded-2xl bg-gradient-to-br from-white to-[#2563EB0D] p-5 shadow-md shadow-[#E5E7EB]/40 ${className}`}>
       <form onSubmit={handleSearch} className="flex flex-col gap-4 md:flex-row md:items-end">
-        
+
         {/* Service input */}
         <div className="flex-1">
           <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
