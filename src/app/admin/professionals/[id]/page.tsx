@@ -110,6 +110,7 @@ export default async function AdminProfessionalDetailPage({
                     <AdminProfessionalActions
                         professionalId={professional.id}
                         currentStatus={professional.status}
+                        isVerified={professional.isVerified}
                         documents={professional.documents.map((d: any) => ({
                             id: d.id,
                             type: d.type,

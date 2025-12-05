@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 interface AdminProfessionalActionsProps {
     professionalId: string;
     currentStatus: string;
+    isVerified: boolean;
     documents: {
         id: string;
         type: string;
@@ -20,6 +21,7 @@ interface AdminProfessionalActionsProps {
 export default function AdminProfessionalActions({
     professionalId,
     currentStatus,
+    isVerified,
     documents,
 }: AdminProfessionalActionsProps) {
     const router = useRouter();
@@ -40,6 +42,27 @@ export default function AdminProfessionalActions({
             router.refresh();
         } catch (error) {
             alert('Error updating status');
+            console.error(error);
+        } finally {
+            setLoading(null);
+        }
+    }
+
+    async function handleVerificationChange(newStatus: boolean) {
+        if (!confirm(`Are you sure you want to ${newStatus ? 'verify' : 'unverify'} this professional?`)) return;
+
+        setLoading('verify');
+        try {
+            const res = await fetch(`/api/admin/professionals/${professionalId}/verify`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isVerified: newStatus }),
+            });
+
+            if (!res.ok) throw new Error('Failed to update verification status');
+            router.refresh();
+        } catch (error) {
+            alert('Error updating verification status');
             console.error(error);
         } finally {
             setLoading(null);
@@ -98,6 +121,21 @@ export default function AdminProfessionalActions({
                         Ban Account
                     </Button>
                 )}
+            </div>
+
+            {/* Verification Actions */}
+            <div className="flex flex-wrap gap-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-4">
+                    <span className="text-sm font-medium text-[#333333]">Manual Verification:</span>
+                    <Button
+                        variant={isVerified ? "destructive" : "success"}
+                        onClick={() => handleVerificationChange(!isVerified)}
+                        disabled={!!loading}
+                        className="py-1 px-3 text-xs h-8 min-h-0"
+                    >
+                        {loading === 'verify' ? 'Updating...' : (isVerified ? 'Unverify User' : 'Verify User')}
+                    </Button>
+                </div>
             </div>
 
             {/* Documents Review */}
