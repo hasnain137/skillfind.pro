@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
+import ClientJobsList from '@/components/client/ClientJobsList';
 
 const STATUS_VARIANT: Record<string, "primary" | "warning" | "success" | "gray"> = {
   PENDING: "primary",
@@ -34,6 +35,11 @@ export default async function ClientJobsPage() {
                   professional: {
                     include: {
                       user: true,
+                    },
+                  },
+                  review: {
+                    select: {
+                      id: true,
                     },
                   },
                   request: {
@@ -102,94 +108,7 @@ export default async function ClientJobsPage() {
           </Link>
         </Card>
       ) : (
-        <div className="space-y-6">
-          {/* Active Jobs */}
-          {activeJobs.length > 0 && (
-            <section className="space-y-4">
-              <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-                <span>⚡</span> Active Jobs ({activeJobs.length})
-              </h2>
-              {activeJobs.map((job) => {
-                const statusConfig = STATUS_VARIANT[job.status as string] || "gray";
-                const canComplete = (job.status as string) === 'IN_PROGRESS';
-
-                return (
-                  <Link key={job.id} href={`/client/jobs/${job.id}`}>
-                    <Card className="group hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
-                      <div className="space-y-3">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 min-w-0">
-                            <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors truncate">
-                              {job.request.title}
-                            </h3>
-                            <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
-                              <span className="flex items-center gap-1">
-                                👤 {job.professional.user.firstName || 'Professional'} {job.professional.user.lastName || ''}
-                              </span>
-                              <span>•</span>
-                              <span className="flex items-center gap-1">
-                                📂 {job.request.category.nameEn}
-                              </span>
-                            </div>
-                          </div>
-                          <Badge variant={statusConfig}>{job.status}</Badge>
-                        </div>
-
-                        <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
-                          <div className="flex items-center gap-4 text-xs">
-                            <span className="flex items-center gap-1 font-semibold text-green-600">
-                              💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
-                            </span>
-                            <span className="flex items-center gap-1 text-[#7C7373]">
-                              📅 Started {new Date(job.startedAt || job.createdAt).toLocaleDateString()}
-                            </span>
-                          </div>
-                          {canComplete && (
-                            <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">
-                              Can Complete
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                );
-              })}
-            </section>
-          )}
-
-          {/* Completed Jobs */}
-          {completedJobs.length > 0 && (
-            <section className="space-y-4">
-              <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-                <span>🟢</span> Completed Jobs ({completedJobs.length})
-              </h2>
-              {completedJobs.map((job) => (
-                <Link key={job.id} href={`/client/jobs/${job.id}`}>
-                  <Card className="group hover:border-green-500 hover:shadow-md transition-all duration-200 cursor-pointer bg-gradient-to-br from-green-50 to-white border-green-200" padding="lg">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-base font-bold text-[#333333] group-hover:text-green-600 transition-colors truncate">
-                          {job.request.title}
-                        </h3>
-                        <div className="flex items-center gap-3 text-xs text-[#7C7373] mt-1">
-                          <span className="flex items-center gap-1">
-                            ✅ Completed {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'}
-                          </span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1 font-semibold text-green-600">
-                            💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
-                          </span>
-                        </div>
-                      </div>
-                      <Badge variant="success">Completed</Badge>
-                    </div>
-                  </Card>
-                </Link>
-              ))}
-            </section>
-          )}
-        </div>
+        <ClientJobsList activeJobs={activeJobs as any} completedJobs={completedJobs as any} />
       )}
     </div>
   );

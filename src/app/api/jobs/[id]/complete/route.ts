@@ -1,7 +1,7 @@
 // POST /api/jobs/[id]/complete - Mark job as complete (professional only)
 import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { requireProfessional } from '@/lib/auth';
+import { requireAuth } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { NotFoundError, ForbiddenError, BadRequestError } from '@/lib/errors';
 
@@ -10,27 +10,15 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { userId } = await requireProfessional();
+    const { userId, role } = await requireAuth();
     const { id } = await context.params;
-
-    // Get professional
-    const professional = await prisma.professional.findUnique({
-      where: { userId },
-    });
-
-    if (!professional) {
-      throw new NotFoundError('Professional profile');
-    }
 
     // Get job
     const job = await prisma.job.findUnique({
       where: { id },
       include: {
-        client: {
-          include: {
-            user: true,
-          },
-        },
+        client: true,
+        professional: true,
       },
     });
 
@@ -39,8 +27,18 @@ export async function POST(
     }
 
     // Verify ownership
-    if (job.professionalId !== professional.id) {
-      throw new ForbiddenError('You can only complete your own jobs');
+    if (role === 'PROFESSIONAL') {
+      // Get professional profile
+      const professional = await prisma.professional.findUnique({
+        where: { userId },
+      });
+
+      if (!professional || job.professionalId !== professional.id) {
+        throw new ForbiddenError('You can only complete your own jobs');
+      }
+    } else if (role !== 'ADMIN') {
+      // Clients cannot complete jobs via this API anymore
+      throw new ForbiddenError('Only professionals can complete jobs');
     }
 
     // Check status
