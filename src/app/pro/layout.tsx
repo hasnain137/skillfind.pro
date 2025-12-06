@@ -1,8 +1,10 @@
 // src/app/pro/layout.tsx
 import type { Metadata } from "next";
-import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { Container } from "@/components/ui/Container";
+import { Navbar } from "@/components/layout/Navbar";
 import { SidebarNav } from "@/components/layout/SidebarNav";
 import { ClientUserButton } from "@/components/layout/ClientUserButton";
+import { MobileDashboardNav } from "@/components/layout/MobileDashboardNav";
 
 export const metadata: Metadata = {
   title: "Professional Area | SkillFind",
@@ -25,29 +27,44 @@ export default function ProLayout({
   children: React.ReactNode;
 }) {
 
-  const SidebarContent = (
-    <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center border-b border-zinc-200 px-6 dark:border-zinc-800">
-        <span className="text-lg font-bold tracking-tight text-surface-900">SkillFind<span className="text-primary-600">Pro</span></span>
-      </div>
-      <div className="flex-1 overflow-y-auto py-6 px-4">
-        <SidebarNav links={SIDEBAR_LINKS} />
-      </div>
-      <div className="border-t border-zinc-200 p-4 dark:border-zinc-800">
-        <div className="flex items-center gap-3 rounded-lg border border-surface-200 bg-surface-50 p-3">
-          <ClientUserButton />
-          <div className="text-xs">
-            <p className="font-medium text-surface-900">My Account</p>
-            <p className="text-surface-500">Manage settings</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
-    <DashboardLayout sidebar={SidebarContent}>
-      {children}
-    </DashboardLayout>
+    <div className="min-h-screen bg-[#F3F4F6] pb-20 lg:pb-0">
+      <Navbar />
+      <div className="py-6 lg:py-10">
+        <Container className="flex flex-col gap-6 lg:flex-row">
+          {/* Desktop Sidebar - Hidden on mobile */}
+          <aside className="hidden lg:block rounded-2xl border border-[#DDE7FF] bg-gradient-to-b from-white via-[#F7FAFF] to-[#EEF2FF] p-5 shadow-sm lg:w-64 h-fit sticky top-24">
+            <div className="flex items-start justify-between mb-4">
+              <div className="space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
+                  Pro Area
+                </p>
+                <h2 className="text-lg font-semibold text-[#333333]">
+                  SkillFind Pro
+                </h2>
+              </div>
+              <ClientUserButton />
+            </div>
+
+            <SidebarNav links={SIDEBAR_LINKS} />
+
+            <div className="mt-8 pt-4 border-t border-[#E5E7EB]">
+              <p className="text-xs text-[#7C7373]">
+                Manage your profile, respond to requests, and grow your business.
+              </p>
+            </div>
+          </aside>
+
+          <div className="flex-1">
+            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4 lg:p-6 shadow-sm min-h-[600px]">
+              {children}
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileDashboardNav links={SIDEBAR_LINKS} />
+    </div>
   );
 }
