@@ -80,6 +80,9 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                     <label className="block text-sm font-medium text-[#333333] mb-1">
                         Max Offers Per Request
                     </label>
+                    <p className="text-xs text-[#7C7373] mb-2">
+                        Maximum number of professionals who can send an offer for a single request.
+                    </p>
                     <input
                         type="number"
                         min="1"

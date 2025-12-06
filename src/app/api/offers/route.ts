@@ -7,7 +7,7 @@ import { successResponse, handleApiError, createdResponse } from '@/lib/api-resp
 import { createOfferSchema, listOffersSchema } from '@/lib/validations/offer';
 import { NotFoundError, BadRequestError, LimitExceededError, ForbiddenError } from '@/lib/errors';
 
-const MAX_OFFERS_PER_REQUEST = 10;
+
 
 export async function GET(request: NextRequest) {
   try {
@@ -266,10 +266,14 @@ export async function POST(request: NextRequest) {
       throw new BadRequestError('You have already sent an offer for this request');
     }
 
-    // Check 10-offer limit per request (enforce in transaction)
-    if (serviceRequest._count.offers >= MAX_OFFERS_PER_REQUEST) {
+    // Get platform settings for limits
+    const settings = await prisma.platformSettings.findFirst();
+    const maxOffers = settings?.maxOffersPerRequest || 10;
+
+    // Check offer limit per request (enforce in transaction)
+    if (serviceRequest._count.offers >= maxOffers) {
       throw new LimitExceededError(
-        `This request has reached the maximum of ${MAX_OFFERS_PER_REQUEST} offers`
+        `This request has reached the maximum of ${maxOffers} offers`
       );
     }
 
@@ -280,9 +284,9 @@ export async function POST(request: NextRequest) {
         where: { requestId: data.requestId },
       });
 
-      if (offerCount >= MAX_OFFERS_PER_REQUEST) {
+      if (offerCount >= maxOffers) {
         throw new LimitExceededError(
-          `This request has reached the maximum of ${MAX_OFFERS_PER_REQUEST} offers`
+          `This request has reached the maximum of ${maxOffers} offers`
         );
       }
 
