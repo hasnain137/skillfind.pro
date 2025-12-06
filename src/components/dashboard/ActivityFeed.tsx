@@ -22,7 +22,7 @@ const ACTIVITY_ICONS = {
 };
 
 const ACTIVITY_COLORS = {
-  offer_received: 'from-primary-50 to-primary-100',
+  offer_received: 'from-[#EFF6FF] to-[#DBEAFE]',
   request_created: 'from-green-50 to-green-100',
   job_completed: 'from-purple-50 to-purple-100',
   review_left: 'from-yellow-50 to-yellow-100',
@@ -64,18 +64,18 @@ export function ActivityFeed({ activities }: ActivityFeedProps) {
               {ACTIVITY_ICONS[activity.type]}
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-surface-900 group-hover:text-primary-600 transition-colors">
+              <h4 className="text-sm font-semibold text-[#333333] group-hover:text-[#2563EB] transition-colors">
                 {activity.title}
               </h4>
-              <p className="text-xs text-surface-500 mt-1 line-clamp-2">
+              <p className="text-xs text-[#7C7373] mt-1 line-clamp-2">
                 {activity.description}
               </p>
-              <p className="text-[10px] text-surface-400 mt-2 font-medium">
+              <p className="text-[10px] text-[#7C7373] mt-2 font-medium">
                 {formatTimeAgo(activity.timestamp)}
               </p>
             </div>
             {activity.href && (
-              <div className="flex items-center text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex items-center text-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-sm">→</span>
               </div>
             )}

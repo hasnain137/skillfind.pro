@@ -15,25 +15,25 @@ export function ActionCard({ title, description, href, cta, icon }: ActionCardPr
     <Card
       level={2}
       interactive
-      className="group flex h-full flex-col gap-2 transition-all duration-200 border border-transparent hover:border-primary-100"
+      className="group flex h-full flex-col gap-2 transition-all duration-200 border border-transparent hover:border-[#DBEAFE]"
     >
       <CardContent className="h-full flex flex-col pt-6">
         <div className="flex items-start gap-3">
           {icon && (
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600 text-sm">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#DBEAFE] text-[#2563EB] text-sm">
               {icon}
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-surface-900 group-hover:text-primary-600 transition-colors">
+            <p className="text-sm font-semibold text-[#333333] group-hover:text-[#2563EB] transition-colors">
               {title}
             </p>
-            <p className="text-xs text-surface-500 mt-0.5">{description}</p>
+            <p className="text-xs text-[#7C7373] mt-0.5">{description}</p>
           </div>
         </div>
         <Link
           href={href}
-          className="text-xs font-semibold text-primary-600 hover:text-primary-700 hover:underline transition-colors mt-auto pt-4"
+          className="text-xs font-semibold text-[#2563EB] hover:text-[#1d4ed8] hover:underline transition-colors mt-auto pt-4"
         >
           {cta} →
         </Link>

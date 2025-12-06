@@ -71,7 +71,7 @@ export async function Navbar() {
               </Link>
             </>
           )}
-          
+
           {/* Mobile Navigation */}
           <MobileNav />
         </div>

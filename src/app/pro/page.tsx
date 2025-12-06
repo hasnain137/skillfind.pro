@@ -298,7 +298,7 @@ export default async function ProDashboardPage() {
           />
           <Link
             href="/pro/requests"
-            className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+            className="text-xs font-semibold text-[#2563EB] hover:text-[#1d4ed8] transition-colors"
           >
             View all →
           </Link>
@@ -336,11 +336,11 @@ export default async function ProDashboardPage() {
           <CardContent>
             <ul className="space-y-3">
               {nextSteps.map((step, index) => (
-                <li key={index} className="flex items-start gap-3 rounded-lg bg-surface-50 p-3 shadow-sm border border-surface-200">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">
+                <li key={index} className="flex items-start gap-3 rounded-lg bg-[#FAFAFA] p-3 shadow-sm border border-[#E5E7EB]">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#2563EB] text-xs font-bold text-white">
                     {index + 1}
                   </div>
-                  <span className="text-sm text-surface-900">{step}</span>
+                  <span className="text-sm text-[#333333]">{step}</span>
                 </li>
               ))}
             </ul>

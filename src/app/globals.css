@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  /* Status Colors for Dashboard */
+  --color-success-light: #dcfce7;
+  --color-success-dark: #166534;
+  --color-error-light: #fee2e2;
+  --color-error-dark: #991b1b;
+}
+
 @layer theme {
   :root {
     --background: 0 0% 100%;

@@ -60,7 +60,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
 
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start gap-4">
-                  <CardTitle className="text-base group-hover:text-primary-600 transition-colors line-clamp-1">
+                  <CardTitle className="text-base group-hover:text-[#2563EB] transition-colors line-clamp-1">
                     {request.title}
                   </CardTitle>
                 </div>
@@ -68,19 +68,19 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
 
               <CardContent className="pb-3">
                 {request.description && (
-                  <p className="text-xs text-surface-500 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#7C7373] leading-relaxed line-clamp-2">
                     {request.description}
                   </p>
                 )}
 
                 {/* Meta Info */}
                 <div className="flex flex-wrap items-center gap-3 text-xs mt-3">
-                  <span className="flex items-center gap-1 rounded-md bg-primary-50 px-2 py-1 font-semibold text-primary-700">
+                  <span className="flex items-center gap-1 rounded-md bg-[#EFF6FF] px-2 py-1 font-semibold text-[#1d4ed8]">
                     <span>💰</span> {budgetDisplay}
                   </span>
 
                   {request.location && (
-                    <span className="flex items-center gap-1 text-surface-500">
+                    <span className="flex items-center gap-1 text-[#7C7373]">
                       <span>📍</span> {request.location}
                     </span>
                   )}
@@ -91,20 +91,20 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
                     </span>
                   )}
 
-                  <span className="ml-auto text-surface-400">
+                  <span className="ml-auto text-[#7C7373]">
                     {timeDisplay}
                   </span>
                 </div>
               </CardContent>
 
-              <div className="mx-5 border-t border-surface-200/50" />
+              <div className="mx-5 border-t border-[#E5E7EB]/50" />
 
               <CardFooter className="pt-2 pb-2">
                 <div className="flex w-full items-center justify-between">
-                  <span className="text-xs font-medium text-surface-500">
+                  <span className="text-xs font-medium text-[#7C7373]">
                     Send your offer
                   </span>
-                  <span className="text-primary-600 font-bold group-hover:translate-x-1 transition-transform text-sm">
+                  <span className="text-[#2563EB] font-bold group-hover:translate-x-1 transition-transform text-sm">
                     →
                   </span>
                 </div>

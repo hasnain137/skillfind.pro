@@ -30,18 +30,18 @@ export function SectionHeading({
     >
       <div className="space-y-1">
         {eyebrow ? (
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-surface-500">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
             {eyebrow}
           </p>
         ) : null}
         <TitleTag
-          className={`font-bold text-surface-900 ${variant === "page" ? "text-xl" : "text-sm"
+          className={`font-bold text-[#333333] ${variant === "page" ? "text-xl" : "text-sm"
             }`}
         >
           {title}
         </TitleTag>
         {description ? (
-          <p className="text-xs text-surface-500">{description}</p>
+          <p className="text-xs text-[#7C7373]">{description}</p>
         ) : null}
       </div>
 

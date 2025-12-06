@@ -3,6 +3,7 @@
 
 import { Container } from "@/components/ui/Container";
 import { motion } from "framer-motion";
+import { Avatar } from "@/components/ui/Avatar";
 
 interface Review {
   id: string;
@@ -84,9 +85,12 @@ function TestimonialCard({ review, index }: { review: Review; index: number }) {
       </div>
 
       <div className="flex items-center gap-4 pt-6 mt-6 border-t border-[#E5E7EB]">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2563EB] text-white font-bold text-sm shadow-sm">
-          {clientInitials}
-        </div>
+        <Avatar
+          firstName={review.client.user.firstName}
+          lastName={review.client.user.lastName}
+          size="lg" // h-12 w-12 is roughly md/lg depending on sizing, let's check. md is 10, lg is 14. h-12 is 48px. 
+          className="h-12 w-12 border-2 border-white shadow-sm"
+        />
         <div>
           <p className="font-semibold text-[#333333]">
             {review.client.user.firstName} {review.client.user.lastName[0]}.

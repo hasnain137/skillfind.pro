@@ -43,6 +43,12 @@ const config: Config = {
                     950: "#09090b",
                 },
 
+                // Custom Brand Colors (to preserve homepage look)
+                brand: {
+                    black: "#333333", // Primary branding black
+                    gray: "#7C7373",  // Branding gray text
+                },
+
                 primary: {
                     50: '#eff6ff',
                     100: '#dbeafe',
@@ -50,7 +56,7 @@ const config: Config = {
                     300: '#93c5fd',
                     400: '#60a5fa',
                     500: '#3b82f6',
-                    600: '#2563eb', // Main brand color
+                    600: '#2563EB', // Main brand color
                     700: '#1d4ed8',
                     800: '#1e40af',
                     900: '#1e3a8a',
@@ -66,6 +72,34 @@ const config: Config = {
                     DEFAULT: "hsl(var(--destructive))",
                     foreground: "hsl(var(--destructive-foreground))",
                 },
+
+                // Status Colors (Missing in original config)
+                success: {
+                    light: "#dcfce7", // emerald-100
+                    DEFAULT: "#22c55e", // emerald-500
+                    dark: "#14532d", // emerald-900
+                    50: "#ecfdf5",
+                    100: "#d1fae5",
+                    200: "#a7f3d0",
+                    300: "#6ee7b7",
+                    400: "#34d399",
+                    500: "#10b981",
+                    600: "#059669",
+                    700: "#047857",
+                    800: "#065f46",
+                    900: "#064e3b",
+                },
+                error: {
+                    light: "#fee2e2", // rose-100
+                    DEFAULT: "#ef4444", // rose-500
+                    dark: "#7f1d1d", // rose-900
+                },
+                warning: {
+                    light: "#fef3c7", // amber-100
+                    DEFAULT: "#f59e0b", // amber-500
+                    dark: "#78350f", // amber-900
+                },
+
                 muted: {
                     DEFAULT: "hsl(var(--muted))",
                     foreground: "hsl(var(--muted-foreground))",

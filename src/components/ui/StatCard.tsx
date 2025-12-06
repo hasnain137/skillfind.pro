@@ -74,19 +74,19 @@ const TREND_STYLES: Record<TrendDirection, { bg: string; text: string; icon: str
     icon: '↓',
   },
   neutral: {
-    bg: 'bg-surface-100',
-    text: 'text-surface-500',
+    bg: 'bg-[#F3F4F6]',
+    text: 'text-[#7C7373]',
     icon: '→',
   },
 };
 
 // Gradient backgrounds
 const GRADIENT_COLORS: Record<string, string> = {
-  blue: 'from-primary-50 to-primary-100 border-primary-200',
-  green: 'from-green-50 to-green-100 border-green-200',
-  orange: 'from-orange-50 to-orange-100 border-orange-200',
-  purple: 'from-purple-50 to-purple-100 border-purple-200',
-  red: 'from-red-50 to-red-100 border-red-200',
+  blue: 'from-[#EFF6FF] to-[#DBEAFE] border-[#BFDBFE]',
+  green: 'from-[#F0FDF4] to-[#DCFCE7] border-[#BBF7D0]',
+  orange: 'from-[#FFF7ED] to-[#FFEDD5] border-[#FED7AA]',
+  purple: 'from-[#FAF5FF] to-[#F3E8FF] border-[#E9D5FF]',
+  red: 'from-[#FEF2F2] to-[#FEE2E2] border-[#FECACA]',
   default: '', // Handle default properly
 };
 
@@ -125,12 +125,12 @@ export function StatCard({
         <div className="flex items-start justify-between">
           <div className="flex-1">
             {/* Label */}
-            <p className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider">
+            <p className="text-[11px] font-semibold text-[#7C7373] uppercase tracking-wider">
               {label}
             </p>
 
             {/* Value */}
-            <p className="mt-1.5 text-2xl font-bold text-surface-900 tabular-nums">
+            <p className="mt-1.5 text-2xl font-bold text-[#333333] tabular-nums">
               {displayValue}
             </p>
 
@@ -144,20 +144,20 @@ export function StatCard({
                   {TREND_STYLES[trend.direction].icon} {Math.abs(trend.value)}%
                 </span>
                 {trend.label && (
-                  <span className="text-[10px] text-surface-400">{trend.label}</span>
+                  <span className="text-[10px] text-[#7C7373]">{trend.label}</span>
                 )}
               </div>
             )}
 
             {/* Helper Text */}
             {helperText && !trend && (
-              <p className="mt-1.5 text-[11px] text-surface-400">{helperText}</p>
+              <p className="mt-1.5 text-[11px] text-[#7C7373]">{helperText}</p>
             )}
           </div>
 
           {/* Icon */}
           {icon && (
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-100 text-lg shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F3F4F6] text-lg shrink-0">
               {icon}
             </div>
           )}

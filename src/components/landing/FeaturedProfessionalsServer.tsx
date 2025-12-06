@@ -15,6 +15,7 @@ interface Professional {
   user: {
     firstName: string;
     lastName: string;
+    avatar: string | null;
   };
   profile: {
     hourlyRateMin: number | null;
@@ -45,6 +46,7 @@ const getFeaturedProfessionals = unstable_cache(
             select: {
               firstName: true,
               lastName: true,
+              avatar: true,
             },
           },
           profile: {
@@ -73,8 +75,8 @@ const getFeaturedProfessionals = unstable_cache(
       return [];
     }
   },
-  ['featured-professionals'],
-  { revalidate: 3600, tags: ['featured-professionals'] }
+  ['featured-professionals-v2'],
+  { revalidate: 3600, tags: ['featured-professionals-v2'] }
 );
 
 function ProfessionalCard({
@@ -107,6 +109,7 @@ function ProfessionalCard({
       <div className="flex items-start gap-4 pt-2">
         <div className="relative">
           <Avatar
+            src={user.avatar}
             firstName={user.firstName}
             lastName={user.lastName}
             size="lg"
