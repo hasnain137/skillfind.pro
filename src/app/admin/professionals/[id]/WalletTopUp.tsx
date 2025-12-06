@@ -85,7 +85,7 @@ export default function WalletTopUp({ professionalId }: { professionalId: string
                                 >
                                     Cancel
                                 </Button>
-                                <Button type="submit" variant="primary" className="flex-1" disabled={loading}>
+                                <Button type="submit" variant="default" className="flex-1" disabled={loading}>
                                     {loading ? 'Adding...' : 'Add Credit'}
                                 </Button>
                             </div>

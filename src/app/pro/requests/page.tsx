@@ -104,7 +104,7 @@ export default async function ProRequestsPage() {
       )}
 
       {requests.length === 0 ? (
-        <Card variant="dashed" padding="lg" className="text-center py-12">
+        <Card level={1} padding="lg" className="text-center py-12 border-dashed">
           <div className="text-5xl mb-4">🔍</div>
           <h3 className="text-lg font-semibold text-[#333333] mb-2">No matching requests</h3>
           <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">

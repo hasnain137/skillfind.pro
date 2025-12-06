@@ -68,12 +68,12 @@ export default async function ClientRequestsPage() {
   });
 
   const requests = dbUser?.clientProfile?.requests || [];
-  
+
   // Categorize requests
   const openRequests = requests.filter(r => r.status === 'OPEN');
   const activeRequests = requests.filter(r => r.status === 'IN_PROGRESS');
   const completedRequests = requests.filter(r => r.status === 'COMPLETED');
-  
+
   return (
     <div className="space-y-6">
       <SectionHeading
@@ -114,7 +114,7 @@ export default async function ClientRequestsPage() {
 
       {/* Empty State */}
       {requests.length === 0 ? (
-        <Card variant="dashed" padding="lg" className="text-center py-12">
+        <Card level={1} padding="lg" className="text-center py-12 border-dashed">
           <div className="text-5xl mb-4">📝</div>
           <h3 className="text-lg font-semibold text-[#333333] mb-2">No requests yet</h3>
           <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">
@@ -174,7 +174,7 @@ function RequestCard({ request }: { request: any }) {
   const config = STATUS_CONFIG[request.status as RequestStatus];
   const hasOffers = request.offers.length > 0;
   const isNew = (Date.now() - new Date(request.createdAt).getTime()) < 24 * 60 * 60 * 1000; // Less than 24 hours
-  
+
   return (
     <Link key={request.id} href={`/client/requests/${request.id}`}>
       <Card className="group relative overflow-hidden hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">

@@ -2,7 +2,7 @@
 'use client';
 
 import { HTMLAttributes } from "react";
-import { Card } from "./Card";
+import { Card, CardContent } from "./Card";
 
 export type StatusType = "info" | "warning" | "error" | "success" | "pending";
 
@@ -75,8 +75,7 @@ export function StatusBanner({
 
     return (
         <Card
-            variant="default"
-            padding="lg"
+            level={1}
             className={`
         border-l-4 ${config.borderColor} ${config.bgColor}
         animate-fade-in-up
@@ -84,44 +83,46 @@ export function StatusBanner({
       `.trim().replace(/\s+/g, ' ')}
             {...props}
         >
-            <div className="flex items-start gap-4">
-                <div className="text-2xl shrink-0">
-                    {icon || config.icon}
+            <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                    <div className="text-2xl shrink-0">
+                        {icon || config.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <h3 className={`font-bold ${config.titleColor}`}>
+                            {title}
+                        </h3>
+                        <p className={`mt-1 text-sm ${config.textColor}`}>
+                            {description}
+                        </p>
+                        {action && (
+                            <div className="mt-3">
+                                {action.href ? (
+                                    <a
+                                        href={action.href}
+                                        className={`
+                        inline-flex items-center text-sm font-semibold ${config.titleColor}
+                        hover:underline transition-all
+                    `}
+                                    >
+                                        {action.label} →
+                                    </a>
+                                ) : (
+                                    <button
+                                        onClick={action.onClick}
+                                        className={`
+                        inline-flex items-center text-sm font-semibold ${config.titleColor}
+                        hover:underline transition-all
+                    `}
+                                    >
+                                        {action.label} →
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                    <h3 className={`font-bold ${config.titleColor}`}>
-                        {title}
-                    </h3>
-                    <p className={`mt-1 text-sm ${config.textColor}`}>
-                        {description}
-                    </p>
-                    {action && (
-                        <div className="mt-3">
-                            {action.href ? (
-                                <a
-                                    href={action.href}
-                                    className={`
-                    inline-flex items-center text-sm font-semibold ${config.titleColor}
-                    hover:underline transition-all
-                  `}
-                                >
-                                    {action.label} →
-                                </a>
-                            ) : (
-                                <button
-                                    onClick={action.onClick}
-                                    className={`
-                    inline-flex items-center text-sm font-semibold ${config.titleColor}
-                    hover:underline transition-all
-                  `}
-                                >
-                                    {action.label} →
-                                </button>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </div>
+            </CardContent>
         </Card>
     );
 }

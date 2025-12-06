@@ -81,13 +81,13 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
 function CategoryColumn({ name, items }: CategoryGroup) {
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-bold text-[#333333] uppercase tracking-wide">{name}</h3>
+      <h3 className="text-sm font-semibold text-[#333333] uppercase tracking-wide">{name}</h3>
       <ul className="flex flex-col gap-2">
         {items.map((item) => (
           <li key={item}>
             <Link
               href={`/search?q=${encodeURIComponent(item)}`}
-              className="group flex items-center justify-between rounded-lg p-2 text-sm text-[#7C7373] transition-all hover:bg-slate-50 hover:text-blue-600 hover:pl-3"
+              className="group flex items-center justify-between rounded-lg p-2 text-sm text-[#7C7373] transition-all hover:bg-[#F3F4F6] hover:text-[#2563EB] hover:pl-3"
             >
               <span>{item}</span>
               <span className="opacity-0 transition-opacity group-hover:opacity-100">→</span>
@@ -101,14 +101,14 @@ function CategoryColumn({ name, items }: CategoryGroup) {
 
 export function CategoryDirectory() {
   return (
-    <section className="py-20 md:py-24 bg-white border-b border-slate-200">
+    <section className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-blue-600">
+          <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
             Browse all categories
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#333333] md:text-4xl">
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
             Explore everything on SkillFind.
           </h2>
           <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">

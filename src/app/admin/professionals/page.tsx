@@ -46,12 +46,12 @@ export default async function AdminProfessionalsPage({
                 />
                 <div className="flex gap-2">
                     <Link href="/admin/professionals?status=PENDING_REVIEW">
-                        <Button variant={status === 'PENDING_REVIEW' ? 'primary' : 'outline'} className="text-xs">
+                        <Button variant={status === 'PENDING_REVIEW' ? 'default' : 'outline'} className="text-xs">
                             Pending Review
                         </Button>
                     </Link>
                     <Link href="/admin/professionals">
-                        <Button variant={!status ? 'primary' : 'outline'} className="text-xs">
+                        <Button variant={!status ? 'default' : 'outline'} className="text-xs">
                             All
                         </Button>
                     </Link>

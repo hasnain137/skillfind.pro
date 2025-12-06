@@ -1,7 +1,12 @@
+
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import { ClerkProvider } from '@clerk/nextjs';
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
+import { ProgressBarProvider } from "@/components/providers/ProgressBarProvider";
+import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
   title: "SkillFind",
@@ -14,9 +19,6 @@ export const viewport = {
   maximumScale: 5,
 };
 
-import { ToastProvider } from "@/components/providers/ToastProvider";
-import { ProgressBarProvider } from "@/components/providers/ProgressBarProvider";
-
 export default function RootLayout({
   children,
 }: {
@@ -24,14 +26,25 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider dynamic>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
-          className="bg-[#FAFAFA] text-[#333333] antialiased"
           suppressHydrationWarning
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            // Selection color for premium feel
+            "selection:bg-primary-100 selection:text-primary-900"
+          )}
         >
-          <ProgressBarProvider />
-          <ToastProvider />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            disableTransitionOnChange
+          >
+            <ProgressBarProvider />
+            <ToastProvider />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

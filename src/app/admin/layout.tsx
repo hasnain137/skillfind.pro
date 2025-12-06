@@ -1,6 +1,8 @@
+// src/app/admin/layout.tsx
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
+import { AdminLayout as SharedAdminLayout } from '@/components/layouts/AdminLayout'; // Rename to avoid conflict if any default import issues
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 
 export default async function AdminLayout({
@@ -23,14 +25,14 @@ export default async function AdminLayout({
         redirect('/');
     }
 
+    // We can pass custom sidebar content if needed, but AdminLayout might have a default sidebar slot
+    // For now, let's use the SharedAdminLayout which encapsulates the structure.
+    // If SharedAdminLayout expects a sidebar prop, we should pass AdminSidebar there.
+    // Let's assume SharedAdminLayout handles structure and we pass sidebar as prop.
+
     return (
-        <div className="flex h-screen bg-[#F3F4F6]">
-            <AdminSidebar />
-            <main className="flex-1 overflow-y-auto p-8">
-                <div className="mx-auto max-w-6xl">
-                    {children}
-                </div>
-            </main>
-        </div>
+        <SharedAdminLayout sidebar={<AdminSidebar />}>
+            {children}
+        </SharedAdminLayout>
     );
 }

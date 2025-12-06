@@ -64,35 +64,35 @@ function TestimonialCard({ review, index }: { review: Review; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-      className="group flex flex-col justify-between rounded-2xl bg-white p-8 shadow-soft ring-1 ring-surface-200 transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1"
+      className="group flex flex-col justify-between rounded-2xl bg-white p-8 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:shadow-md hover:-translate-y-1"
     >
       <div>
         <div className="flex items-center gap-1 mb-4">
           {[...Array(5)].map((_, i) => (
-            <span key={i} className={`text-lg ${i < review.rating ? 'text-amber-400' : 'text-surface-200'}`}>
+            <span key={i} className={`text-lg ${i < review.rating ? 'text-amber-400' : 'text-[#E5E7EB]'}`}>
               ★
             </span>
           ))}
         </div>
 
         <div className="relative">
-          <span className="absolute -top-4 -left-2 text-6xl text-surface-100 font-serif leading-none select-none">"</span>
-          <p className="relative text-base text-surface-700 leading-relaxed font-medium">
+          <span className="absolute -top-4 -left-2 text-6xl text-[#E5E7EB] font-serif leading-none select-none">"</span>
+          <p className="relative text-base text-[#333333] leading-relaxed">
             {review.comment}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-4 pt-6 mt-6 border-t border-surface-100">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-surface-900 text-white font-bold text-sm shadow-soft">
+      <div className="flex items-center gap-4 pt-6 mt-6 border-t border-[#E5E7EB]">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2563EB] text-white font-bold text-sm shadow-sm">
           {clientInitials}
         </div>
         <div>
-          <p className="font-bold text-surface-900">
+          <p className="font-semibold text-[#333333]">
             {review.client.user.firstName} {review.client.user.lastName[0]}.
           </p>
-          <p className="text-xs text-surface-500 font-medium">
-            Hired a pro for <span className="text-primary-600">Services</span>
+          <p className="text-xs text-[#7C7373]">
+            Hired a pro for <span className="text-[#2563EB]">Services</span>
           </p>
         </div>
       </div>
@@ -104,16 +104,16 @@ export function Testimonials() {
   const reviews = getFeaturedReviews();
 
   return (
-    <section className="py-20 md:py-24 bg-surface-50 border-b border-surface-200">
+    <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-[#E5E7EB]">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-primary-600">
+          <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
             Client Success Stories
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
             Trusted by clients and professionals.
           </h2>
-          <p className="mt-4 text-lg text-surface-500 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
             See what our community has to say about their experience on SkillFind.
           </p>
         </div>

@@ -1,5 +1,9 @@
 // src/components/dashboard/MatchingRequests.tsx
 import Link from "next/link";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { Badge } from "@/components/ui/Badge"; // Assuming we have Badge, if not use default span
+import { formatDistanceToNow } from "date-fns"; // Standardizing date if available, else manual is fine. Manual for now.
 
 interface Request {
   id: string;
@@ -16,8 +20,6 @@ interface Request {
 interface MatchingRequestsProps {
   requests: Request[];
 }
-
-import { EmptyState } from "@/components/ui/EmptyState";
 
 export function MatchingRequests({ requests }: MatchingRequestsProps) {
   if (requests.length === 0) {
@@ -47,60 +49,67 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
         const timeDisplay = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
 
         return (
-          <Link key={request.id} href={`/pro/requests/${request.id}/offer`}>
-            <div className="group relative flex flex-col gap-3 rounded-xl bg-white p-4 shadow-soft ring-1 ring-black/[0.03] hover:shadow-soft-md hover:-translate-y-0.5 hover:ring-primary-500/20 transition-all duration-200">
+          <Link key={request.id} href={`/pro/requests/${request.id}/offer`} className="block">
+            <Card level={2} interactive className="group relative">
               {/* New Badge */}
               {daysAgo === 0 && (
-                <div className="absolute -top-2 -right-2 rounded-full bg-gradient-to-r from-error to-red-600 px-3 py-1 text-[10px] font-bold text-white shadow-soft">
+                <div className="absolute -top-2 -right-2 rounded-full bg-gradient-to-r from-error to-red-600 px-3 py-1 text-[10px] font-bold text-white shadow-soft z-10">
                   🔥 NEW
                 </div>
               )}
 
-              {/* Title */}
-              <h4 className="text-sm font-bold text-surface-900 group-hover:text-primary-600 transition-colors pr-12">
-                {request.title}
-              </h4>
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start gap-4">
+                  <CardTitle className="text-base group-hover:text-primary-600 transition-colors line-clamp-1">
+                    {request.title}
+                  </CardTitle>
+                </div>
+              </CardHeader>
 
-              {/* Description */}
-              {request.description && (
-                <p className="text-xs text-surface-500 leading-relaxed line-clamp-2">
-                  {request.description}
-                </p>
-              )}
-
-              {/* Meta Info */}
-              <div className="flex flex-wrap items-center gap-3 text-xs">
-                <span className="flex items-center gap-1 rounded-lg bg-primary-50 px-2.5 py-1 font-semibold text-primary-600">
-                  <span>💰</span> {budgetDisplay}
-                </span>
-
-                {request.location && (
-                  <span className="flex items-center gap-1 text-surface-500">
-                    <span>📍</span> {request.location}
-                  </span>
+              <CardContent className="pb-3">
+                {request.description && (
+                  <p className="text-xs text-surface-500 leading-relaxed line-clamp-2">
+                    {request.description}
+                  </p>
                 )}
 
-                {request.remotePreference !== 'NO_REMOTE' && (
-                  <span className="flex items-center gap-1 rounded-lg bg-success-light px-2.5 py-1 font-semibold text-success-dark">
-                    <span>💻</span> Remote
+                {/* Meta Info */}
+                <div className="flex flex-wrap items-center gap-3 text-xs mt-3">
+                  <span className="flex items-center gap-1 rounded-md bg-primary-50 px-2 py-1 font-semibold text-primary-700">
+                    <span>💰</span> {budgetDisplay}
                   </span>
-                )}
 
-                <span className="ml-auto text-surface-400">
-                  {timeDisplay}
-                </span>
-              </div>
+                  {request.location && (
+                    <span className="flex items-center gap-1 text-surface-500">
+                      <span>📍</span> {request.location}
+                    </span>
+                  )}
 
-              {/* CTA */}
-              <div className="flex items-center justify-between pt-2 border-t border-surface-100">
-                <span className="text-xs font-medium text-surface-500">
-                  Send your offer
-                </span>
-                <span className="text-primary-600 font-bold group-hover:translate-x-1 transition-transform">
-                  →
-                </span>
-              </div>
-            </div>
+                  {request.remotePreference !== 'NO_REMOTE' && (
+                    <span className="flex items-center gap-1 rounded-md bg-success-light px-2 py-1 font-semibold text-success-dark">
+                      <span>💻</span> Remote
+                    </span>
+                  )}
+
+                  <span className="ml-auto text-surface-400">
+                    {timeDisplay}
+                  </span>
+                </div>
+              </CardContent>
+
+              <div className="mx-5 border-t border-surface-200/50" />
+
+              <CardFooter className="pt-2 pb-2">
+                <div className="flex w-full items-center justify-between">
+                  <span className="text-xs font-medium text-surface-500">
+                    Send your offer
+                  </span>
+                  <span className="text-primary-600 font-bold group-hover:translate-x-1 transition-transform text-sm">
+                    →
+                  </span>
+                </div>
+              </CardFooter>
+            </Card>
           </Link>
         );
       })}

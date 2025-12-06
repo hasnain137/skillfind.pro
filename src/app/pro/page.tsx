@@ -4,10 +4,9 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getOrCreateWallet } from "@/lib/services/wallet";
 import Link from "next/link";
-import { Card } from "@/components/ui/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StatCard } from "@/components/ui/StatCard";
 import { ActionCard } from "@/components/ui/ActionCard";
 import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/StatusBanner";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
@@ -17,6 +16,7 @@ import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletio
 import { calculateProfessionalCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
+import { FadeIn } from "@/components/ui/motion/FadeIn";
 
 const QUICK_ACTIONS = [
   {
@@ -102,13 +102,7 @@ export default async function ProDashboardPage() {
     redirect('/auth-redirect');
   }
 
-  // Get wallet balance
-  // We already included wallet in the query above, but keeping getOrCreateWallet for safety if it's missing (though it should be created on signup)
-  // Actually, let's rely on the query if possible, but getOrCreateWallet handles creation if missing.
-  // For simplicity and to match new types, we'll use the queried wallet if present.
   const balanceEuros = (professional.wallet?.balance || 0) / 100;
-
-  // Calculate profile completion using the shared helper
   const { percentage: profileCompletion, missingSteps } = calculateProfessionalCompletion(professional);
 
   // Get matching requests count (today)
@@ -127,7 +121,6 @@ export default async function ProDashboardPage() {
     },
   });
 
-  // Calculate average rating from job reviews
   const allReviews = professional.jobs
     .map((job: any) => job.review)
     .filter((review: any) => review !== null);
@@ -135,12 +128,6 @@ export default async function ProDashboardPage() {
   const avgRating = allReviews.length > 0
     ? (allReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / allReviews.length).toFixed(1)
     : 'N/A';
-
-  const stats = [
-    { label: "New matching requests", value: matchingRequestsToday, icon: "🔍" },
-    { label: "Active jobs", value: professional.jobs.length, icon: "💼" },
-    { label: "Average rating", value: avgRating, icon: "⭐" },
-  ];
 
   const highlights = [
     {
@@ -160,7 +147,6 @@ export default async function ProDashboardPage() {
     },
   ];
 
-  // Dynamic next steps based on profile state
   const nextSteps = [];
   if (profileCompletion < 100) {
     nextSteps.push("Complete your profile to win more jobs");
@@ -183,7 +169,6 @@ export default async function ProDashboardPage() {
 
   const timeOfDay = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening';
 
-  // Get earnings data
   const completedJobs = await prisma.job.findMany({
     where: {
       professionalId: professional.id,
@@ -218,7 +203,6 @@ export default async function ProDashboardPage() {
     completedJobs: completedJobs.length,
   };
 
-  // Get matching requests
   const matchingRequests = await prisma.request.findMany({
     where: {
       status: 'OPEN',
@@ -232,7 +216,6 @@ export default async function ProDashboardPage() {
     take: 5,
   });
 
-  // Get profile views and clicks
   const profileViews = await prisma.clickEvent.count({
     where: {
       professionalId: professional.id,
@@ -254,21 +237,18 @@ export default async function ProDashboardPage() {
     acceptanceRate,
     averageRating: professional.averageRating,
     totalReviews: professional.totalReviews,
-    responseTime: '< 2 hours', // This would need real calculation
+    responseTime: '< 2 hours',
   };
 
-  // Get status banner props if not active
   const statusBannerProps = professional.status !== 'ACTIVE'
     ? getProfessionalStatusBanner(professional.status)
     : null;
 
   return (
     <div className="space-y-6">
-      {/* Status Banner - Using new reusable component */}
       {statusBannerProps && (
         <StatusBanner {...statusBannerProps} />
       )}
-
 
       <DashboardHero
         eyebrow="Professional dashboard"
@@ -278,35 +258,39 @@ export default async function ProDashboardPage() {
         highlights={highlights}
       />
 
-      {/* Profile Completion Banner */}
       <ProfileCompletionBanner
         profileCompletion={profileCompletion}
         userRole="PROFESSIONAL"
         missingSteps={missingSteps}
       />
 
-      {/* Earnings Overview */}
+      {/* Main Grid */}
       <div className="grid gap-6 lg:grid-cols-3" data-tour="earnings">
+        {/* Earnings */}
         <div className="lg:col-span-1">
           <EarningsChart data={earningsData} />
         </div>
 
         {/* Performance Metrics */}
         <div className="lg:col-span-2" data-tour="stats">
-          <Card variant="default" padding="lg" className="space-y-4 h-full">
-            <SectionHeading
-              variant="section"
-              title="Performance metrics"
-              description="Track your success and visibility on the platform."
-            />
-            <PerformanceMetrics data={metricsData} />
+          <Card level={1} className="space-y-4 h-full">
+            <CardHeader>
+              <SectionHeading
+                variant="section"
+                title="Performance metrics"
+                description="Track your success and visibility on the platform."
+              />
+            </CardHeader>
+            <CardContent>
+              <PerformanceMetrics data={metricsData} />
+            </CardContent>
           </Card>
         </div>
       </div>
 
       {/* Matching Requests */}
-      <Card variant="default" padding="lg" className="space-y-4" data-tour="matching-requests">
-        <div className="flex items-center justify-between">
+      <Card level={1} className="space-y-4" data-tour="matching-requests">
+        <CardHeader className="flex flex-row items-center justify-between">
           <SectionHeading
             variant="section"
             title="Matching requests"
@@ -314,45 +298,53 @@ export default async function ProDashboardPage() {
           />
           <Link
             href="/pro/requests"
-            className="text-xs font-semibold text-[#2563EB] hover:text-[#1D4FD8] transition-colors"
+            className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors"
           >
             View all →
           </Link>
-        </div>
-        <MatchingRequests requests={matchingRequests as any} />
+        </CardHeader>
+        <CardContent>
+          <MatchingRequests requests={matchingRequests as any} />
+        </CardContent>
       </Card>
 
       {/* Quick Actions & Next Steps */}
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card variant="muted" padding="lg" className="space-y-4">
-          <SectionHeading
-            variant="section"
-            title="Quick actions"
-            description="Shortcuts to the most common tasks."
-          />
-          <div className="space-y-3">
+        <Card level={1} className="space-y-4">
+          <CardHeader>
+            <SectionHeading
+              variant="section"
+              title="Quick actions"
+              description="Shortcuts to the most common tasks."
+            />
+          </CardHeader>
+          <CardContent className="space-y-3">
             {QUICK_ACTIONS.map((action) => (
               <ActionCard key={action.href} {...action} />
             ))}
-          </div>
+          </CardContent>
         </Card>
 
-        <Card variant="muted" padding="lg" className="space-y-4">
-          <SectionHeading
-            variant="section"
-            title="Next steps"
-            description="Suggested actions to grow your business."
-          />
-          <ul className="space-y-3">
-            {nextSteps.map((step, index) => (
-              <li key={index} className="flex items-start gap-3 rounded-lg bg-white p-3 shadow-sm">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-xs font-bold text-white">
-                  {index + 1}
-                </div>
-                <span className="text-sm text-[#333333]">{step}</span>
-              </li>
-            ))}
-          </ul>
+        <Card level={1} className="space-y-4">
+          <CardHeader>
+            <SectionHeading
+              variant="section"
+              title="Next steps"
+              description="Suggested actions to grow your business."
+            />
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3">
+              {nextSteps.map((step, index) => (
+                <li key={index} className="flex items-start gap-3 rounded-lg bg-surface-50 p-3 shadow-sm border border-surface-200">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">
+                    {index + 1}
+                  </div>
+                  <span className="text-sm text-surface-900">{step}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
         </Card>
       </div>
       <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />

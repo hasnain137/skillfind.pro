@@ -9,15 +9,15 @@ export default function SignupPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <ClientNavbar />
-      <main className="flex-1 bg-[#FAFAFA] py-12 md:py-16">
+      <main className="flex-1 bg-surface-50 py-12 md:py-16">
         <Container>
           <div className="mx-auto max-w-md">
             {/* Header */}
             <div className="mb-8 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
+              <h1 className="text-2xl font-semibold tracking-tight text-surface-900 md:text-3xl">
                 Join SkillFind
               </h1>
-              <p className="mt-2 text-sm text-[#7C7373]">
+              <p className="mt-2 text-sm text-surface-600">
                 Create your account to get started
               </p>
             </div>
@@ -28,12 +28,16 @@ export default function SignupPage() {
                 appearance={{
                   elements: {
                     rootBox: "mx-auto",
-                    card: "rounded-2xl border border-[#E5E7EB] bg-gradient-to-br from-white to-[#2563EB0D] shadow-sm shadow-[#E5E7EB]/40",
+                    card: "rounded-2xl border border-surface-200 bg-gradient-to-br from-white to-primary-50/10 shadow-soft",
                     headerTitle: "hidden",
                     headerSubtitle: "hidden",
-                    socialButtonsBlockButton: "border-[#E5E7EB] bg-white hover:bg-gray-50",
-                    formButtonPrimary: "bg-[#2563EB] hover:bg-[#1D4FD8]",
-                    footerActionLink: "text-[#2563EB] hover:text-[#1D4FD8]",
+                    socialButtonsBlockButton: "border-surface-200 bg-white hover:bg-surface-50 text-surface-600",
+                    formButtonPrimary: "bg-primary-600 hover:bg-primary-700 text-white shadow-sm hover:shadow-md transition-all",
+                    footerActionLink: "text-primary-600 hover:text-primary-700 font-medium",
+                    formFieldLabel: "text-surface-700 font-medium",
+                    formFieldInput: "border-surface-200 focus:border-primary-500 focus:ring-primary-500/20",
+                    dividerLine: "bg-surface-200",
+                    dividerText: "text-surface-400",
                   },
                 }}
                 routing="path"

@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Card } from './Card';
+import { Card, CardContent } from './Card';
 
 interface Tip {
     title: string;
@@ -23,10 +23,11 @@ export function CollapsibleTips({
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
-        <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200 overflow-hidden" padding="none">
+        <Card level={2} className="bg-gradient-to-br from-blue-50 to-white border-blue-200 overflow-hidden">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full flex items-center justify-between p-4 lg:p-5 text-left hover:bg-blue-50/50 transition-colors"
+                aria-expanded={isOpen}
             >
                 <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
                     <span>💡</span> {title}
@@ -41,13 +42,15 @@ export function CollapsibleTips({
         ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}
       `}>
                 <div className="overflow-hidden">
-                    <div className="px-4 pb-4 lg:px-5 lg:pb-5 grid gap-2 sm:grid-cols-2 text-sm text-[#7C7373]">
-                        {tips.map((tip, index) => (
-                            <p key={index}>
-                                • <strong>{tip.title}:</strong> {tip.description}
-                            </p>
-                        ))}
-                    </div>
+                    <CardContent className="pt-0 px-4 pb-4 lg:px-5 lg:pb-5">
+                        <div className="grid gap-2 sm:grid-cols-2 text-sm text-[#7C7373]">
+                            {tips.map((tip, index) => (
+                                <p key={index}>
+                                    • <strong>{tip.title}:</strong> {tip.description}
+                                </p>
+                            ))}
+                        </div>
+                    </CardContent>
                 </div>
             </div>
         </Card>

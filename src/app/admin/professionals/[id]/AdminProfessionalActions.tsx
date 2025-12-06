@@ -96,7 +96,8 @@ export default function AdminProfessionalActions({
             <div className="flex flex-wrap gap-4">
                 {currentStatus !== 'ACTIVE' && (
                     <Button
-                        variant="success"
+                        variant="default"
+                        className="bg-green-600 hover:bg-green-700 text-white"
                         onClick={() => handleStatusChange('ACTIVE')}
                         disabled={!!loading}
                     >
@@ -105,7 +106,8 @@ export default function AdminProfessionalActions({
                 )}
                 {currentStatus !== 'SUSPENDED' && (
                     <Button
-                        variant="warning"
+                        variant="default"
+                        className="bg-amber-500 hover:bg-amber-600 text-white"
                         onClick={() => handleStatusChange('SUSPENDED')}
                         disabled={!!loading}
                     >
@@ -128,10 +130,10 @@ export default function AdminProfessionalActions({
                 <div className="flex items-center gap-4">
                     <span className="text-sm font-medium text-[#333333]">Manual Verification:</span>
                     <Button
-                        variant={isVerified ? "destructive" : "success"}
+                        variant={isVerified ? "destructive" : "default"}
                         onClick={() => handleVerificationChange(!isVerified)}
                         disabled={!!loading}
-                        className="py-1 px-3 text-xs h-8 min-h-0"
+                        className={`py-1 px-3 text-xs h-8 min-h-0 ${!isVerified ? 'bg-green-600 hover:bg-green-700 text-white' : ''}`}
                     >
                         {loading === 'verify' ? 'Updating...' : (isVerified ? 'Unverify User' : 'Verify User')}
                     </Button>
@@ -175,8 +177,8 @@ export default function AdminProfessionalActions({
                                 {doc.status === 'PENDING' && (
                                     <div className="flex gap-2">
                                         <Button
-                                            variant="success"
-                                            className="w-full text-xs"
+                                            variant="default"
+                                            className="w-full text-xs bg-green-600 hover:bg-green-700 text-white"
                                             onClick={() => handleDocumentAction(doc.id, 'APPROVED')}
                                             disabled={!!loading}
                                         >

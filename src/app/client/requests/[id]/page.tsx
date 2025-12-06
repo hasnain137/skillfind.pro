@@ -251,7 +251,7 @@ export default async function ClientRequestDetailPage({
         </div>
 
         {!hasOffers ? (
-          <Card variant="muted" padding="lg" className="text-center">
+          <Card level={2} padding="lg" className="text-center">
             <div className="py-8">
               <span className="text-5xl mb-3 block">📭</span>
               <p className="text-sm font-medium text-[#7C7373] mb-2">No offers yet</p>

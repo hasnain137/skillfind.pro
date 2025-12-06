@@ -1,159 +1,156 @@
-// src/components/ui/Card.tsx
-import { HTMLAttributes, forwardRef } from "react";
 
-type CardVariant = "default" | "elevated" | "muted" | "dashed" | "gradient";
-type CardPadding = "none" | "sm" | "md" | "lg" | "xl";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/cn"
+import { motion, HTMLMotionProps } from "framer-motion"
+import { fadeIn } from "@/lib/motion-variants"
 
-type CardProps = HTMLAttributes<HTMLDivElement> & {
-  variant?: CardVariant;
-  padding?: CardPadding;
-  interactive?: boolean;
-  hoverEffect?: "lift" | "glow" | "border" | "none";
-};
+// ============================================
+// CVA DEFINITIONS
+// ============================================
 
-// Using design system tokens - SUBTLE SHADOW-BASED 3D LOOK
-// Removed heavy borders, using soft shadows for depth
-const VARIANTS: Record<CardVariant, string> = {
-  default:
-    "bg-white shadow-soft ring-1 ring-black/[0.03]",
-  elevated:
-    "bg-white shadow-soft-md ring-1 ring-black/[0.02]",
-  muted:
-    "bg-surface-50/80 shadow-soft-xs ring-1 ring-black/[0.02]",
-  dashed:
-    "bg-surface-50/50 border-2 border-dashed border-surface-200",
-  gradient:
-    "bg-gradient-to-br from-white to-surface-50 shadow-soft ring-1 ring-black/[0.03]",
-};
-
-const PADDING: Record<CardPadding, string> = {
-  none: "",
-  sm: "p-3",
-  md: "p-4",
-  lg: "p-5",
-  xl: "p-6",
-};
-
-const HOVER_EFFECTS: Record<string, string> = {
-  lift: "hover:-translate-y-0.5 hover:shadow-soft-lg hover:ring-black/[0.05]",
-  glow: "hover:shadow-glow-sm",
-  border: "hover:ring-primary-500/30 hover:shadow-soft-md",
-  none: "",
-};
-
-export const Card = forwardRef<HTMLDivElement, CardProps>(
-  (
-    {
-      variant = "default",
-      padding = "md",
-      interactive = false,
-      hoverEffect = interactive ? "lift" : "none",
-      className = "",
-      children,
-      ...props
+const cardVariants = cva(
+  "rounded-2xl transition-all duration-200 ease-out",
+  {
+    variants: {
+      level: {
+        0: "bg-transparent border-none shadow-none", // Page background blend
+        1: "bg-white border border-zinc-200 shadow-soft bg-noise", // Standard Container
+        2: "bg-zinc-50 border border-zinc-200", // Nested (Alternating)
+        3: "bg-zinc-100 border-none", // Deep nested
+      },
+      interactive: {
+        true: "cursor-pointer hover:shadow-medium hover:border-zinc-300 active:scale-[0.995]",
+        false: "",
+      },
+      glass: {
+        true: "glass border-white/20 shadow-float",
+        false: "",
+      },
     },
-    ref
-  ) => {
-    const baseStyles = [
-      // Shape
-      "rounded-2xl",
-      // Transitions - smooth for that premium feel
-      "transition-all duration-200 ease-out",
-    ].join(" ");
+    defaultVariants: {
+      level: 1,
+      interactive: false,
+      glass: false,
+    },
+  }
+)
 
-    const interactiveStyles = interactive
-      ? "cursor-pointer active:scale-[0.995]"
-      : "";
+// ============================================
+// MAIN COMPONENT
+// ============================================
+
+export interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+  VariantProps<typeof cardVariants> {
+  asMotion?: boolean
+  motionDelay?: number
+  padding?: "none" | "sm" | "md" | "lg" | "xl"
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, level, interactive, glass, asMotion = false, motionDelay = 0, padding, ...props }, ref) => {
+
+    // Strict enforcement: Noise only on Level 1 unless glass
+    const hasNoise = level === 1 && !glass;
+
+    // Legacy padding support
+    const paddingClass = padding ? {
+      none: "p-0",
+      sm: "p-3",
+      md: "p-4",
+      lg: "p-6",
+      xl: "p-8"
+    }[padding] : "";
+
+    if (asMotion) {
+      return (
+        <motion.div
+          ref={ref}
+          initial="initial"
+          animate="animate"
+          variants={{
+            ...fadeIn,
+            animate: { ...fadeIn.animate, transition: { ...fadeIn.animate?.transition, delay: motionDelay } }
+          }}
+          className={cn(cardVariants({ level, interactive, glass }), paddingClass, className)}
+          {...(props as HTMLMotionProps<"div">)}
+        />
+      )
+    }
 
     return (
       <div
         ref={ref}
-        className={`
-          ${baseStyles}
-          ${VARIANTS[variant]}
-          ${PADDING[padding]}
-          ${HOVER_EFFECTS[hoverEffect]}
-          ${interactiveStyles}
-          ${className}
-        `.trim().replace(/\s+/g, ' ')}
+        className={cn(cardVariants({ level, interactive, glass }), paddingClass, className)}
         {...props}
-      >
-        {children}
-      </div>
-    );
+      />
+    )
   }
-);
+)
+Card.displayName = "Card"
 
-Card.displayName = "Card";
+// ============================================
+// SUBCOMPONENTS (Compound Pattern)
+// ============================================
 
-// Card Header subcomponent
-export const CardHeader = ({
-  className = "",
-  children,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) => (
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
-    className={`flex items-center justify-between gap-4 ${className}`}
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 p-6 pb-2", className)}
     {...props}
-  >
-    {children}
-  </div>
-);
+  />
+))
+CardHeader.displayName = "CardHeader"
 
-// Card Title subcomponent
-export const CardTitle = ({
-  className = "",
-  children,
-  ...props
-}: HTMLAttributes<HTMLHeadingElement>) => (
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
   <h3
-    className={`text-lg font-bold text-surface-900 ${className}`}
+    ref={ref}
+    className={cn(
+      "text-xl font-semibold leading-none tracking-tight text-zinc-900",
+      className
+    )}
     {...props}
-  >
-    {children}
-  </h3>
-);
+  />
+))
+CardTitle.displayName = "CardTitle"
 
-// Card Description subcomponent
-export const CardDescription = ({
-  className = "",
-  children,
-  ...props
-}: HTMLAttributes<HTMLParagraphElement>) => (
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
   <p
-    className={`text-sm text-surface-500 ${className}`}
+    ref={ref}
+    className={cn("text-sm text-zinc-500 font-medium", className)}
     {...props}
-  >
-    {children}
-  </p>
-);
+  />
+))
+CardDescription.displayName = "CardDescription"
 
-// Card Content subcomponent
-export const CardContent = ({
-  className = "",
-  children,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) => (
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+))
+CardContent.displayName = "CardContent"
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
-    className={`${className}`}
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
     {...props}
-  >
-    {children}
-  </div>
-);
+  />
+))
+CardFooter.displayName = "CardFooter"
 
-// Card Footer subcomponent
-export const CardFooter = ({
-  className = "",
-  children,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={`flex items-center gap-3 pt-4 border-t border-surface-100 ${className}`}
-    {...props}
-  >
-    {children}
-  </div>
-);
-
-export default Card;
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }

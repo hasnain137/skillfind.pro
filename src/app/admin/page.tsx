@@ -1,5 +1,6 @@
+// src/app/admin/page.tsx
 import { prisma } from '@/lib/prisma';
-import { Card } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { StatCard } from '@/components/ui/StatCard';
 
@@ -59,17 +60,25 @@ export default async function AdminDashboardPage() {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">
-                <Card padding="lg" className="space-y-4">
-                    <h3 className="text-lg font-bold text-[#333333]">Recent Activity</h3>
-                    <p className="text-sm text-[#7C7373]">Activity logs coming soon...</p>
+                <Card level={1} className="h-full">
+                    <CardHeader>
+                        <CardTitle>Recent Activity</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-surface-500">Activity logs coming soon...</p>
+                    </CardContent>
                 </Card>
 
-                <Card padding="lg" className="space-y-4">
-                    <h3 className="text-lg font-bold text-[#333333]">System Health</h3>
-                    <div className="flex items-center gap-2">
-                        <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                        <span className="text-sm font-medium text-[#333333]">All Systems Operational</span>
-                    </div>
+                <Card level={1} className="h-full">
+                    <CardHeader>
+                        <CardTitle>System Health</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-green-500 shadow-glow-sm"></div>
+                            <span className="text-sm font-medium text-surface-900">All Systems Operational</span>
+                        </div>
+                    </CardContent>
                 </Card>
             </div>
         </div>

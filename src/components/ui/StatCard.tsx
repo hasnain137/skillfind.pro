@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState, useRef, HTMLAttributes } from 'react';
-import { Card } from "./Card";
+import { Card, CardContent } from "./Card";
 
 type TrendDirection = 'up' | 'down' | 'neutral';
 
@@ -87,6 +87,7 @@ const GRADIENT_COLORS: Record<string, string> = {
   orange: 'from-orange-50 to-orange-100 border-orange-200',
   purple: 'from-purple-50 to-purple-100 border-purple-200',
   red: 'from-red-50 to-red-100 border-red-200',
+  default: '', // Handle default properly
 };
 
 export function StatCard({
@@ -111,56 +112,57 @@ export function StatCard({
 
   return (
     <Card
-      variant={variant === 'gradient' ? 'default' : 'default'}
+      level={1}
       className={`
         hover:shadow-soft transition-shadow duration-200
         animate-fade-in-up
         ${cardClass}
         ${className}
       `.trim().replace(/\s+/g, ' ')}
-      padding="lg"
       {...props}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          {/* Label */}
-          <p className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider">
-            {label}
-          </p>
+      <CardContent>
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            {/* Label */}
+            <p className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider">
+              {label}
+            </p>
 
-          {/* Value */}
-          <p className="mt-1.5 text-2xl font-bold text-surface-900 tabular-nums">
-            {displayValue}
-          </p>
+            {/* Value */}
+            <p className="mt-1.5 text-2xl font-bold text-surface-900 tabular-nums">
+              {displayValue}
+            </p>
 
-          {/* Trend Indicator */}
-          {trend && (
-            <div className="mt-2.5 flex items-center gap-1.5">
-              <span className={`
-                inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold
-                ${TREND_STYLES[trend.direction].bg} ${TREND_STYLES[trend.direction].text}
-              `}>
-                {TREND_STYLES[trend.direction].icon} {Math.abs(trend.value)}%
-              </span>
-              {trend.label && (
-                <span className="text-[10px] text-surface-400">{trend.label}</span>
-              )}
+            {/* Trend Indicator */}
+            {trend && (
+              <div className="mt-2.5 flex items-center gap-1.5">
+                <span className={`
+                    inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold
+                    ${TREND_STYLES[trend.direction].bg} ${TREND_STYLES[trend.direction].text}
+                `}>
+                  {TREND_STYLES[trend.direction].icon} {Math.abs(trend.value)}%
+                </span>
+                {trend.label && (
+                  <span className="text-[10px] text-surface-400">{trend.label}</span>
+                )}
+              </div>
+            )}
+
+            {/* Helper Text */}
+            {helperText && !trend && (
+              <p className="mt-1.5 text-[11px] text-surface-400">{helperText}</p>
+            )}
+          </div>
+
+          {/* Icon */}
+          {icon && (
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-100 text-lg shrink-0">
+              {icon}
             </div>
           )}
-
-          {/* Helper Text */}
-          {helperText && !trend && (
-            <p className="mt-1.5 text-[11px] text-surface-400">{helperText}</p>
-          )}
         </div>
-
-        {/* Icon */}
-        {icon && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-100 text-lg shrink-0">
-            {icon}
-          </div>
-        )}
-      </div>
+      </CardContent>
     </Card>
   );
 }

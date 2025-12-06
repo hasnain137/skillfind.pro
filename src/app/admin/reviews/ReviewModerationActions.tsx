@@ -40,8 +40,8 @@ export default function ReviewModerationActions({ reviewId }: { reviewId: string
                 Reject
             </Button>
             <Button
-                variant="success"
-                className="text-xs"
+                variant="default"
+                className="text-xs bg-green-600 hover:bg-green-700 text-white"
                 onClick={() => handleAction('APPROVED')}
                 disabled={!!loading}
             >

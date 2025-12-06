@@ -54,7 +54,7 @@ export function TrustSection() {
             viewport={{ once: true }}
             className="md:pr-12"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-[#333333] sm:text-4xl mb-6">
+            <h2 className="text-3xl font-semibold tracking-tight text-[#333333] sm:text-4xl mb-6">
               Why 10,000+ clients trust SkillFind
             </h2>
             <p className="text-lg text-[#7C7373] mb-8 leading-relaxed">
@@ -88,7 +88,7 @@ export function TrustSection() {
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#333333]">{item.title}</h3>
+                  <h3 className="font-semibold text-[#333333]">{item.title}</h3>
                   <p className="mt-2 text-sm text-[#7C7373] leading-relaxed">
                     {item.description}
                   </p>

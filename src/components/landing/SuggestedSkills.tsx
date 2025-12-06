@@ -21,7 +21,7 @@ export function SuggestedSkills() {
     <section className="border-b border-[#E5E7EB] bg-[#FAFAFA] py-10 md:py-14">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C7373]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#7C7373]">
             Ideas to get started
           </p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">

@@ -112,7 +112,7 @@ export default function ReviewJobPage() {
       )}
 
       {error && (
-        <Card variant="muted" padding="lg" className="bg-red-50 border-red-200">
+        <Card level={1} padding="lg" className="bg-red-50 border-red-200">
           <p className="text-sm text-red-600 flex items-center gap-2">
             <span>⚠️</span> {error}
           </p>

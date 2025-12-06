@@ -138,7 +138,7 @@ export default function NewClientRequestPage() {
       />
 
       {error && (
-        <Card variant="muted" padding="lg" className="bg-red-50 border-red-200">
+        <Card level={1} padding="lg" className="bg-red-50 border-red-200">
           <p className="text-sm text-red-600">{error}</p>
         </Card>
       )}
@@ -343,7 +343,7 @@ export default function NewClientRequestPage() {
           </p>
         </Card>
 
-        <Card variant="dashed" className="text-center" padding="lg">
+        <Card level={1} className="text-center border-dashed" padding="lg">
           <Button className="w-full sm:w-auto" type="submit" disabled={loading}>
             {loading ? 'Publishing...' : 'Publish request'}
           </Button>

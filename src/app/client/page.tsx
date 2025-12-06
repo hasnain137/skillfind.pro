@@ -176,7 +176,7 @@ export default async function ClientDashboardPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Quick Actions */}
-        <Card variant="muted" padding="lg" className="space-y-4" data-tour="quick-actions">
+        <Card level={2} padding="lg" className="space-y-4" data-tour="quick-actions">
           <SectionHeading
             variant="section"
             title="Quick actions"
@@ -190,7 +190,7 @@ export default async function ClientDashboardPage() {
         </Card>
 
         {/* Activity Feed */}
-        <Card variant="default" padding="lg" className="space-y-4" data-tour="activity">
+        <Card level={1} padding="lg" className="space-y-4" data-tour="activity">
           <SectionHeading
             variant="section"
             title="Recent activity"
@@ -201,7 +201,7 @@ export default async function ClientDashboardPage() {
       </div>
 
       {/* Request Timeline */}
-      <Card variant="default" padding="lg" className="space-y-4">
+      <Card level={1} padding="lg" className="space-y-4">
         <SectionHeading
           variant="section"
           title="Your requests"

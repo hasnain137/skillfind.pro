@@ -52,7 +52,7 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
           title="Request Closed"
           description="This request is no longer accepting offers."
         />
-        <Card padding="lg" variant="muted">
+        <Card padding="lg" level={2}>
           <p className="text-sm text-[#7C7373]">
             The client has closed this request or accepted another offer.
           </p>
@@ -69,7 +69,7 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
         description="Share your proposed price, timing and a friendly message. Clients see the first 10 qualified offers."
       />
 
-      <Card padding="lg" className="space-y-3" variant="muted">
+      <Card padding="lg" className="space-y-3" level={2}>
         <div className="flex justify-between items-start">
           <div>
             <p className="text-sm font-semibold text-[#333333]">
