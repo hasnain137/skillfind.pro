@@ -120,7 +120,7 @@ export default function AuthRedirectPage() {
   };
 
   // Helper function to handle dashboard redirect with retry logic
-  const redirectToDashboard = async (role: 'CLIENT' | 'PROFESSIONAL' | 'ADMIN', delay: number = 1000) => {
+  const redirectToDashboard = async (role: 'CLIENT' | 'PROFESSIONAL' | 'ADMIN', delay: number = 1000, allowIncomplete: boolean = false) => {
     const dashboardUrl = role === 'CLIENT' ? '/client' :
       role === 'PROFESSIONAL' ? '/pro' :
         role === 'ADMIN' ? '/admin' : '/';
@@ -152,9 +152,10 @@ export default function AuthRedirectPage() {
 
           console.log(`📋 Backend says: exists=${profileData.exists}, hasProfile=${profileData.hasProfile}, role=${profileData.role}`);
 
-          // Profile must exist in DB, be complete, AND have matching role
-          if (profileData.exists && profileData.hasProfile && profileData.role === role) {
-            console.log(`✅ Backend confirms profile is complete!`);
+          // Profile must exist in DB and have matching role.
+          // If allowIncomplete is true, we don't require hasProfile (full completeness) to be true
+          if (profileData.exists && profileData.role === role && (profileData.hasProfile || allowIncomplete)) {
+            console.log(`✅ Backend confirms profile is ready!`);
 
             // Also check client session has the role
             await user?.reload();
@@ -249,22 +250,37 @@ export default function AuthRedirectPage() {
     }
   };
 
-  // Handle skip - redirect to dashboard without completing profile
+  // Handle skip - create account with minimal info and redirect
   const handleSkip = async () => {
     setLoading(true);
     setError('');
 
     try {
-      console.log('⏭️ Skipping profile completion, redirecting to dashboard...');
+      console.log('⏭️ Skipping profile completion, creating base account...');
 
-      // User can skip filling basic info and complete it later from their dashboard
-      // Just redirect them to the appropriate dashboard
       if (selectedRole) {
-        const dashboardUrl = selectedRole === 'CLIENT' ? '/client' :
-          selectedRole === 'PROFESSIONAL' ? '/pro' : '/';
+        // Create the account in DB with minimal info (just the role)
+        // This ensures the user exists in DB so middleware won't redirect them back
+        const response = await fetch('/api/auth/complete-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            role: selectedRole,
+            // Don't send other fields, let them be null/optional
+          }),
+        });
 
-        console.log('✅ Redirecting to:', dashboardUrl);
-        window.location.href = dashboardUrl;
+        if (!response.ok) {
+          const data = await response.json();
+          console.error('❌ Failed to create base account during skip:', data);
+          throw new Error(data.message || 'Failed to create account');
+        }
+
+        console.log('✅ Base account created. Redirecting...');
+
+        // Use the robust redirect handler that waits for DB consistency
+        // PASS TRUE to allow incomplete profile (since we just skipped)
+        await redirectToDashboard(selectedRole, 500, true);
       } else {
         window.location.href = '/';
       }
@@ -320,7 +336,7 @@ export default function AuthRedirectPage() {
 
       // Redirect to dashboard
       if (selectedRole) {
-        await redirectToDashboard(selectedRole, 1000);
+        await redirectToDashboard(selectedRole, 1000, false);
       } else {
         window.location.href = '/';
       }
@@ -549,20 +565,20 @@ export default function AuthRedirectPage() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+                  <div className="flex flex-col gap-3 pt-4 sm:flex-row">
                     <Button
                       type="button"
-                      variant="ghost"
+                      variant="outline"
                       onClick={handleSkip}
                       disabled={loading}
-                      className="flex-1"
+                      className="flex-1 h-12 border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                     >
                       Skip for Now
                     </Button>
                     <Button
                       type="submit"
                       disabled={loading}
-                      className="flex-1"
+                      className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"
                     >
                       {loading ? 'Saving...' : 'Complete Profile'}
                     </Button>
