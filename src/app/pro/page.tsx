@@ -129,46 +129,6 @@ export default async function ProDashboardPage() {
     ? (allReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / allReviews.length).toFixed(1)
     : 'N/A';
 
-  const highlights = [
-    {
-      label: "Profile completion",
-      value: `${profileCompletion}%`,
-      helper: profileCompletion < 100 ? "Complete your profile" : "All done!"
-    },
-    {
-      label: "Wallet balance",
-      value: `€${balanceEuros.toFixed(2)}`,
-      helper: balanceEuros < 5 ? "Top up recommended" : "Good balance"
-    },
-    {
-      label: "Pending offers",
-      value: `${professional.offers.length}`,
-      helper: professional.offers.length > 0 ? "Awaiting response" : "Send more offers"
-    },
-  ];
-
-  const nextSteps = [];
-  if (profileCompletion < 100) {
-    nextSteps.push("Complete your profile to win more jobs");
-  }
-  if (professional.services.length === 0) {
-    nextSteps.push("Add services to see matching requests");
-  }
-  if (matchingRequestsToday > 0) {
-    nextSteps.push(`${matchingRequestsToday} new matching requests today - respond quickly!`);
-  }
-  if (professional.offers.length > 0) {
-    nextSteps.push(`${professional.offers.length} pending offers awaiting client decision`);
-  }
-  if (professional.jobs.length > 0) {
-    nextSteps.push(`${professional.jobs.length} active jobs need your attention`);
-  }
-  if (nextSteps.length === 0) {
-    nextSteps.push("Browse matching requests and send offers to get hired");
-  }
-
-  const timeOfDay = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening';
-
   const completedJobs = await prisma.job.findMany({
     where: {
       professionalId: professional.id,
@@ -179,28 +139,31 @@ export default async function ProDashboardPage() {
     },
   });
 
-  const totalEarnings = completedJobs.reduce((sum, job) => {
-    const amount = job.request.budgetMax || job.request.budgetMin || 0;
-    return sum + amount;
-  }, 0);
+  const activeJobs = await prisma.job.count({
+    where: {
+      professionalId: professional.id,
+      status: 'IN_PROGRESS',
+    }
+  });
 
   const thisMonth = new Date();
   const lastMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() - 1, 1);
 
-  const thisMonthEarnings = completedJobs
+  const thisMonthJobs = completedJobs
     .filter(job => job.completedAt && job.completedAt >= new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
-    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+    .length;
 
-  const lastMonthEarnings = completedJobs
+  const lastMonthJobs = completedJobs
     .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
-    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+    .length;
 
   const earningsData = {
-    totalEarnings,
-    thisMonth: thisMonthEarnings,
-    lastMonth: lastMonthEarnings,
-    pendingPayouts: balanceEuros,
+    totalEarnings: completedJobs.length, // repurposing field for Total Jobs
+    thisMonth: thisMonthJobs, // repurposing for This Month Jobs
+    lastMonth: lastMonthJobs, // repurposing for Last Month Jobs
+    pendingPayouts: professional.offers.length, // repurposing for Pending Offers
     completedJobs: completedJobs.length,
+    activeJobs: activeJobs, // element to pass for UI
   };
 
   const matchingRequests = await prisma.request.findMany({
@@ -230,6 +193,46 @@ export default async function ProDashboardPage() {
 
   const acceptedOffers = allOffers.filter(o => o.status === 'ACCEPTED').length;
   const acceptanceRate = allOffers.length > 0 ? Math.round((acceptedOffers / allOffers.length) * 100) : 0;
+
+  const highlights = [
+    {
+      label: "Profile completion",
+      value: `${profileCompletion}%`,
+      helper: profileCompletion < 100 ? "Complete your profile" : "All done!"
+    },
+    {
+      label: "Client Rating",
+      value: avgRating,
+      helper: "Based on reviews"
+    },
+    {
+      label: "Pending offers",
+      value: `${professional.offers.length}`,
+      helper: professional.offers.length > 0 ? "Awaiting response" : "Send more offers"
+    },
+  ];
+
+  const nextSteps = [];
+  if (profileCompletion < 100) {
+    nextSteps.push("Complete your profile to win more jobs");
+  }
+  if (professional.services.length === 0) {
+    nextSteps.push("Add services to see matching requests");
+  }
+  if (matchingRequestsToday > 0) {
+    nextSteps.push(`${matchingRequestsToday} new matching requests today - respond quickly!`);
+  }
+  if (professional.offers.length > 0) {
+    nextSteps.push(`${professional.offers.length} pending offers awaiting client decision`);
+  }
+  if (professional.jobs.length > 0) {
+    nextSteps.push(`${professional.jobs.length} active jobs need your attention`);
+  }
+  if (nextSteps.length === 0) {
+    nextSteps.push("Browse matching requests and send offers to get hired");
+  }
+
+  const timeOfDay = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening';
 
   const metricsData = {
     profileViews,
