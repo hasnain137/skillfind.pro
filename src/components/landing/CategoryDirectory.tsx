@@ -1,82 +1,58 @@
-// src/components/landing/CategoryDirectory.tsx
 'use client';
 
 import { Container } from "@/components/ui/Container";
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
-// Define keys to look up in translation file
-// We keep structure but values are keys
-const CATEGORY_KEYS = [
-  {
-    nameKey: "tutoring",
-    items: [
-      "math", "science", "language", "exam", "school", "uni"
-    ]
-  },
-  {
-    nameKey: "tech",
-    items: [
-      "web", "bug", "app", "scripts", "techSupport", "db"
-    ]
-  },
-  {
-    nameKey: "design",
-    items: [
-      "logo", "ui", "presentation", "social", "photo", "illustration"
-    ]
-  },
-  {
-    nameKey: "business",
-    items: [
-      "cv", "linkedin", "career", "consulting", "pitch", "interview"
-    ]
-  },
-  {
-    nameKey: "wellness",
-    items: [
-      "fitness", "nutrition", "yoga", "mental", "lifestyle", "rehab"
-    ]
-  },
-  {
-    nameKey: "home",
-    items: [
-      "cleaning", "moving", "handyman", "furniture", "organization", "pet"
-    ]
-  }
-];
+interface Subcategory {
+  id: string;
+  nameEn: string;
+  slug: string;
+}
 
-function CategoryColumn({ nameKey, items }: { nameKey: string, items: string[] }) {
-  const tCat = useTranslations('CategoryDirectory.Categories');
-  const tItems = useTranslations('CategoryDirectory.Items');
+interface Category {
+  id: string;
+  nameEn: string;
+  slug: string;
+  subcategories: Subcategory[];
+}
+
+interface CategoryDirectoryProps {
+  categories?: Category[];
+}
+
+function CategoryColumn({ category }: { category: Category }) {
+  if (!category.subcategories || category.subcategories.length === 0) {
+    return null;
+  }
 
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-[#333333] uppercase tracking-wide">
-        {tCat(nameKey)}
+        {category.nameEn}
       </h3>
       <ul className="flex flex-col gap-2">
-        {items.map((itemKey) => {
-          const itemLabel = tItems(itemKey);
-          return (
-            <li key={itemKey}>
-              <Link
-                href={`/search?q=${encodeURIComponent(itemLabel)}`}
-                className="group flex items-center justify-between rounded-lg p-2 text-sm text-[#7C7373] transition-all hover:bg-[#F3F4F6] hover:text-[#2563EB] hover:pl-3"
-              >
-                <span>{itemLabel}</span>
-                <span className="opacity-0 transition-opacity group-hover:opacity-100">→</span>
-              </Link>
-            </li>
-          );
-        })}
+        {category.subcategories.map((sub) => (
+          <li key={sub.id}>
+            <Link
+              href={`/search?subcategory=${sub.id}`}
+              className="group flex items-center justify-between rounded-lg p-2 text-sm text-[#7C7373] transition-all hover:bg-[#F3F4F6] hover:text-[#2563EB] hover:pl-3"
+            >
+              <span>{sub.nameEn}</span>
+              <span className="opacity-0 transition-opacity group-hover:opacity-100">→</span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
 }
 
-export function CategoryDirectory() {
+export function CategoryDirectory({ categories = [] }: CategoryDirectoryProps) {
   const t = useTranslations('CategoryDirectory');
+
+  // Filter out empty categories to keep the design clean
+  const activeCategories = categories.filter(c => c.subcategories && c.subcategories.length > 0);
 
   return (
     <section className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">
@@ -95,11 +71,17 @@ export function CategoryDirectory() {
         </div>
 
         {/* Category columns */}
-        <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {CATEGORY_KEYS.map((group) => (
-            <CategoryColumn key={group.nameKey} {...group} />
-          ))}
-        </div>
+        {activeCategories.length > 0 ? (
+          <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {activeCategories.map((category) => (
+              <CategoryColumn key={category.id} category={category} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-gray-400 py-8 italic">
+            No categories have been set up yet.
+          </div>
+        )}
       </Container>
     </section>
   );

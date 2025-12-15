@@ -35,6 +35,16 @@ const getCategories = unstable_cache(
           description: true,
           icon: true,
           slug: true,
+          subcategories: {
+            select: {
+              id: true,
+              nameEn: true,
+              slug: true,
+            },
+            orderBy: {
+              nameEn: 'asc',
+            },
+          },
         },
         orderBy: {
           nameEn: 'asc',
@@ -87,7 +97,8 @@ export default async function HomePage() {
         <SuggestedSkills />
         <TrustSection />
         <DualCTA />
-        <CategoryDirectory />
+        <DualCTA />
+        <CategoryDirectory categories={categories} />
       </main>
       <Footer />
     </div>
