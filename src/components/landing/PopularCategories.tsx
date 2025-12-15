@@ -5,57 +5,14 @@ import { Container } from "@/components/ui/Container";
 import { Stagger } from "@/components/ui/motion/Stagger";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 type Category = {
   name: string;
   description: string;
   icon: string;
 };
-
-// Default fallback categories - 8 for 4-column symmetry
-const FALLBACK_CATEGORIES: Category[] = [
-  {
-    name: "Tutoring",
-    description: "Math, languages, exam prep.",
-    icon: "📚",
-  },
-  {
-    name: "Software & Tech",
-    description: "Websites, apps, tech support.",
-    icon: "💻",
-  },
-  {
-    name: "Design",
-    description: "Logos, UI/UX, graphics.",
-    icon: "🎨",
-  },
-  {
-    name: "Health & Fitness",
-    description: "Training, nutrition, wellness.",
-    icon: "🧘‍♀️",
-  },
-  {
-    name: "Home Services",
-    description: "Cleaning, repairs, moving.",
-    icon: "🏠",
-  },
-  {
-    name: "Business",
-    description: "Consulting, coaching, strategy.",
-    icon: "📈",
-  },
-  {
-    name: "Writing",
-    description: "Content, copywriting, editing.",
-    icon: "✍️",
-  },
-  {
-    name: "Music & Audio",
-    description: "Lessons, production, mixing.",
-    icon: "🎵",
-  },
-];
 
 function CategoryCard({ name, description, icon, id }: Category & { id?: string }) {
   const searchUrl = id ? `/search?category=${id}` : '/search';
@@ -103,10 +60,24 @@ function mapDatabaseCategories(dbCategories: DatabaseCategory[]): (Category & { 
 }
 
 export function PopularCategories({ categories }: PopularCategoriesProps) {
+  const t = useTranslations('PopularCategories');
+
+  // Default fallback categories - 8 for 4-column symmetry
+  const fallbackCategories: Category[] = [
+    { name: t('cat1Name'), description: t('cat1Desc'), icon: "📚" },
+    { name: t('cat2Name'), description: t('cat2Desc'), icon: "💻" },
+    { name: t('cat3Name'), description: t('cat3Desc'), icon: "🎨" },
+    { name: t('cat4Name'), description: t('cat4Desc'), icon: "🧘‍♀️" },
+    { name: t('cat5Name'), description: t('cat5Desc'), icon: "🏠" },
+    { name: t('cat6Name'), description: t('cat6Desc'), icon: "📈" },
+    { name: t('cat7Name'), description: t('cat7Desc'), icon: "✍️" },
+    { name: t('cat8Name'), description: t('cat8Desc'), icon: "🎵" },
+  ];
+
   // Use fallback if fewer than 8 categories in database (need 8 for symmetry)
   const displayCategories = categories && categories.length >= 8
     ? mapDatabaseCategories(categories).slice(0, 8)
-    : FALLBACK_CATEGORIES;
+    : fallbackCategories;
 
   return (
     <section className="py-16 md:py-20 bg-[#FAFAFA] border-b border-[#E5E7EB]">
@@ -114,13 +85,13 @@ export function PopularCategories({ categories }: PopularCategoriesProps) {
         <div className="mx-auto max-w-3xl text-center mb-12">
           <FadeIn>
             <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-              Most In-Demand
+              {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-[#333333] md:text-4xl">
-              Popular services this week.
+              {t('title')}
             </h2>
             <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
-              Find help for your daily needs or long-term projects.
+              {t('subtitle')}
             </p>
           </FadeIn>
         </div>

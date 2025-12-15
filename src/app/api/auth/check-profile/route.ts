@@ -43,6 +43,18 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // Auto-Sync: If Database Role differs from Clerk Role, force-update Clerk
+    const clerkRole = clerkUser.publicMetadata?.role as string | undefined;
+    if (dbUser.role && dbUser.role !== clerkRole) {
+      console.log(`🔄 Syncing Role: DB says ${dbUser.role}, Clerk says ${clerkRole}. Updating Clerk...`);
+      await client.users.updateUserMetadata(userId, {
+        publicMetadata: {
+          role: dbUser.role
+        }
+      });
+      console.log('✅ Clerk Metadata synced.');
+    }
+
     // Check if they have the required role-specific profile
     const hasClientProfile = dbUser.role === 'CLIENT' && !!dbUser.clientProfile;
     const hasProfessionalProfile = dbUser.role === 'PROFESSIONAL' && !!dbUser.professionalProfile;
@@ -58,8 +70,8 @@ export async function GET(request: NextRequest) {
     // Profile is complete if:
     // 1. They have role-specific profile (client/professional/admin), AND
     // 2. They have basic info (DOB, phone, city) OR they're an admin (admins don't need these)
-    const profileComplete = (hasClientProfile || hasProfessionalProfile || isAdmin) && 
-                           (hasBasicInfo || isAdmin);
+    const profileComplete = (hasClientProfile || hasProfessionalProfile || isAdmin) &&
+      (hasBasicInfo || isAdmin);
 
     return successResponse({
       exists: true,

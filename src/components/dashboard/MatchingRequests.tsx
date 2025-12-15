@@ -1,9 +1,10 @@
 // src/components/dashboard/MatchingRequests.tsx
-import Link from "next/link";
+'use client';
+
+import { Link } from '@/i18n/routing';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { Badge } from "@/components/ui/Badge"; // Assuming we have Badge, if not use default span
-import { formatDistanceToNow } from "date-fns"; // Standardizing date if available, else manual is fine. Manual for now.
+import { useTranslations } from 'next-intl';
 
 interface Request {
   id: string;
@@ -22,14 +23,16 @@ interface MatchingRequestsProps {
 }
 
 export function MatchingRequests({ requests }: MatchingRequestsProps) {
+  const t = useTranslations('Dashboard.MatchingRequests');
+
   if (requests.length === 0) {
     return (
       <EmptyState
         icon={<span className="text-4xl">🔍</span>}
-        title="No matching requests"
-        description="Complete your profile and add more services to get matched with clients."
+        title={t('emptyTitle')}
+        description={t('emptyDesc')}
         action={{
-          label: "Update Profile",
+          label: t('updateProfile'),
           href: "/pro/profile",
         }}
       />
@@ -42,11 +45,13 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
         const budgetDisplay = request.budgetMin && request.budgetMax
           ? `€${request.budgetMin}-${request.budgetMax}`
           : request.budgetMin
-            ? `From €${request.budgetMin}`
-            : 'Budget not specified';
+            ? t('fromBudget', { amount: request.budgetMin })
+            : t('budgetNotSpecified');
 
-        const daysAgo = Math.floor((Date.now() - request.createdAt.getTime()) / (1000 * 60 * 60 * 24));
-        const timeDisplay = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
+        const daysAgo = Math.floor((Date.now() - new Date(request.createdAt).getTime()) / (1000 * 60 * 60 * 24));
+        // Safe check for Date object or string if passed from server serialization
+
+        const timeDisplay = daysAgo === 0 ? t('today') : daysAgo === 1 ? t('yesterday') : t('daysAgo', { count: daysAgo });
 
         return (
           <Link key={request.id} href={`/pro/requests/${request.id}/offer`} className="block">
@@ -54,7 +59,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
               {/* New Badge */}
               {daysAgo === 0 && (
                 <div className="absolute -top-2 -right-2 rounded-full bg-gradient-to-r from-error to-red-600 px-3 py-1 text-[10px] font-bold text-white shadow-soft z-10">
-                  🔥 NEW
+                  {t('new')}
                 </div>
               )}
 
@@ -102,7 +107,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
               <CardFooter className="pt-2 pb-2">
                 <div className="flex w-full items-center justify-between">
                   <span className="text-xs font-medium text-[#7C7373]">
-                    Send your offer
+                    {t('sendOffer')}
                   </span>
                   <span className="text-[#2563EB] font-bold group-hover:translate-x-1 transition-transform text-sm">
                     →

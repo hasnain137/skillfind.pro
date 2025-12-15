@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -11,6 +11,7 @@ const NAVIGATION = [
     { name: 'Categories', href: '/admin/categories', icon: '📂' },
     { name: 'Reviews', href: '/admin/reviews', icon: '⭐' },
     { name: 'Transactions', href: '/admin/financials/transactions', icon: '💰' },
+    { name: 'Translations', href: '/admin/translations', icon: '🌍' },
     { name: 'Settings', href: '/admin/settings', icon: '⚙️' },
 ];
 

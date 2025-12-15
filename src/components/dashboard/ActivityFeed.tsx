@@ -1,5 +1,7 @@
 // src/components/dashboard/ActivityFeed.tsx
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
+import { EmptyState } from "@/components/ui/EmptyState";
 
 interface Activity {
   id: string;
@@ -28,29 +30,35 @@ const ACTIVITY_COLORS = {
   review_left: 'from-yellow-50 to-yellow-100',
 };
 
-function formatTimeAgo(date: Date): string {
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins} min ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-  return date.toLocaleDateString();
-}
-
-import { EmptyState } from "@/components/ui/EmptyState";
-
 export function ActivityFeed({ activities }: ActivityFeedProps) {
+  const t = useTranslations('Dashboard.ActivityFeed');
+
+  function formatTimeAgo(date: Date): string {
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return t('justNow');
+    if (diffMins < 60) return t('minAgo', { count: diffMins });
+    if (diffHours < 24) return t('hoursAgo', { count: diffHours }); // Note: I used 'hoursAgo' for plural in JSON, 'hourAgo' for singular. 
+    // Logic refinement: 
+    if (diffHours === 1) return t('hourAgo', { count: 1 });
+    if (diffHours < 24) return t('hoursAgo', { count: diffHours });
+
+    if (diffDays === 1) return t('dayAgo', { count: 1 });
+    if (diffDays < 7) return t('daysAgo', { count: diffDays });
+
+    return date.toLocaleDateString();
+  }
+
   if (activities.length === 0) {
     return (
       <EmptyState
         icon={<span className="text-4xl">📭</span>}
-        title="No recent activity"
-        description="Your activity will appear here once you start interacting with requests and offers."
+        title={t('emptyTitle')}
+        description={t('emptyDesc')}
       />
     );
   }

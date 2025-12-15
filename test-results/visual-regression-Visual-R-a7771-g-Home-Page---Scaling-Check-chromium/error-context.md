@@ -1,0 +1,543 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - link "SF SkillFind" [ref=e7] [cursor=pointer]:
+            - /url: /en
+            - generic [ref=e8]: SF
+            - generic [ref=e9]: SkillFind
+          - combobox [ref=e10]:
+            - option "EN" [selected]
+            - option "DE"
+            - option "FR"
+        - navigation [ref=e11]:
+          - link "How it works" [ref=e12] [cursor=pointer]:
+            - /url: /en#how-it-works
+          - link "Categories" [ref=e13] [cursor=pointer]:
+            - /url: /en#categories
+          - link "Top professionals" [ref=e14] [cursor=pointer]:
+            - /url: /en#top-professionals
+          - link "For professionals" [ref=e15] [cursor=pointer]:
+            - /url: /en#for-professionals
+        - generic [ref=e16]:
+          - link "Log in" [ref=e17] [cursor=pointer]:
+            - /url: /en/login
+          - link "Sign up" [ref=e18] [cursor=pointer]:
+            - /url: /en/signup
+    - main [ref=e19]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - generic [ref=e24]:
+              - generic [ref=e25]: "🚀 The #1 Marketplace for Professional Services"
+              - heading "Find the perfect expert for any task." [level=1] [ref=e26]
+              - paragraph [ref=e27]: Connect with verified tutors, developers, cleaners, and coaches in minutes. Trusted by 10,000+ clients worldwide.
+            - generic [ref=e29]:
+              - generic [ref=e30]:
+                - generic [ref=e31]:
+                  - img [ref=e32]
+                  - textbox "Find a professional..." [ref=e35]
+                - button "Find" [ref=e36]
+              - paragraph [ref=e37]: Clients don't pay any fees. Professionals pay only when you view their profile.
+            - generic [ref=e38]:
+              - generic [ref=e39]:
+                - img [ref=e40]
+                - text: Verified Pros
+              - generic [ref=e42]:
+                - img [ref=e43]
+                - text: Direct Contact
+              - generic [ref=e45]:
+                - img [ref=e46]
+                - text: Satisfaction Guarantee
+          - generic [ref=e49]:
+            - img "Diverse professionals working" [ref=e52]
+            - generic [ref=e58]:
+              - paragraph [ref=e59]: 500+ New Pros
+              - paragraph [ref=e60]: joined this week
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - generic [ref=e66]: 👥
+            - generic [ref=e67]: "250"
+            - generic [ref=e68]: Verified Professionals
+          - generic [ref=e69]:
+            - generic [ref=e70]: ⭐
+            - generic [ref=e71]: 1,200
+            - generic [ref=e72]: Trusted Reviews
+          - generic [ref=e73]:
+            - generic [ref=e74]: 📋
+            - generic [ref=e75]: "45"
+            - generic [ref=e76]: Active Requests
+          - generic [ref=e77]:
+            - generic [ref=e78]: ✅
+            - generic [ref=e79]: "850"
+            - generic [ref=e80]: Jobs Completed
+      - generic [ref=e82]:
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: Simple & Transparent
+          - heading "How SkillFind works." [level=2] [ref=e86]
+          - paragraph [ref=e87]: Get the job done in three easy steps. No hidden fees, no hassle.
+        - generic [ref=e88]:
+          - generic [ref=e90]:
+            - img [ref=e92]
+            - heading "Create a request" [level=3] [ref=e94]
+            - paragraph [ref=e95]: Tell us what you need, your budget, and delivery preference. It's free and takes 2 minutes.
+            - generic: "1"
+          - generic [ref=e97]:
+            - img [ref=e99]
+            - heading "Receive custom offers" [level=3] [ref=e101]
+            - paragraph [ref=e102]: Verified professionals will review your request and send tailored offers with price and availability.
+            - generic: "2"
+          - generic [ref=e104]:
+            - img [ref=e106]
+            - heading "Hire & leave a review" [level=3] [ref=e108]
+            - paragraph [ref=e109]: Choose the best fit, chat directly, and get the job done. Leave a review to help the community.
+            - generic: "3"
+      - generic [ref=e111]:
+        - generic [ref=e113]:
+          - paragraph [ref=e114]: Most In-Demand
+          - heading "Popular services this week." [level=2] [ref=e115]
+          - paragraph [ref=e116]: Find help for your daily needs or long-term projects.
+        - generic [ref=e117]:
+          - link "📚 Tutoring Math, languages, exam prep." [ref=e119] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e120]:
+              - generic [ref=e121]:
+                - generic [ref=e123]: 📚
+                - heading "Tutoring" [level=3] [ref=e124]
+              - paragraph [ref=e125]: Math, languages, exam prep.
+          - link "💻 Software & Tech Websites, apps, tech support." [ref=e127] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - generic [ref=e131]: 💻
+                - heading "Software & Tech" [level=3] [ref=e132]
+              - paragraph [ref=e133]: Websites, apps, tech support.
+          - link "🎨 Design Logos, UI/UX, graphics." [ref=e135] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e136]:
+              - generic [ref=e137]:
+                - generic [ref=e139]: 🎨
+                - heading "Design" [level=3] [ref=e140]
+              - paragraph [ref=e141]: Logos, UI/UX, graphics.
+          - link "🧘‍♀️ Health & Fitness Training, nutrition, wellness." [ref=e143] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - generic [ref=e147]: 🧘‍♀️
+                - heading "Health & Fitness" [level=3] [ref=e148]
+              - paragraph [ref=e149]: Training, nutrition, wellness.
+          - link "🏠 Home Services Cleaning, repairs, moving." [ref=e151] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e152]:
+              - generic [ref=e153]:
+                - generic [ref=e155]: 🏠
+                - heading "Home Services" [level=3] [ref=e156]
+              - paragraph [ref=e157]: Cleaning, repairs, moving.
+          - link "📈 Business Consulting, coaching, strategy." [ref=e159] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e160]:
+              - generic [ref=e161]:
+                - generic [ref=e163]: 📈
+                - heading "Business" [level=3] [ref=e164]
+              - paragraph [ref=e165]: Consulting, coaching, strategy.
+          - link "✍️ Writing Content, copywriting, editing." [ref=e167] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e168]:
+              - generic [ref=e169]:
+                - generic [ref=e171]: ✍️
+                - heading "Writing" [level=3] [ref=e172]
+              - paragraph [ref=e173]: Content, copywriting, editing.
+          - link "🎵 Music & Audio Lessons, production, mixing." [ref=e175] [cursor=pointer]:
+            - /url: /en/search
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - generic [ref=e179]: 🎵
+                - heading "Music & Audio" [level=3] [ref=e180]
+              - paragraph [ref=e181]: Lessons, production, mixing.
+      - generic [ref=e184]:
+        - paragraph [ref=e185]: Featured professionals
+        - heading "Our top-rated professionals will appear here soon." [level=2] [ref=e186]
+        - paragraph [ref=e187]: Start exploring by searching for the service you need or browse by category.
+      - generic [ref=e189]:
+        - generic [ref=e190]:
+          - paragraph [ref=e191]: Client Success Stories
+          - heading "Trusted by clients and professionals." [level=2] [ref=e192]
+          - paragraph [ref=e193]: See what our community has to say about their experience on SkillFind.
+        - generic [ref=e194]:
+          - generic [ref=e195]:
+            - generic [ref=e196]:
+              - generic [ref=e197]:
+                - generic [ref=e198]: ★
+                - generic [ref=e199]: ★
+                - generic [ref=e200]: ★
+                - generic [ref=e201]: ★
+                - generic [ref=e202]: ★
+              - generic [ref=e203]:
+                - generic [ref=e204]: "\""
+                - paragraph [ref=e205]: Amazing experience! Found a great tutor for my son within hours. The platform made it so easy to compare different professionals.
+            - generic [ref=e206]:
+              - generic [ref=e207]: SJ
+              - generic [ref=e208]:
+                - paragraph [ref=e209]: Sarah J.
+                - paragraph [ref=e210]: Hired a pro for Services
+          - generic [ref=e211]:
+            - generic [ref=e212]:
+              - generic [ref=e213]:
+                - generic [ref=e214]: ★
+                - generic [ref=e215]: ★
+                - generic [ref=e216]: ★
+                - generic [ref=e217]: ★
+                - generic [ref=e218]: ★
+              - generic [ref=e219]:
+                - generic [ref=e220]: "\""
+                - paragraph [ref=e221]: As a professional, SkillFind has transformed my business. I get quality leads and the payment system is transparent and fair.
+            - generic [ref=e222]:
+              - generic [ref=e223]: DM
+              - generic [ref=e224]:
+                - paragraph [ref=e225]: David M.
+                - paragraph [ref=e226]: Hired a pro for Services
+          - generic [ref=e227]:
+            - generic [ref=e228]:
+              - generic [ref=e229]:
+                - generic [ref=e230]: ★
+                - generic [ref=e231]: ★
+                - generic [ref=e232]: ★
+                - generic [ref=e233]: ★
+                - generic [ref=e234]: ★
+              - generic [ref=e235]:
+                - generic [ref=e236]: "\""
+                - paragraph [ref=e237]: Great platform! The verification process gave me confidence in choosing the right person for my home renovation project.
+            - generic [ref=e238]:
+              - generic [ref=e239]: LA
+              - generic [ref=e240]:
+                - paragraph [ref=e241]: Lisa A.
+                - paragraph [ref=e242]: Hired a pro for Services
+      - generic [ref=e244]:
+        - generic [ref=e245]:
+          - paragraph [ref=e246]: Ideas to get started
+          - heading "Not sure what to search for?" [level=2] [ref=e247]
+          - paragraph [ref=e248]: Here are some common things people use SkillFind for. Tap a skill to explore professionals in that area.
+        - generic [ref=e249]:
+          - button "Math & exam prep" [ref=e250]
+          - button "Language tutoring" [ref=e251]
+          - button "CV & career coaching" [ref=e252]
+          - button "Frontend bug fixing" [ref=e253]
+          - button "Logo & brand design" [ref=e254]
+          - button "Fitness & nutrition" [ref=e255]
+          - button "Mental wellbeing support" [ref=e256]
+          - button "Home cleaning" [ref=e257]
+          - button "Moving & packing help" [ref=e258]
+          - button "Resume & LinkedIn review" [ref=e259]
+          - button "Website troubleshooting" [ref=e260]
+          - button "Social media support" [ref=e261]
+      - generic [ref=e264]:
+        - generic [ref=e265]:
+          - heading "Why 10,000+ clients trust SkillFind" [level=2] [ref=e266]
+          - paragraph [ref=e267]: We've built a marketplace where trust isn't an option—it's the foundation. From verified identities to secure transactions, we protect every step of your journey.
+          - generic [ref=e274]:
+            - paragraph [ref=e275]: 4.9/5 Average Rating
+            - paragraph [ref=e276]: from trusted reviews
+        - generic [ref=e277]:
+          - generic [ref=e278]:
+            - img [ref=e280]
+            - generic [ref=e282]:
+              - heading "Vetted Professionals" [level=3] [ref=e283]
+              - paragraph [ref=e284]: Every pro passes an identity check and profile review before joining.
+          - generic [ref=e285]:
+            - img [ref=e287]
+            - generic [ref=e289]:
+              - heading "Direct Connections" [level=3] [ref=e290]
+              - paragraph [ref=e291]: Connect directly with professionals. Negotiate terms that work for both of you.
+          - generic [ref=e292]:
+            - img [ref=e294]
+            - generic [ref=e296]:
+              - heading "Fair Pricing" [level=3] [ref=e297]
+              - paragraph [ref=e298]: Get multiple offers and choose the one that fits your budget. No hidden fees.
+          - generic [ref=e299]:
+            - img [ref=e301]
+            - generic [ref=e303]:
+              - heading "Quality Guaranteed" [level=3] [ref=e304]
+              - paragraph [ref=e305]: Not satisfied? We have a support team ready to help resolve any issues.
+      - generic [ref=e308]:
+        - generic [ref=e311]:
+          - generic [ref=e312]: For Clients
+          - heading "Need help with a project?" [level=3] [ref=e313]
+          - paragraph [ref=e314]: Find trusted professionals for any task. From tutoring to home repairs, we have you covered.
+          - link "Find a Professional" [ref=e315] [cursor=pointer]:
+            - /url: /en/search
+            - button "Find a Professional" [ref=e316]
+        - generic [ref=e319]:
+          - generic [ref=e320]: For Professionals
+          - heading "Grow your business" [level=3] [ref=e321]
+          - paragraph [ref=e322]: Join 5,000+ experts receiving quality leads daily. Set your rates and work on your terms.
+          - link "Join as a Pro" [ref=e323] [cursor=pointer]:
+            - /url: /en/signup
+            - button "Join as a Pro" [ref=e324]
+      - generic [ref=e326]:
+        - generic [ref=e327]:
+          - paragraph [ref=e328]: Browse all categories
+          - heading "Explore everything on SkillFind." [level=2] [ref=e329]
+          - paragraph [ref=e330]: From tutoring and tech to fitness, design, and home help — we bring all kinds of professionals together in one place.
+        - generic [ref=e331]:
+          - generic [ref=e332]:
+            - heading "Tutoring & Education" [level=3] [ref=e333]
+            - list [ref=e334]:
+              - listitem [ref=e335]:
+                - link "Math tutoring →" [ref=e336] [cursor=pointer]:
+                  - /url: /en/search?q=Math%20tutoring
+                  - generic [ref=e337]: Math tutoring
+                  - generic [ref=e338]: →
+              - listitem [ref=e339]:
+                - link "Science tutoring →" [ref=e340] [cursor=pointer]:
+                  - /url: /en/search?q=Science%20tutoring
+                  - generic [ref=e341]: Science tutoring
+                  - generic [ref=e342]: →
+              - listitem [ref=e343]:
+                - link "Language tutoring →" [ref=e344] [cursor=pointer]:
+                  - /url: /en/search?q=Language%20tutoring
+                  - generic [ref=e345]: Language tutoring
+                  - generic [ref=e346]: →
+              - listitem [ref=e347]:
+                - link "Exam preparation →" [ref=e348] [cursor=pointer]:
+                  - /url: /en/search?q=Exam%20preparation
+                  - generic [ref=e349]: Exam preparation
+                  - generic [ref=e350]: →
+              - listitem [ref=e351]:
+                - link "School support →" [ref=e352] [cursor=pointer]:
+                  - /url: /en/search?q=School%20support
+                  - generic [ref=e353]: School support
+                  - generic [ref=e354]: →
+              - listitem [ref=e355]:
+                - link "University subjects →" [ref=e356] [cursor=pointer]:
+                  - /url: /en/search?q=University%20subjects
+                  - generic [ref=e357]: University subjects
+                  - generic [ref=e358]: →
+          - generic [ref=e359]:
+            - heading "Software & Tech" [level=3] [ref=e360]
+            - list [ref=e361]:
+              - listitem [ref=e362]:
+                - link "Website development →" [ref=e363] [cursor=pointer]:
+                  - /url: /en/search?q=Website%20development
+                  - generic [ref=e364]: Website development
+                  - generic [ref=e365]: →
+              - listitem [ref=e366]:
+                - link "Bug fixing & troubleshooting →" [ref=e367] [cursor=pointer]:
+                  - /url: /en/search?q=Bug%20fixing%20%26%20troubleshooting
+                  - generic [ref=e368]: Bug fixing & troubleshooting
+                  - generic [ref=e369]: →
+              - listitem [ref=e370]:
+                - link "App development →" [ref=e371] [cursor=pointer]:
+                  - /url: /en/search?q=App%20development
+                  - generic [ref=e372]: App development
+                  - generic [ref=e373]: →
+              - listitem [ref=e374]:
+                - link "Automation & scripts →" [ref=e375] [cursor=pointer]:
+                  - /url: /en/search?q=Automation%20%26%20scripts
+                  - generic [ref=e376]: Automation & scripts
+                  - generic [ref=e377]: →
+              - listitem [ref=e378]:
+                - link "Tech support →" [ref=e379] [cursor=pointer]:
+                  - /url: /en/search?q=Tech%20support
+                  - generic [ref=e380]: Tech support
+                  - generic [ref=e381]: →
+              - listitem [ref=e382]:
+                - link "Database help →" [ref=e383] [cursor=pointer]:
+                  - /url: /en/search?q=Database%20help
+                  - generic [ref=e384]: Database help
+                  - generic [ref=e385]: →
+          - generic [ref=e386]:
+            - heading "Design & Creative" [level=3] [ref=e387]
+            - list [ref=e388]:
+              - listitem [ref=e389]:
+                - link "Logo & brand design →" [ref=e390] [cursor=pointer]:
+                  - /url: /en/search?q=Logo%20%26%20brand%20design
+                  - generic [ref=e391]: Logo & brand design
+                  - generic [ref=e392]: →
+              - listitem [ref=e393]:
+                - link "UI/UX design →" [ref=e394] [cursor=pointer]:
+                  - /url: /en/search?q=UI%2FUX%20design
+                  - generic [ref=e395]: UI/UX design
+                  - generic [ref=e396]: →
+              - listitem [ref=e397]:
+                - link "Presentation design →" [ref=e398] [cursor=pointer]:
+                  - /url: /en/search?q=Presentation%20design
+                  - generic [ref=e399]: Presentation design
+                  - generic [ref=e400]: →
+              - listitem [ref=e401]:
+                - link "Social media visuals →" [ref=e402] [cursor=pointer]:
+                  - /url: /en/search?q=Social%20media%20visuals
+                  - generic [ref=e403]: Social media visuals
+                  - generic [ref=e404]: →
+              - listitem [ref=e405]:
+                - link "Photo editing →" [ref=e406] [cursor=pointer]:
+                  - /url: /en/search?q=Photo%20editing
+                  - generic [ref=e407]: Photo editing
+                  - generic [ref=e408]: →
+              - listitem [ref=e409]:
+                - link "Illustration →" [ref=e410] [cursor=pointer]:
+                  - /url: /en/search?q=Illustration
+                  - generic [ref=e411]: Illustration
+                  - generic [ref=e412]: →
+          - generic [ref=e413]:
+            - heading "Business & Career" [level=3] [ref=e414]
+            - list [ref=e415]:
+              - listitem [ref=e416]:
+                - link "CV & resume review →" [ref=e417] [cursor=pointer]:
+                  - /url: /en/search?q=CV%20%26%20resume%20review
+                  - generic [ref=e418]: CV & resume review
+                  - generic [ref=e419]: →
+              - listitem [ref=e420]:
+                - link "LinkedIn profile help →" [ref=e421] [cursor=pointer]:
+                  - /url: /en/search?q=LinkedIn%20profile%20help
+                  - generic [ref=e422]: LinkedIn profile help
+                  - generic [ref=e423]: →
+              - listitem [ref=e424]:
+                - link "Career coaching →" [ref=e425] [cursor=pointer]:
+                  - /url: /en/search?q=Career%20coaching
+                  - generic [ref=e426]: Career coaching
+                  - generic [ref=e427]: →
+              - listitem [ref=e428]:
+                - link "Business consulting →" [ref=e429] [cursor=pointer]:
+                  - /url: /en/search?q=Business%20consulting
+                  - generic [ref=e430]: Business consulting
+                  - generic [ref=e431]: →
+              - listitem [ref=e432]:
+                - link "Pitch deck help →" [ref=e433] [cursor=pointer]:
+                  - /url: /en/search?q=Pitch%20deck%20help
+                  - generic [ref=e434]: Pitch deck help
+                  - generic [ref=e435]: →
+              - listitem [ref=e436]:
+                - link "Interview preparation →" [ref=e437] [cursor=pointer]:
+                  - /url: /en/search?q=Interview%20preparation
+                  - generic [ref=e438]: Interview preparation
+                  - generic [ref=e439]: →
+          - generic [ref=e440]:
+            - heading "Health & Wellness" [level=3] [ref=e441]
+            - list [ref=e442]:
+              - listitem [ref=e443]:
+                - link "Fitness coaching →" [ref=e444] [cursor=pointer]:
+                  - /url: /en/search?q=Fitness%20coaching
+                  - generic [ref=e445]: Fitness coaching
+                  - generic [ref=e446]: →
+              - listitem [ref=e447]:
+                - link "Nutrition guidance →" [ref=e448] [cursor=pointer]:
+                  - /url: /en/search?q=Nutrition%20guidance
+                  - generic [ref=e449]: Nutrition guidance
+                  - generic [ref=e450]: →
+              - listitem [ref=e451]:
+                - link "Yoga & pilates →" [ref=e452] [cursor=pointer]:
+                  - /url: /en/search?q=Yoga%20%26%20pilates
+                  - generic [ref=e453]: Yoga & pilates
+                  - generic [ref=e454]: →
+              - listitem [ref=e455]:
+                - link "Mental wellbeing support →" [ref=e456] [cursor=pointer]:
+                  - /url: /en/search?q=Mental%20wellbeing%20support
+                  - generic [ref=e457]: Mental wellbeing support
+                  - generic [ref=e458]: →
+              - listitem [ref=e459]:
+                - link "Lifestyle coaching →" [ref=e460] [cursor=pointer]:
+                  - /url: /en/search?q=Lifestyle%20coaching
+                  - generic [ref=e461]: Lifestyle coaching
+                  - generic [ref=e462]: →
+              - listitem [ref=e463]:
+                - link "Rehabilitation exercises →" [ref=e464] [cursor=pointer]:
+                  - /url: /en/search?q=Rehabilitation%20exercises
+                  - generic [ref=e465]: Rehabilitation exercises
+                  - generic [ref=e466]: →
+          - generic [ref=e467]:
+            - heading "Home & Everyday" [level=3] [ref=e468]
+            - list [ref=e469]:
+              - listitem [ref=e470]:
+                - link "Cleaning services →" [ref=e471] [cursor=pointer]:
+                  - /url: /en/search?q=Cleaning%20services
+                  - generic [ref=e472]: Cleaning services
+                  - generic [ref=e473]: →
+              - listitem [ref=e474]:
+                - link "Moving & packing help →" [ref=e475] [cursor=pointer]:
+                  - /url: /en/search?q=Moving%20%26%20packing%20help
+                  - generic [ref=e476]: Moving & packing help
+                  - generic [ref=e477]: →
+              - listitem [ref=e478]:
+                - link "Handyman services →" [ref=e479] [cursor=pointer]:
+                  - /url: /en/search?q=Handyman%20services
+                  - generic [ref=e480]: Handyman services
+                  - generic [ref=e481]: →
+              - listitem [ref=e482]:
+                - link "Furniture assembly →" [ref=e483] [cursor=pointer]:
+                  - /url: /en/search?q=Furniture%20assembly
+                  - generic [ref=e484]: Furniture assembly
+                  - generic [ref=e485]: →
+              - listitem [ref=e486]:
+                - link "Home organisation →" [ref=e487] [cursor=pointer]:
+                  - /url: /en/search?q=Home%20organisation
+                  - generic [ref=e488]: Home organisation
+                  - generic [ref=e489]: →
+              - listitem [ref=e490]:
+                - link "Pet care & walking →" [ref=e491] [cursor=pointer]:
+                  - /url: /en/search?q=Pet%20care%20%26%20walking
+                  - generic [ref=e492]: Pet care & walking
+                  - generic [ref=e493]: →
+    - contentinfo [ref=e494]:
+      - generic [ref=e495]:
+        - generic [ref=e496]:
+          - generic [ref=e497]:
+            - generic [ref=e498]:
+              - generic [ref=e499]: SF
+              - generic [ref=e500]: SkillFind
+            - paragraph [ref=e501]: A trusted marketplace connecting clients with verified professionals for tutoring, tech, home services, and more.
+          - generic [ref=e502]:
+            - generic [ref=e503]:
+              - heading "For clients" [level=4] [ref=e504]
+              - list [ref=e505]:
+                - listitem [ref=e506]:
+                  - link "Browse categories" [ref=e507] [cursor=pointer]:
+                    - /url: /en/search
+                - listitem [ref=e508]:
+                  - link "Featured professionals" [ref=e509] [cursor=pointer]:
+                    - /url: "#top-professionals"
+                - listitem [ref=e510]:
+                  - link "How it works" [ref=e511] [cursor=pointer]:
+                    - /url: "#how-it-works"
+            - generic [ref=e512]:
+              - heading "For professionals" [level=4] [ref=e513]
+              - list [ref=e514]:
+                - listitem [ref=e515]:
+                  - link "Become a professional" [ref=e516] [cursor=pointer]:
+                    - /url: /en/signup
+                - listitem [ref=e517]:
+                  - button "Pricing & visibility" [ref=e518]
+                - listitem [ref=e519]:
+                  - button "Help & support" [ref=e520]
+            - generic [ref=e521]:
+              - heading "Company" [level=4] [ref=e522]
+              - list [ref=e523]:
+                - listitem [ref=e524]:
+                  - button "About" [ref=e525]
+                - listitem [ref=e526]:
+                  - button "Terms" [ref=e527]
+                - listitem [ref=e528]:
+                  - button "Privacy" [ref=e529]
+        - generic [ref=e530]:
+          - paragraph [ref=e531]: © 2025 SkillFind. All rights reserved.
+          - generic [ref=e532]:
+            - combobox [ref=e533]:
+              - option "English" [selected]
+            - generic [ref=e534]: Made with ❤️ for the community.
+  - generic [ref=e539] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e540]:
+      - img [ref=e541]
+    - generic [ref=e544]:
+      - button "Open issues overlay" [ref=e545]:
+        - generic [ref=e546]:
+          - generic [ref=e547]: "0"
+          - generic [ref=e548]: "1"
+        - generic [ref=e549]: Issue
+      - button "Collapse issues badge" [ref=e550]:
+        - img [ref=e551]
+  - alert [ref=e553]
+```

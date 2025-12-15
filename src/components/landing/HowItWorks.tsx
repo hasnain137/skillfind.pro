@@ -5,54 +5,57 @@ import { Container } from "@/components/ui/Container";
 import { Stagger } from "@/components/ui/motion/Stagger";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { motion } from "framer-motion";
-
-const steps = [
-  {
-    number: "1",
-    title: "Create a request",
-    description: "Tell us what you need, your budget, and delivery preference. It's free and takes 2 minutes.",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-      </svg>
-    )
-  },
-  {
-    number: "2",
-    title: "Receive custom offers",
-    description: "Verified professionals will review your request and send tailored offers with price and availability.",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-      </svg>
-    )
-  },
-  {
-    number: "3",
-    title: "Hire & leave a review",
-    description: "Choose the best fit, chat directly, and get the job done. Leave a review to help the community.",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    )
-  }
-];
+import { useTranslations } from 'next-intl';
 
 export function HowItWorks() {
+  const t = useTranslations('HowItWorks');
+
+  const steps = [
+    {
+      number: "1",
+      title: t('step1Title'),
+      description: t('step1Desc'),
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      )
+    },
+    {
+      number: "2",
+      title: t('step2Title'),
+      description: t('step2Desc'),
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      )
+    },
+    {
+      number: "3",
+      title: t('step3Title'),
+      description: t('step3Desc'),
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    }
+  ];
+
   return (
     <section id="how-it-works" className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
           <FadeIn>
             <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-              Simple & Transparent
+              {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-[#333333] md:text-4xl">
-              How SkillFind works.
+              {t('title')}
             </h2>
             <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
-              Get the job done in three easy steps. No hidden fees, no hassle.
+              {t('subtitle')}
             </p>
           </FadeIn>
         </div>

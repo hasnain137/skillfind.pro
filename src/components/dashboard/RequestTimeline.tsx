@@ -1,5 +1,5 @@
 // src/components/dashboard/RequestTimeline.tsx
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 
 interface TimelineRequest {
   id: string;

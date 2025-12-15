@@ -1,8 +1,11 @@
 // src/components/layout/Footer.tsx
 import { Container } from "@/components/ui/Container";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
+import { getTranslations } from 'next-intl/server';
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations('Footer');
+
   return (
     <footer className="border-t border-[#E5E7EB] bg-[#FAFAFA] py-12 md:py-16">
       <Container>
@@ -18,8 +21,7 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-4 text-sm text-[#7C7373] leading-relaxed">
-              A trusted marketplace connecting clients with verified professionals
-              for tutoring, tech, home services, and more.
+              {t('brandSlogan')}
             </p>
           </div>
 
@@ -27,22 +29,22 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 text-sm text-[#7C7373] md:grid-cols-3">
             <div className="space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#333333]">
-                For clients
+                {t('forClients')}
               </h4>
               <ul className="space-y-3">
                 <li>
                   <Link href="/search" className="hover:text-[#2563EB] transition-colors">
-                    Browse categories
+                    {t('browseCategories')}
                   </Link>
                 </li>
                 <li>
                   <Link href="#top-professionals" className="hover:text-[#2563EB] transition-colors">
-                    Featured professionals
+                    {t('featuredPros')}
                   </Link>
                 </li>
                 <li>
                   <Link href="#how-it-works" className="hover:text-[#2563EB] transition-colors">
-                    How it works
+                    {t('howItWorks')}
                   </Link>
                 </li>
               </ul>
@@ -50,22 +52,22 @@ export function Footer() {
 
             <div className="space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#333333]">
-                For professionals
+                {t('forProfessionals')}
               </h4>
               <ul className="space-y-3">
                 <li>
                   <Link href="/signup" className="hover:text-[#2563EB] transition-colors">
-                    Become a professional
+                    {t('becomePro')}
                   </Link>
                 </li>
                 <li>
                   <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    Pricing & visibility
+                    {t('pricing')}
                   </button>
                 </li>
                 <li>
                   <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    Help & support
+                    {t('help')}
                   </button>
                 </li>
               </ul>
@@ -73,22 +75,22 @@ export function Footer() {
 
             <div className="space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#333333]">
-                Company
+                {t('company')}
               </h4>
               <ul className="space-y-3">
                 <li>
                   <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    About
+                    {t('about')}
                   </button>
                 </li>
                 <li>
                   <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    Terms
+                    {t('terms')}
                   </button>
                 </li>
                 <li>
                   <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    Privacy
+                    {t('privacy')}
                   </button>
                 </li>
               </ul>
@@ -98,7 +100,7 @@ export function Footer() {
 
         {/* Bottom row */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#E5E7EB] pt-8 text-xs text-[#7C7373] md:flex-row">
-          <p>© {new Date().getFullYear()} SkillFind. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {t('rightsReserved')}</p>
 
           <div className="flex items-center gap-6">
             <select
@@ -107,7 +109,7 @@ export function Footer() {
             >
               <option value="en">English</option>
             </select>
-            <span>Made with ❤️ for the community.</span>
+            <span>{t('madeWithLove')}</span>
           </div>
         </div>
       </Container>

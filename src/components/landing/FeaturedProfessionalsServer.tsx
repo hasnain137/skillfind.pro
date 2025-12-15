@@ -1,8 +1,10 @@
 // src/components/landing/FeaturedProfessionalsServer.tsx
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Avatar } from "@/components/ui/Avatar";
+import { getTranslations } from 'next-intl/server';
+import { unstable_cache } from 'next/cache';
 
 interface Professional {
   id: string;
@@ -26,8 +28,6 @@ interface Professional {
     description: string | null;
   }>;
 }
-
-import { unstable_cache } from 'next/cache';
 
 const getFeaturedProfessionals = unstable_cache(
   async (): Promise<Professional[]> => {
@@ -81,8 +81,10 @@ const getFeaturedProfessionals = unstable_cache(
 
 function ProfessionalCard({
   professional,
+  t
 }: {
   professional: Professional;
+  t: any; // Using any for t to avoid complex type import for now, or use generic
 }) {
   const { user, bio, profile, city, remoteAvailability, averageRating, totalReviews, services } = professional;
 
@@ -93,7 +95,7 @@ function ProfessionalCard({
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
     : hourlyRateMin
       ? `From €${hourlyRateMin}/hr`
-      : 'Contact for pricing';
+      : t('contactForPricing');
 
   const primaryService = services[0]?.description || 'Professional';
   const additionalServices = services.length > 1 ? services.length - 1 : 0;
@@ -102,7 +104,7 @@ function ProfessionalCard({
     <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#2563EB]/20">
       {/* Top Badge - Verified */}
       <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#2563EB] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
-        <span>✓</span> Verified
+        <span>✓</span> {t('verified')}
       </div>
 
       {/* Profile Header */}
@@ -124,7 +126,7 @@ function ProfessionalCard({
           <p className="text-sm font-medium text-[#7C7373] mt-0.5">{primaryService}</p>
           {additionalServices > 0 && (
             <p className="text-xs text-[#2563EB] font-bold mt-1">
-              +{additionalServices} more {additionalServices === 1 ? 'service' : 'services'}
+              {t('moreServices', { count: additionalServices })}
             </p>
           )}
         </div>
@@ -167,14 +169,14 @@ function ProfessionalCard({
       {/* Price */}
       <div className="border-t border-[#E5E7EB] pt-4 mt-auto">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-medium text-[#7C7373] uppercase tracking-wide">Starting from</span>
+          <span className="text-xs font-medium text-[#7C7373] uppercase tracking-wide">{t('startingFrom')}</span>
           <span className="text-lg font-bold text-[#2563EB]">{priceDisplay}</span>
         </div>
 
         {/* CTA Button */}
         <Link href={`/professionals/${professional.id}`}>
           <Button className="w-full justify-center py-2.5 text-sm font-bold transition-all">
-            View Profile
+            {t('viewProfile')}
           </Button>
         </Link>
       </div>
@@ -184,6 +186,7 @@ function ProfessionalCard({
 
 export async function FeaturedProfessionalsServer() {
   const professionals = await getFeaturedProfessionals();
+  const t = await getTranslations('FeaturedProfessionals');
 
   // If no professionals in database, show fallback message
   if (professionals.length === 0) {
@@ -195,13 +198,13 @@ export async function FeaturedProfessionalsServer() {
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-              Featured professionals
+              {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
-              Our top-rated professionals will appear here soon.
+              {t('emptyTitle')}
             </h2>
             <p className="mt-4 text-lg text-[#7C7373]">
-              Start exploring by searching for the service you need or browse by category.
+              {t('emptySubtitle')}
             </p>
           </div>
         </Container>
@@ -217,13 +220,13 @@ export async function FeaturedProfessionalsServer() {
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
           <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-            Featured professionals
+            {t('badge')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
-            Meet highly rated experts.
+            {t('title')}
           </h2>
           <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
-            These professionals have been vetted and reviewed by clients just like you.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -232,7 +235,7 @@ export async function FeaturedProfessionalsServer() {
           <div className="flex gap-6 overflow-x-auto pb-6 sm:hidden snap-x px-4 -mx-4">
             {professionals.map((pro) => (
               <div key={pro.id} className="snap-center">
-                <ProfessionalCard professional={pro} />
+                <ProfessionalCard professional={pro} t={t} />
               </div>
             ))}
           </div>
@@ -240,7 +243,7 @@ export async function FeaturedProfessionalsServer() {
           {/* Desktop Grid */}
           <div className="hidden sm:grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {professionals.map((pro) => (
-              <ProfessionalCard key={pro.id} professional={pro} />
+              <ProfessionalCard key={pro.id} professional={pro} t={t} />
             ))}
           </div>
         </div>
@@ -248,7 +251,7 @@ export async function FeaturedProfessionalsServer() {
         <div className="mt-12 text-center">
           <Link href="/search">
             <Button variant="outline" className="px-8 py-3 h-auto text-base font-semibold">
-              View All Professionals
+              {t('viewAll')}
             </Button>
           </Link>
         </div>

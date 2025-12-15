@@ -1,69 +1,76 @@
+
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
 import { auth } from '@clerk/nextjs/server';
+import { revalidatePath } from 'next/cache';
 
 export async function addManualCredit(professionalId: string, amount: number, note: string) {
-    // 1. Verify Authentication (Admin check could be added here if not handled by middleware)
-    const session = await auth();
-    if (!session?.userId) {
-        return { success: false, error: 'Unauthorized' };
-    }
-
-    // In a real app, you might query the user role here to ensure they are an ADMIN
-    // const user = await prisma.user.findUnique({ where: { clerkId: session.userId } });
-    // if (user?.role !== 'ADMIN') { return { success: false, error: 'Forbidden' }; }
-
-    if (!amount || amount <= 0) {
-        return { success: false, error: 'Invalid amount' };
-    }
-
     try {
-        // 2. Perform Transaction
-        // We use a transaction to ensure both Wallet and Transaction records are created atomically
-        await prisma.$transaction(async (tx) => {
-            // Find user's wallet
-            const wallet = await tx.wallet.findUnique({
-                where: { professionalId: professionalId },
-            });
+        const { userId, sessionClaims } = await auth();
 
-            if (!wallet) {
-                throw new Error('Wallet not found');
-            }
+        // Basic Role Check (Ensure User is Admin)
+        const metadata = sessionClaims?.metadata as { role?: string } | undefined;
+        const publicMetadata = sessionClaims?.publicMetadata as { role?: string } | undefined;
+        const userRole = metadata?.role || publicMetadata?.role;
 
-            const amountInCents = Math.round(amount * 100); // Store as cents
-            const newBalance = wallet.balance + amountInCents;
+        if (userRole !== 'ADMIN') {
+            return { success: false, error: 'Unauthorized. Admin access required.' };
+        }
 
-            // Update Wallet
-            await tx.wallet.update({
-                where: { id: wallet.id },
-                data: {
-                    balance: newBalance,
-                    totalDeposits: { increment: amountInCents },
-                },
-            });
+        // 1. Get Wallet
+        const wallet = await prisma.wallet.findUnique({
+            where: { professionalId }
+        });
 
+        if (!wallet) {
+            // Attempt to create if missing? Or error?
+            // Usually Pro creation makes a wallet.
+            return { success: false, error: 'Wallet not found for this professional.' };
+        }
+
+        // 2. Transact
+        // Convert to cents if amount is float? The UI passes a float. 
+        // Logic: The DB usually stores integers (cents).
+        // Let's assume input is in EUR (e.g. 10.50), DB is cents.
+        const amountInCents = Math.round(amount * 100);
+
+        const transaction = await prisma.$transaction(async (tx) => {
             // Create Transaction Record
-            await tx.transaction.create({
+            const newTx = await tx.transaction.create({
                 data: {
                     walletId: wallet.id,
                     type: 'ADMIN_ADJUSTMENT',
                     amount: amountInCents,
                     balanceBefore: wallet.balance,
-                    balanceAfter: newBalance,
-                    description: note || 'Admin manual credit',
-                    adminId: session.userId, // Log who did it
-                },
+                    balanceAfter: wallet.balance + amountInCents,
+                    description: `Manual Adjustment: ${note}`,
+                    adminId: userId,
+                    adminNote: note
+                }
             });
+
+            // Update Wallet
+            await tx.wallet.update({
+                where: { id: wallet.id },
+                data: {
+                    balance: { increment: amountInCents },
+                    totalDeposits: { increment: amountInCents > 0 ? amountInCents : 0 }
+                    // If negative adjustment, maybe track separately? 
+                    // For now, simple increment.
+                }
+            });
+
+            return newTx;
         });
 
-        // 3. Revalidate the page
+        revalidatePath('/admin/professionals');
         revalidatePath(`/admin/professionals/${professionalId}`);
-        return { success: true };
 
-    } catch (error: any) {
-        console.error('Failed to add credit:', error);
-        return { success: false, error: error.message || 'Failed to add credit' };
+        return { success: true, transactionId: transaction.id };
+
+    } catch (error) {
+        console.error('Failed to add manual credit:', error);
+        return { success: false, error: 'Internal server error' };
     }
 }

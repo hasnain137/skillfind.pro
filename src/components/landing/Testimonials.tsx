@@ -4,6 +4,7 @@
 import { Container } from "@/components/ui/Container";
 import { motion } from "framer-motion";
 import { Avatar } from "@/components/ui/Avatar";
+import { useTranslations } from 'next-intl';
 
 interface Review {
   id: string;
@@ -24,40 +25,8 @@ interface Review {
   };
 }
 
-// Fallback testimonials when no real reviews exist
-const FALLBACK_TESTIMONIALS = [
-  {
-    id: "1",
-    rating: 5,
-    comment: "Amazing experience! Found a great tutor for my son within hours. The platform made it so easy to compare different professionals.",
-    client: { user: { firstName: "Sarah", lastName: "Johnson" } },
-    professional: { user: { firstName: "Michael", lastName: "Chen" } },
-    createdAt: new Date(),
-  },
-  {
-    id: "2",
-    rating: 5,
-    comment: "As a professional, SkillFind has transformed my business. I get quality leads and the payment system is transparent and fair.",
-    client: { user: { firstName: "David", lastName: "Miller" } },
-    professional: { user: { firstName: "Emma", lastName: "Wilson" } },
-    createdAt: new Date(),
-  },
-  {
-    id: "3",
-    rating: 4,
-    comment: "Great platform! The verification process gave me confidence in choosing the right person for my home renovation project.",
-    client: { user: { firstName: "Lisa", lastName: "Anderson" } },
-    professional: { user: { firstName: "James", lastName: "Brown" } },
-    createdAt: new Date(),
-  },
-];
-
-function getFeaturedReviews(): Review[] {
-  return FALLBACK_TESTIMONIALS as any;
-}
-
-function TestimonialCard({ review, index }: { review: Review; index: number }) {
-  const clientInitials = `${review.client.user.firstName[0]}${review.client.user.lastName[0]}`.toUpperCase();
+function TestimonialCard({ review, index, t }: { review: Review; index: number; t: any }) {
+  // const clientInitials = `${review.client.user.firstName[0]}${review.client.user.lastName[0]}`.toUpperCase(); // Unused
 
   return (
     <motion.div
@@ -88,7 +57,7 @@ function TestimonialCard({ review, index }: { review: Review; index: number }) {
         <Avatar
           firstName={review.client.user.firstName}
           lastName={review.client.user.lastName}
-          size="lg" // h-12 w-12 is roughly md/lg depending on sizing, let's check. md is 10, lg is 14. h-12 is 48px. 
+          size="lg"
           className="h-12 w-12 border-2 border-white shadow-sm"
         />
         <div>
@@ -96,7 +65,7 @@ function TestimonialCard({ review, index }: { review: Review; index: number }) {
             {review.client.user.firstName} {review.client.user.lastName[0]}.
           </p>
           <p className="text-xs text-[#7C7373]">
-            Hired a pro for <span className="text-[#2563EB]">Services</span>
+            {t('hiredFor')} <span className="text-[#2563EB]">Services</span>
           </p>
         </div>
       </div>
@@ -105,26 +74,56 @@ function TestimonialCard({ review, index }: { review: Review; index: number }) {
 }
 
 export function Testimonials() {
-  const reviews = getFeaturedReviews();
+  const t = useTranslations('Testimonials');
+
+  // Fallback testimonials when no real reviews exist
+  const FALLBACK_TESTIMONIALS = [
+    {
+      id: "1",
+      rating: 5,
+      comment: t('review1'),
+      client: { user: { firstName: "Sarah", lastName: "Johnson" } },
+      professional: { user: { firstName: "Michael", lastName: "Chen" } },
+      createdAt: new Date(),
+    },
+    {
+      id: "2",
+      rating: 5,
+      comment: t('review2'),
+      client: { user: { firstName: "David", lastName: "Miller" } },
+      professional: { user: { firstName: "Emma", lastName: "Wilson" } },
+      createdAt: new Date(),
+    },
+    {
+      id: "3",
+      rating: 4,
+      comment: t('review3'),
+      client: { user: { firstName: "Lisa", lastName: "Anderson" } },
+      professional: { user: { firstName: "James", lastName: "Brown" } },
+      createdAt: new Date(),
+    },
+  ];
+
+  const reviews = FALLBACK_TESTIMONIALS as any; // Cast to bypass strict type check for now if exact match fails
 
   return (
     <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-[#E5E7EB]">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
           <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-            Client Success Stories
+            {t('badge')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
-            Trusted by clients and professionals.
+            {t('title')}
           </h2>
           <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
-            See what our community has to say about their experience on SkillFind.
+            {t('subtitle')}
           </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {reviews.slice(0, 3).map((review, index) => (
-            <TestimonialCard key={review.id} review={review} index={index} />
+          {reviews.slice(0, 3).map((review: Review, index: number) => (
+            <TestimonialCard key={review.id} review={review} index={index} t={t} />
           ))}
         </div>
       </Container>

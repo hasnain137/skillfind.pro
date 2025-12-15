@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 interface ProfileStep {
   id: string;
@@ -21,6 +22,7 @@ export function ProfileCompletionBanner({
   missingSteps = []
 }: ProfileCompletionBannerProps) {
   const router = useRouter();
+  const t = useTranslations('Dashboard.ProfileCompletion');
 
   if (profileCompletion === 100) return null;
 
@@ -29,8 +31,8 @@ export function ProfileCompletionBanner({
 
   return (
     <div className={`rounded-2xl border-2 p-5 shadow-sm transition-all ${isLowCompletion
-        ? 'border-[#F59E0B] bg-gradient-to-br from-[#FEF3C7] to-white'
-        : 'border-[#3B82F6] bg-gradient-to-br from-[#EFF6FF] to-white'
+      ? 'border-[#F59E0B] bg-gradient-to-br from-[#FEF3C7] to-white'
+      : 'border-[#3B82F6] bg-gradient-to-br from-[#EFF6FF] to-white'
       }`}>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1 space-y-3">
@@ -42,12 +44,12 @@ export function ProfileCompletionBanner({
             </div>
             <div>
               <h3 className="text-base font-bold text-[#333333]">
-                {isLowCompletion ? 'Complete Your Profile' : 'Almost There!'}
+                {isLowCompletion ? t('titleLow') : t('titleHigh')}
               </h3>
               <p className="text-xs text-[#7C7373]">
                 {userRole === 'PROFESSIONAL'
-                  ? 'A complete profile gets more job offers'
-                  : 'Help professionals understand your needs better'
+                  ? t('descPro')
+                  : t('descClient')
                 }
               </p>
             </div>
@@ -56,7 +58,7 @@ export function ProfileCompletionBanner({
           {/* Progress Bar with Label */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-[#7C7373]">Profile completion</span>
+              <span className="font-medium text-[#7C7373]">{t('label')}</span>
               <span className={`font-bold ${isLowCompletion ? 'text-[#D97706]' : 'text-[#2563EB]'}`}>
                 {profileCompletion}%
               </span>
@@ -84,7 +86,7 @@ export function ProfileCompletionBanner({
               ))}
               {missingSteps.length > 3 && (
                 <span className="text-xs text-[#7C7373] px-2 py-1">
-                  +{missingSteps.length - 3} more
+                  {t('moreSteps', { count: missingSteps.length - 3 })}
                 </span>
               )}
             </div>
@@ -96,10 +98,9 @@ export function ProfileCompletionBanner({
           onClick={() => router.push(missingSteps[0]?.actionUrl || profileUrl)}
           className="whitespace-nowrap shadow-md hover:shadow-lg"
         >
-          Complete Now →
+          {t('completeNow')}
         </Button>
       </div>
     </div>
   );
 }
-

@@ -4,7 +4,7 @@
 import { Container } from "@/components/ui/Container";
 import { useUser } from "@clerk/nextjs";
 import { UserMenu } from "./UserMenu";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 
 export function ClientNavbar() {
   const { isSignedIn } = useUser();

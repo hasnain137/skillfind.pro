@@ -1,5 +1,5 @@
 // src/components/ui/Breadcrumb.tsx
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 interface BreadcrumbItem {
     label: string;

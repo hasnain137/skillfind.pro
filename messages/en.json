@@ -1,0 +1,458 @@
+{
+    "Common": {
+        "welcome": "Welcome to SkillFind",
+        "dashboard": "Dashboard",
+        "signIn": "Sign In",
+        "signOut": "Sign Out",
+        "profile": "Profile"
+    },
+    "Landing": {
+        "heroTitle": "Find the perfect professional for your needs",
+        "heroSubtitle": "Connect with top-rated experts in seconds."
+    },
+    "Auth": {
+        "loginTitle": "Log in to your account",
+        "signupTitle": "Create an account"
+    },
+    "Navbar": {
+        "howItWorks": "How it works",
+        "categories": "Categories",
+        "topProfessionals": "Top professionals",
+        "forProfessionals": "For professionals",
+        "login": "Log in",
+        "signup": "Sign up"
+    },
+    "Hero": {
+        "badge": "🚀 The #1 Marketplace for Professional Services",
+        "titlePrefix": "Find the perfect",
+        "titleHighlight": "expert",
+        "titleSuffix": "for any task.",
+        "subtitle": "Connect with verified tutors, developers, cleaners, and coaches in minutes. Trusted by 10,000+ clients worldwide.",
+        "verifiedPros": "Verified Pros",
+        "directContact": "Direct Contact",
+        "satisfactionGuarantee": "Satisfaction Guarantee",
+        "newProsBadge": "500+ New Pros",
+        "joinedThisWeek": "joined this week"
+    },
+    "Footer": {
+        "brandSlogan": "A trusted marketplace connecting clients with verified professionals for tutoring, tech, home services, and more.",
+        "forClients": "For clients",
+        "browseCategories": "Browse categories",
+        "featuredPros": "Featured professionals",
+        "howItWorks": "How it works",
+        "forProfessionals": "For professionals",
+        "becomePro": "Become a professional",
+        "pricing": "Pricing & visibility",
+        "help": "Help & support",
+        "company": "Company",
+        "about": "About",
+        "terms": "Terms",
+        "privacy": "Privacy",
+        "rightsReserved": "SkillFind. All rights reserved.",
+        "madeWithLove": "Made with ❤️ for the community."
+    },
+    "HowItWorks": {
+        "badge": "Simple & Transparent",
+        "title": "How SkillFind works.",
+        "subtitle": "Get the job done in three easy steps. No hidden fees, no hassle.",
+        "step1Title": "Create a request",
+        "step1Desc": "Tell us what you need, your budget, and delivery preference. It's free and takes 2 minutes.",
+        "step2Title": "Receive custom offers",
+        "step2Desc": "Verified professionals will review your request and send tailored offers with price and availability.",
+        "step3Title": "Hire & leave a review",
+        "step3Desc": "Choose the best fit, chat directly, and get the job done. Leave a review to help the community."
+    },
+    "TrustSection": {
+        "title": "Why 10,000+ clients trust SkillFind",
+        "subtitle": "We've built a marketplace where trust isn't an option—it's the foundation. From verified identities to secure transactions, we protect every step of your journey.",
+        "rating": "4.9/5 Average Rating",
+        "ratingSub": "from trusted reviews",
+        "vettedTitle": "Vetted Professionals",
+        "vettedDesc": "Every pro passes an identity check and profile review before joining.",
+        "connectTitle": "Direct Connections",
+        "connectDesc": "Connect directly with professionals. Negotiate terms that work for both of you.",
+        "pricingTitle": "Fair Pricing",
+        "pricingDesc": "Get multiple offers and choose the one that fits your budget. No hidden fees.",
+        "qualityTitle": "Quality Guaranteed",
+        "qualityDesc": "Not satisfied? We have a support team ready to help resolve any issues."
+    },
+    "PopularCategories": {
+        "badge": "Most In-Demand",
+        "title": "Popular services this week.",
+        "subtitle": "Find help for your daily needs or long-term projects.",
+        "cat1Name": "Tutoring",
+        "cat1Desc": "Math, languages, exam prep.",
+        "cat2Name": "Software & Tech",
+        "cat2Desc": "Websites, apps, tech support.",
+        "cat3Name": "Design",
+        "cat3Desc": "Logos, UI/UX, graphics.",
+        "cat4Name": "Health & Fitness",
+        "cat4Desc": "Training, nutrition, wellness.",
+        "cat5Name": "Home Services",
+        "cat5Desc": "Cleaning, repairs, moving.",
+        "cat6Name": "Business",
+        "cat6Desc": "Consulting, coaching, strategy.",
+        "cat7Name": "Writing",
+        "cat7Desc": "Content, copywriting, editing.",
+        "cat8Name": "Music & Audio",
+        "cat8Desc": "Lessons, production, mixing."
+    },
+    "FeaturedProfessionals": {
+        "verified": "Verified",
+        "contactForPricing": "Contact for pricing",
+        "startingFrom": "Starting from",
+        "viewProfile": "View Profile",
+        "moreServices": "+{count} more services",
+        "moreService": "+{count} more service",
+        "badge": "Featured professionals",
+        "title": "Meet highly rated experts.",
+        "subtitle": "These professionals have been vetted and reviewed by clients just like you.",
+        "emptyTitle": "Our top-rated professionals will appear here soon.",
+        "emptySubtitle": "Start exploring by searching for the service you need or browse by category.",
+        "viewAll": "View All Professionals"
+    },
+    "DualCTA": {
+        "clientBadge": "For Clients",
+        "clientTitle": "Need help with a project?",
+        "clientDesc": "Find trusted professionals for any task. From tutoring to home repairs, we have you covered.",
+        "clientButton": "Find a Professional",
+        "proBadge": "For Professionals",
+        "proTitle": "Grow your business",
+        "proDesc": "Join 5,000+ experts receiving quality leads daily. Set your rates and work on your terms.",
+        "proButton": "Join as a Pro"
+    },
+    "Testimonials": {
+        "badge": "Client Success Stories",
+        "title": "Trusted by clients and professionals.",
+        "subtitle": "See what our community has to say about their experience on SkillFind.",
+        "review1": "Amazing experience! Found a great tutor for my son within hours. The platform made it so easy to compare different professionals.",
+        "review2": "As a professional, SkillFind has transformed my business. I get quality leads and the payment system is transparent and fair.",
+        "review3": "Great platform! The verification process gave me confidence in choosing the right person for my home renovation project.",
+        "hiredFor": "Hired a pro for"
+    },
+    "Dashboard": {
+        "PerformanceMetrics": {
+            "profileViews": "Profile Views",
+            "offersSent": "Offers Sent",
+            "acceptanceRate": "Acceptance Rate",
+            "avgRating": "Avg. Rating",
+            "responseTime": "Response Time",
+            "reviews": "{count} reviews",
+            "na": "N/A"
+        },
+        "EarningsChart": {
+            "totalEarnings": "Total Earnings",
+            "viewHistory": "View history",
+            "thisMonth": "This Month",
+            "pending": "Pending",
+            "fromLastMonth": "from last month"
+        },
+        "ProfileCompletion": {
+            "titleLow": "Complete Your Profile",
+            "titleHigh": "Almost There!",
+            "descPro": "A complete profile gets more job offers",
+            "descClient": "Help professionals understand your needs better",
+            "label": "Profile completion",
+            "moreSteps": "+{count} more",
+            "completeNow": "Complete Now →"
+        },
+        "ActivityFeed": {
+            "emptyTitle": "No recent activity",
+            "emptyDesc": "Your activity will appear here once you start interacting with requests and offers.",
+            "justNow": "Just now",
+            "minAgo": "{count} min ago",
+            "hourAgo": "{count} hour ago",
+            "hoursAgo": "{count} hours ago",
+            "dayAgo": "{count} day ago",
+            "daysAgo": "{count} days ago"
+        },
+        "MatchingRequests": {
+            "emptyTitle": "No matching requests",
+            "emptyDesc": "Complete your profile and add more services to get matched with clients.",
+            "updateProfile": "Update Profile",
+            "budgetNotSpecified": "Budget not specified",
+            "fromBudget": "From €{amount}",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "daysAgo": "{count} days ago",
+            "new": "🔥 NEW",
+            "sendOffer": "Send your offer"
+        }
+    },
+    "CategoryDirectory": {
+        "badge": "Browse all categories",
+        "title": "Explore everything on SkillFind.",
+        "subtitle": "From tutoring and tech to fitness, design, and home help — we bring all kinds of professionals together in one place.",
+        "Categories": {
+            "tutoring": "Tutoring & Education",
+            "tech": "Software & Tech",
+            "design": "Design & Creative",
+            "business": "Business & Career",
+            "wellness": "Health & Wellness",
+            "home": "Home & Everyday"
+        },
+        "Items": {
+            "math": "Math tutoring",
+            "science": "Science tutoring",
+            "language": "Language tutoring",
+            "exam": "Exam preparation",
+            "school": "School support",
+            "uni": "University subjects",
+            "web": "Website development",
+            "bug": "Bug fixing & troubleshooting",
+            "app": "App development",
+            "scripts": "Automation & scripts",
+            "techSupport": "Tech support",
+            "db": "Database help",
+            "logo": "Logo & brand design",
+            "ui": "UI/UX design",
+            "presentation": "Presentation design",
+            "social": "Social media visuals",
+            "photo": "Photo editing",
+            "illustration": "Illustration",
+            "cv": "CV & resume review",
+            "linkedin": "LinkedIn profile help",
+            "career": "Career coaching",
+            "consulting": "Business consulting",
+            "pitch": "Pitch deck help",
+            "interview": "Interview preparation",
+            "fitness": "Fitness coaching",
+            "nutrition": "Nutrition guidance",
+            "yoga": "Yoga & pilates",
+            "mental": "Mental wellbeing support",
+            "lifestyle": "Lifestyle coaching",
+            "rehab": "Rehabilitation exercises",
+            "cleaning": "Cleaning services",
+            "moving": "Moving & packing help",
+            "handyman": "Handyman services",
+            "furniture": "Furniture assembly",
+            "organization": "Home organisation",
+            "pet": "Pet care & walking"
+        }
+    },
+    "ProDashboard": {
+        "eyebrow": "Professional dashboard",
+        "welcome": "Good {period}, {name}",
+        "description": "See matching requests, send tailored offers, and keep your profile ready for new opportunities.",
+        "metricsTitle": "Performance metrics",
+        "metricsDesc": "Track your success and visibility on the platform.",
+        "requestsTitle": "Matching requests",
+        "requestsDesc": "New opportunities that match your services.",
+        "viewAll": "View all",
+        "quickActionsTitle": "Quick actions",
+        "quickActionsDesc": "Shortcuts to the most common tasks.",
+        "nextStepsTitle": "Next steps",
+        "nextStepsDesc": "Suggested actions to grow your business.",
+        "periods": {
+            "morning": "morning",
+            "afternoon": "afternoon",
+            "evening": "evening"
+        },
+        "Actions": {
+            "browseTitle": "Browse matching requests",
+            "browseDesc": "See new opportunities that match your services and skills.",
+            "browseCta": "View requests",
+            "offersTitle": "Manage your offers",
+            "offersDesc": "Track pending offers and see which ones got accepted.",
+            "offersCta": "View offers",
+            "jobsTitle": "Active jobs",
+            "jobsDesc": "Start work and mark jobs complete when finished.",
+            "jobsCta": "View jobs",
+            "profileTitle": "Update profile",
+            "profileDesc": "Keep your bio, services, and portfolio up to date.",
+            "profileCta": "Edit profile"
+        },
+        "Steps": {
+            "profile": "Complete your profile to win more jobs",
+            "services": "Add services to see matching requests",
+            "matching": "{count} new matching requests today - respond quickly!",
+            "offers": "{count} pending offers awaiting client decision",
+            "jobs": "{count} active jobs need your attention",
+            "default": "Browse matching requests and send offers to get hired"
+        },
+        "Highlights": {
+            "profile": "Profile completion",
+            "wallet": "Wallet balance",
+            "pending": "Pending offers"
+        }
+    },
+    "Layouts": {
+        "Pro": {
+            "badge": "Pro Area",
+            "title": "SkillFind Pro",
+            "description": "Manage your profile, respond to requests, and grow your business.",
+            "links": {
+                "dashboard": "Dashboard",
+                "requests": "Matching requests",
+                "offers": "My offers",
+                "jobs": "My jobs",
+                "profile": "My profile",
+                "wallet": "Wallet"
+            }
+        },
+        "Client": {
+            "badge": "Client Area",
+            "title": "Plan your projects",
+            "description": "Post new service needs, review offers from verified professionals, and keep every conversation in one place.",
+            "links": {
+                "dashboard": "Dashboard",
+                "requests": "Requests",
+                "jobs": "Jobs",
+                "new": "New",
+                "profile": "Profile"
+            }
+        }
+    },
+    "ClientDashboard": {
+        "eyebrow": "Client dashboard",
+        "welcome": "Welcome back, {name}",
+        "description": "You're in control of every service request, from posting details to choosing the best professional.",
+        "highlights": {
+            "nextSteps": "Next steps",
+            "verification": "Verification",
+            "activity": "Activity",
+            "reviewOffers": "Review offers",
+            "waitingOffers": "Waiting for offers",
+            "createRequest": "Create a request",
+            "offersToReview": "{count} offer to review | {count} offers to review",
+            "openRequests": "{count} open request | {count} open requests",
+            "getStarted": "Get started now",
+            "emailVerified": "Email verified",
+            "emailPending": "Email pending",
+            "phoneVerified": "Phone verified ✓",
+            "addPhone": "Add phone for trust",
+            "offersCount": "{count} offer | {count} offers",
+            "completedRequests": "{count} completed",
+            "noJobs": "No jobs yet"
+        },
+        "stats": {
+            "openRequests": "Open requests",
+            "totalOffers": "Total offers received",
+            "completedRequests": "Completed requests"
+        },
+        "sections": {
+            "quickActions": "Quick actions",
+            "quickActionsDesc": "Shortcuts to the most common tasks.",
+            "recentActivity": "Recent activity",
+            "recentActivityDesc": "Your latest updates and notifications.",
+            "yourRequests": "Your requests",
+            "yourRequestsDesc": "Track the progress of all your service requests."
+        },
+        "actions": {
+            "createTitle": "Create a new request",
+            "createDesc": "Describe what you need so professionals can send tailored offers.",
+            "createCta": "Start request",
+            "reviewTitle": "Review your requests",
+            "reviewDesc": "Check statuses, compare offers and keep work organised.",
+            "reviewCta": "View requests"
+        },
+        "activity": {
+            "requestCreated": "Request created",
+            "offerReceived": "Offer received",
+            "offerReceivedTitle": "{count} offer received | {count} offers received",
+            "offerInterest": "Professionals are interested in: {title}"
+        }
+    },
+    "Search": {
+        "title": "Find Professionals",
+        "subtitle": "Browse verified professionals and find the perfect match for your needs.",
+        "filters": {
+            "title": "Filters",
+            "searchLabel": "Search",
+            "searchPlaceholder": "Keywords...",
+            "locationLabel": "Location",
+            "locationPlaceholder": "City or region...",
+            "categoryLabel": "Category",
+            "allCategories": "All categories",
+            "remoteLabel": "Remote only",
+            "ratingLabel": "Minimum rating",
+            "anyRating": "Any rating",
+            "stars": "{count}+ stars",
+            "priceLabel": "Max hourly rate (€)",
+            "pricePlaceholder": "e.g. 50",
+            "apply": "Apply Filters",
+            "clear": "Clear all",
+            "showResults": "Show Results"
+        },
+        "results": {
+            "searching": "Searching...",
+            "count": "{count} professional found | {count} professionals found",
+            "forQuery": " for \"{query}\"",
+            "previous": "Previous",
+            "next": "Next",
+            "pageInfo": "Page {page} of {total}"
+        },
+        "empty": {
+            "title": "No professionals found",
+            "desc": "Try adjusting your search filters or browse all categories to find the right professional for your needs.",
+            "action": "Clear filters"
+        }
+    },
+    "PublicProfile": {
+        "unavailable": {
+            "title": "Profile Unavailable",
+            "description": "This professional profile is not currently active.",
+            "cta": "Browse Other Professionals"
+        },
+        "hero": {
+            "verified": "Verified",
+            "reviews": "{count} reviews",
+            "remote": "Available remotely",
+            "memberSince": "Member since {date}",
+            "sendRequest": "Send Request",
+            "jobsDone": "Jobs Done",
+            "yearsExp": "Years Exp"
+        },
+        "sections": {
+            "about": "About Me",
+            "services": "Services Offered",
+            "reviews": "Recent Reviews ({count})",
+            "quickStats": "Quick Stats",
+            "location": "Location",
+            "experience": "Experience"
+        },
+        "services": {
+            "perProject": "per project",
+            "startsAt": "Starts at"
+        },
+        "reviews": {
+            "wouldRecommend": "Would recommend",
+            "responseFromPro": "Response from professional:"
+        },
+        "cta": {
+            "readyToHire": "Ready to hire {name}?",
+            "signInDesc": "Sign in to send a request or message this professional",
+            "getStarted": "Get Started",
+            "signInLink": "Already have an account? Sign in"
+        },
+        "stats": {
+            "completion": "Profile Completion",
+            "completedJobs": "Completed Jobs",
+            "avgRating": "Average Rating",
+            "noRatings": "No ratings yet",
+            "totalReviews": "Total Reviews"
+        },
+        "location": {
+            "remoteAvailable": "Available for remote work"
+        },
+        "experience": {
+            "years": "{count} years",
+            "desc": "of professional experience"
+        }
+    },
+    "ProfessionalCard": {
+        "priceFrom": "From €{price}/hr",
+        "contactForPricing": "Contact for pricing",
+        "defaultService": "Professional",
+        "reviews": "{count} review | {count} reviews",
+        "remote": "Remote",
+        "moreServices": "+{count} more",
+        "viewProfile": "View Profile"
+    },
+    "LiveStats": {
+        "verifiedPros": "Verified Professionals",
+        "trustedReviews": "Trusted Reviews",
+        "activeRequests": "Active Requests",
+        "jobsCompleted": "Jobs Completed"
+    }
+}
