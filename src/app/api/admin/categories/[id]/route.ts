@@ -8,7 +8,7 @@ const updateCategorySchema = z.object({
     nameEn: z.string().min(1).optional(),
     nameFr: z.string().optional(),
     description: z.string().optional(),
-    icon: z.string().optional(),
+    icon: z.string().nullable().optional(),
     slug: z.string().min(1).optional(),
     isActive: z.boolean().optional(),
 });

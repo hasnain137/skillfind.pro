@@ -46,9 +46,10 @@ const getCategories = unstable_cache(
             },
           },
         },
-        orderBy: {
-          nameEn: 'asc',
-        },
+        orderBy: [
+          { sortOrder: 'desc' },
+          { nameEn: 'asc' },
+        ],
       });
 
       return categories;
@@ -96,7 +97,6 @@ export default async function HomePage() {
         <Testimonials />
         <SuggestedSkills />
         <TrustSection />
-        <DualCTA />
         <DualCTA />
         <CategoryDirectory categories={categories} />
       </main>

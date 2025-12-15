@@ -62,22 +62,10 @@ function mapDatabaseCategories(dbCategories: DatabaseCategory[]): (Category & { 
 export function PopularCategories({ categories }: PopularCategoriesProps) {
   const t = useTranslations('PopularCategories');
 
-  // Default fallback categories - 8 for 4-column symmetry
-  const fallbackCategories: Category[] = [
-    { name: t('cat1Name'), description: t('cat1Desc'), icon: "📚" },
-    { name: t('cat2Name'), description: t('cat2Desc'), icon: "💻" },
-    { name: t('cat3Name'), description: t('cat3Desc'), icon: "🎨" },
-    { name: t('cat4Name'), description: t('cat4Desc'), icon: "🧘‍♀️" },
-    { name: t('cat5Name'), description: t('cat5Desc'), icon: "🏠" },
-    { name: t('cat6Name'), description: t('cat6Desc'), icon: "📈" },
-    { name: t('cat7Name'), description: t('cat7Desc'), icon: "✍️" },
-    { name: t('cat8Name'), description: t('cat8Desc'), icon: "🎵" },
-  ];
-
-  // Use fallback if fewer than 8 categories in database (need 8 for symmetry)
-  const displayCategories = categories && categories.length >= 8
+  // Display up to 8 categories from the database
+  const displayCategories = categories && categories.length > 0
     ? mapDatabaseCategories(categories).slice(0, 8)
-    : fallbackCategories;
+    : [];
 
   return (
     <section className="py-16 md:py-20 bg-[#FAFAFA] border-b border-[#E5E7EB]">

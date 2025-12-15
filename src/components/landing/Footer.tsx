@@ -87,9 +87,9 @@ export function Footer() { // Not async
                   </button>
                 </li>
                 <li>
-                  <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    {t('terms')}
-                  </button>
+                  <Link href="/legal" className="hover:text-[#2563EB] transition-colors">
+                    Legal Notice
+                  </Link>
                 </li>
                 <li>
                   <button type="button" className="hover:text-[#2563EB] transition-colors">
