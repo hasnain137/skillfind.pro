@@ -14,6 +14,11 @@ import "@/app/globals.css";
 export const metadata = {
     title: "SkillFind",
     description: "Find trusted professionals for any skill.",
+    icons: {
+        icon: '/favicon.svg',
+        shortcut: '/favicon.svg',
+        apple: '/favicon.svg',
+    },
 };
 
 export default async function LocaleLayout({

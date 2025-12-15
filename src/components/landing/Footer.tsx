@@ -16,11 +16,11 @@ export function Footer() { // Not async
           {/* Brand + short text */}
           <div className="max-w-xs">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-bold text-white shadow-sm">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#3B4D9D] text-xs font-bold text-white shadow-sm">
                 SF
               </div>
               <span className="text-base font-bold text-[#333333]">
-                Skill<span className="text-[#2563EB]">Find</span>
+                Skill<span className="text-[#3B4D9D]">Find</span>
               </span>
             </div>
             <p className="mt-4 text-sm text-[#7C7373] leading-relaxed">

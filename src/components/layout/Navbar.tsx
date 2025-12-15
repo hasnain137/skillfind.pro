@@ -17,11 +17,11 @@ export async function Navbar() {
         {/* Left: Logo + language */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#3B4D9D] text-xs font-bold text-white">
               SF
             </div>
             <span className="text-lg font-semibold tracking-tight">
-              Skill<span className="text-[#2563EB]">Find</span>
+              Skill<span className="text-[#3B4D9D]">Find</span>
             </span>
           </Link>
 
