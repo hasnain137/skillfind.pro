@@ -56,12 +56,9 @@ export default function AuthRedirectPage() {
           });
 
           if (response.status === 401) {
-            console.error('User not authenticated (401) during profile check');
-            // Do NOT redirect to login immediately to avoid loops.
-            // The polling logic below will try to sync the session.
-            // If it persists, we'll show an error.
-            setStep('loading'); // Keep loading state
-            // Let the flow continue to the polling mechanism or just return to let the effect re-run
+            console.log('Session not synced yet (401), scheduling retry...');
+            // Wait 1s and try again (simple recursion or state trigger)
+            setTimeout(determineStep, 1000);
             return;
           }
 

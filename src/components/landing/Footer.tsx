@@ -1,10 +1,13 @@
 // src/components/layout/Footer.tsx
+'use client';
+
 import { Container } from "@/components/ui/Container";
 import { Link } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl'; // Client hook
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
-export async function Footer() {
-  const t = await getTranslations('Footer');
+export function Footer() { // Not async
+  const t = useTranslations('Footer'); // Client hook
 
   return (
     <footer className="border-t border-[#E5E7EB] bg-[#FAFAFA] py-12 md:py-16">
@@ -103,12 +106,7 @@ export async function Footer() {
           <p>© {new Date().getFullYear()} {t('rightsReserved')}</p>
 
           <div className="flex items-center gap-6">
-            <select
-              className="rounded-lg border border-[#E5E7EB] bg-white py-1.5 pl-3 pr-8 text-xs text-[#7C7373] shadow-sm focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
-              defaultValue="en"
-            >
-              <option value="en">English</option>
-            </select>
+            <LanguageSwitcher className="rounded-lg pl-3 pr-8 py-1.5 focus:border-[#2563EB] focus:ring-1" />
             <span>{t('madeWithLove')}</span>
           </div>
         </div>

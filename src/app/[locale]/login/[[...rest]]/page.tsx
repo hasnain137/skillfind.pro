@@ -1,14 +1,15 @@
-'use client';
 
-import { useParams } from 'next/navigation';
 import { SignIn } from '@clerk/nextjs';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
 
-export default function LoginPage() {
-  const params = useParams();
-  const locale = params?.locale as string || 'en';
+export default async function LoginPage({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
 
   return (
     <div className="flex min-h-screen flex-col">

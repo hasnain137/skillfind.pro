@@ -27,7 +27,7 @@ export async function Navbar() {
 
           {/* Language/region dropdown */}
           {/* Language/region dropdown */}
-          <LanguageSwitcher />
+          <LanguageSwitcher className="hidden md:block" />
         </div>
 
         {/* Middle: navigation (desktop only) */}
