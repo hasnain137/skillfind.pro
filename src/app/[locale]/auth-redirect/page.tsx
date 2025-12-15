@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
+import { useUser, useAuth } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";
@@ -15,6 +15,7 @@ type OnboardingStep = 'loading' | 'select-role' | 'complete-profile' | 'redirect
  */
 export default function AuthRedirectPage() {
   const { user, isLoaded } = useUser();
+  const { getToken } = useAuth(); // Get auth helper
   const [step, setStep] = useState<OnboardingStep>('loading');
   const [selectedRole, setSelectedRole] = useState<'CLIENT' | 'PROFESSIONAL' | ''>('');
   const [loading, setLoading] = useState(false);
@@ -50,14 +51,23 @@ export default function AuthRedirectPage() {
       // If user already has a role, check if they have a complete profile in the database
       if (role) {
         try {
+          // Get the session token explicitly to bypass cookie propagation delays
+          const token = await getToken();
+
           // Use the check-profile endpoint that doesn't require database user
           const response = await fetch('/api/auth/check-profile', {
-            credentials: 'include',
+            // credentials: 'include', // Not strictly needed with Bearer, but harmless
+            headers: {
+              'Authorization': `Bearer ${token}`, // Pass token
+              'Content-Type': 'application/json'
+            }
           });
 
           if (response.status === 401) {
-            console.log('Session not synced yet (401), scheduling retry...');
-            // Wait 1s and try again (simple recursion or state trigger)
+            // Should not happen with Token, but if it does, it's a real error
+            console.error('User not authenticated (401) despite token');
+            // ... (keep retry or standard error handling, but no silent loop needed ideally)
+            // Let's keep the silent retry just in case token generation failed transiently
             setTimeout(determineStep, 1000);
             return;
           }
@@ -81,11 +91,6 @@ export default function AuthRedirectPage() {
               console.log('Missing fields:', profileData.missingFields);
               setSelectedRole(role as 'CLIENT' | 'PROFESSIONAL');
 
-              // Pre-fill form with existing data if available
-              if (profileData.user) {
-                // We'll pre-fill what we have, user only needs to fill missing fields
-              }
-
               setStep('complete-profile');
             }
           } else {
@@ -107,7 +112,7 @@ export default function AuthRedirectPage() {
     }
 
     determineStep();
-  }, [user, isLoaded]);
+  }, [user, isLoaded, getToken]); // Add getToken dependency
 
   // Validate international phone number format (E.164)
   const validatePhoneNumber = (phone: string): boolean => {
