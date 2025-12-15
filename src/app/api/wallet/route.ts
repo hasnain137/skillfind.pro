@@ -69,18 +69,16 @@ export async function GET() {
     // Get platform settings for limits
     const platformSettings = await prisma.platformSettings.findFirst();
     const minimumBalance = platformSettings?.minimumWalletBalance || 200;
-    const dailyClickLimit = professional.dailyClickLimit || 10;
 
     // Calculate stats
     const balanceCents = wallet.balance;
     const balanceEuros = balanceCents / 100;
     const totalDepositsCents = totalDeposits._sum.amount || 0;
     const totalDebitsCents = Math.abs(totalDebits._sum.amount || 0);
-    
+
     // Status checks
     const isLowBalance = balanceCents < minimumBalance;
-    const isNearDailyLimit = clicksToday >= dailyClickLimit * 0.8; // 80% of limit
-    const canReceiveClicks = balanceCents >= minimumBalance && clicksToday < dailyClickLimit;
+    const canReceiveClicks = balanceCents >= minimumBalance;
 
     return successResponse({
       wallet: {
@@ -92,7 +90,6 @@ export async function GET() {
         },
         status: {
           isLowBalance,
-          isNearDailyLimit,
           canReceiveClicks,
           minimumBalance: {
             cents: minimumBalance,
@@ -110,8 +107,6 @@ export async function GET() {
           },
           totalClicks,
           clicksToday,
-          dailyClickLimit,
-          clicksRemaining: Math.max(0, dailyClickLimit - clicksToday),
         },
         recentTransactions: recentTransactions.map((tx) => ({
           id: tx.id,

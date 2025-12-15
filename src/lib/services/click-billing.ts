@@ -5,7 +5,6 @@ import { debitWallet, getMinimumWalletBalance, hasSufficientBalance } from './wa
 import { InsufficientBalanceError, LimitExceededError, ConflictError } from '../errors';
 
 const CLICK_FEE_CENTS = 10; // €0.10 per click
-const DAILY_CLICK_LIMIT = 100; // Max clicks per day per professional
 
 /**
  * Record a click and charge the professional's wallet
@@ -48,24 +47,7 @@ export async function recordClickAndCharge(params: {
     throw new ConflictError('Click already recorded for this offer and client');
   }
 
-  // Check daily click limit
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  const clicksToday = await prisma.clickEvent.count({
-    where: {
-      professionalId: offer.professionalId,
-      clickedAt: {
-        gte: today,
-      },
-    },
-  });
 
-  if (clicksToday >= DAILY_CLICK_LIMIT) {
-    throw new LimitExceededError(
-      `Daily click limit of ${DAILY_CLICK_LIMIT} reached. Limit resets at midnight.`
-    );
-  }
 
   // Check minimum balance requirement
   const minBalance = await getMinimumWalletBalance();
@@ -153,23 +135,7 @@ export async function getClickStats(professionalId: string, days = 30) {
 export async function canProcessClick(
   professionalId: string
 ): Promise<{ canProcess: boolean; reason?: string }> {
-  // Check daily limit
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  const clicksToday = await prisma.clickEvent.count({
-    where: {
-      professionalId,
-      clickedAt: { gte: today },
-    },
-  });
 
-  if (clicksToday >= DAILY_CLICK_LIMIT) {
-    return {
-      canProcess: false,
-      reason: `Daily click limit of ${DAILY_CLICK_LIMIT} reached`,
-    };
-  }
 
   // Check minimum balance
   const minBalance = await getMinimumWalletBalance();
