@@ -407,9 +407,9 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                         onChange={e => setProfileData({ ...profileData, remoteAvailability: e.target.value as 'YES_AND_ONSITE' | 'ONLY_REMOTE' | 'NO_REMOTE' })}
                                         className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                                     >
-                                        <option value="YES_AND_ONSITE">Yes, and on-site</option>
-                                        <option value="ONLY_REMOTE">Only remote</option>
-                                        <option value="NO_REMOTE">No remote</option>
+                                        <option value="YES_AND_ONSITE">Remote and on-site</option>
+                                        <option value="ONLY_REMOTE">Remote only</option>
+                                        <option value="NO_REMOTE">On-site only</option>
                                     </select>
                                 </div>
                             </div>

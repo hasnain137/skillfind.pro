@@ -62,7 +62,7 @@ export default function NewClientRequestPage() {
         subcategoryId: formData.subcategoryId,
         title: formData.title,
         description: formData.description,
-        locationType: formData.preferredFormat === 'ONLINE' ? 'REMOTE' : 'ON_SITE',
+        locationType: formData.preferredFormat === 'ONLINE_ONLY' ? 'REMOTE' : 'ON_SITE',
         city: formData.location,
         country: 'FR', // Default country
         urgency: formData.timing === 'URGENT' ? 'URGENT' : formData.timing === 'SOON' ? 'SOON' : 'FLEXIBLE',
@@ -265,10 +265,10 @@ export default function NewClientRequestPage() {
                 className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
               >
                 <option value="ONLINE_OR_OFFLINE">
-                  Online or in person is fine
+                  Remote and on-site
                 </option>
-                <option value="ONLINE_ONLY">Online only</option>
-                <option value="IN_PERSON_ONLY">In person only</option>
+                <option value="ONLINE_ONLY">Remote only</option>
+                <option value="IN_PERSON_ONLY">On-site only</option>
               </select>
             </div>
           </div>
