@@ -20,6 +20,7 @@ interface Professional {
   location: string | null;
   availability: string;
   isRemote: boolean;
+  isVerified: boolean;
   rating: number;
   reviewCount: number;
   user: {

@@ -13,6 +13,7 @@ export type ProfessionalWithRelations = Professional & {
   services: ProfessionalService[];
   profile: ProfessionalProfile | null;
   wallet: Wallet | null;
+  documents?: any[];
 };
 
 export function calculateProfessionalCompletion(professional: ProfessionalWithRelations) {
@@ -68,10 +69,10 @@ export function calculateProfessionalCompletion(professional: ProfessionalWithRe
     },
     {
       id: 'verification',
-      label: 'Identity Verification',
-      isComplete: professional.isVerified,
-      weight: 20,
-      actionUrl: '/pro/verification'
+      label: 'Verify Identity',
+      isComplete: Boolean(professional.isVerified || (professional.documents && professional.documents.length > 0)),
+      weight: 15,
+      actionUrl: '/pro/profile'
     }
   ];
 

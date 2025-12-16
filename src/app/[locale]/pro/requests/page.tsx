@@ -7,7 +7,8 @@ import { getProfessionalWithRelations } from "@/lib/get-professional";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
-import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/StatusBanner";
+import { StatusBanner } from "@/components/ui/StatusBanner";
+import { getProfessionalStatusBanner } from "@/lib/professional-status";
 
 export default async function ProRequestsPage() {
   const { userId } = await auth();

@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { DocumentUpload } from '@/components/professional/verification/DocumentUpload';
+import { VerificationStatus } from '@/components/professional/verification/VerificationStatus';
 
 type Category = {
     id: string;
@@ -39,6 +41,9 @@ type Profile = {
     isAvailable: boolean;
     remoteAvailability: 'YES_AND_ONSITE' | 'ONLY_REMOTE' | 'NO_REMOTE';
     services: Service[];
+    isVerified: boolean;
+    verificationMethod: string;
+    documents?: any[];
     user?: {
         dateOfBirth: Date | string | null;
         phoneNumber: string | null;
@@ -52,7 +57,7 @@ type ProfileFormProps = {
 
 export default function ProfileForm({ initialProfile, categories }: ProfileFormProps) {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState<'info' | 'services'>('info');
+    const [activeTab, setActiveTab] = useState<'info' | 'services' | 'verification'>('info');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -246,6 +251,11 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
 
     const selectedCategory = categories.find(c => c.id === newService.categoryId);
 
+    const handleUploadSuccess = () => {
+        router.refresh();
+        setSuccess('Document uploaded successfully');
+    };
+
     return (
         <div className="space-y-6">
             {/* Tabs */}
@@ -268,6 +278,16 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 >
                     Services ({initialProfile.services.length})
                 </button>
+                <button
+                    onClick={() => setActiveTab('verification')}
+                    className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'verification'
+                        ? 'border-[#2563EB] text-[#2563EB]'
+                        : 'border-transparent text-[#7C7373] hover:text-[#333333]'
+                        }`}
+                >
+                    Verification
+                    {initialProfile.isVerified && <Badge className="ml-2 bg-green-100 text-green-700 hover:bg-green-200">✓</Badge>}
+                </button>
             </div>
 
             {error && (
@@ -277,7 +297,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 <div className="rounded-lg bg-green-50 p-3 text-sm text-green-600">{success}</div>
             )}
 
-            {activeTab === 'info' ? (
+            {activeTab === 'info' && (
                 <form onSubmit={handleProfileUpdate}>
                     <Card padding="lg" className="space-y-4">
                         <div className="grid gap-4 md:grid-cols-2">
@@ -422,7 +442,9 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         </div>
                     </Card>
                 </form>
-            ) : (
+            )}
+
+            {activeTab === 'services' && (
                 <div className="space-y-4">
                     {!isAddingService ? (
                         <Button onClick={() => {
@@ -546,6 +568,21 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                             </p>
                         )}
                     </div>
+                </div>
+            )}
+
+            {activeTab === 'verification' && (
+                <div className="space-y-6">
+                    <VerificationStatus
+                        isVerified={initialProfile.isVerified}
+                        verificationMethod={initialProfile.verificationMethod}
+                        documents={initialProfile.documents || []}
+                    />
+
+                    <DocumentUpload
+                        onUploadSuccess={handleUploadSuccess}
+                        existingDocuments={initialProfile.documents || []}
+                    />
                 </div>
             )}
         </div>

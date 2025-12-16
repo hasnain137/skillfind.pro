@@ -16,6 +16,7 @@ export default async function ProProfilePage() {
   const professional: any = await getProfessionalWithRelations(userId, {
     user: { select: { dateOfBirth: true, phoneNumber: true } },
     profile: true,
+    documents: true,
     services: { include: { subcategory: { include: { category: true } } } },
   });
 

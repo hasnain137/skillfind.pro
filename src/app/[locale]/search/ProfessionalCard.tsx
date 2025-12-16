@@ -16,6 +16,7 @@ interface Professional {
   location: string | null;
   availability: string;
   isRemote: boolean;
+  isVerified: boolean;
   rating: number;
   reviewCount: number;
   user: {
@@ -31,7 +32,7 @@ interface Professional {
 
 export function ProfessionalCard({ professional }: { professional: Professional }) {
   const t = useTranslations('ProfessionalCard');
-  const { user, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services } = professional;
+  const { user, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services, isVerified } = professional;
 
   const priceDisplay = hourlyRateMin && hourlyRateMax
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
@@ -42,9 +43,18 @@ export function ProfessionalCard({ professional }: { professional: Professional 
   const primaryService = services[0]?.title || t('defaultService');
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
+    <div className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md relative">
+      {/* Verified Badge */}
+      {isVerified && (
+        <div className="absolute top-4 right-4 z-10">
+          <Badge className="bg-blue-600 hover:bg-blue-700 text-white border-0 text-[10px] px-2 py-0.5">
+            ✓ {t('verified')}
+          </Badge>
+        </div>
+      )}
+
       {/* Header */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 pr-8">
         <Avatar
           firstName={user.firstName}
           lastName={user.lastName}

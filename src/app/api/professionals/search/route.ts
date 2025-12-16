@@ -52,10 +52,8 @@ export async function GET(request: NextRequest) {
 
     // Build where clause
     const whereClause: any = {
-      // Show ACTIVE or at least not BANNED/SUSPENDED professionals
-      status: {
-        in: ['ACTIVE', 'INCOMPLETE', 'PENDING_REVIEW'],
-      },
+      // ONLY show ACTIVE professionals in public search
+      status: 'ACTIVE',
     };
 
     // Filter by rating
@@ -98,7 +96,7 @@ export async function GET(request: NextRequest) {
     // Filter by services (category or subcategory)
     if (filters.category || filters.subcategory) {
       const serviceWhere: any = {};
-      
+
       if (filters.subcategory) {
         serviceWhere.subcategoryId = filters.subcategory;
       } else if (filters.category) {
@@ -190,52 +188,52 @@ export async function GET(request: NextRequest) {
     let professionals;
     try {
       professionals = await prisma.professional.findMany({
-      where: whereClause,
-      include: {
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            avatar: true,
+        where: whereClause,
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              avatar: true,
+            },
           },
-        },
-        profile: {
-          select: {
-            hourlyRateMin: true,
-            hourlyRateMax: true,
-            portfolioImages: true,
+          profile: {
+            select: {
+              hourlyRateMin: true,
+              hourlyRateMax: true,
+              portfolioImages: true,
+            },
           },
-        },
-        services: {
-          include: {
-            subcategory: {
-              select: {
-                id: true,
-                nameEn: true,
-                nameFr: true,
-                category: {
-                  select: {
-                    id: true,
-                    nameEn: true,
-                    nameFr: true,
+          services: {
+            include: {
+              subcategory: {
+                select: {
+                  id: true,
+                  nameEn: true,
+                  nameFr: true,
+                  category: {
+                    select: {
+                      id: true,
+                      nameEn: true,
+                      nameFr: true,
+                    },
                   },
                 },
               },
             },
           },
-        },
-        _count: {
-          select: {
-            jobs: true,
+          _count: {
+            select: {
+              jobs: true,
+            },
           },
         },
-      },
-      orderBy: [
-        { averageRating: 'desc' },
-        { totalReviews: 'desc' },
-        { createdAt: 'desc' },
-      ],
+        orderBy: [
+          { averageRating: 'desc' },
+          { totalReviews: 'desc' },
+          { createdAt: 'desc' },
+        ],
         skip: (filters.page - 1) * filters.limit,
         take: filters.limit,
       });
@@ -262,11 +260,12 @@ export async function GET(request: NextRequest) {
       yearsOfExperience: pro.yearsOfExperience,
       hourlyRate: pro.profile
         ? {
-            min: pro.profile.hourlyRateMin,
-            max: pro.profile.hourlyRateMax,
-          }
+          min: pro.profile.hourlyRateMin,
+          max: pro.profile.hourlyRateMax,
+        }
         : null,
       remoteAvailability: pro.remoteAvailability,
+      isVerified: pro.isVerified,
       averageRating: pro.averageRating,
       totalReviews: pro.totalReviews,
       completedJobs: pro.completedJobs,

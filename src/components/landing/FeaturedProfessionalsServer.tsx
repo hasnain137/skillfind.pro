@@ -12,6 +12,7 @@ interface Professional {
   bio: string | null;
   city: string | null;
   remoteAvailability: string;
+  isVerified: boolean;
   averageRating: number;
   totalReviews: number;
   user: {
@@ -86,7 +87,7 @@ function ProfessionalCard({
   professional: Professional;
   t: any; // Using any for t to avoid complex type import for now, or use generic
 }) {
-  const { user, bio, profile, city, remoteAvailability, averageRating, totalReviews, services } = professional;
+  const { user, bio, profile, city, remoteAvailability, averageRating, totalReviews, services, isVerified } = professional;
 
   const hourlyRateMin = profile?.hourlyRateMin;
   const hourlyRateMax = profile?.hourlyRateMax;
@@ -103,9 +104,11 @@ function ProfessionalCard({
   return (
     <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#2563EB]/20">
       {/* Top Badge - Verified */}
-      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#2563EB] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
-        <span>✓</span> {t('verified')}
-      </div>
+      {isVerified && (
+        <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#2563EB] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
+          <span>✓</span> {t('verified')}
+        </div>
+      )}
 
       {/* Profile Header */}
       <div className="flex items-start gap-4 pt-2">

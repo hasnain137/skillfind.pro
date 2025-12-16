@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
             city: data.city || '',
             country: data.country || 'FR',
             profileCompletion: data.city && data.country ? 20 : 10,
-            status: 'ACTIVE',
+            status: 'INCOMPLETE',
           },
         });
 
@@ -213,7 +213,7 @@ export async function POST(request: NextRequest) {
           city: data.city || '',
           country: data.country || 'FR',
           profileCompletion: data.city && data.country ? 20 : 10,
-          status: 'ACTIVE',
+          status: 'INCOMPLETE',
         },
       });
 

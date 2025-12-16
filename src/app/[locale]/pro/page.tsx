@@ -8,7 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ActionCard } from "@/components/ui/ActionCard";
-import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/StatusBanner";
+import { StatusBanner } from "@/components/ui/StatusBanner";
+import { getProfessionalStatusBanner } from "@/lib/professional-status";
+import { StatusCard } from "@/components/dashboard/StatusCard";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
@@ -222,9 +224,7 @@ export default async function ProDashboardPage() {
     responseTime: '< 2 hours',
   };
 
-  const statusBannerProps = professional.status !== 'ACTIVE'
-    ? getProfessionalStatusBanner(professional.status)
-    : null;
+  const statusBannerProps = getProfessionalStatusBanner(professional.status);
 
   const quickActionKeys = ['browse', 'offers', 'jobs', 'profile'];
   const quickActions = quickActionKeys.map(key => ({
@@ -257,7 +257,12 @@ export default async function ProDashboardPage() {
       {/* Main Grid */}
       <div className="grid gap-6 lg:grid-cols-3" data-tour="earnings">
         {/* Earnings */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
+          <StatusCard
+            status={professional.status}
+            isVerified={professional.isVerified}
+            verificationMethod={professional.verificationMethod}
+          />
           <EarningsChart data={earningsData} />
         </div>
 
