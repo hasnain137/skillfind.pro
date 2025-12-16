@@ -5,6 +5,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import AdminProfessionalActions from './AdminProfessionalActions';
 import WalletTopUp from './WalletTopUp';
+import { AdminReadinessChecklist } from '@/components/admin/AdminReadinessChecklist';
 
 import { Prisma } from '@prisma/client';
 
@@ -142,6 +143,10 @@ export default async function AdminProfessionalDetailPage({
                                 >
                                     {professional.status}
                                 </Badge>
+
+                                <div className="mt-4">
+                                    <AdminReadinessChecklist professionalId={professional.id} />
+                                </div>
                             </div>
                             <div>
                                 <p className="text-xs text-[#7C7373]">Verification</p>

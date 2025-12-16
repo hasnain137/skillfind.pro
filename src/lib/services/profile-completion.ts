@@ -115,7 +115,7 @@ export async function updateProfileCompletionPercentage(
  */
 export async function canProfessionalBeActive(
   professionalId: string
-): Promise<{ canBeActive: boolean; reasons: string[] }> {
+): Promise<{ canBeActive: boolean; isPendingReview: boolean; reasons: string[] }> {
   const professional = await prisma.professional.findUnique({
     where: { id: professionalId },
     include: {
@@ -125,7 +125,7 @@ export async function canProfessionalBeActive(
   });
 
   if (!professional) {
-    return { canBeActive: false, reasons: ['Professional not found'] };
+    return { canBeActive: false, isPendingReview: false, reasons: ['Professional not found'] };
   }
 
   const reasons: string[] = [];
@@ -155,8 +155,17 @@ export async function canProfessionalBeActive(
     reasons.push('Location information missing');
   }
 
+  // Check if they are ready for review (everything done EXCEPT manual admin verification)
+  const isReadyForReview =
+    professional.user.emailVerified &&
+    professional.user.phoneVerified &&
+    professional.bio && professional.bio.length >= 50 &&
+    professional.services.length > 0 &&
+    !!professional.city && !!professional.country;
+
   return {
-    canBeActive: reasons.length === 0,
+    canBeActive: reasons.length === 0, // must have isVerified = true
+    isPendingReview: !!isReadyForReview,
     reasons,
   };
 }

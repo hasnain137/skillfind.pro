@@ -96,7 +96,8 @@ export async function POST(
           clientId: client.id,
           professionalId: offer.professionalId,
           agreedPrice: offer.proposedPrice,
-          status: 'ACCEPTED',
+          status: 'IN_PROGRESS',
+          startedAt: new Date(),
         },
       });
 

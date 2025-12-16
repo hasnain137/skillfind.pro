@@ -94,16 +94,23 @@ export async function PUT(request: NextRequest) {
     // Recalculate profile completion
     const completionPercent = await updateProfileCompletionPercentage(professional.id);
 
-    // Auto-activate if requirements are met
+    // Auto-update status if requirements are met
     if (professional.status === 'INCOMPLETE' || professional.status === 'PENDING_REVIEW') {
-      const { canBeActive } = await canProfessionalBeActive(professional.id);
+      const { canBeActive, reasons, isPendingReview } = await canProfessionalBeActive(professional.id);
+
       if (canBeActive) {
         await prisma.professional.update({
           where: { id: professional.id },
           data: { status: 'ACTIVE' },
         });
-        // Update local object for response
         professional.status = 'ACTIVE';
+      } else if (isPendingReview && professional.status !== 'PENDING_REVIEW') {
+        // If not ready for active but ready for review
+        await prisma.professional.update({
+          where: { id: professional.id },
+          data: { status: 'PENDING_REVIEW' },
+        });
+        professional.status = 'PENDING_REVIEW';
       }
     }
 
