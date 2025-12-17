@@ -498,6 +498,50 @@
             "activityComingSoon": "Flux d'activité bientôt disponible...",
             "systemHealth": "Santé système",
             "allSystemsOperational": "Tous les systèmes opérationnels"
+        },
+        "AdminSidebar": {
+            "title": "Panneau Admin",
+            "backToSite": "← Retour au site",
+            "nav": {
+                "overview": "Aperçu",
+                "professionals": "Professionnels",
+                "clients": "Clients",
+                "categories": "Catégories",
+                "reviews": "Avis",
+                "transactions": "Transactions",
+                "translations": "Traductions",
+                "settings": "Paramètres"
+            }
+        },
+        "ClientNavbar": {
+            "howItWorks": "Comment ça marche",
+            "categories": "Catégories",
+            "topProfessionals": "Meilleurs professionnels",
+            "forProfessionals": "Pour les professionnels",
+            "login": "Connexion",
+            "signup": "S'inscrire"
+        },
+        "StatusBanner": {
+            "pendingReview": {
+                "title": "Compte en cours d'examen",
+                "description": "Votre profil est en cours d'examen par notre équipe. Vous pouvez parcourir et mettre à jour votre profil, mais vous ne pouvez pas encore envoyer d'offres."
+            },
+            "suspended": {
+                "title": "Compte suspendu",
+                "description": "Votre compte a été suspendu. Veuillez contacter le support pour résoudre ce problème."
+            },
+            "banned": {
+                "title": "Compte banni",
+                "description": "Votre compte a été désactivé. Veuillez contacter le support pour plus d'informations."
+            },
+            "incomplete": {
+                "title": "Complétez votre profil",
+                "description": "Veuillez compléter les détails de votre profil pour être vérifié et commencer à recevoir des demandes."
+            }
+        },
+        "EmptyState": {
+            "defaultTitle": "Aucun élément",
+            "defaultDescription": "Les éléments apparaîtront ici une fois disponibles."
         }
     }
 }

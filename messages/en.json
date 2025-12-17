@@ -65,6 +65,50 @@
             "activityComingSoon": "Activity feed coming soon...",
             "systemHealth": "System Health",
             "allSystemsOperational": "All systems operational"
+        },
+        "AdminSidebar": {
+            "title": "Admin Panel",
+            "backToSite": "← Back to Site",
+            "nav": {
+                "overview": "Overview",
+                "professionals": "Professionals",
+                "clients": "Clients",
+                "categories": "Categories",
+                "reviews": "Reviews",
+                "transactions": "Transactions",
+                "translations": "Translations",
+                "settings": "Settings"
+            }
+        },
+        "ClientNavbar": {
+            "howItWorks": "How it works",
+            "categories": "Categories",
+            "topProfessionals": "Top professionals",
+            "forProfessionals": "For professionals",
+            "login": "Log in",
+            "signup": "Sign up"
+        },
+        "StatusBanner": {
+            "pendingReview": {
+                "title": "Account Under Review",
+                "description": "Your profile is currently being reviewed by our team. You can browse and update your profile, but cannot send offers yet."
+            },
+            "suspended": {
+                "title": "Account Suspended",
+                "description": "Your account has been suspended. Please contact support to resolve this issue."
+            },
+            "banned": {
+                "title": "Account Banned",
+                "description": "Your account has been deactivated. Please contact support for more information."
+            },
+            "incomplete": {
+                "title": "Complete Your Profile",
+                "description": "Please complete your profile details to get verified and start receiving requests."
+            }
+        },
+        "EmptyState": {
+            "defaultTitle": "No items yet",
+            "defaultDescription": "Items will appear here once available."
         }
     },
     "Hero": {

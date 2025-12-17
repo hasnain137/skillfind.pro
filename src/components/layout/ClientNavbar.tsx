@@ -4,10 +4,12 @@
 import { Container } from "@/components/ui/Container";
 import { useUser } from "@clerk/nextjs";
 import { UserMenu } from "./UserMenu";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export function ClientNavbar() {
   const { isSignedIn } = useUser();
+  const t = useTranslations('Components.ClientNavbar');
 
   return (
     <header className="sticky top-0 z-30 border-b border-[#E5E7EB] bg-white/90 backdrop-blur">
@@ -37,16 +39,16 @@ export function ClientNavbar() {
         {/* Middle: navigation (desktop only) */}
         <nav className="hidden items-center gap-6 text-sm font-medium text-[#7C7373] md:flex">
           <Link href="/#how-it-works" className="hover:text-[#333333]">
-            How it works
+            {t('howItWorks')}
           </Link>
           <Link href="/#categories" className="hover:text-[#333333]">
-            Categories
+            {t('categories')}
           </Link>
           <Link href="/#top-professionals" className="hover:text-[#333333]">
-            Top professionals
+            {t('topProfessionals')}
           </Link>
           <Link href="/#for-professionals" className="hover:text-[#333333]">
-            For professionals
+            {t('forProfessionals')}
           </Link>
         </nav>
 
@@ -62,13 +64,13 @@ export function ClientNavbar() {
                 href="/login"
                 className="hidden items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-[#333333] transition hover:bg-[#F3F4F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#E5E5E5] border border-transparent hover:border-[#E5E7EB] md:inline-flex"
               >
-                Log in
+                {t('login')}
               </Link>
               <Link
                 href="/signup"
                 className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
               >
-                Sign up
+                {t('signup')}
               </Link>
             </>
           )}
