@@ -1,0 +1,88 @@
+'use client';
+
+import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { CheckCircle2, Clock, XCircle, AlertCircle } from 'lucide-react';
+import { ProfessionalStatus } from '@prisma/client';
+
+interface VerificationStatusProps {
+    status: ProfessionalStatus;
+}
+
+export function VerificationStatus({ status }: VerificationStatusProps) {
+    if (status === 'ACTIVE') {
+        return (
+            <Card className="bg-green-50 border-green-200" padding="lg">
+                <div className="flex items-start gap-4">
+                    <div className="bg-green-100 p-2 rounded-full text-green-600">
+                        <CheckCircle2 className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <div className="flex items-center gap-2">
+                            <h3 className="text-lg font-bold text-green-900">Profile Verified</h3>
+                            <Badge className="bg-green-200 text-green-800 hover:bg-green-300">Active</Badge>
+                        </div>
+                        <p className="text-green-700 mt-1">
+                            Your profile is verified and active. You can receive job requests and send offers to clients.
+                        </p>
+                    </div>
+                </div>
+            </Card>
+        );
+    }
+
+    if (status === 'PENDING_REVIEW') {
+        return (
+            <Card className="bg-yellow-50 border-yellow-200" padding="lg">
+                <div className="flex items-start gap-4">
+                    <div className="bg-yellow-100 p-2 rounded-full text-yellow-600">
+                        <Clock className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-bold text-yellow-900">Verification Pending</h3>
+                        <p className="text-yellow-700 mt-1">
+                            Your documents have been submitted and are currently under review by our team.
+                            You will be notified once the verification process is complete.
+                        </p>
+                    </div>
+                </div>
+            </Card>
+        );
+    }
+
+    if (status === 'REJECTED' || status === 'SUSPENDED') {
+        return (
+            <Card className="bg-red-50 border-red-200" padding="lg">
+                <div className="flex items-start gap-4">
+                    <div className="bg-red-100 p-2 rounded-full text-red-600">
+                        <XCircle className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-bold text-red-900">Verification Failed</h3>
+                        <p className="text-red-700 mt-1">
+                            There was an issue with your verification. Please check your email for details
+                            and upload a valid document to proceed with verification.
+                        </p>
+                    </div>
+                </div>
+            </Card>
+        );
+    }
+
+    return (
+        <Card className="bg-gray-50 border-gray-200" padding="lg">
+            <div className="flex items-start gap-4">
+                <div className="bg-gray-200 p-2 rounded-full text-gray-500">
+                    <AlertCircle className="h-6 w-6" />
+                </div>
+                <div>
+                    <h3 className="text-lg font-bold text-gray-900">Profile Not Verified</h3>
+                    <p className="text-gray-600 mt-1">
+                        Please upload at least one official identity document (ID Card, Passport, or Business License)
+                        to verify your account. Verified profiles get 3x more jobs.
+                    </p>
+                </div>
+            </div>
+        </Card>
+    );
+}

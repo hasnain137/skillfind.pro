@@ -79,6 +79,23 @@ export function errorResponse(
   );
 }
 
+// Helpers
+export function unauthorizedResponse(message = 'Authentication required') {
+  return errorResponse(401, 'UNAUTHORIZED', message);
+}
+
+export function forbiddenResponse(message = 'Access denied') {
+  return errorResponse(403, 'FORBIDDEN', message);
+}
+
+export function notFoundResponse(message = 'Resource not found') {
+  return errorResponse(404, 'NOT_FOUND', message);
+}
+
+export function validationErrorResponse(message = 'Invalid request data', details?: any) {
+  return errorResponse(400, 'VALIDATION_ERROR', message, details);
+}
+
 /**
  * Handle errors and convert to appropriate response
  */
@@ -111,7 +128,7 @@ export function handleApiError(error: unknown): NextResponse<ApiErrorResponse> {
   // Prisma errors
   if (error && typeof error === 'object' && 'code' in error) {
     const prismaError = error as { code: string; meta?: any };
-    
+
     if (prismaError.code === 'P2002') {
       return errorResponse(
         409,
@@ -120,7 +137,7 @@ export function handleApiError(error: unknown): NextResponse<ApiErrorResponse> {
         prismaError.meta
       );
     }
-    
+
     if (prismaError.code === 'P2025') {
       return errorResponse(
         404,

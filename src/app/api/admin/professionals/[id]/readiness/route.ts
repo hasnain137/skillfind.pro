@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
-import { requireAdmin } from '@/lib/auth/admin-utils';
-import { handleApiError, successResponse } from '@/lib/api-utils';
+import { requireAdmin } from '@/lib/auth';
+import { handleApiError, successResponse } from '@/lib/api-response';
 import { checkProfileCompletion } from '@/lib/services/profile-completion';
 
 export async function GET(

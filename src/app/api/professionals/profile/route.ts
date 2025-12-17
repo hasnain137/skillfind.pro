@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { handleApiError, successResponse, unauthorizedResponse, notFoundResponse, validationErrorResponse } from '@/lib/api-utils';
+import { handleApiError, successResponse, unauthorizedResponse, notFoundResponse, validationErrorResponse } from '@/lib/api-response';
 import { auth } from '@clerk/nextjs/server';
 import { z } from 'zod';
 import { checkProfileCompletion } from '@/lib/services/profile-completion';

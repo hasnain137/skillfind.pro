@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { handleApiError, successResponse, unauthorizedResponse, notFoundResponse, forbiddenResponse, errorResponse } from '@/lib/api-utils';
+import { handleApiError, successResponse, unauthorizedResponse, notFoundResponse, forbiddenResponse, errorResponse } from '@/lib/api-response';
 import { auth } from '@clerk/nextjs/server';
 
 export async function POST(
