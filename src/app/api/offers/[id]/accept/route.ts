@@ -1,93 +1,110 @@
+// POST /api/offers/[id]/accept - Accept an offer (client only)
+import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { handleApiError, successResponse, unauthorizedResponse, notFoundResponse, forbiddenResponse, errorResponse } from '@/lib/api-response';
-import { auth } from '@clerk/nextjs/server';
+import { requireClient } from '@/lib/auth';
+import { successResponse, handleApiError } from '@/lib/api-response';
+import { NotFoundError, ForbiddenError, BadRequestError } from '@/lib/errors';
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      return unauthorizedResponse();
+    const { userId } = await requireClient();
+    const { id: offerId } = await params;
+
+    // Get client profile
+    const client = await prisma.client.findUnique({
+      where: { userId },
+      include: {
+        user: true,
+      },
+    });
+
+    if (!client) {
+      throw new NotFoundError('Client profile');
     }
 
-    const { id } = await params;
-
+    // Get the offer
     const offer = await prisma.offer.findUnique({
-      where: { id },
+      where: { id: offerId },
       include: {
         request: true,
         professional: {
           include: {
             user: true,
-            profile: true,
           },
         },
       },
     });
 
     if (!offer) {
-      return notFoundResponse('Offer not found');
+      throw new NotFoundError('Offer');
     }
 
-    const client = await prisma.client.findUnique({
-      where: { userId },
-      include: { user: true },
-    });
-
-    if (!client) {
-      return forbiddenResponse('Only clients can accept offers');
-    }
-
+    // Verify request ownership
     if (offer.request.clientId !== client.id) {
-      return forbiddenResponse('You can only accept offers for your own requests');
+      throw new ForbiddenError('You can only accept offers on your own requests');
     }
 
+    // Check if offer is still pending
+    if (offer.status !== 'PENDING') {
+      throw new BadRequestError('This offer is no longer available');
+    }
+
+    // Check if request is still open
     if (offer.request.status !== 'OPEN') {
-      return errorResponse('Request is not open for new offers', 400);
+      throw new BadRequestError('This request is no longer accepting offers');
     }
 
-    if (offer.status !== 'PENDING' && offer.status !== 'VIEWED') {
-      return errorResponse('This offer is no longer available', 400);
+    // Check if professional is active
+    if (offer.professional.status !== 'ACTIVE') {
+      throw new BadRequestError('This professional is no longer active on the platform');
     }
 
-    // Use a transaction to update status and create job
+    // Accept offer and create job in transaction
     const result = await prisma.$transaction(async (tx) => {
-      // 1. Mark this offer as accepted
+      // Update offer status
       const acceptedOffer = await tx.offer.update({
-        where: { id: offer.id },
+        where: { id: offerId },
         data: { status: 'ACCEPTED' },
       });
 
-      // 2. Mark other offers as rejected (optional rule, but good for single-hire jobs)
-      // await tx.offer.updateMany({
-      //   where: { requestId: offer.requestId, id: { not: offer.id } },
-      //   data: { status: 'REJECTED' },
-      // });
-
-      // 3. Update request status
-      // Note: We keep it 'OPEN' if multiple hires are allowed, but usually 'IN_PROGRESS'
-      await tx.request.update({
-        where: { id: offer.requestId },
-        data: { status: 'IN_PROGRESS' },
+      // Reject all other pending offers for this request
+      await tx.offer.updateMany({
+        where: {
+          requestId: offer.requestId,
+          id: { not: offerId },
+          status: 'PENDING',
+        },
+        data: { status: 'REJECTED' },
       });
 
-      // 4. Create the Job
+      // Update the request to IN_PROGRESS
+      await tx.request.update({
+        where: { id: offer.requestId },
+        data: {
+          status: 'IN_PROGRESS',
+          closedAt: new Date(),
+        },
+      });
+
+      // Create job
       const job = await tx.job.create({
         data: {
           requestId: offer.requestId,
           clientId: client.id,
           professionalId: offer.professionalId,
           agreedPrice: offer.proposedPrice,
-          status: 'ACCEPTED', // Initial status
+          status: 'IN_PROGRESS',
+          startedAt: new Date(),
         },
       });
 
       return { acceptedOffer, job };
     });
 
-    // Return contact info in response so frontend can show a modal/toast
+    // Phone numbers are now revealed (both parties can see)
     return successResponse(
       {
         offer: {
