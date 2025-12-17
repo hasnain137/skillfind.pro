@@ -22,6 +22,33 @@
         "login": "Connexion",
         "signup": "S'inscrire"
     },
+    "Sidebar": {
+        "Pro": {
+            "eyebrow": "Espace Pro",
+            "title": "Gestion de compte",
+            "description": "Accès premium pour prestataires.",
+            "links": {
+                "dashboard": "Tableau de bord",
+                "matchingRequests": "Demandes",
+                "myOffers": "Mes offres",
+                "myJobs": "Jobs actifs",
+                "myProfile": "Profil",
+                "wallet": "Porte-monnaie"
+            }
+        },
+        "Client": {
+            "eyebrow": "Espace Client",
+            "title": "Mes Projets",
+            "description": "Gérez vos demandes et recrutements.",
+            "links": {
+                "dashboard": "Tableau de bord",
+                "requests": "Mes demandes",
+                "jobs": "Historique",
+                "new": "Nouveau projet",
+                "profile": "Profil"
+            }
+        }
+    },
     "Hero": {
         "badge": "🚀 La place de marché n°1 pour les services professionnels",
         "titlePrefix": "Trouvez l'",
@@ -454,5 +481,23 @@
         "trustedReviews": "Avis Vérifiés",
         "activeRequests": "Demandes Actives",
         "jobsCompleted": "Missions Réalisées"
+    },
+    "Components": {
+        "AdminDashboard": {
+            "eyebrow": "Aperçu",
+            "title": "État du système",
+            "description": "Métriques clés et surveillance.",
+            "metrics": {
+                "totalUsers": "Utilisateurs totaux",
+                "professionals": "Professionnels",
+                "clients": "Clients",
+                "pendingVerifications": "Vérifications en attente",
+                "totalRevenue": "Revenu total"
+            },
+            "recentActivity": "Activité récente",
+            "activityComingSoon": "Flux d'activité bientôt disponible...",
+            "systemHealth": "Santé système",
+            "allSystemsOperational": "Tous les systèmes opérationnels"
+        }
     }
 }

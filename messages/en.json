@@ -22,6 +22,51 @@
         "login": "Log in",
         "signup": "Sign up"
     },
+    "Sidebar": {
+        "Pro": {
+            "eyebrow": "Professional Area",
+            "title": "Account Management",
+            "description": "Premium access for service providers.",
+            "links": {
+                "dashboard": "Dashboard",
+                "matchingRequests": "Requests",
+                "myOffers": "My Offers",
+                "myJobs": "Active Jobs",
+                "myProfile": "Profile",
+                "wallet": "Wallet"
+            }
+        },
+        "Client": {
+            "eyebrow": "Client Area",
+            "title": "My Projects",
+            "description": "Manage your requests and hires.",
+            "links": {
+                "dashboard": "Dashboard",
+                "requests": "My Requests",
+                "jobs": "My Hires",
+                "new": "New Request",
+                "profile": "Profile"
+            }
+        }
+    },
+    "Components": {
+        "AdminDashboard": {
+            "eyebrow": "Overview",
+            "title": "System Status",
+            "description": "Key metrics and system health monitoring.",
+            "metrics": {
+                "totalUsers": "Total Users",
+                "professionals": "Professionals",
+                "clients": "Clients",
+                "pendingVerifications": "Pending Verifications",
+                "totalRevenue": "Total Revenue"
+            },
+            "recentActivity": "Recent Activity",
+            "activityComingSoon": "Activity feed coming soon...",
+            "systemHealth": "System Health",
+            "allSystemsOperational": "All systems operational"
+        }
+    },
     "Hero": {
         "badge": "🚀 The #1 Marketplace for Professional Services",
         "titlePrefix": "Find the perfect",
