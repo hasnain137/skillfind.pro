@@ -46,6 +46,13 @@ export default clerkMiddleware(async (auth, req) => {
   const publicMetadata = sessionClaims?.publicMetadata as { role?: string } | undefined;
   const userRole = metadata?.role || publicMetadata?.role;
 
+  // Force redirection to onboarding if user has no role
+  // This restores the strict logic from 472db05 preventing "stuck" users
+  if (userId && !userRole && !req.nextUrl.pathname.includes('/auth-redirect')) {
+    const onboardingUrl = new URL('/auth-redirect', req.url);
+    return NextResponse.redirect(onboardingUrl);
+  }
+
   if (isClientRoute(req) && userRole !== 'CLIENT' && userRole !== 'ADMIN') {
     if (isApiRoute) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     return NextResponse.redirect(new URL('/', req.url));
