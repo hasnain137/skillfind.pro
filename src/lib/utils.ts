@@ -141,3 +141,18 @@ export function generateId(prefix = ''): string {
   const randomStr = Math.random().toString(36).substring(2, 10);
   return `${prefix}${timestamp}${randomStr}`;
 }
+
+/**
+ * Flatten nested object (e.g. { a: { b: 1 } } -> { "a.b": 1 })
+ */
+export function flattenObject(obj: any, prefix = ''): Record<string, string> {
+  return Object.keys(obj).reduce((acc: any, k) => {
+    const pre = prefix.length ? prefix + '.' : '';
+    if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k])) {
+      Object.assign(acc, flattenObject(obj[k], pre + k));
+    } else {
+      acc[pre + k] = String(obj[k]);
+    }
+    return acc;
+  }, {});
+}

@@ -15,6 +15,7 @@ export function AdminSidebar() {
         { name: t('links.clients'), href: '/admin/clients', icon: '👥' },
         { name: t('links.categories'), href: '/admin/categories', icon: '📂' },
         { name: t('links.reviews'), href: '/admin/reviews', icon: '⭐' },
+        { name: t('links.translations'), href: '/admin/translations', icon: '🌐' },
         { name: t('links.transactions'), href: '/admin/financials/transactions', icon: '💰' },
         { name: t('links.settings'), href: '/admin/settings', icon: '⚙️' },
     ];

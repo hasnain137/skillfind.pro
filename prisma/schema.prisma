@@ -742,3 +742,33 @@ enum AdminActionType {
   CONTENT_REMOVED
   REVIEW_MODERATED
 }
+
+// ============================================
+// SYSTEM SETTINGS
+// ============================================
+
+model SystemSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+  
+  @@map("system_settings")
+}
+
+// ============================================
+// TRANSLATIONS
+// ============================================
+
+model Translation {
+  id        String   @id @default(cuid())
+  key       String
+  locale    String
+  value     String
+  namespace String   @default("common")
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@unique([key, locale])
+  @@index([locale, namespace])
+  @@map("translations")
+}
