@@ -1,42 +1,43 @@
 import { ProfessionalStatus } from "@prisma/client";
 
-export type StatusDetails = {
-    status: 'success' | 'warning' | 'error' | 'info';
+
+import { StatusType } from "@/components/ui/StatusBanner";
+
+export interface StatusBannerProps {
+    status: StatusType;
     title: string;
     description: string;
-} | null;
+    action?: {
+        label: string;
+        href: string;
+    };
+}
 
-export function getStatusDetails(status: ProfessionalStatus): StatusDetails {
+export function getProfessionalStatusBanner(status: ProfessionalStatus): StatusBannerProps | null {
     switch (status) {
-        case 'ACTIVE':
-            return {
-                status: 'success',
-                title: 'Account Active',
-                description: "Your account is verified and active. You can now receive requests and send offers.",
-            };
         case 'PENDING_REVIEW':
             return {
                 status: 'warning',
                 title: 'Verification Pending',
-                description: "Your profile is currently under review by our team. We'll notify you once verification is complete.",
+                description: "Your documents are under review. We'll notify you once verified.",
             };
         case 'SUSPENDED':
             return {
                 status: 'error',
-                title: 'Account Suspended',
-                description: "Your account has been suspended. Please contact support to resolve this issue.",
-            };
-        case 'BANNED':
-            return {
-                status: 'error',
-                title: 'Account Banned',
-                description: "Your account has been deactivated. Please contact support for more information.",
+                title: 'Attention Required',
+                description: "Your verification request was rejected. Please check the rejection reason.",
+                // In 472db05, there might have been an action here, but for now matching the text
+                // logic we just restored in Phase 1's VerificationStatus.
             };
         case 'INCOMPLETE':
             return {
                 status: 'info',
                 title: 'Complete Your Profile',
-                description: "Please complete your profile details to get verified and start receiving requests.",
+                description: "Finish setting up your profile to get verified and receive jobs.",
+                action: {
+                    label: "Complete Profile",
+                    href: "/pro/profile"
+                }
             };
         default:
             return null;

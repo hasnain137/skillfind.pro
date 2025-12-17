@@ -8,7 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ActionCard } from "@/components/ui/ActionCard";
-import { VerificationStatus } from "@/components/professional/verification/VerificationStatus";
+import { StatusBanner } from "@/components/ui/StatusBanner";
+import { getProfessionalStatusBanner } from "@/lib/professional-status";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
@@ -219,6 +220,8 @@ export default async function ProDashboardPage() {
     responseTime: '< 2 hours',
   };
 
+  const statusBannerProps = getProfessionalStatusBanner(professional.status);
+
   const QUICK_ACTIONS = [
     {
       title: t('Actions.browseTitle'),
@@ -248,7 +251,9 @@ export default async function ProDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <VerificationStatus status={professional.status} />
+      {statusBannerProps && (
+        <StatusBanner {...statusBannerProps} />
+      )}
 
       <DashboardHero
         eyebrow={t('eyebrow')}
