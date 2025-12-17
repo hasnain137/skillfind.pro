@@ -6,6 +6,7 @@ import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from 'next-intl';
 
 type OnboardingStep = 'loading' | 'select-role' | 'complete-profile' | 'redirecting';
 
@@ -15,6 +16,7 @@ type OnboardingStep = 'loading' | 'select-role' | 'complete-profile' | 'redirect
  */
 export default function AuthRedirectPage() {
   const { user, isLoaded } = useUser();
+  const locale = useLocale();
   const [step, setStep] = useState<OnboardingStep>('loading');
   const [selectedRole, setSelectedRole] = useState<'CLIENT' | 'PROFESSIONAL' | ''>('');
   const [loading, setLoading] = useState(false);
@@ -41,7 +43,7 @@ export default function AuthRedirectPage() {
       // If loaded but no user, they're not authenticated - redirect to login
       if (!user) {
         console.log('No authenticated user found, redirecting to login');
-        window.location.href = '/login';
+        window.location.href = `/${locale}/login`;
         return;
       }
 
@@ -73,9 +75,9 @@ export default function AuthRedirectPage() {
 
             if (profileData.exists && profileData.hasProfile) {
               // Profile complete, redirect to dashboard
-              const dashboardUrl = role === 'CLIENT' ? '/client' :
-                role === 'PROFESSIONAL' ? '/pro' :
-                  role === 'ADMIN' ? '/admin' : '/';
+              const dashboardUrl = role === 'CLIENT' ? `/${locale}/client` :
+                role === 'PROFESSIONAL' ? `/${locale}/pro` :
+                  role === 'ADMIN' ? `/${locale}/admin` : `/${locale}`;
               window.location.href = dashboardUrl;
               return;
             } else {
@@ -110,7 +112,7 @@ export default function AuthRedirectPage() {
     }
 
     determineStep();
-  }, [user, isLoaded]);
+  }, [user, isLoaded, locale]);
 
   // Validate international phone number format (E.164)
   const validatePhoneNumber = (phone: string): boolean => {
@@ -121,9 +123,9 @@ export default function AuthRedirectPage() {
 
   // Helper function to handle dashboard redirect with retry logic
   const redirectToDashboard = async (role: 'CLIENT' | 'PROFESSIONAL' | 'ADMIN', delay: number = 1000, allowIncomplete: boolean = false) => {
-    const dashboardUrl = role === 'CLIENT' ? '/client' :
-      role === 'PROFESSIONAL' ? '/pro' :
-        role === 'ADMIN' ? '/admin' : '/';
+    const dashboardUrl = role === 'CLIENT' ? `/${locale}/client` :
+      role === 'PROFESSIONAL' ? `/${locale}/pro` :
+        role === 'ADMIN' ? `/${locale}/admin` : `/${locale}`;
 
     console.log(`🔄 Preparing to redirect to ${dashboardUrl}...`);
     setStep('redirecting');
@@ -282,7 +284,7 @@ export default function AuthRedirectPage() {
         // PASS TRUE to allow incomplete profile (since we just skipped)
         await redirectToDashboard(selectedRole, 500, true);
       } else {
-        window.location.href = '/';
+        window.location.href = `/${locale}`;
       }
     } catch (err: any) {
       console.error('❌ Error during skip:', err);
@@ -338,7 +340,7 @@ export default function AuthRedirectPage() {
       if (selectedRole) {
         await redirectToDashboard(selectedRole, 1000, false);
       } else {
-        window.location.href = '/';
+        window.location.href = `/${locale}`;
       }
     } catch (err: any) {
       console.error('❌ Error during profile completion:', err);
