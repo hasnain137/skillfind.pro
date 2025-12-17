@@ -5,6 +5,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import AdminProfessionalActions from './AdminProfessionalActions';
 import WalletTopUp from './WalletTopUp';
+import { AdminReadinessChecklist } from '@/components/admin/AdminReadinessChecklist';
 
 import { Prisma } from '@prisma/client';
 
@@ -61,6 +62,7 @@ export default async function AdminProfessionalDetailPage({
             <div className="grid gap-6 lg:grid-cols-3">
                 {/* Left Column: Profile & Stats */}
                 <div className="space-y-6 lg:col-span-2">
+                    <AdminReadinessChecklist professionalId={professional.id} />
                     <Card padding="lg">
                         <h3 className="mb-4 text-lg font-bold text-[#333333]">Profile Details</h3>
                         <dl className="grid gap-4 sm:grid-cols-2">
