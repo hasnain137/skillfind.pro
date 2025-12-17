@@ -163,4 +163,4 @@ export function getProfessionalStatusBanner(status: string): {
     }
 }
 
-export default StatusBanner;
+

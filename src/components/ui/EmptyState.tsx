@@ -1,7 +1,7 @@
 // src/components/ui/EmptyState.tsx
 import { Card, CardContent } from './Card';
 import { Button } from './Button';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { ReactNode } from 'react';
 
 interface EmptyStateProps {

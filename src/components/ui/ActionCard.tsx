@@ -1,5 +1,5 @@
 // src/components/ui/ActionCard.tsx
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Card, CardContent } from "./Card";
 
 type ActionCardProps = {
@@ -42,4 +42,4 @@ export function ActionCard({ title, description, href, cta, icon }: ActionCardPr
   );
 }
 
-export default ActionCard;
+

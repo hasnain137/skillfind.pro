@@ -117,4 +117,4 @@ export const LEGACY_VARIANT_MAP: Record<string, BadgeVariant> = {
   destructive: "error",
 };
 
-export default Badge;
+

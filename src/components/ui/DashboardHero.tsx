@@ -1,5 +1,5 @@
 // src/components/ui/DashboardHero.tsx
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 
 type Highlight = {
   label: string;

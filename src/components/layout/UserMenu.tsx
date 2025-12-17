@@ -1,7 +1,7 @@
 'use client';
 
 import { UserButton, useUser } from '@clerk/nextjs';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 export function UserMenu() {
   const { user, isLoaded } = useUser();
@@ -35,11 +35,18 @@ export function UserMenu() {
     <div className="flex items-center gap-4">
       {/* Dashboard Link */}
       <Link
-        href={user.publicMetadata?.role === 'PROFESSIONAL' ? '/pro' : '/client'}
+        href={user.publicMetadata?.role === 'PROFESSIONAL' ? '/pro' : user.publicMetadata?.role === 'ADMIN' ? '/admin' : '/client'}
         className="text-sm font-medium text-[#7C7373] hover:text-[#333333] transition-colors"
       >
         Dashboard
       </Link>
+
+      {/* Admin Badge */}
+      {user.publicMetadata?.role === 'ADMIN' && (
+        <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800">
+          Admin
+        </span>
+      )}
 
       {/* Clerk User Button with custom appearance */}
       <UserButton
