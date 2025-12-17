@@ -152,5 +152,77 @@
                 "profile": "Profil"
             }
         }
+    },
+    "Components": {
+        "EarningsChart": {
+            "totalJobsWon": "Total Missions Remportées",
+            "allTime": "depuis le début",
+            "thisMonth": "Ce Mois",
+            "activeNow": "En Cours",
+            "jobGrowth": "Croissance des Missions",
+            "jobsVsLastMonth": "missions vs dernier mois",
+            "pendingOffers": "Offres en Attente",
+            "awaitingResponse": "En attente de réponse"
+        },
+        "ActivityFeed": {
+            "emptyTitle": "Aucune activité récente",
+            "emptyDesc": "Votre activité apparaîtra ici une fois que vous commencerez à interagir avec des demandes et des offres.",
+            "time": {
+                "justNow": "À l'instant",
+                "minAgo": "il y a {count} min",
+                "hourAgo": "il y a {count} heure",
+                "hoursAgo": "il y a {count} heures",
+                "dayAgo": "il y a {count} jour",
+                "daysAgo": "il y a {count} jours"
+            }
+        },
+        "RequestTimeline": {
+            "emptyTitle": "Aucune demande pour le moment",
+            "emptyDesc": "Créez votre première demande pour recevoir des offres.",
+            "createRequest": "Créer une demande",
+            "offers": "{count} offres",
+            "budget": "Budget {amount} €",
+            "status": {
+                "OPEN": "Ouverte",
+                "IN_PROGRESS": "En cours",
+                "COMPLETED": "Terminée",
+                "CANCELLED": "Annulée"
+            }
+        },
+        "ProfileCompletionBanner": {
+            "titleLow": "Complétez votre profil",
+            "titleHigh": "Presque fini !",
+            "descPro": "Un profil complet reçoit plus d'offres",
+            "descClient": "Aidez les professionnels à mieux comprendre vos besoins",
+            "label": "Complétion du profil",
+            "more": "+{count} de plus",
+            "cta": "Compléter maintenant →"
+        },
+        "MatchingRequests": {
+            "emptyTitle": "Aucune demande correspondante",
+            "emptyDesc": "Complétez votre profil et ajoutez des services pour être mis en relation avec des clients.",
+            "updateProfile": "Mettre à jour le profil",
+            "budget": {
+                "range": "{min}-{max} €",
+                "from": "Dès {min} €",
+                "unspecified": "Budget non spécifié"
+            },
+            "time": {
+                "today": "Aujourd'hui",
+                "yesterday": "Hier",
+                "daysAgo": "il y a {count} jours"
+            },
+            "new": "NOUVEAU",
+            "remote": "Télétravail",
+            "sendOffer": "Envoyer une offre"
+        },
+        "PerformanceMetrics": {
+            "profileViews": "Vues du Profil",
+            "offersSent": "Offres Envoyées",
+            "acceptanceRate": "Taux d'Acceptation",
+            "avgRating": "Note Moyenne",
+            "responseTime": "Temps de Réponse",
+            "reviews": "{count} avis"
+        }
     }
 }

@@ -1,7 +1,9 @@
 // src/components/dashboard/PerformanceMetrics.tsx
+'use client';
 
 import { Card, CardContent } from "@/components/ui/Card";
 import { cn } from "@/lib/cn";
+import { useTranslations } from 'next-intl';
 
 interface MetricsData {
   profileViews: number;
@@ -17,34 +19,36 @@ interface PerformanceMetricsProps {
 }
 
 export function PerformanceMetrics({ data }: PerformanceMetricsProps) {
+  const t = useTranslations('Components.PerformanceMetrics');
+
   const metrics = [
     {
-      label: 'Profile Views',
+      label: t('profileViews'),
       value: data.profileViews,
       icon: '👁️',
       color: 'bg-blue-50/50 border-blue-100 text-blue-700',
     },
     {
-      label: 'Offers Sent',
+      label: t('offersSent'),
       value: data.offersSent,
       icon: '📨',
       color: 'bg-purple-50/50 border-purple-100 text-purple-700',
     },
     {
-      label: 'Acceptance Rate',
+      label: t('acceptanceRate'),
       value: `${data.acceptanceRate}%`,
       icon: '✅',
       color: 'bg-green-50/50 border-green-100 text-green-700',
     },
     {
-      label: 'Avg. Rating',
+      label: t('avgRating'),
       value: data.averageRating > 0 ? `${data.averageRating.toFixed(1)}/5` : 'N/A',
       icon: '⭐',
       color: 'bg-yellow-50/50 border-yellow-100 text-yellow-700',
-      badge: data.totalReviews > 0 ? `${data.totalReviews} reviews` : null,
+      badge: data.totalReviews > 0 ? t('reviews', { count: data.totalReviews }) : null,
     },
     {
-      label: 'Response Time',
+      label: t('responseTime'),
       value: data.responseTime,
       icon: '⚡',
       color: 'bg-orange-50/50 border-orange-100 text-orange-700',

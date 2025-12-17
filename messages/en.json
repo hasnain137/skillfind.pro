@@ -152,5 +152,77 @@
                 "profile": "Profile"
             }
         }
+    },
+    "Components": {
+        "EarningsChart": {
+            "totalJobsWon": "Total Jobs Won",
+            "allTime": "all time",
+            "thisMonth": "This Month",
+            "activeNow": "Active Now",
+            "jobGrowth": "Job Growth",
+            "jobsVsLastMonth": "jobs vs last month",
+            "pendingOffers": "Pending Offers",
+            "awaitingResponse": "Awaiting response"
+        },
+        "ActivityFeed": {
+            "emptyTitle": "No recent activity",
+            "emptyDesc": "Your activity will appear here once you start interacting with requests and offers.",
+            "time": {
+                "justNow": "Just now",
+                "minAgo": "{count} min ago",
+                "hourAgo": "{count} hour ago",
+                "hoursAgo": "{count} hours ago",
+                "dayAgo": "{count} day ago",
+                "daysAgo": "{count} days ago"
+            }
+        },
+        "RequestTimeline": {
+            "emptyTitle": "No requests yet",
+            "emptyDesc": "Create your first request to receive offers.",
+            "createRequest": "Create Request",
+            "offers": "{count} offers",
+            "budget": "€{amount} budget",
+            "status": {
+                "OPEN": "Open",
+                "IN_PROGRESS": "In Progress",
+                "COMPLETED": "Completed",
+                "CANCELLED": "Cancelled"
+            }
+        },
+        "ProfileCompletionBanner": {
+            "titleLow": "Complete Your Profile",
+            "titleHigh": "Almost There!",
+            "descPro": "A complete profile gets more job offers",
+            "descClient": "Help professionals understand your needs better",
+            "label": "Profile completion",
+            "more": "+{count} more",
+            "cta": "Complete Now →"
+        },
+        "MatchingRequests": {
+            "emptyTitle": "No matching requests",
+            "emptyDesc": "Complete your profile and add more services to get matched with clients.",
+            "updateProfile": "Update Profile",
+            "budget": {
+                "range": "€{min}-{max}",
+                "from": "From €{min}",
+                "unspecified": "Budget not specified"
+            },
+            "time": {
+                "today": "Today",
+                "yesterday": "Yesterday",
+                "daysAgo": "{count} days ago"
+            },
+            "new": "NEW",
+            "remote": "Remote",
+            "sendOffer": "Send your offer"
+        },
+        "PerformanceMetrics": {
+            "profileViews": "Profile Views",
+            "offersSent": "Offers Sent",
+            "acceptanceRate": "Acceptance Rate",
+            "avgRating": "Avg. Rating",
+            "responseTime": "Response Time",
+            "reviews": "{count} reviews"
+        }
     }
 }

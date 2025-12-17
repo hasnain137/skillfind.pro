@@ -2,6 +2,7 @@
 'use client';
 
 import { Card, CardContent } from "@/components/ui/Card";
+import { useTranslations } from 'next-intl';
 
 interface EarningsData {
   totalEarnings: number; // This is now Total Jobs Won
@@ -17,6 +18,8 @@ interface EarningsChartProps {
 }
 
 export function EarningsChart({ data }: EarningsChartProps) {
+  const t = useTranslations('Components.EarningsChart');
+
   const growthPercent = data.lastMonth > 0
     ? ((data.thisMonth - data.lastMonth) / data.lastMonth * 100).toFixed(1)
     : '0';
@@ -29,19 +32,19 @@ export function EarningsChart({ data }: EarningsChartProps) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
         <div className="relative">
           <p className="text-xs font-semibold uppercase tracking-wider text-blue-100">
-            Total Jobs Won
+            {t('totalJobsWon')}
           </p>
           <div className="mt-2 flex items-baseline gap-2">
             <h3 className="text-4xl font-bold tracking-tight">{data.totalEarnings}</h3>
-            <span className="text-sm text-blue-100">all time</span>
+            <span className="text-sm text-blue-100">{t('allTime')}</span>
           </div>
           <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/20 pt-4">
             <div>
-              <p className="text-xs text-blue-100">This Month</p>
+              <p className="text-xs text-blue-100">{t('thisMonth')}</p>
               <p className="text-xl font-bold">{data.thisMonth}</p>
             </div>
             <div>
-              <p className="text-xs text-blue-100">Active Now</p>
+              <p className="text-xs text-blue-100">{t('activeNow')}</p>
               <p className="text-xl font-bold">{data.activeJobs}</p>
             </div>
           </div>
@@ -53,7 +56,7 @@ export function EarningsChart({ data }: EarningsChartProps) {
         <Card level={2}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#7C7373]">Job Growth</span>
+              <span className="text-xs font-medium text-[#7C7373]">{t('jobGrowth')}</span>
               <div className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${isPositiveGrowth
                 ? 'bg-success-light text-success-dark'
                 : 'bg-error-light text-error-dark'
@@ -65,20 +68,20 @@ export function EarningsChart({ data }: EarningsChartProps) {
             <p className="mt-2 text-2xl font-bold text-[#333333] tracking-tight">
               {data.thisMonth - data.lastMonth >= 0 ? '+' : ''}{data.thisMonth - data.lastMonth}
             </p>
-            <p className="text-xs text-[#7C7373] mt-1">jobs vs last month</p>
+            <p className="text-xs text-[#7C7373] mt-1">{t('jobsVsLastMonth')}</p>
           </CardContent>
         </Card>
 
         <Card level={2}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#7C7373]">Pending Offers</span>
+              <span className="text-xs font-medium text-[#7C7373]">{t('pendingOffers')}</span>
               <div className="text-2xl">⏳</div>
             </div>
             <p className="mt-2 text-2xl font-bold text-[#333333] tracking-tight">
               {data.pendingPayouts}
             </p>
-            <p className="text-xs text-[#7C7373] mt-1">Awaiting response</p>
+            <p className="text-xs text-[#7C7373] mt-1">{t('awaitingResponse')}</p>
           </CardContent>
         </Card>
       </div>
