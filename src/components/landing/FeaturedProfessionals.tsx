@@ -3,7 +3,7 @@
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Avatar } from "@/components/ui/Avatar";
 
 type Professional = {
