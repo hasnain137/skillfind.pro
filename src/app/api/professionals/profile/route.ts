@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { handleApiError, successResponse, unauthorizedResponse, notFoundResponse, validationErrorResponse } from '@/lib/api-response';
 import { auth } from '@clerk/nextjs/server';
 import { z } from 'zod';
-import { checkProfileCompletion } from '@/lib/services/profile-completion';
+import { canProfessionalBeActive } from '@/lib/services/profile-completion';
 
 // Schema for updating professional profile
 const profileSchema = z.object({
@@ -95,7 +95,7 @@ export async function PUT(request: Request) {
     // We could do this properly but for now let's just trigger status check
 
     // Check Status Transition
-    const { canBeActive, isPendingReview } = await checkProfileCompletion(professional.id);
+    const { canBeActive, isPendingReview } = await canProfessionalBeActive(professional.id);
 
     // If they aren't fully verified yet (isVerified=false), we can auto-move them to PENDING_REVIEW if ready
     if (!professional.isVerified) {

@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { requireAdmin } from '@/lib/auth';
 import { handleApiError, successResponse } from '@/lib/api-response';
-import { checkProfileCompletion } from '@/lib/services/profile-completion';
+import { canProfessionalBeActive } from '@/lib/services/profile-completion';
 
 export async function GET(
     request: NextRequest,
@@ -11,7 +11,7 @@ export async function GET(
         await requireAdmin();
         const { id } = await params;
 
-        const status = await checkProfileCompletion(id);
+        const status = await canProfessionalBeActive(id);
 
         // Map existing logic to "readiness" structure
         // core 'checkProfileCompletion' mainly returns blocking reasons.
