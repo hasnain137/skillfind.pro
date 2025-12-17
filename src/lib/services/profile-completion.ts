@@ -61,3 +61,66 @@ export async function checkProfileCompletion(professionalId: string): Promise<Co
     reasons,
   };
 }
+
+// Legacy alias / Wrapper for backward compatibility
+export async function canProfessionalBeActive(professionalId: string) {
+  const status = await checkProfileCompletion(professionalId);
+  return {
+    canBeActive: status.canBeActive,
+    isPendingReview: status.isPendingReview,
+    reasons: status.reasons
+  };
+}
+
+export async function calculateProfileCompletion(professionalId: string) {
+  const professional = await prisma.professional.findUnique({
+    where: { id: professionalId },
+    include: { profile: true, services: true, user: true }
+  });
+
+  if (!professional) return { percentage: 0, missingSteps: [], completedSteps: [] };
+
+  let score = 0;
+  const missing: string[] = [];
+  const completed: string[] = [];
+  const totalWeight = 100;
+
+  // Define steps and weights
+  const steps = [
+    { label: 'Basic Info (Title)', check: !!professional.title, weight: 10 },
+    { label: 'Bio (>50 chars)', check: !!(professional.bio && professional.bio.length >= 50), weight: 20 },
+    { label: 'Location', check: !!professional.city, weight: 10 },
+    { label: 'Services', check: professional.services.length > 0, weight: 20 },
+    { label: 'Phone Verification', check: professional.user.phoneVerified, weight: 10 },
+    { label: 'Identity Verification', check: professional.isVerified, weight: 20 },
+    { label: 'Profile Picture', check: !!professional.user.imageUrl, weight: 10 }, // Assuming Clerk handles this often
+  ];
+
+  let currentScore = 0;
+
+  for (const step of steps) {
+    if (step.check) {
+      currentScore += step.weight;
+      completed.push(step.label);
+    } else {
+      missing.push(step.label);
+    }
+  }
+
+  return {
+    percentage: Math.min(currentScore, 100),
+    missingSteps: missing,
+    completedSteps: completed
+  };
+}
+
+export async function updateProfileCompletionPercentage(professionalId: string) {
+  const { percentage } = await calculateProfileCompletion(professionalId);
+
+  await prisma.professional.update({
+    where: { id: professionalId },
+    data: { profileCompletion: percentage }
+  });
+
+  return percentage;
+}
