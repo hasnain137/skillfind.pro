@@ -3,13 +3,14 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getOrCreateWallet } from "@/lib/services/wallet";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ActionCard } from "@/components/ui/ActionCard";
 import { StatusBanner } from "@/components/ui/StatusBanner";
 import { getProfessionalStatusBanner } from "@/lib/professional-status";
+import { StatusCard } from "@/components/dashboard/StatusCard";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
@@ -22,6 +23,7 @@ import { getTranslations } from 'next-intl/server';
 
 export default async function ProDashboardPage() {
   const { userId } = await auth();
+  const t = await getTranslations('ProDashboard');
 
   if (!userId) {
     redirect('/login');
@@ -77,8 +79,6 @@ export default async function ProDashboardPage() {
     redirect('/auth-redirect');
   }
 
-  const t = await getTranslations('ProDashboard');
-
   const balanceEuros = (professional.wallet?.balance || 0) / 100;
   const { percentage: profileCompletion, missingSteps } = calculateProfessionalCompletion(professional);
 
@@ -116,6 +116,25 @@ export default async function ProDashboardPage() {
     },
   });
 
+  const matchingRequests = await prisma.request.findMany({
+    where: {
+      status: 'OPEN',
+      categoryId: {
+        in: uniqueCategoryIds as string[],
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 5,
+    include: {
+      category: true,
+      subcategory: true,
+    }
+  });
+
+  const allOffers = await prisma.offer.findMany({
+    where: { professionalId: professional.id }
+  });
+
   const activeJobs = await prisma.job.count({
     where: {
       professionalId: professional.id,
@@ -124,92 +143,77 @@ export default async function ProDashboardPage() {
   });
 
   const thisMonth = new Date();
-  const lastMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() - 1, 1);
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-  const thisMonthJobs = completedJobs
-    .filter(job => job.completedAt && job.completedAt >= new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
-    .length;
-
-  const lastMonthJobs = completedJobs
-    .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
-    .length;
-
-  const earningsData = {
-    totalEarnings: completedJobs.length, // repurposing field for Total Jobs
-    thisMonth: thisMonthJobs, // repurposing for This Month Jobs
-    lastMonth: lastMonthJobs, // repurposing for Last Month Jobs
-    pendingPayouts: professional.offers.length, // repurposing for Pending Offers
-    completedJobs: completedJobs.length,
-    activeJobs: activeJobs, // element to pass for UI
-  };
-
-  const matchingRequests = await prisma.request.findMany({
-    where: {
-      status: 'OPEN',
-      categoryId: {
-        in: uniqueCategoryIds as string[],
-      },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    take: 5,
-  });
-
-  const profileViews = await prisma.clickEvent.count({
-    where: {
-      professionalId: professional.id,
-    },
-  });
-
-  const allOffers = await prisma.offer.findMany({
-    where: {
-      professionalId: professional.id,
-    },
-  });
-
-  const acceptedOffers = allOffers.filter(o => o.status === 'ACCEPTED').length;
-  const acceptanceRate = allOffers.length > 0 ? Math.round((acceptedOffers / allOffers.length) * 100) : 0;
 
   const highlights = [
     {
-      label: t('highlights.completion'),
+      label: t('Highlights.profile'),
       value: `${profileCompletion}%`,
-      helper: profileCompletion < 100 ? t('highlights.completeProfile') : t('highlights.allDone')
+      helper: profileCompletion < 100 ? t('Steps.profile') : "All done!" // Fallback English for "All done!" or add key?
     },
     {
-      label: t('highlights.rating'),
-      value: avgRating,
-      helper: t('highlights.basedOnReviews')
+      label: t('Highlights.wallet'),
+      value: `€${balanceEuros.toFixed(2)}`,
+      helper: balanceEuros < 5 ? "Top up recommended" : "Good balance" // These are tough to translate without keys
     },
     {
-      label: t('highlights.pending'),
+      label: t('Highlights.pending'),
       value: `${professional.offers.length}`,
-      helper: professional.offers.length > 0 ? t('highlights.awaitingResponse') : t('highlights.sendOffers')
+      helper: professional.offers.length > 0 ? "Awaiting response" : "Send more offers"
     },
   ];
 
   const nextSteps = [];
   if (profileCompletion < 100) {
-    nextSteps.push(t('nextSteps.completeProfile'));
+    nextSteps.push(t('Steps.profile'));
   }
   if (professional.services.length === 0) {
-    nextSteps.push(t('nextSteps.addServices'));
+    nextSteps.push(t('Steps.services'));
   }
   if (matchingRequestsToday > 0) {
-    nextSteps.push(t('nextSteps.newRequests', { count: matchingRequestsToday }));
+    nextSteps.push(t('Steps.matching', { count: matchingRequestsToday }));
   }
   if (professional.offers.length > 0) {
-    nextSteps.push(t('nextSteps.pendingOffers', { count: professional.offers.length }));
+    nextSteps.push(t('Steps.offers', { count: professional.offers.length }));
   }
   if (professional.jobs.length > 0) {
-    nextSteps.push(t('nextSteps.activeJobs', { count: professional.jobs.length }));
+    nextSteps.push(t('Steps.jobs', { count: professional.jobs.length }));
   }
   if (nextSteps.length === 0) {
-    nextSteps.push(t('nextSteps.browse'));
+    nextSteps.push(t('Steps.default'));
   }
 
-  const timeOfDay = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening';
+  const hour = new Date().getHours();
+  const timeOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+
+  const profileViews = 0; // Not tracked in schema yet
+  const acceptanceRate = allOffers.length > 0
+    ? Math.round((allOffers.filter(o => o.status === 'ACCEPTED').length / allOffers.length) * 100)
+    : 0;
+
+
+  const totalEarnings = completedJobs.reduce((sum, job) => {
+    const amount = job.request.budgetMax || job.request.budgetMin || 0;
+    return sum + amount;
+  }, 0);
+
+  const thisMonthEarnings = completedJobs
+    .filter(job => job.completedAt && job.completedAt >= new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
+    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+
+  const lastMonthEarnings = completedJobs
+    .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
+    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+
+  const earningsData = {
+    totalEarnings,
+    thisMonth: thisMonthEarnings,
+    lastMonth: lastMonthEarnings,
+    pendingPayouts: balanceEuros,
+    completedJobs: completedJobs.length,
+  };
 
   const metricsData = {
     profileViews,
@@ -222,32 +226,13 @@ export default async function ProDashboardPage() {
 
   const statusBannerProps = getProfessionalStatusBanner(professional.status);
 
-  const QUICK_ACTIONS = [
-    {
-      title: t('Actions.browseTitle'),
-      description: t('Actions.browseDesc'),
-      href: "/pro/requests",
-      cta: t('Actions.browseCta'),
-    },
-    {
-      title: t('Actions.offersTitle'),
-      description: t('Actions.offersDesc'),
-      href: "/pro/offers",
-      cta: t('Actions.offersCta'),
-    },
-    {
-      title: t('Actions.jobsTitle'),
-      description: t('Actions.jobsDesc'),
-      href: "/pro/jobs",
-      cta: t('Actions.jobsCta'),
-    },
-    {
-      title: t('Actions.profileTitle'),
-      description: t('Actions.profileDesc'),
-      href: "/pro/profile",
-      cta: t('Actions.profileCta'),
-    },
-  ];
+  const quickActionKeys = ['browse', 'offers', 'jobs', 'profile'];
+  const quickActions = quickActionKeys.map(key => ({
+    title: t(`Actions.${key}Title`),
+    description: t(`Actions.${key}Desc`),
+    href: key === 'browse' ? '/pro/requests' : key === 'offers' ? '/pro/offers' : key === 'jobs' ? '/pro/jobs' : '/pro/profile',
+    cta: t(`Actions.${key}Cta`)
+  }));
 
   return (
     <div className="space-y-6">
@@ -272,7 +257,12 @@ export default async function ProDashboardPage() {
       {/* Main Grid */}
       <div className="grid gap-6 lg:grid-cols-3" data-tour="earnings">
         {/* Earnings */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
+          <StatusCard
+            status={professional.status}
+            isVerified={professional.isVerified}
+            verificationMethod={professional.verificationMethod}
+          />
           <EarningsChart data={earningsData} />
         </div>
 
@@ -324,7 +314,7 @@ export default async function ProDashboardPage() {
             />
           </CardHeader>
           <CardContent className="space-y-3">
-            {QUICK_ACTIONS.map((action) => (
+            {quickActions.map((action) => (
               <ActionCard key={action.href} {...action} />
             ))}
           </CardContent>
@@ -354,6 +344,6 @@ export default async function ProDashboardPage() {
       </div>
       <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />
       <ProDashboardTour />
-    </div >
+    </div>
   );
 }

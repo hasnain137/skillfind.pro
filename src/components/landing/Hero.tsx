@@ -9,7 +9,7 @@ import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { useTranslations } from 'next-intl';
 
 export function Hero() {
-  const t = useTranslations('Landing.Hero');
+  const t = useTranslations('Hero');
 
   return (
     <section className="relative overflow-hidden border-b border-[#E5E7EB] bg-white pt-8 pb-12 md:pt-16 md:pb-20 lg:pt-24 lg:pb-28">
@@ -23,10 +23,7 @@ export function Hero() {
                 {t('badge')}
               </FadeIn>
               <h1 className="text-4xl font-semibold tracking-tighter text-[#333333] sm:text-5xl md:text-6xl">
-                {t.rich('title', {
-                  blue: (chunks) => <span className="text-[#2563EB]">{chunks}</span>,
-                  highlight: t('highlight')
-                })}
+                {t('titlePrefix')} <span className="text-[#2563EB]">{t('titleHighlight')}</span> {t('titleSuffix')}
               </h1>
               <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto lg:mx-0">
                 {t('subtitle')}
@@ -48,13 +45,13 @@ export function Hero() {
                 <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                {t('securePayment')}
+                {t('directContact')}
               </span>
               <span className="flex items-center gap-1.5">
                 <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                {t('satisfaction')}
+                {t('satisfactionGuarantee')}
               </span>
             </div>
           </FadeIn>
@@ -90,7 +87,7 @@ export function Hero() {
                 </div>
                 <div className="text-xs">
                   <p className="font-bold text-[#333333]">{t('newProsBadge')}</p>
-                  <p className="text-[#7C7373]">{t('joinedWeek')}</p>
+                  <p className="text-[#7C7373]">{t('joinedThisWeek')}</p>
                 </div>
               </FadeIn>
             </div>

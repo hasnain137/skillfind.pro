@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Stagger } from "@/components/ui/motion/Stagger";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 type Category = {
@@ -60,56 +60,12 @@ function mapDatabaseCategories(dbCategories: DatabaseCategory[]): (Category & { 
 }
 
 export function PopularCategories({ categories }: PopularCategoriesProps) {
-  const t = useTranslations('Landing.PopularCategories');
+  const t = useTranslations('PopularCategories');
 
-  // Default fallback categories - 8 for 4-column symmetry
-  const FALLBACK_CATEGORIES: Category[] = [
-    {
-      name: t('fallback.tutoring.name'),
-      description: t('fallback.tutoring.description'),
-      icon: "📚",
-    },
-    {
-      name: t('fallback.tech.name'),
-      description: t('fallback.tech.description'),
-      icon: "💻",
-    },
-    {
-      name: t('fallback.design.name'),
-      description: t('fallback.design.description'),
-      icon: "🎨",
-    },
-    {
-      name: t('fallback.health.name'),
-      description: t('fallback.health.description'),
-      icon: "🧘‍♀️",
-    },
-    {
-      name: t('fallback.home.name'),
-      description: t('fallback.home.description'),
-      icon: "🏠",
-    },
-    {
-      name: t('fallback.business.name'),
-      description: t('fallback.business.description'),
-      icon: "📈",
-    },
-    {
-      name: t('fallback.writing.name'),
-      description: t('fallback.writing.description'),
-      icon: "✍️",
-    },
-    {
-      name: t('fallback.music.name'),
-      description: t('fallback.music.description'),
-      icon: "🎵",
-    },
-  ];
-
-  // Use fallback if fewer than 8 categories in database (need 8 for symmetry)
-  const displayCategories = categories && categories.length >= 8
+  // Display up to 8 categories from the database
+  const displayCategories = categories && categories.length > 0
     ? mapDatabaseCategories(categories).slice(0, 8)
-    : FALLBACK_CATEGORIES;
+    : [];
 
   return (
     <section className="py-16 md:py-20 bg-[#FAFAFA] border-b border-[#E5E7EB]">
@@ -117,7 +73,7 @@ export function PopularCategories({ categories }: PopularCategoriesProps) {
         <div className="mx-auto max-w-3xl text-center mb-12">
           <FadeIn>
             <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-              {t('eyebrow')}
+              {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-[#333333] md:text-4xl">
               {t('title')}

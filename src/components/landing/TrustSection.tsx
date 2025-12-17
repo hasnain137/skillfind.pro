@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 import { useTranslations } from 'next-intl';
 
 export function TrustSection() {
-  const t = useTranslations('Landing.TrustSection');
+  const t = useTranslations('TrustSection');
 
   const benefits = [
     {
-      title: t('benefits.vetted.title'),
-      description: t('benefits.vetted.description'),
+      title: t('vettedTitle'),
+      description: t('vettedDesc'),
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -19,17 +19,17 @@ export function TrustSection() {
       )
     },
     {
-      title: t('benefits.secure.title'),
-      description: t('benefits.secure.description'),
+      title: t('connectTitle'),
+      description: t('connectDesc'),
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
         </svg>
       )
     },
     {
-      title: t('benefits.fair.title'),
-      description: t('benefits.fair.description'),
+      title: t('pricingTitle'),
+      description: t('pricingDesc'),
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -37,8 +37,8 @@ export function TrustSection() {
       )
     },
     {
-      title: t('benefits.quality.title'),
-      description: t('benefits.quality.description'),
+      title: t('qualityTitle'),
+      description: t('qualityDesc'),
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -61,7 +61,7 @@ export function TrustSection() {
               {t('title')}
             </h2>
             <p className="text-lg text-[#7C7373] mb-8 leading-relaxed">
-              {t('intro')}
+              {t('subtitle')}
             </p>
             <div className="flex gap-4">
               <div className="flex -space-x-4">
@@ -70,8 +70,8 @@ export function TrustSection() {
                 ))}
               </div>
               <div className="text-sm font-medium">
-                <p className="text-[#333333]">{t('rating', { rating: 4.9 })}</p>
-                <p className="text-[#7C7373]">{t('reviews')}</p>
+                <p className="text-[#333333]">{t('rating')}</p>
+                <p className="text-[#7C7373]">{t('ratingSub')}</p>
               </div>
             </div>
           </motion.div>

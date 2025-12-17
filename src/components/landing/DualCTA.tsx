@@ -3,11 +3,11 @@
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 export function DualCTA() {
-  const t = useTranslations('Landing.DualCTA');
+  const t = useTranslations('DualCTA');
 
   return (
     <section id="for-professionals" className="py-20 md:py-24 bg-white">
@@ -20,17 +20,17 @@ export function DualCTA() {
 
             <div className="relative z-10 flex flex-col h-full items-start">
               <span className="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400 ring-1 ring-inset ring-blue-500/20 mb-6">
-                {t('clients.badge')}
+                {t('clientBadge')}
               </span>
               <h3 className="text-3xl font-bold text-white mb-4">
-                {t('clients.title')}
+                {t('clientTitle')}
               </h3>
               <p className="text-gray-300 mb-8 max-w-sm leading-relaxed">
-                {t('clients.description')}
+                {t('clientDesc')}
               </p>
               <Link href="/search" className="mt-auto">
                 <Button className="bg-white text-[#333333] hover:bg-gray-100 border-none font-bold px-8">
-                  {t('clients.button')}
+                  {t('clientButton')}
                 </Button>
               </Link>
             </div>
@@ -42,17 +42,17 @@ export function DualCTA() {
 
             <div className="relative z-10 flex flex-col h-full items-start">
               <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white ring-1 ring-inset ring-white/20 mb-6">
-                {t('pros.badge')}
+                {t('proBadge')}
               </span>
               <h3 className="text-3xl font-bold text-white mb-4">
-                {t('pros.title')}
+                {t('proTitle')}
               </h3>
               <p className="text-blue-100 mb-8 max-w-sm leading-relaxed">
-                {t('pros.description')}
+                {t('proDesc')}
               </p>
               <Link href="/signup" className="mt-auto">
                 <Button className="bg-[#333333] text-white hover:bg-gray-800 border-none font-bold px-8">
-                  {t('pros.button')}
+                  {t('proButton')}
                 </Button>
               </Link>
             </div>

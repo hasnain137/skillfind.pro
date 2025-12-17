@@ -1,9 +1,10 @@
 // src/components/landing/FeaturedProfessionalsServer.tsx
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Avatar } from "@/components/ui/Avatar";
-import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server';
+import { unstable_cache } from 'next/cache';
 
 interface Professional {
   id: string;
@@ -11,6 +12,7 @@ interface Professional {
   bio: string | null;
   city: string | null;
   remoteAvailability: string;
+  isVerified: boolean;
   averageRating: number;
   totalReviews: number;
   user: {
@@ -27,8 +29,6 @@ interface Professional {
     description: string | null;
   }>;
 }
-
-import { unstable_cache } from 'next/cache';
 
 const getFeaturedProfessionals = unstable_cache(
   async (): Promise<Professional[]> => {
@@ -82,12 +82,12 @@ const getFeaturedProfessionals = unstable_cache(
 
 function ProfessionalCard({
   professional,
-  t,
+  t
 }: {
   professional: Professional;
-  t: any; // Using any for ease as types are dynamic, but could define TFunction
+  t: any; // Using any for t to avoid complex type import for now, or use generic
 }) {
-  const { user, bio, profile, city, remoteAvailability, averageRating, totalReviews, services } = professional;
+  const { user, bio, profile, city, remoteAvailability, averageRating, totalReviews, services, isVerified } = professional;
 
   const hourlyRateMin = profile?.hourlyRateMin;
   const hourlyRateMax = profile?.hourlyRateMax;
@@ -95,8 +95,8 @@ function ProfessionalCard({
   const priceDisplay = hourlyRateMin && hourlyRateMax
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
     : hourlyRateMin
-      ? t('fromPrice', { price: hourlyRateMin })
-      : t('contactPricing');
+      ? `From €${hourlyRateMin}/hr`
+      : t('contactForPricing');
 
   const primaryService = services[0]?.description || 'Professional';
   const additionalServices = services.length > 1 ? services.length - 1 : 0;
@@ -104,9 +104,11 @@ function ProfessionalCard({
   return (
     <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#2563EB]/20">
       {/* Top Badge - Verified */}
-      <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#2563EB] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
-        <span>✓</span> {t('verified')}
-      </div>
+      {isVerified && (
+        <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#2563EB] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
+          <span>✓</span> {t('verified')}
+        </div>
+      )}
 
       {/* Profile Header */}
       <div className="flex items-start gap-4 pt-2">
@@ -143,7 +145,7 @@ function ProfessionalCard({
           ))}
         </div>
         <span className="text-sm font-bold text-amber-900">{averageRating.toFixed(1)}</span>
-        <span className="text-xs text-amber-700 font-medium">{t('reviews', { count: totalReviews })}</span>
+        <span className="text-xs text-amber-700 font-medium">({totalReviews} reviews)</span>
       </div>
 
       {/* Bio snippet */}
@@ -162,7 +164,7 @@ function ProfessionalCard({
         )}
         {remoteAvailability !== 'NO_REMOTE' && (
           <span className="flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-            <span>💻</span> {t('remote')}
+            <span>💻</span> Remote
           </span>
         )}
       </div>
@@ -187,7 +189,7 @@ function ProfessionalCard({
 
 export async function FeaturedProfessionalsServer() {
   const professionals = await getFeaturedProfessionals();
-  const t = await getTranslations('Landing.FeaturedPros');
+  const t = await getTranslations('FeaturedProfessionals');
 
   // If no professionals in database, show fallback message
   if (professionals.length === 0) {
@@ -199,13 +201,13 @@ export async function FeaturedProfessionalsServer() {
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-              {t('eyebrow')}
+              {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
-              {t('fallbackTitle')}
+              {t('emptyTitle')}
             </h2>
             <p className="mt-4 text-lg text-[#7C7373]">
-              {t('fallbackDesc')}
+              {t('emptySubtitle')}
             </p>
           </div>
         </Container>
@@ -221,7 +223,7 @@ export async function FeaturedProfessionalsServer() {
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
           <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-            {t('eyebrow')}
+            {t('badge')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
             {t('title')}
