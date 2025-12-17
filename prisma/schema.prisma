@@ -772,3 +772,10 @@ model Translation {
   @@index([locale, namespace])
   @@map("translations")
 }
+
+// ============================================
+// LOCALIZATION
+// ============================================
+
+
+
