@@ -162,7 +162,11 @@
             "jobGrowth": "Job Growth",
             "jobsVsLastMonth": "jobs vs last month",
             "pendingOffers": "Pending Offers",
-            "awaitingResponse": "Awaiting response"
+            "awaitingResponse": "Awaiting response",
+            "totalEarnings": "Total Earnings",
+            "viewHistory": "View history",
+            "fromLastMonth": "from last month",
+            "pending": "Pending Payouts"
         },
         "ActivityFeed": {
             "emptyTitle": "No recent activity",
@@ -265,7 +269,7 @@
         },
         "Hero": {
             "badge": "🚀 The #1 Marketplace for Professional Services",
-            "title": "Find the perfect {highlight} for any task.",
+            "title": "Find the perfect <blue>{highlight}</blue> for any task.",
             "highlight": "expert",
             "subtitle": "Connect with verified tutors, developers, cleaners, and coaches in minutes. Trusted by 10,000+ clients worldwide.",
             "verifiedPros": "Verified Pros",

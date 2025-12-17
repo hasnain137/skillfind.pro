@@ -37,13 +37,11 @@ export default async function WalletPage() {
         prisma.transaction.findMany({
             where: { walletId: wallet.id },
             orderBy: { createdAt: 'desc' },
-            take: 10,
+            take: 20, // Increased to show more history
         }),
     ]);
 
     const balanceEuros = wallet.balance / 100;
-    const dailyLimit = professional.dailyClickLimit || 10;
-    const clicksRemaining = Math.max(0, dailyLimit - clicksToday);
 
     const totalSpent = recentTransactions
         .filter(tx => tx.type === 'DEBIT')
@@ -52,140 +50,207 @@ export default async function WalletPage() {
     const isLowBalance = balanceEuros < 2;
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8 max-w-5xl mx-auto pb-10">
             <SectionHeading
-                eyebrow="Wallet"
-                title="Balance & Transactions"
-                description="Manage your funds and track your spending on client leads."
+                eyebrow="Financials"
+                title="Wallet"
+                description="Manage your balance and view your transaction history."
             />
 
-            {/* Main Balance Card - Full Width */}
-            <Card className="relative overflow-hidden bg-gradient-to-br from-[#2563EB] via-[#1D4FD8] to-[#1E40AF] text-white border-none" padding="lg">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
-                <div className="relative">
-                    <div className="flex items-start justify-between mb-6">
-                        <div>
-                            <p className="text-sm font-semibold uppercase tracking-wider text-blue-200">Current Balance</p>
-                            <p className="mt-2 text-5xl font-bold">€{balanceEuros.toFixed(2)}</p>
-                            {isLowBalance && (
-                                <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-yellow-500/20 px-3 py-1 text-xs font-semibold text-yellow-100">
-                                    ⚠️ Low Balance - Add funds to continue
+            <div className="grid gap-6 lg:grid-cols-3">
+                {/* Left Column: Balance Card (2/3) */}
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Credit Card Style Balance */}
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
+                        {/* Abstract Pattern Overlay */}
+                        <div className="absolute inset-0 opacity-10 flex items-center justify-center pointer-events-none overflow-hidden">
+                            <div className="w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/40 via-transparent to-transparent blur-3xl animate-pulse" />
+                        </div>
+                        <div className="absolute top-0 right-0 p-8 opacity-20">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                <line x1="2" y1="10" x2="22" y2="10" />
+                            </svg>
+                        </div>
+
+                        <div className="relative p-8 flex flex-col justify-between h-full min-h-[220px]">
+                            <div className="space-y-1">
+                                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Available Balance</p>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-4xl md:text-5xl font-bold tracking-tight">€{balanceEuros.toFixed(2)}</span>
+                                    <span className="text-slate-400 font-medium">EUR</span>
+                                </div>
+                            </div>
+
+                            <div className="flex items-end justify-between mt-8">
+                                <div className="space-y-4">
+                                    {isLowBalance && (
+                                        <Badge variant="warning" className="bg-yellow-500/10 text-yellow-200 border-yellow-500/20 backdrop-blur-sm">
+                                            ⚠️ Low Balance
+                                        </Badge>
+                                    )}
+                                    <div className="flex items-center gap-3 text-sm text-slate-300">
+                                        <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+                                        <span>Wallet Active & Ready</span>
+                                    </div>
+                                </div>
+                                <Button
+                                    className="bg-white text-slate-950 hover:bg-blue-50 shadow-lg shadow-white/5 font-semibold px-6"
+                                    size="lg"
+                                >
+                                    + Add Funds
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Transaction History Section - moved to col-span-2 for tablet/desktop */}
+                    <Card padding="none" className="overflow-hidden border-slate-200 shadow-sm hidden lg:block">
+                        <div className="border-b border-slate-100 bg-slate-50/50 px-6 py-4 flex items-center justify-between">
+                            <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+                                Transaction History
+                            </h3>
+                            <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-900">
+                                Export CSV
+                            </Button>
+                        </div>
+                        {recentTransactions.length === 0 ? (
+                            <div className="p-12 text-center">
+                                <div className="mx-auto h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-2xl mb-3">📝</div>
+                                <h3 className="text-sm font-semibold text-slate-900">No transactions yet</h3>
+                                <p className="text-sm text-slate-500 mt-1">Activity will show up here.</p>
+                            </div>
+                        ) : (
+                            <div className="divide-y divide-slate-100">
+                                {recentTransactions.map((tx) => {
+                                    const isDeposit = tx.type === 'DEPOSIT';
+                                    return (
+                                        <div key={tx.id} className="flex items-center justify-between px-6 py-4 hover:bg-slate-50/50 transition-colors group">
+                                            <div className="flex items-center gap-4">
+                                                <div className={`
+                                                    h-10 w-10 rounded-full flex items-center justify-center text-lg shadow-sm border
+                                                    ${isDeposit ? 'bg-green-50 border-green-100 text-green-600' : 'bg-slate-50 border-slate-100 text-slate-600'}
+                                                `}>
+                                                    {isDeposit ? '↓' : '↑'}
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-slate-900">{tx.description}</p>
+                                                    <p className="text-xs text-slate-500 mt-0.5">
+                                                        {new Date(tx.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className={`text-sm font-bold ${isDeposit ? 'text-green-600' : 'text-slate-900'}`}>
+                                                    {isDeposit ? '+' : '-'}€{(tx.amount / 100).toFixed(2)}
+                                                </p>
+                                                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
+                                                    COMPLETED
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </Card>
+                </div>
+
+                {/* Right Column: Stats (1/3) */}
+                <div className="space-y-6">
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-1 gap-4">
+                        <Card padding="md" className="border-slate-200">
+                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">Today's Activity</p>
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-2xl font-bold text-slate-900">{clicksToday}</p>
+                                    <p className="text-xs text-slate-500">Profile Clicks</p>
+                                </div>
+                                <div className="h-8 w-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    👁️
+                                </div>
+                            </div>
+                        </Card>
+
+                        <Card padding="md" className="border-slate-200">
+                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">Total Spent</p>
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-2xl font-bold text-slate-900">€{totalSpent.toFixed(2)}</p>
+                                    <p className="text-xs text-slate-500">Last 20 txns</p>
+                                </div>
+                                <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
+                                    📉
+                                </div>
+                            </div>
+                        </Card>
+
+                        <Card padding="md" className="border-slate-200">
+                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">Cost Per Lead</p>
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-2xl font-bold text-slate-900">€0.10</p>
+                                    <p className="text-xs text-slate-500">Flat Rate</p>
+                                </div>
+                                <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
+                                    🏷️
+                                </div>
+                            </div>
+                        </Card>
+                    </div>
+
+                    {/* Transaction History (Mobile Only - visible below lg) */}
+                    <div className="lg:hidden">
+                        <h3 className="font-semibold text-slate-900 mb-4 px-1">Recent Transactions</h3>
+                        <Card padding="none" className="overflow-hidden border-slate-200 shadow-sm">
+                            {recentTransactions.length === 0 ? (
+                                <div className="p-8 text-center text-sm text-slate-500">No transactions yet</div>
+                            ) : (
+                                <div className="divide-y divide-slate-100">
+                                    {recentTransactions.map((tx) => {
+                                        const isDeposit = tx.type === 'DEPOSIT';
+                                        return (
+                                            <div key={tx.id} className="flex items-center justify-between p-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`h-8 w-8 rounded-full flex items-center justify-center text-sm ${isDeposit ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'}`}>
+                                                        {isDeposit ? '↓' : '↑'}
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-medium text-slate-900 truncate max-w-[150px]">{tx.description}</p>
+                                                        <p className="text-xs text-slate-500">{new Date(tx.createdAt).toLocaleDateString()}</p>
+                                                    </div>
+                                                </div>
+                                                <span className={`text-sm font-bold ${isDeposit ? 'text-green-600' : 'text-slate-900'}`}>
+                                                    {isDeposit ? '+' : '-'}€{(tx.amount / 100).toFixed(2)}
+                                                </span>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             )}
-                        </div>
-                        <div className="text-4xl">💰</div>
+                        </Card>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4 border-t border-white/20 pt-4">
-                        <div>
-                            <p className="text-xs text-blue-200">Clicks Today</p>
-                            <p className="text-xl font-bold">{clicksToday}/{dailyLimit}</p>
-                        </div>
-                        <div>
-                            <p className="text-xs text-blue-200">Remaining</p>
-                            <p className="text-xl font-bold">{clicksRemaining}</p>
-                        </div>
-                        <div>
-                            <p className="text-xs text-blue-200">Total Spent</p>
-                            <p className="text-xl font-bold">€{totalSpent.toFixed(2)}</p>
-                        </div>
-                    </div>
-
-                    <div className="mt-6">
-                        <Button
-                            variant="ghost"
-                            className="w-full bg-white text-[#2563EB] hover:bg-blue-50 border border-blue-100 shadow-md"
-                        >
-                            💳 Add Funds to Wallet
-                        </Button>
+                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <h4 className="font-semibold text-slate-900 text-sm mb-2">About Your Wallet</h4>
+                        <ul className="text-xs text-slate-600 space-y-2">
+                            <li className="flex gap-2">
+                                <span className="text-slate-400">•</span>
+                                <span>Funds are used to pay for profile views (€0.10/click).</span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-slate-400">•</span>
+                                <span>Auto-reload is not currently enabled.</span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-slate-400">•</span>
+                                <span>Keep at least €2.00 to stay visible.</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </Card>
-
-            {/* Info Cards */}
-            <div className="grid gap-4 sm:grid-cols-3">
-                <Card padding="lg" className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-                    <div className="text-2xl mb-2">👁️</div>
-                    <p className="text-xs text-blue-700 font-medium">Cost per Click</p>
-                    <p className="text-2xl font-bold text-blue-600">€0.10</p>
-                </Card>
-                <Card padding="lg" className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-                    <div className="text-2xl mb-2">⚡</div>
-                    <p className="text-xs text-green-700 font-medium">Daily Limit</p>
-                    <p className="text-2xl font-bold text-green-600">{dailyLimit} clicks</p>
-                </Card>
-                <Card padding="lg" className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-                    <div className="text-2xl mb-2">🔄</div>
-                    <p className="text-xs text-purple-700 font-medium">Resets</p>
-                    <p className="text-2xl font-bold text-purple-600">Midnight</p>
-                </Card>
             </div>
-
-            {/* Transactions */}
-            <Card padding="none" className="overflow-hidden">
-                <div className="border-b border-[#E5E7EB] px-6 py-4 bg-gradient-to-r from-gray-50 to-white">
-                    <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
-                        <span>📝</span> Recent Transactions
-                    </h3>
-                </div>
-
-                {recentTransactions.length === 0 ? (
-                    <div className="p-12 text-center">
-                        <div className="text-5xl mb-4">💳</div>
-                        <h3 className="text-lg font-semibold text-[#333333] mb-2">No transactions yet</h3>
-                        <p className="text-sm text-[#7C7373] max-w-md mx-auto">
-                            Your transaction history will appear here when you add funds or profile clicks are charged.
-                        </p>
-                    </div>
-                ) : (
-                    <div className="divide-y divide-[#E5E7EB]">
-                        {recentTransactions.map((tx) => {
-                            const isDeposit = tx.type === 'DEPOSIT';
-
-                            return (
-                                <div key={tx.id} className="group flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-xl ${isDeposit ? 'bg-green-100' : 'bg-blue-100'
-                                            }`}>
-                                            {isDeposit ? '💰' : '👁️'}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-semibold text-[#333333]">
-                                                {tx.description}
-                                            </p>
-                                            <p className="text-xs text-[#7C7373] mt-0.5">
-                                                {new Date(tx.createdAt).toLocaleDateString()} at {new Date(tx.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className={`text-base font-bold ${isDeposit ? 'text-green-600' : 'text-red-600'
-                                            }`}>
-                                            {isDeposit ? '+' : '-'}€{(tx.amount / 100).toFixed(2)}
-                                        </p>
-                                        <Badge variant="success">
-                                            Completed
-                                        </Badge>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-            </Card>
-
-            {/* Help Card */}
-            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="lg">
-                <h3 className="text-base font-bold text-[#333333] flex items-center gap-2 mb-3">
-                    <span>💡</span> How Wallet Works
-                </h3>
-                <div className="space-y-2 text-sm text-[#7C7373]">
-                    <p>• <strong>€0.10 per click:</strong> You're only charged when a client views your full profile after seeing your offer</p>
-                    <p>• <strong>Daily limit:</strong> Protects you from overspending - currently set to {dailyLimit} clicks per day</p>
-                    <p>• <strong>Minimum balance:</strong> Keep at least €2.00 to continue receiving requests</p>
-                    <p>• <strong>Auto-resets:</strong> Your daily click counter resets at midnight each day</p>
-                </div>
-            </Card>
         </div>
     );
 }

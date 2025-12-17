@@ -4,11 +4,14 @@ import { SearchResults } from './SearchResults';
 import { Container } from '@/components/ui/Container';
 import { Navbar } from '@/components/layout/Navbar';
 import { SkeletonProfessionalCard } from '@/components/ui/Skeleton';
+import { getTranslations } from 'next-intl/server';
 
 // No need for force-dynamic - the page wrapper is static,
 // only SearchResults is dynamic (client component with useSearchParams)
 
-export default function SearchPage() {
+export default async function SearchPage() {
+  const t = await getTranslations('Search');
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -16,10 +19,10 @@ export default function SearchPage() {
         <Container>
           <div className="mb-6">
             <h1 className="text-2xl font-semibold text-[#333333] mb-2">
-              Find Professionals
+              {t('title')}
             </h1>
             <p className="text-sm text-[#7C7373]">
-              Browse verified professionals and find the perfect match for your needs.
+              {t('subtitle')}
             </p>
           </div>
 

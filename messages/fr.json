@@ -162,7 +162,11 @@
             "jobGrowth": "Croissance des Missions",
             "jobsVsLastMonth": "missions vs dernier mois",
             "pendingOffers": "Offres en Attente",
-            "awaitingResponse": "En attente de réponse"
+            "awaitingResponse": "En attente de réponse",
+            "totalEarnings": "Gains Totaux",
+            "viewHistory": "Voir l'historique",
+            "fromLastMonth": "vs le mois dernier",
+            "pending": "Paiements en attente"
         },
         "ActivityFeed": {
             "emptyTitle": "Aucune activité récente",
@@ -265,7 +269,7 @@
         },
         "Hero": {
             "badge": "🚀 La 1ère place de marché pour les services pro",
-            "title": "Trouvez l'{highlight} parfait pour toute tâche.",
+            "title": "Trouvez l'<blue>{highlight}</blue> parfait pour toute tâche.",
             "highlight": "expert",
             "subtitle": "Connectez-vous avec des tuteurs, développeurs et coachs vérifiés en quelques minutes. Approuvé par +10 000 clients.",
             "verifiedPros": "Pros Vérifiés",

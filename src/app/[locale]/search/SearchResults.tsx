@@ -9,6 +9,7 @@ import { ProfessionalCard } from './ProfessionalCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Spinner } from '@/components/ui/Spinner';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 interface Professional {
   id: string;
@@ -44,6 +45,7 @@ interface SearchResponse {
 }
 
 export function SearchResults() {
+  const t = useTranslations('Search');
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -112,11 +114,11 @@ export function SearchResults() {
           <div className="mb-4 flex items-center justify-between">
             <p className="text-sm text-[#7C7373]">
               {loading ? (
-                <span>Searching...</span>
+                <span>{t('results.searching')}</span>
               ) : (
                 <span>
-                  {total} professional{total !== 1 ? 's' : ''} found
-                  {query && <span> for &quot;{query}&quot;</span>}
+                  {t('results.count', { count: total })}
+                  {query && <span>{t('results.forQuery', { query })}</span>}
                 </span>
               )}
             </p>
@@ -146,17 +148,17 @@ export function SearchResults() {
                     disabled={page === 1}
                     className="px-4 py-2"
                   >
-                    Previous
+                    {t('results.previous')}
                   </Button>
                   <span className="text-sm text-[#7C7373]">
-                    Page {page} of {totalPages}
+                    {t('results.pageInfo', { page, total: totalPages })}
                   </span>
                   <Button
                     onClick={() => setPage((p) => p + 1)}
                     disabled={!hasMore}
                     className="px-4 py-2"
                   >
-                    Next
+                    {t('results.next')}
                   </Button>
                 </div>
               )}
@@ -167,10 +169,10 @@ export function SearchResults() {
           {!loading && professionals.length === 0 && (
             <EmptyState
               icon="🔍"
-              title="No professionals found"
-              description="Try adjusting your search filters or browse all categories to find the right professional for your needs."
+              title={t('empty.title')}
+              description={t('empty.desc')}
               action={{
-                label: 'Clear filters',
+                label: t('empty.action'),
                 href: '/search',
               }}
             />

@@ -23,7 +23,7 @@ export default async function AdminLayout({
 
     // Double-check admin role in database
     const user = await prisma.user.findUnique({
-        where: { clerkId: userId },
+        where: { clerkId: userId! },
     });
 
     if (!user || user.role !== 'ADMIN') {

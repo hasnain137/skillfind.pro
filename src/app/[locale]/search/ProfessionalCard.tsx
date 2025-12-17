@@ -1,10 +1,11 @@
 // src/app/search/ProfessionalCard.tsx
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { Badge } from '@/components/ui/Badge';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 interface Professional {
   id: string;
@@ -28,18 +29,17 @@ interface Professional {
   }>;
 }
 
-
-
 export function ProfessionalCard({ professional }: { professional: Professional }) {
+  const t = useTranslations('ProfessionalCard');
   const { user, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services } = professional;
 
   const priceDisplay = hourlyRateMin && hourlyRateMax
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
     : hourlyRateMin
-      ? `From €${hourlyRateMin}/hr`
-      : 'Contact for pricing';
+      ? t('priceFrom', { price: hourlyRateMin })
+      : t('contactForPricing');
 
-  const primaryService = services[0]?.title || 'Professional';
+  const primaryService = services[0]?.title || t('defaultService');
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
@@ -71,7 +71,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
         <div className="flex items-center gap-2 text-xs text-[#7C7373]">
           <span className="text-[#F59E0B]">★</span>
           <span className="font-semibold text-[#333333]">{rating.toFixed(1)}</span>
-          <span>({reviewCount} review{reviewCount !== 1 ? 's' : ''})</span>
+          <span>({t('reviews', { count: reviewCount })})</span>
         </div>
       )}
 
@@ -84,7 +84,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
         )}
         {isRemote && (
           <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] text-[#166534]">
-            🌐 Remote
+            🌐 {t('remote')}
           </span>
         )}
       </div>
@@ -99,7 +99,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
           ))}
           {services.length > 2 && (
             <Badge variant="gray" className="text-[10px]">
-              +{services.length - 2} more
+              {t('moreServices', { count: services.length - 2 })}
             </Badge>
           )}
         </div>
@@ -111,7 +111,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
       {/* Action */}
       <Link href={`/professionals/${professional.id}`}>
         <Button className="w-full justify-center py-2.5 text-xs">
-          View Profile
+          {t('viewProfile')}
         </Button>
       </Link>
     </div>

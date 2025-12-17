@@ -1,12 +1,15 @@
+// src/app/search/MobileFilterDrawer.tsx
 'use client';
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { SearchFilters } from './SearchFilters';
+import { useTranslations } from 'next-intl';
 
 export function MobileFilterDrawer() {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations('Search');
 
   return (
     <>
@@ -16,7 +19,7 @@ export function MobileFilterDrawer() {
           variant="outline"
           className="w-full justify-center gap-2"
         >
-          <span>⚙️</span> Filters
+          <span>⚙️</span> {t('filters.title')}
         </Button>
       </div>
 
@@ -42,7 +45,7 @@ export function MobileFilterDrawer() {
             >
               <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between border-b p-4">
-                  <h3 className="font-semibold">Filters</h3>
+                  <h3 className="font-semibold">{t('filters.title')}</h3>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="p-2 text-gray-500 hover:text-gray-700"
@@ -52,12 +55,12 @@ export function MobileFilterDrawer() {
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4">
-                  <SearchFilters />
+                  <SearchFilters onApply={() => setIsOpen(false)} />
                 </div>
 
                 <div className="border-t p-4">
                   <Button onClick={() => setIsOpen(false)} className="w-full justify-center">
-                    Show Results
+                    {t('filters.showResults')}
                   </Button>
                 </div>
               </div>

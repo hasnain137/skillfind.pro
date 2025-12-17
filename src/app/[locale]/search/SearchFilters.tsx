@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 interface Category {
   id: string;
@@ -13,6 +14,7 @@ interface Category {
 }
 
 export function SearchFilters({ onApply }: { onApply?: () => void }) {
+  const t = useTranslations('Search');
   const router = useRouter();
   const searchParams = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -66,18 +68,18 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
 
   return (
     <Card padding="lg" className="sticky top-4">
-      <h3 className="text-sm font-semibold text-[#333333] mb-4">Filters</h3>
+      <h3 className="text-sm font-semibold text-[#333333] mb-4">{t('filters.title')}</h3>
 
       {/* Search */}
       <div className="mb-4">
         <label className="block text-xs font-medium text-[#7C7373] mb-1.5">
-          Search
+          {t('filters.searchLabel')}
         </label>
         <input
           type="text"
           value={filters.search}
           onChange={(e) => handleFilterChange('search', e.target.value)}
-          placeholder="Keywords..."
+          placeholder={t('filters.searchPlaceholder')}
           className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
         />
       </div>
@@ -85,13 +87,13 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
       {/* Location */}
       <div className="mb-4">
         <label className="block text-xs font-medium text-[#7C7373] mb-1.5">
-          Location
+          {t('filters.locationLabel')}
         </label>
         <input
           type="text"
           value={filters.location}
           onChange={(e) => handleFilterChange('location', e.target.value)}
-          placeholder="City or region..."
+          placeholder={t('filters.locationPlaceholder')}
           className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
         />
       </div>
@@ -99,14 +101,14 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
       {/* Category */}
       <div className="mb-4">
         <label className="block text-xs font-medium text-[#7C7373] mb-1.5">
-          Category
+          {t('filters.categoryLabel')}
         </label>
         <select
           value={filters.category}
           onChange={(e) => handleFilterChange('category', e.target.value)}
           className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
         >
-          <option value="">All categories</option>
+          <option value="">{t('filters.allCategories')}</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.nameEn}
@@ -124,38 +126,38 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
             onChange={(e) => handleFilterChange('remote', e.target.checked ? 'true' : '')}
             className="h-4 w-4 rounded border-[#E5E7EB] text-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/15"
           />
-          <span className="text-xs font-medium text-[#7C7373]">Remote only</span>
+          <span className="text-xs font-medium text-[#7C7373]">{t('filters.remoteLabel')}</span>
         </label>
       </div>
 
       {/* Min Rating */}
       <div className="mb-4">
         <label className="block text-xs font-medium text-[#7C7373] mb-1.5">
-          Minimum rating
+          {t('filters.ratingLabel')}
         </label>
         <select
           value={filters.minRating}
           onChange={(e) => handleFilterChange('minRating', e.target.value)}
           className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
         >
-          <option value="">Any rating</option>
-          <option value="4.5">4.5+ stars</option>
-          <option value="4.0">4.0+ stars</option>
-          <option value="3.5">3.5+ stars</option>
-          <option value="3.0">3.0+ stars</option>
+          <option value="">{t('filters.anyRating')}</option>
+          <option value="4.5">{t('filters.stars', { count: 4.5 })}</option>
+          <option value="4.0">{t('filters.stars', { count: 4.0 })}</option>
+          <option value="3.5">{t('filters.stars', { count: 3.5 })}</option>
+          <option value="3.0">{t('filters.stars', { count: 3.0 })}</option>
         </select>
       </div>
 
       {/* Max Price */}
       <div className="mb-4">
         <label className="block text-xs font-medium text-[#7C7373] mb-1.5">
-          Max hourly rate (€)
+          {t('filters.priceLabel')}
         </label>
         <input
           type="number"
           value={filters.maxPrice}
           onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-          placeholder="e.g. 50"
+          placeholder={t('filters.pricePlaceholder')}
           min="0"
           className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
         />
@@ -164,13 +166,13 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
       {/* Actions */}
       <div className="flex flex-col gap-2">
         <Button onClick={applyFilters} className="w-full justify-center py-2">
-          Apply Filters
+          {t('filters.apply')}
         </Button>
         <button
           onClick={clearFilters}
           className="text-xs text-[#7C7373] hover:text-[#333333] underline"
         >
-          Clear all
+          {t('filters.clear')}
         </button>
       </div>
     </Card>

@@ -24,7 +24,8 @@ export function Hero() {
               </FadeIn>
               <h1 className="text-4xl font-semibold tracking-tighter text-[#333333] sm:text-5xl md:text-6xl">
                 {t.rich('title', {
-                  highlight: (chunks) => <span className="text-[#2563EB]">{chunks}</span>
+                  blue: (chunks) => <span className="text-[#2563EB]">{chunks}</span>,
+                  highlight: t('highlight')
                 })}
               </h1>
               <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto lg:mx-0">
