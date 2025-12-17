@@ -252,209 +252,209 @@
                 "transactions": "Transactions",
                 "settings": "Settings"
             }
+        }
+    },
+    "Landing": {
+        "Navbar": {
+            "howItWorks": "How it works",
+            "categories": "Categories",
+            "topPros": "Top professionals",
+            "forPros": "For professionals",
+            "login": "Log in",
+            "signup": "Sign up"
         },
-        "Landing": {
-            "Navbar": {
-                "howItWorks": "How it works",
-                "categories": "Categories",
-                "topPros": "Top professionals",
-                "forPros": "For professionals",
-                "login": "Log in",
-                "signup": "Sign up"
-            },
-            "Hero": {
-                "badge": "🚀 The #1 Marketplace for Professional Services",
-                "title": "Find the perfect {highlight} for any task.",
-                "highlight": "expert",
-                "subtitle": "Connect with verified tutors, developers, cleaners, and coaches in minutes. Trusted by 10,000+ clients worldwide.",
-                "verifiedPros": "Verified Pros",
-                "securePayment": "Secure Payment",
-                "satisfaction": "Satisfaction Guarantee",
-                "newProsBadge": "500+ New Pros",
-                "joinedWeek": "joined this week"
-            },
-            "Footer": {
-                "tagline": "A trusted marketplace connecting clients with verified professionals for tutoring, tech, home services, and more.",
-                "forClients": "For clients",
-                "browse": "Browse categories",
-                "featured": "Featured professionals",
-                "howItWorks": "How it works",
-                "forPros": "For professionals",
-                "becomePro": "Become a professional",
-                "pricing": "Pricing & visibility",
-                "help": "Help & support",
-                "company": "Company",
-                "about": "About",
-                "terms": "Terms",
-                "privacy": "Privacy",
-                "rights": "© {year} SkillFind. All rights reserved.",
-                "madeWithLove": "Made with ❤️ for the community."
-            },
-            "HowItWorks": {
-                "eyebrow": "Simple & Transparent",
-                "title": "How SkillFind works.",
-                "subtitle": "Get the job done in three easy steps. No hidden fees, no hassle.",
-                "steps": {
-                    "step1": {
-                        "title": "Create a request",
-                        "description": "Tell us what you need, your budget, and delivery preference. It's free and takes 2 minutes."
-                    },
-                    "step2": {
-                        "title": "Receive custom offers",
-                        "description": "Verified professionals will review your request and send tailored offers with price and availability."
-                    },
-                    "step3": {
-                        "title": "Hire & leave a review",
-                        "description": "Choose the best fit, chat directly, and get the job done. Leave a review to help the community."
-                    }
-                }
-            },
-            "Testimonials": {
-                "eyebrow": "Client Success Stories",
-                "title": "Trusted by clients and professionals.",
-                "subtitle": "See what our community has to say about their experience on SkillFind.",
-                "reviews": {
-                    "review1": "Amazing experience! Found a great tutor for my son within hours. The platform made it so easy to compare different professionals.",
-                    "review2": "As a professional, SkillFind has transformed my business. I get quality leads and the payment system is transparent and fair.",
-                    "review3": "Great platform! The verification process gave me confidence in choosing the right person for my home renovation project."
-                }
-            },
-            "PopularCategories": {
-                "eyebrow": "Most In-Demand",
-                "title": "Popular services this week.",
-                "subtitle": "Find help for your daily needs or long-term projects.",
-                "fallback": {
-                    "tutoring": {
-                        "name": "Tutoring",
-                        "description": "Math, languages, exam prep."
-                    },
-                    "tech": {
-                        "name": "Software & Tech",
-                        "description": "Websites, apps, tech support."
-                    },
-                    "design": {
-                        "name": "Design",
-                        "description": "Logos, UI/UX, graphics."
-                    },
-                    "health": {
-                        "name": "Health & Fitness",
-                        "description": "Training, nutrition, wellness."
-                    },
-                    "home": {
-                        "name": "Home Services",
-                        "description": "Cleaning, repairs, moving."
-                    },
-                    "business": {
-                        "name": "Business",
-                        "description": "Consulting, coaching, strategy."
-                    },
-                    "writing": {
-                        "name": "Writing",
-                        "description": "Content, copywriting, editing."
-                    },
-                    "music": {
-                        "name": "Music & Audio",
-                        "description": "Lessons, production, mixing."
-                    }
-                }
-            },
-            "TrustSection": {
-                "title": "Why 10,000+ clients trust SkillFind",
-                "intro": "We've built a marketplace where trust isn't an option—it's the foundation. From verified identities to secure transactions, we protect every step of your journey.",
-                "benefits": {
-                    "vetted": {
-                        "title": "Vetted Professionals",
-                        "description": "Every pro passes an identity check and profile review before joining."
-                    },
-                    "secure": {
-                        "title": "Secure Payments",
-                        "description": "Your money is held in escrow until you confirm the job is done perfectly."
-                    },
-                    "fair": {
-                        "title": "Fair Pricing",
-                        "description": "Get multiple offers and choose the one that fits your budget. No hidden fees."
-                    },
-                    "quality": {
-                        "title": "Quality Guaranteed",
-                        "description": "Not satisfied? We have a support team ready to help resolve any issues."
-                    }
+        "Hero": {
+            "badge": "🚀 The #1 Marketplace for Professional Services",
+            "title": "Find the perfect {highlight} for any task.",
+            "highlight": "expert",
+            "subtitle": "Connect with verified tutors, developers, cleaners, and coaches in minutes. Trusted by 10,000+ clients worldwide.",
+            "verifiedPros": "Verified Pros",
+            "securePayment": "Secure Payment",
+            "satisfaction": "Satisfaction Guarantee",
+            "newProsBadge": "500+ New Pros",
+            "joinedWeek": "joined this week"
+        },
+        "Footer": {
+            "tagline": "A trusted marketplace connecting clients with verified professionals for tutoring, tech, home services, and more.",
+            "forClients": "For clients",
+            "browse": "Browse categories",
+            "featured": "Featured professionals",
+            "howItWorks": "How it works",
+            "forPros": "For professionals",
+            "becomePro": "Become a professional",
+            "pricing": "Pricing & visibility",
+            "help": "Help & support",
+            "company": "Company",
+            "about": "About",
+            "terms": "Terms",
+            "privacy": "Privacy",
+            "rights": "© {year} SkillFind. All rights reserved.",
+            "madeWithLove": "Made with ❤️ for the community."
+        },
+        "HowItWorks": {
+            "eyebrow": "Simple & Transparent",
+            "title": "How SkillFind works.",
+            "subtitle": "Get the job done in three easy steps. No hidden fees, no hassle.",
+            "steps": {
+                "step1": {
+                    "title": "Create a request",
+                    "description": "Tell us what you need, your budget, and delivery preference. It's free and takes 2 minutes."
                 },
-                "rating": "{rating}/5 Average Rating",
-                "reviews": "from trusted reviews"
-            },
-            "DualCTA": {
-                "clients": {
-                    "badge": "For Clients",
-                    "title": "Need help with a project?",
-                    "description": "Find trusted professionals for any task. From tutoring to home repairs, we have you covered.",
-                    "button": "Find a Professional"
+                "step2": {
+                    "title": "Receive custom offers",
+                    "description": "Verified professionals will review your request and send tailored offers with price and availability."
                 },
-                "pros": {
-                    "badge": "For Professionals",
-                    "title": "Grow your business",
-                    "description": "Join 5,000+ experts receiving quality leads daily. Set your rates and work on your terms.",
-                    "button": "Join as a Pro"
+                "step3": {
+                    "title": "Hire & leave a review",
+                    "description": "Choose the best fit, chat directly, and get the job done. Leave a review to help the community."
                 }
-            },
-            "SuggestedSkills": {
-                "eyebrow": "Ideas to get started",
-                "title": "Not sure what to search for?",
-                "subtitle": "Here are some common things people use SkillFind for. Tap a skill to explore professionals in that area.",
-                "skills": {
-                    "math": "Math & exam prep",
-                    "language": "Language tutoring",
-                    "career": "CV & career coaching",
-                    "frontend": "Frontend bug fixing",
-                    "design": "Logo & brand design",
-                    "fitness": "Fitness & nutrition",
-                    "wellbeing": "Mental wellbeing support",
-                    "cleaning": "Home cleaning",
-                    "moving": "Moving & packing help",
-                    "resume": "Resume & LinkedIn review",
-                    "website": "Website troubleshooting",
-                    "social": "Social media support"
-                }
-            },
-            "CategoryDirectory": {
-                "eyebrow": "Browse all categories",
-                "title": "Explore everything on SkillFind.",
-                "subtitle": "From tutoring and tech to fitness, design, and home help — we bring all kinds of professionals together in one place.",
-                "groups": {
-                    "tutoring": "Tutoring & Education",
-                    "tech": "Software & Tech",
-                    "design": "Design & Creative",
-                    "business": "Business & Career",
-                    "health": "Health & Wellness",
-                    "home": "Home & Everyday"
-                }
-            },
-            "FeaturedPros": {
-                "eyebrow": "Featured professionals",
-                "title": "Meet highly rated experts.",
-                "subtitle": "These professionals have been vetted and reviewed by clients just like you.",
-                "fallbackTitle": "Our top-rated professionals will appear here soon.",
-                "fallbackDesc": "Start exploring by searching for the service you need or browse by category.",
-                "viewAll": "View All Professionals",
-                "verified": "Verified",
-                "moreServices": "+{count} more {count, plural, =1 {service} other {services}}",
-                "reviews": "({count} reviews)",
-                "startingFrom": "Starting from",
-                "contactPricing": "Contact for pricing",
-                "fromPrice": "From {price}/hr",
-                "remote": "Remote",
-                "viewProfile": "View Profile"
-            },
-            "LiveStats": {
-                "professionals": "Verified Professionals",
-                "reviews": "Trusted Reviews",
-                "requests": "Active Requests",
-                "jobs": "Jobs Completed"
-            },
-            "SearchCard": {
-                "placeholder": "Find a professional...",
-                "button": "Find",
-                "disclaimer": "Clients don't pay any fees. Professionals pay only when you view their profile."
             }
+        },
+        "Testimonials": {
+            "eyebrow": "Client Success Stories",
+            "title": "Trusted by clients and professionals.",
+            "subtitle": "See what our community has to say about their experience on SkillFind.",
+            "reviews": {
+                "review1": "Amazing experience! Found a great tutor for my son within hours. The platform made it so easy to compare different professionals.",
+                "review2": "As a professional, SkillFind has transformed my business. I get quality leads and the payment system is transparent and fair.",
+                "review3": "Great platform! The verification process gave me confidence in choosing the right person for my home renovation project."
+            }
+        },
+        "PopularCategories": {
+            "eyebrow": "Most In-Demand",
+            "title": "Popular services this week.",
+            "subtitle": "Find help for your daily needs or long-term projects.",
+            "fallback": {
+                "tutoring": {
+                    "name": "Tutoring",
+                    "description": "Math, languages, exam prep."
+                },
+                "tech": {
+                    "name": "Software & Tech",
+                    "description": "Websites, apps, tech support."
+                },
+                "design": {
+                    "name": "Design",
+                    "description": "Logos, UI/UX, graphics."
+                },
+                "health": {
+                    "name": "Health & Fitness",
+                    "description": "Training, nutrition, wellness."
+                },
+                "home": {
+                    "name": "Home Services",
+                    "description": "Cleaning, repairs, moving."
+                },
+                "business": {
+                    "name": "Business",
+                    "description": "Consulting, coaching, strategy."
+                },
+                "writing": {
+                    "name": "Writing",
+                    "description": "Content, copywriting, editing."
+                },
+                "music": {
+                    "name": "Music & Audio",
+                    "description": "Lessons, production, mixing."
+                }
+            }
+        },
+        "TrustSection": {
+            "title": "Why 10,000+ clients trust SkillFind",
+            "intro": "We've built a marketplace where trust isn't an option—it's the foundation. From verified identities to secure transactions, we protect every step of your journey.",
+            "benefits": {
+                "vetted": {
+                    "title": "Vetted Professionals",
+                    "description": "Every pro passes an identity check and profile review before joining."
+                },
+                "secure": {
+                    "title": "Secure Payments",
+                    "description": "Your money is held in escrow until you confirm the job is done perfectly."
+                },
+                "fair": {
+                    "title": "Fair Pricing",
+                    "description": "Get multiple offers and choose the one that fits your budget. No hidden fees."
+                },
+                "quality": {
+                    "title": "Quality Guaranteed",
+                    "description": "Not satisfied? We have a support team ready to help resolve any issues."
+                }
+            },
+            "rating": "{rating}/5 Average Rating",
+            "reviews": "from trusted reviews"
+        },
+        "DualCTA": {
+            "clients": {
+                "badge": "For Clients",
+                "title": "Need help with a project?",
+                "description": "Find trusted professionals for any task. From tutoring to home repairs, we have you covered.",
+                "button": "Find a Professional"
+            },
+            "pros": {
+                "badge": "For Professionals",
+                "title": "Grow your business",
+                "description": "Join 5,000+ experts receiving quality leads daily. Set your rates and work on your terms.",
+                "button": "Join as a Pro"
+            }
+        },
+        "SuggestedSkills": {
+            "eyebrow": "Ideas to get started",
+            "title": "Not sure what to search for?",
+            "subtitle": "Here are some common things people use SkillFind for. Tap a skill to explore professionals in that area.",
+            "skills": {
+                "math": "Math & exam prep",
+                "language": "Language tutoring",
+                "career": "CV & career coaching",
+                "frontend": "Frontend bug fixing",
+                "design": "Logo & brand design",
+                "fitness": "Fitness & nutrition",
+                "wellbeing": "Mental wellbeing support",
+                "cleaning": "Home cleaning",
+                "moving": "Moving & packing help",
+                "resume": "Resume & LinkedIn review",
+                "website": "Website troubleshooting",
+                "social": "Social media support"
+            }
+        },
+        "CategoryDirectory": {
+            "eyebrow": "Browse all categories",
+            "title": "Explore everything on SkillFind.",
+            "subtitle": "From tutoring and tech to fitness, design, and home help — we bring all kinds of professionals together in one place.",
+            "groups": {
+                "tutoring": "Tutoring & Education",
+                "tech": "Software & Tech",
+                "design": "Design & Creative",
+                "business": "Business & Career",
+                "health": "Health & Wellness",
+                "home": "Home & Everyday"
+            }
+        },
+        "FeaturedPros": {
+            "eyebrow": "Featured professionals",
+            "title": "Meet highly rated experts.",
+            "subtitle": "These professionals have been vetted and reviewed by clients just like you.",
+            "fallbackTitle": "Our top-rated professionals will appear here soon.",
+            "fallbackDesc": "Start exploring by searching for the service you need or browse by category.",
+            "viewAll": "View All Professionals",
+            "verified": "Verified",
+            "moreServices": "+{count} more {count, plural, =1 {service} other {services}}",
+            "reviews": "({count} reviews)",
+            "startingFrom": "Starting from",
+            "contactPricing": "Contact for pricing",
+            "fromPrice": "From {price}/hr",
+            "remote": "Remote",
+            "viewProfile": "View Profile"
+        },
+        "LiveStats": {
+            "professionals": "Verified Professionals",
+            "reviews": "Trusted Reviews",
+            "requests": "Active Requests",
+            "jobs": "Jobs Completed"
+        },
+        "SearchCard": {
+            "placeholder": "Find a professional...",
+            "button": "Find",
+            "disclaimer": "Clients don't pay any fees. Professionals pay only when you view their profile."
         }
     }
 }

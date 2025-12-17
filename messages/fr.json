@@ -252,209 +252,209 @@
                 "transactions": "Transactions",
                 "settings": "Paramètres"
             }
+        }
+    },
+    "Landing": {
+        "Navbar": {
+            "howItWorks": "Comment ça marche",
+            "categories": "Catégories",
+            "topPros": "Meilleurs pros",
+            "forPros": "Pour les professionnels",
+            "login": "Connexion",
+            "signup": "S'inscrire"
         },
-        "Landing": {
-            "Navbar": {
-                "howItWorks": "Comment ça marche",
-                "categories": "Catégories",
-                "topPros": "Meilleurs pros",
-                "forPros": "Pour les professionnels",
-                "login": "Connexion",
-                "signup": "S'inscrire"
-            },
-            "Hero": {
-                "badge": "🚀 La 1ère place de marché pour les services pro",
-                "title": "Trouvez l'{highlight} parfait pour toute tâche.",
-                "highlight": "expert",
-                "subtitle": "Connectez-vous avec des tuteurs, développeurs et coachs vérifiés en quelques minutes. Approuvé par +10 000 clients.",
-                "verifiedPros": "Pros Vérifiés",
-                "securePayment": "Paiement Sécurisé",
-                "satisfaction": "Satisfaction Garantie",
-                "newProsBadge": "500+ Nouveaux Pros",
-                "joinedWeek": "inscrits cette semaine"
-            },
-            "Footer": {
-                "tagline": "Une place de marché de confiance connectant clients et professionnels vérifiés pour le tutorat, la tech, et plus.",
-                "forClients": "Pour les clients",
-                "browse": "Explorer les catégories",
-                "featured": "Professionnels en vedette",
-                "howItWorks": "Comment ça marche",
-                "forPros": "Pour les professionnels",
-                "becomePro": "Devenir professionnel",
-                "pricing": "Tarifs & visibilité",
-                "help": "Aide & support",
-                "company": "Entreprise",
-                "about": "À propos",
-                "terms": "Conditions",
-                "privacy": "Confidentialité",
-                "rights": "© {year} SkillFind. Tous droits réservés.",
-                "madeWithLove": "Fait avec ❤️ pour la communauté."
-            },
-            "HowItWorks": {
-                "eyebrow": "Simple & Transparent",
-                "title": "Comment ça marche.",
-                "subtitle": "Réalisez votre projet en trois étapes simples. Pas de frais cachés, pas de tracas.",
-                "steps": {
-                    "step1": {
-                        "title": "Créez une demande",
-                        "description": "Dites-nous ce dont vous avez besoin, votre budget et vos délais. C'est gratuit et prend 2 minutes."
-                    },
-                    "step2": {
-                        "title": "Recevez des offres personnalisées",
-                        "description": "Des professionnels vérifiés examineront votre demande et enverront des offres sur mesure avec prix et disponibilité."
-                    },
-                    "step3": {
-                        "title": "Engagez & laissez un avis",
-                        "description": "Choisissez la meilleure offre, discutez en direct et réalisez le travail. Laissez un avis pour aider la communauté."
-                    }
-                }
-            },
-            "Testimonials": {
-                "eyebrow": "Témoignages Clients",
-                "title": "Approuvé par clients et professionnels.",
-                "subtitle": "Découvrez ce que notre communauté dit de son expérience sur SkillFind.",
-                "reviews": {
-                    "review1": "Expérience incroyable ! J'ai trouvé un super tuteur pour mon fils en quelques heures. La plateforme rend la comparaison très facile.",
-                    "review2": "En tant que pro, SkillFind a transformé mon activité. J'obtiens des leads de qualité et le système de paiement est transparent.",
-                    "review3": "Super plateforme ! Le processus de vérification m'a donné confiance pour choisir la bonne personne pour mes travaux."
-                }
-            },
-            "PopularCategories": {
-                "eyebrow": "Les plus demandés",
-                "title": "Services populaires cette semaine.",
-                "subtitle": "Trouvez de l'aide pour vos besoins quotidiens ou projets à long terme.",
-                "fallback": {
-                    "tutoring": {
-                        "name": "Tutorat",
-                        "description": "Maths, langues, prépa examens."
-                    },
-                    "tech": {
-                        "name": "Logiciel & Tech",
-                        "description": "Sites web, applis, support technique."
-                    },
-                    "design": {
-                        "name": "Design",
-                        "description": "Logos, UI/UX, graphisme."
-                    },
-                    "health": {
-                        "name": "Santé & Fitness",
-                        "description": "Entraînement, nutrition, bien-être."
-                    },
-                    "home": {
-                        "name": "Services à domicile",
-                        "description": "Ménage, réparations, déménagement."
-                    },
-                    "business": {
-                        "name": "Business",
-                        "description": "Conseil, coaching, stratégie."
-                    },
-                    "writing": {
-                        "name": "Rédaction",
-                        "description": "Contenu, copywriting, relecture."
-                    },
-                    "music": {
-                        "name": "Musique & Audio",
-                        "description": "Cours, production, mixage."
-                    }
-                }
-            },
-            "TrustSection": {
-                "title": "Pourquoi +10 000 clients font confiance à SkillFind",
-                "intro": "Nous avons bâti une place de marché où la confiance est la fondation. Des identités vérifiées aux transactions sécurisées, nous protégeons chaque étape.",
-                "benefits": {
-                    "vetted": {
-                        "title": "Pros Vérifiés",
-                        "description": "Chaque pro passe une vérification d'identité et de profil avant de rejoindre."
-                    },
-                    "secure": {
-                        "title": "Paiements Sécurisés",
-                        "description": "Votre argent est bloqué jusqu'à ce que vous confirmiez que le travail est parfait."
-                    },
-                    "fair": {
-                        "title": "Prix Justes",
-                        "description": "Obtenez plusieurs offres et choisissez celle qui correspond à votre budget."
-                    },
-                    "quality": {
-                        "title": "Qualité Garantie",
-                        "description": "Pas satisfait ? Notre équipe de support est prête à résoudre tout problème."
-                    }
+        "Hero": {
+            "badge": "🚀 La 1ère place de marché pour les services pro",
+            "title": "Trouvez l'{highlight} parfait pour toute tâche.",
+            "highlight": "expert",
+            "subtitle": "Connectez-vous avec des tuteurs, développeurs et coachs vérifiés en quelques minutes. Approuvé par +10 000 clients.",
+            "verifiedPros": "Pros Vérifiés",
+            "securePayment": "Paiement Sécurisé",
+            "satisfaction": "Satisfaction Garantie",
+            "newProsBadge": "500+ Nouveaux Pros",
+            "joinedWeek": "inscrits cette semaine"
+        },
+        "Footer": {
+            "tagline": "Une place de marché de confiance connectant clients et professionnels vérifiés pour le tutorat, la tech, et plus.",
+            "forClients": "Pour les clients",
+            "browse": "Explorer les catégories",
+            "featured": "Professionnels en vedette",
+            "howItWorks": "Comment ça marche",
+            "forPros": "Pour les professionnels",
+            "becomePro": "Devenir professionnel",
+            "pricing": "Tarifs & visibilité",
+            "help": "Aide & support",
+            "company": "Entreprise",
+            "about": "À propos",
+            "terms": "Conditions",
+            "privacy": "Confidentialité",
+            "rights": "© {year} SkillFind. Tous droits réservés.",
+            "madeWithLove": "Fait avec ❤️ pour la communauté."
+        },
+        "HowItWorks": {
+            "eyebrow": "Simple & Transparent",
+            "title": "Comment ça marche.",
+            "subtitle": "Réalisez votre projet en trois étapes simples. Pas de frais cachés, pas de tracas.",
+            "steps": {
+                "step1": {
+                    "title": "Créez une demande",
+                    "description": "Dites-nous ce dont vous avez besoin, votre budget et vos délais. C'est gratuit et prend 2 minutes."
                 },
-                "rating": "Note moyenne {rating}/5",
-                "reviews": "d'avis vérifiés"
-            },
-            "DualCTA": {
-                "clients": {
-                    "badge": "Pour les Clients",
-                    "title": "Besoin d'aide ?",
-                    "description": "Trouvez des pros de confiance pour toute tâche. Du tutorat aux réparations, nous avons ce qu'il vous faut.",
-                    "button": "Trouver un Pro"
+                "step2": {
+                    "title": "Recevez des offres personnalisées",
+                    "description": "Des professionnels vérifiés examineront votre demande et enverront des offres sur mesure avec prix et disponibilité."
                 },
-                "pros": {
-                    "badge": "Pour les Professionnels",
-                    "title": "Développez votre activité",
-                    "description": "Rejoignez +5 000 experts recevant des leads quotidiens. Fixez vos tarifs et conditions.",
-                    "button": "Rejoindre comme Pro"
+                "step3": {
+                    "title": "Engagez & laissez un avis",
+                    "description": "Choisissez la meilleure offre, discutez en direct et réalisez le travail. Laissez un avis pour aider la communauté."
                 }
-            },
-            "SuggestedSkills": {
-                "eyebrow": "Idées pour commencer",
-                "title": "Vous ne savez pas quoi chercher ?",
-                "subtitle": "Voici quelques utilisations courantes de SkillFind. Tapez une compétence pour explorer.",
-                "skills": {
-                    "math": "Maths et prépa examens",
-                    "language": "Cours de langue",
-                    "career": "Coaching CV et carrière",
-                    "frontend": "Correction bugs Frontend",
-                    "design": "Logo et design de marque",
-                    "fitness": "Fitness et nutrition",
-                    "wellbeing": "Soutien bien-être mental",
-                    "cleaning": "Ménage à domicile",
-                    "moving": "Aide au déménagement",
-                    "resume": "Revue CV et LinkedIn",
-                    "website": "Dépannage site web",
-                    "social": "Support réseaux sociaux"
-                }
-            },
-            "CategoryDirectory": {
-                "eyebrow": "Parcourir toutes les catégories",
-                "title": "Explorez tout sur SkillFind.",
-                "subtitle": "Du tutorat à la tech, fitness, design et aide à domicile — nous réunissons tous types de professionnels au même endroit.",
-                "groups": {
-                    "tutoring": "Tutorat & Éducation",
-                    "tech": "Logiciel & Tech",
-                    "design": "Design & Créatif",
-                    "business": "Business & Carrière",
-                    "health": "Santé & Bien-être",
-                    "home": "Maison & Quotidien"
-                }
-            },
-            "FeaturedPros": {
-                "eyebrow": "Professionnels en vedette",
-                "title": "Rencontrez des experts très bien notés.",
-                "subtitle": "Ces professionnels ont été vérifiés et évalués par des clients comme vous.",
-                "fallbackTitle": "Nos meilleurs professionnels apparaîtront bientôt ici.",
-                "fallbackDesc": "Commencez par rechercher le service dont vous avez besoin ou parcourez par catégorie.",
-                "viewAll": "Voir tous les professionnels",
-                "verified": "Vérifié",
-                "moreServices": "+{count} autres {count, plural, =1 {service} other {services}}",
-                "reviews": "({count} avis)",
-                "startingFrom": "À partir de",
-                "contactPricing": "Contactez pour tarif",
-                "fromPrice": "Dès {price}/h",
-                "remote": "À distance",
-                "viewProfile": "Voir le profil"
-            },
-            "LiveStats": {
-                "professionals": "Professionnels vérifiés",
-                "reviews": "Avis de confiance",
-                "requests": "Demandes actives",
-                "jobs": "Travaux terminés"
-            },
-            "SearchCard": {
-                "placeholder": "Trouver un professionnel...",
-                "button": "Trouver",
-                "disclaimer": "Les clients ne paient aucun frais. Les professionnels ne paient que lorsque vous consultez leur profil."
             }
+        },
+        "Testimonials": {
+            "eyebrow": "Témoignages Clients",
+            "title": "Approuvé par clients et professionnels.",
+            "subtitle": "Découvrez ce que notre communauté dit de son expérience sur SkillFind.",
+            "reviews": {
+                "review1": "Expérience incroyable ! J'ai trouvé un super tuteur pour mon fils en quelques heures. La plateforme rend la comparaison très facile.",
+                "review2": "En tant que pro, SkillFind a transformé mon activité. J'obtiens des leads de qualité et le système de paiement est transparent.",
+                "review3": "Super plateforme ! Le processus de vérification m'a donné confiance pour choisir la bonne personne pour mes travaux."
+            }
+        },
+        "PopularCategories": {
+            "eyebrow": "Les plus demandés",
+            "title": "Services populaires cette semaine.",
+            "subtitle": "Trouvez de l'aide pour vos besoins quotidiens ou projets à long terme.",
+            "fallback": {
+                "tutoring": {
+                    "name": "Tutorat",
+                    "description": "Maths, langues, prépa examens."
+                },
+                "tech": {
+                    "name": "Logiciel & Tech",
+                    "description": "Sites web, applis, support technique."
+                },
+                "design": {
+                    "name": "Design",
+                    "description": "Logos, UI/UX, graphisme."
+                },
+                "health": {
+                    "name": "Santé & Fitness",
+                    "description": "Entraînement, nutrition, bien-être."
+                },
+                "home": {
+                    "name": "Services à domicile",
+                    "description": "Ménage, réparations, déménagement."
+                },
+                "business": {
+                    "name": "Business",
+                    "description": "Conseil, coaching, stratégie."
+                },
+                "writing": {
+                    "name": "Rédaction",
+                    "description": "Contenu, copywriting, relecture."
+                },
+                "music": {
+                    "name": "Musique & Audio",
+                    "description": "Cours, production, mixage."
+                }
+            }
+        },
+        "TrustSection": {
+            "title": "Pourquoi +10 000 clients font confiance à SkillFind",
+            "intro": "Nous avons bâti une place de marché où la confiance est la fondation. Des identités vérifiées aux transactions sécurisées, nous protégeons chaque étape.",
+            "benefits": {
+                "vetted": {
+                    "title": "Pros Vérifiés",
+                    "description": "Chaque pro passe une vérification d'identité et de profil avant de rejoindre."
+                },
+                "secure": {
+                    "title": "Paiements Sécurisés",
+                    "description": "Votre argent est bloqué jusqu'à ce que vous confirmiez que le travail est parfait."
+                },
+                "fair": {
+                    "title": "Prix Justes",
+                    "description": "Obtenez plusieurs offres et choisissez celle qui correspond à votre budget."
+                },
+                "quality": {
+                    "title": "Qualité Garantie",
+                    "description": "Pas satisfait ? Notre équipe de support est prête à résoudre tout problème."
+                }
+            },
+            "rating": "Note moyenne {rating}/5",
+            "reviews": "d'avis vérifiés"
+        },
+        "DualCTA": {
+            "clients": {
+                "badge": "Pour les Clients",
+                "title": "Besoin d'aide ?",
+                "description": "Trouvez des pros de confiance pour toute tâche. Du tutorat aux réparations, nous avons ce qu'il vous faut.",
+                "button": "Trouver un Pro"
+            },
+            "pros": {
+                "badge": "Pour les Professionnels",
+                "title": "Développez votre activité",
+                "description": "Rejoignez +5 000 experts recevant des leads quotidiens. Fixez vos tarifs et conditions.",
+                "button": "Rejoindre comme Pro"
+            }
+        },
+        "SuggestedSkills": {
+            "eyebrow": "Idées pour commencer",
+            "title": "Vous ne savez pas quoi chercher ?",
+            "subtitle": "Voici quelques utilisations courantes de SkillFind. Tapez une compétence pour explorer.",
+            "skills": {
+                "math": "Maths et prépa examens",
+                "language": "Cours de langue",
+                "career": "Coaching CV et carrière",
+                "frontend": "Correction bugs Frontend",
+                "design": "Logo et design de marque",
+                "fitness": "Fitness et nutrition",
+                "wellbeing": "Soutien bien-être mental",
+                "cleaning": "Ménage à domicile",
+                "moving": "Aide au déménagement",
+                "resume": "Revue CV et LinkedIn",
+                "website": "Dépannage site web",
+                "social": "Support réseaux sociaux"
+            }
+        },
+        "CategoryDirectory": {
+            "eyebrow": "Parcourir toutes les catégories",
+            "title": "Explorez tout sur SkillFind.",
+            "subtitle": "Du tutorat à la tech, fitness, design et aide à domicile — nous réunissons tous types de professionnels au même endroit.",
+            "groups": {
+                "tutoring": "Tutorat & Éducation",
+                "tech": "Logiciel & Tech",
+                "design": "Design & Créatif",
+                "business": "Business & Carrière",
+                "health": "Santé & Bien-être",
+                "home": "Maison & Quotidien"
+            }
+        },
+        "FeaturedPros": {
+            "eyebrow": "Professionnels en vedette",
+            "title": "Rencontrez des experts très bien notés.",
+            "subtitle": "Ces professionnels ont été vérifiés et évalués par des clients comme vous.",
+            "fallbackTitle": "Nos meilleurs professionnels apparaîtront bientôt ici.",
+            "fallbackDesc": "Commencez par rechercher le service dont vous avez besoin ou parcourez par catégorie.",
+            "viewAll": "Voir tous les professionnels",
+            "verified": "Vérifié",
+            "moreServices": "+{count} autres {count, plural, =1 {service} other {services}}",
+            "reviews": "({count} avis)",
+            "startingFrom": "À partir de",
+            "contactPricing": "Contactez pour tarif",
+            "fromPrice": "Dès {price}/h",
+            "remote": "À distance",
+            "viewProfile": "Voir le profil"
+        },
+        "LiveStats": {
+            "professionals": "Professionnels vérifiés",
+            "reviews": "Avis de confiance",
+            "requests": "Demandes actives",
+            "jobs": "Travaux terminés"
+        },
+        "SearchCard": {
+            "placeholder": "Trouver un professionnel...",
+            "button": "Trouver",
+            "disclaimer": "Les clients ne paient aucun frais. Les professionnels ne paient que lorsque vous consultez leur profil."
         }
     }
 }
