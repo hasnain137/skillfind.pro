@@ -3,7 +3,7 @@
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
-import { Footer } from "@/components/landing/Footer";
+import { FooterContent as Footer } from "@/components/landing/FooterContent";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { useLocale } from 'next-intl';

@@ -1,4 +1,4 @@
-'use client';
+
 
 import { SignIn } from '@clerk/nextjs';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
