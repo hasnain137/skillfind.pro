@@ -3,8 +3,11 @@ import { prisma } from '@/lib/prisma';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { StatCard } from '@/components/ui/StatCard';
+import { getTranslations } from 'next-intl/server';
 
 export default async function AdminDashboardPage() {
+    const t = await getTranslations('Components.AdminDashboard');
+
     // Fetch high-level stats
     const [
         totalUsers,
@@ -34,19 +37,19 @@ export default async function AdminDashboardPage() {
     const revenueEuros = (totalRevenue._sum.totalSpent || 0) / 100;
 
     const stats = [
-        { label: 'Total Users', value: totalUsers },
-        { label: 'Professionals', value: totalProfessionals },
-        { label: 'Clients', value: totalClients },
-        { label: 'Pending Verifications', value: pendingVerifications },
-        { label: 'Total Revenue', value: `€${revenueEuros.toFixed(2)}` },
+        { label: t('metrics.totalUsers'), value: totalUsers },
+        { label: t('metrics.professionals'), value: totalProfessionals },
+        { label: t('metrics.clients'), value: totalClients },
+        { label: t('metrics.pendingVerifications'), value: pendingVerifications },
+        { label: t('metrics.totalRevenue'), value: `€${revenueEuros.toFixed(2)}` },
     ];
 
     return (
         <div className="space-y-6">
             <SectionHeading
-                eyebrow="Admin Dashboard"
-                title="Platform Overview"
-                description="High-level metrics and platform health."
+                eyebrow={t('eyebrow')}
+                title={t('title')}
+                description={t('description')}
             />
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,21 +65,21 @@ export default async function AdminDashboardPage() {
             <div className="grid gap-6 lg:grid-cols-2">
                 <Card level={1} className="h-full">
                     <CardHeader>
-                        <CardTitle>Recent Activity</CardTitle>
+                        <CardTitle>{t('recentActivity')}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-surface-500">Activity logs coming soon...</p>
+                        <p className="text-sm text-surface-500">{t('activityComingSoon')}</p>
                     </CardContent>
                 </Card>
 
                 <Card level={1} className="h-full">
                     <CardHeader>
-                        <CardTitle>System Health</CardTitle>
+                        <CardTitle>{t('systemHealth')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="flex items-center gap-2">
                             <div className="h-3 w-3 rounded-full bg-green-500 shadow-glow-sm"></div>
-                            <span className="text-sm font-medium text-surface-900">All Systems Operational</span>
+                            <span className="text-sm font-medium text-surface-900">{t('allSystemsOperational')}</span>
                         </div>
                     </CardContent>
                 </Card>

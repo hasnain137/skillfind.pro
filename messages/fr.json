@@ -223,6 +223,35 @@
             "avgRating": "Note Moyenne",
             "responseTime": "Temps de Réponse",
             "reviews": "{count} avis"
+        },
+        "AdminDashboard": {
+            "eyebrow": "Tableau de Bord Admin",
+            "title": "Vue d'ensemble",
+            "description": "Métriques clés et santé de la plateforme.",
+            "metrics": {
+                "totalUsers": "Utilisateurs Total",
+                "professionals": "Professionnels",
+                "clients": "Clients",
+                "pendingVerifications": "Vérifications en attente",
+                "totalRevenue": "Revenu Total"
+            },
+            "recentActivity": "Activité Récente",
+            "activityComingSoon": "Journaux d'activité bientôt disponibles...",
+            "systemHealth": "Santé Système",
+            "allSystemsOperational": "Tous les systèmes opérationnels"
+        },
+        "AdminSidebar": {
+            "title": "Panel Admin",
+            "backToSite": "← Retour au site",
+            "links": {
+                "overview": "Vue d'ensemble",
+                "professionals": "Professionnels",
+                "clients": "Clients",
+                "categories": "Catégories",
+                "reviews": "Avis",
+                "transactions": "Transactions",
+                "settings": "Paramètres"
+            }
         }
     }
 }

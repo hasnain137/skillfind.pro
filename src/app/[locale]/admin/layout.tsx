@@ -1,19 +1,24 @@
 // src/app/admin/layout.tsx
 import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import { redirect } from '@/i18n/routing';
 import { prisma } from '@/lib/prisma';
-import { AdminLayout as SharedAdminLayout } from '@/components/layouts/AdminLayout'; // Rename to avoid conflict if any default import issues
+import { AdminLayout as SharedAdminLayout } from '@/components/layouts/AdminLayout';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
+
+interface AdminLayoutProps {
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
+}
 
 export default async function AdminLayout({
     children,
-}: {
-    children: React.ReactNode;
-}) {
+    params,
+}: AdminLayoutProps) {
+    const { locale } = await params;
     const { userId } = await auth();
 
     if (!userId) {
-        redirect('/login');
+        redirect({ href: '/login', locale });
     }
 
     // Double-check admin role in database
@@ -22,13 +27,8 @@ export default async function AdminLayout({
     });
 
     if (!user || user.role !== 'ADMIN') {
-        redirect('/');
+        redirect({ href: '/', locale });
     }
-
-    // We can pass custom sidebar content if needed, but AdminLayout might have a default sidebar slot
-    // For now, let's use the SharedAdminLayout which encapsulates the structure.
-    // If SharedAdminLayout expects a sidebar prop, we should pass AdminSidebar there.
-    // Let's assume SharedAdminLayout handles structure and we pass sidebar as prop.
 
     return (
         <SharedAdminLayout sidebar={<AdminSidebar />}>

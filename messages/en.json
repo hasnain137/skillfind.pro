@@ -223,6 +223,35 @@
             "avgRating": "Avg. Rating",
             "responseTime": "Response Time",
             "reviews": "{count} reviews"
+        },
+        "AdminDashboard": {
+            "eyebrow": "Admin Dashboard",
+            "title": "Platform Overview",
+            "description": "High-level metrics and platform health.",
+            "metrics": {
+                "totalUsers": "Total Users",
+                "professionals": "Professionals",
+                "clients": "Clients",
+                "pendingVerifications": "Pending Verifications",
+                "totalRevenue": "Total Revenue"
+            },
+            "recentActivity": "Recent Activity",
+            "activityComingSoon": "Activity logs coming soon...",
+            "systemHealth": "System Health",
+            "allSystemsOperational": "All Systems Operational"
+        },
+        "AdminSidebar": {
+            "title": "Admin Panel",
+            "backToSite": "← Back to Site",
+            "links": {
+                "overview": "Overview",
+                "professionals": "Professionals",
+                "clients": "Clients",
+                "categories": "Categories",
+                "reviews": "Reviews",
+                "transactions": "Transactions",
+                "settings": "Settings"
+            }
         }
     }
 }
