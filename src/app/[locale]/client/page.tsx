@@ -13,23 +13,7 @@ import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletio
 import { calculateClientCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ClientDashboardTour } from "@/components/onboarding/ClientDashboardTour";
-
-const QUICK_ACTIONS = [
-  {
-    title: "Create a new request",
-    description:
-      "Describe what you need so professionals can send tailored offers.",
-    href: "/client/requests/new",
-    cta: "Start request",
-  },
-  {
-    title: "Review your requests",
-    description: "Check statuses, compare offers and keep work organised.",
-    href: "/client/requests",
-    cta: "View requests",
-  },
-];
-
+import { getTranslations } from 'next-intl/server';
 
 export default async function ClientDashboardPage() {
   // Get authenticated user
@@ -58,6 +42,8 @@ export default async function ClientDashboardPage() {
     },
   });
 
+  const t = await getTranslations('ClientDashboard');
+
   // Calculate stats
   const requests = dbUser?.clientProfile?.requests || [];
   const openRequests = requests.filter(r => r.status === 'OPEN').length;
@@ -71,30 +57,30 @@ export default async function ClientDashboardPage() {
   // Build dynamic highlights based on actual user state
   const heroHighlights = [
     {
-      label: "Next steps",
-      value: pendingOffers > 0 ? "Review offers" : openRequests > 0 ? "Waiting for offers" : "Create a request",
+      label: t('highlights.nextSteps'),
+      value: pendingOffers > 0 ? t('highlights.reviewOffers') : openRequests > 0 ? t('highlights.waitingForOffers') : t('highlights.createRequest'),
       helper: pendingOffers > 0
-        ? `${pendingOffers} offer${pendingOffers > 1 ? 's' : ''} to review`
+        ? t('highlights.offersToReview', { count: pendingOffers, s: pendingOffers > 1 ? 's' : '' })
         : openRequests > 0
-          ? `${openRequests} open request${openRequests > 1 ? 's' : ''}`
-          : "Get started now"
+          ? t('highlights.openRequests', { count: openRequests, s: openRequests > 1 ? 's' : '' })
+          : t('highlights.getStarted')
     },
     {
-      label: "Verification",
-      value: user?.emailAddresses[0]?.verification?.status === 'verified' ? "Email verified" : "Email pending",
-      helper: user?.phoneNumbers?.[0]?.verification?.status === 'verified' ? "Phone verified ✓" : "Add phone for trust"
+      label: t('highlights.verification'),
+      value: user?.emailAddresses[0]?.verification?.status === 'verified' ? t('highlights.emailVerified') : t('highlights.emailPending'),
+      helper: user?.phoneNumbers?.[0]?.verification?.status === 'verified' ? t('highlights.phoneVerified') : t('highlights.addPhone')
     },
     {
-      label: "Activity",
-      value: `${totalOffers} offer${totalOffers !== 1 ? 's' : ''}`,
-      helper: completedRequests > 0 ? `${completedRequests} completed` : "No jobs yet"
+      label: t('highlights.activity'),
+      value: t('highlights.offersCount', { count: totalOffers, s: totalOffers !== 1 ? 's' : '' }),
+      helper: completedRequests > 0 ? t('highlights.completed', { count: completedRequests }) : t('highlights.noJobs')
     },
   ];
 
   const stats = [
-    { label: "Open requests", value: openRequests, icon: "📝" },
-    { label: "Total offers received", value: totalOffers, icon: "📬" },
-    { label: "Completed requests", value: completedRequests, icon: "✅" },
+    { label: t('stats.openRequests'), value: openRequests, icon: "📝" },
+    { label: t('stats.totalOffers'), value: totalOffers, icon: "📬" },
+    { label: t('stats.completedRequests'), value: completedRequests, icon: "✅" },
   ];
 
   // Calculate profile completion
@@ -112,7 +98,7 @@ export default async function ClientDashboardPage() {
     items.push({
       id: `request-${request.id}`,
       type: 'request_created' as const,
-      title: 'Request created',
+      title: t('activity.requestCreated'),
       description: request.title,
       timestamp: request.createdAt,
       href: `/client/requests/${request.id}`,
@@ -123,8 +109,8 @@ export default async function ClientDashboardPage() {
       items.push({
         id: `offers-${request.id}`,
         type: 'offer_received' as const,
-        title: `${request.offers.length} offer${request.offers.length > 1 ? 's' : ''} received`,
-        description: `Professionals are interested in: ${request.title}`,
+        title: t('activity.offerReceivedTitle', { count: request.offers.length }),
+        description: t('activity.offerInterest', { title: request.title }),
         timestamp: request.offers[0].createdAt,
         href: `/client/requests/${request.id}`,
       });
@@ -146,13 +132,28 @@ export default async function ClientDashboardPage() {
       budget: r.budgetMax || undefined,
     }));
 
+  const QUICK_ACTIONS = [
+    {
+      title: t('actions.newRequestTitle'),
+      description: t('actions.newRequestDesc'),
+      href: "/client/requests/new",
+      cta: t('actions.newRequestCta'),
+    },
+    {
+      title: t('actions.reviewRequestsTitle'),
+      description: t('actions.reviewRequestsDesc'),
+      href: "/client/requests",
+      cta: t('actions.reviewRequestsCta'),
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <DashboardHero
-        eyebrow="Client dashboard"
-        title={`Welcome back, ${firstName}`}
-        description="You're in control of every service request, from posting details to choosing the best professional."
-        action={{ label: "New request", href: "/client/requests/new" }}
+        eyebrow={t('eyebrow')}
+        title={t('welcome', { name: firstName })}
+        description={t('description')}
+        action={{ label: t('actions.createCta'), href: "/client/requests/new" }}
         highlights={heroHighlights}
       />
 
@@ -179,8 +180,8 @@ export default async function ClientDashboardPage() {
         <Card level={2} padding="lg" className="space-y-4" data-tour="quick-actions">
           <SectionHeading
             variant="section"
-            title="Quick actions"
-            description="Shortcuts to the most common tasks."
+            title={t('sections.quickActions')}
+            description={t('sections.quickActionsDesc')}
           />
           <div className="space-y-3">
             {QUICK_ACTIONS.map((action) => (
@@ -193,8 +194,8 @@ export default async function ClientDashboardPage() {
         <Card level={1} padding="lg" className="space-y-4" data-tour="activity">
           <SectionHeading
             variant="section"
-            title="Recent activity"
-            description="Your latest updates and notifications."
+            title={t('sections.recentActivity')}
+            description={t('sections.recentActivityDesc')}
           />
           <ActivityFeed activities={activities} />
         </Card>
@@ -204,8 +205,8 @@ export default async function ClientDashboardPage() {
       <Card level={1} padding="lg" className="space-y-4">
         <SectionHeading
           variant="section"
-          title="Your requests"
-          description="Track the progress of all your service requests."
+          title={t('sections.yourRequests')}
+          description={t('sections.yourRequestsDesc')}
         />
         <RequestTimeline requests={timelineRequests} />
       </Card>

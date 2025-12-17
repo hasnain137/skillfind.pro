@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { SidebarNav } from "@/components/layout/SidebarNav";
 import { ClientUserButton } from "@/components/layout/ClientUserButton";
 import { MobileDashboardNav } from "@/components/layout/MobileDashboardNav";
+import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Professional Area | SkillFind",
@@ -12,20 +13,21 @@ export const metadata: Metadata = {
     "Manage your SkillFind professional profile, matching requests, and offers.",
 };
 
-const SIDEBAR_LINKS = [
-  { label: "Dashboard", href: "/pro", icon: "🏠" },
-  { label: "Matching requests", href: "/pro/requests", icon: "🔍" },
-  { label: "My offers", href: "/pro/offers", icon: "📤" },
-  { label: "My jobs", href: "/pro/jobs", icon: "💼" },
-  { label: "My profile", href: "/pro/profile", icon: "👤" },
-  { label: "Wallet", href: "/pro/wallet", icon: "💰" },
-];
-
-export default function ProLayout({
+export default async function ProLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getTranslations('Sidebar.Pro');
+
+  const SIDEBAR_LINKS = [
+    { label: t('links.dashboard'), href: "/pro", icon: "🏠" },
+    { label: t('links.matchingRequests'), href: "/pro/requests", icon: "🔍" },
+    { label: t('links.myOffers'), href: "/pro/offers", icon: "📤" },
+    { label: t('links.myJobs'), href: "/pro/jobs", icon: "💼" },
+    { label: t('links.myProfile'), href: "/pro/profile", icon: "👤" },
+    { label: t('links.wallet'), href: "/pro/wallet", icon: "💰" },
+  ];
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] pb-20 lg:pb-0">
@@ -37,10 +39,10 @@ export default function ProLayout({
             <div className="flex items-start justify-between mb-4">
               <div className="space-y-1">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
-                  Pro Area
+                  {t('eyebrow')}
                 </p>
                 <h2 className="text-lg font-semibold text-[#333333]">
-                  SkillFind Pro
+                  {t('title')}
                 </h2>
               </div>
               <ClientUserButton />
@@ -50,7 +52,7 @@ export default function ProLayout({
 
             <div className="mt-8 pt-4 border-t border-[#E5E7EB]">
               <p className="text-xs text-[#7C7373]">
-                Manage your profile, respond to requests, and grow your business.
+                {t('description')}
               </p>
             </div>
           </aside>

@@ -7,19 +7,12 @@ import { MobileDashboardNav } from "@/components/layout/MobileDashboardNav";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Client Dashboard | SkillFind",
   description: "Manage your service requests and professionals in one place.",
 };
-
-const NAV_LINKS = [
-  { label: "Dashboard", href: "/client", icon: "🏠" },
-  { label: "Requests", href: "/client/requests", icon: "📝" },
-  { label: "Jobs", href: "/client/jobs", icon: "💼" },
-  { label: "New", href: "/client/requests/new", icon: "➕" },
-  { label: "Profile", href: "/client/profile", icon: "👤" },
-];
 
 export default async function ClientLayout({
   children,
@@ -44,6 +37,16 @@ export default async function ClientLayout({
     redirect("/auth-redirect");
   }
 
+  const t = await getTranslations('Sidebar.Client');
+
+  const NAV_LINKS = [
+    { label: t('links.dashboard'), href: "/client", icon: "🏠" },
+    { label: t('links.requests'), href: "/client/requests", icon: "📝" },
+    { label: t('links.jobs'), href: "/client/jobs", icon: "💼" },
+    { label: t('links.new'), href: "/client/requests/new", icon: "➕" },
+    { label: t('links.profile'), href: "/client/profile", icon: "👤" },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F3F4F6] pb-20 lg:pb-0">
       <Navbar />
@@ -54,10 +57,10 @@ export default async function ClientLayout({
             <div className="flex items-start justify-between">
               <div className="space-y-1">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
-                  Client area
+                  {t('eyebrow')}
                 </p>
                 <h2 className="text-lg font-semibold text-[#333333]">
-                  Plan your projects
+                  {t('title')}
                 </h2>
               </div>
               <ClientUserButton />
@@ -66,8 +69,7 @@ export default async function ClientLayout({
             <SidebarNav links={NAV_LINKS} />
 
             <p className="mt-8 text-xs text-[#7C7373]">
-              Post new service needs, review offers from verified professionals,
-              and keep every conversation in one place.
+              {t('description')}
             </p>
           </aside>
 

@@ -43,6 +43,32 @@
             "profileTitle": "Profil",
             "profileDesc": "Mettre à jour vos informations",
             "profileCta": "Modifier le Profil"
+        },
+        "highlights": {
+            "completion": "Complétion du profil",
+            "rating": "Note Client",
+            "pending": "Offres en attente",
+            "completeProfile": "Complétez votre profil",
+            "allDone": "Tout est prêt !",
+            "basedOnReviews": "Basé sur les avis",
+            "awaitingResponse": "En attente de réponse",
+            "sendOffers": "Envoyer plus d'offres"
+        },
+        "nextSteps": {
+            "completeProfile": "Complétez votre profil pour obtenir plus de jobs",
+            "addServices": "Ajoutez des services pour voir les demandes correspondantes",
+            "newRequests": "{count} nouvelles demandes aujourd'hui - répondez vite !",
+            "pendingOffers": "{count} offres en attente de décision du client",
+            "activeJobs": "{count} jobs actifs nécessitent votre attention",
+            "browse": "Parcourez les demandes et envoyez des offres"
+        },
+        "metrics": {
+            "views": "Vues du Profil",
+            "offersSent": "Offres Envoyées",
+            "acceptanceRate": "Taux d'Acceptation",
+            "avgRating": "Note Moy.",
+            "reviews": "Total Avis",
+            "responseTime": "Temps de Réponse"
         }
     },
     "ClientDashboard": {
@@ -68,12 +94,63 @@
             "createCta": "Créer une Demande",
             "reviewTitle": "Examiner les Demandes",
             "reviewDesc": "Vérifiez vos demandes actives",
-            "reviewCta": "Voir les Demandes"
+            "reviewCta": "Voir les Demandes",
+            "newRequestTitle": "Créer une nouvelle demande",
+            "newRequestDesc": "Décrivez ce dont vous avez besoin pour obtenir des offres sur mesure.",
+            "newRequestCta": "Commencer",
+            "reviewRequestsTitle": "Revoir vos demandes",
+            "reviewRequestsDesc": "Vérifiez les statuts, comparez les offres et organisez votre travail.",
+            "reviewRequestsCta": "Voir demandes"
         },
         "activity": {
             "requestCreated": "Demande Créée",
             "offerReceivedTitle": "Reçu {count} offre(s)",
             "offerInterest": "Pour: {title}"
+        },
+        "highlights": {
+            "nextSteps": "Prochaines étapes",
+            "reviewOffers": "Examiner offres",
+            "waitingForOffers": "En attente d'offres",
+            "createRequest": "Créer une demande",
+            "offersToReview": "{count} offre{s} à examiner",
+            "openRequests": "{count} demande{s} ouverte{s}",
+            "getStarted": "Commencez maintenant",
+            "verification": "Vérification",
+            "emailVerified": "Email vérifié",
+            "emailPending": "Email en attente",
+            "phoneVerified": "Téléphone vérifié ✓",
+            "addPhone": "Ajouter tél pour confiance",
+            "activity": "Activité",
+            "offersCount": "{count} offre{s}",
+            "completed": "{count} terminées",
+            "noJobs": "Pas encore de jobs"
+        }
+    },
+    "Sidebar": {
+        "Pro": {
+            "eyebrow": "Espace Pro",
+            "title": "SkillFind Pro",
+            "description": "Gérez votre profil, répondez aux demandes et développez votre activité.",
+            "links": {
+                "dashboard": "Tableau de bord",
+                "matchingRequests": "Demandes correspondantes",
+                "myOffers": "Mes offres",
+                "myJobs": "Mes jobs",
+                "myProfile": "Mon profil",
+                "wallet": "Portefeuille"
+            }
+        },
+        "Client": {
+            "eyebrow": "Espace Client",
+            "title": "Planifiez vos projets",
+            "description": "Publiez de nouveaux besoins, examinez les offres de professionnels vérifiés et gardez toutes les conversations au même endroit.",
+            "links": {
+                "dashboard": "Tableau de bord",
+                "requests": "Demandes",
+                "jobs": "Jobs",
+                "new": "Nouveau",
+                "profile": "Profil"
+            }
         }
     }
 }

@@ -43,6 +43,32 @@
             "profileTitle": "Profile",
             "profileDesc": "Update your information",
             "profileCta": "Edit Profile"
+        },
+        "highlights": {
+            "completion": "Profile completion",
+            "rating": "Client Rating",
+            "pending": "Pending offers",
+            "completeProfile": "Complete your profile",
+            "allDone": "All done!",
+            "basedOnReviews": "Based on reviews",
+            "awaitingResponse": "Awaiting response",
+            "sendOffers": "Send more offers"
+        },
+        "nextSteps": {
+            "completeProfile": "Complete your profile to win more jobs",
+            "addServices": "Add services to see matching requests",
+            "newRequests": "{count} new matching requests today - respond quickly!",
+            "pendingOffers": "{count} pending offers awaiting client decision",
+            "activeJobs": "{count} active jobs need your attention",
+            "browse": "Browse matching requests and send offers to get hired"
+        },
+        "metrics": {
+            "views": "Profile Views",
+            "offersSent": "Offers Sent",
+            "acceptanceRate": "Acceptance Rate",
+            "avgRating": "Avg Rating",
+            "reviews": "Total Reviews",
+            "responseTime": "Response Time"
         }
     },
     "ClientDashboard": {
@@ -68,12 +94,63 @@
             "createCta": "Create Request",
             "reviewTitle": "Review Requests",
             "reviewDesc": "Check your active requests",
-            "reviewCta": "View Requests"
+            "reviewCta": "View Requests",
+            "newRequestTitle": "Create a new request",
+            "newRequestDesc": "Describe what you need so professionals can send tailored offers.",
+            "newRequestCta": "Start request",
+            "reviewRequestsTitle": "Review your requests",
+            "reviewRequestsDesc": "Check statuses, compare offers and keep work organised.",
+            "reviewRequestsCta": "View requests"
         },
         "activity": {
             "requestCreated": "Request Created",
             "offerReceivedTitle": "Received {count} offer(s)",
             "offerInterest": "For: {title}"
+        },
+        "highlights": {
+            "nextSteps": "Next steps",
+            "reviewOffers": "Review offers",
+            "waitingForOffers": "Waiting for offers",
+            "createRequest": "Create a request",
+            "offersToReview": "{count} offer{s} to review",
+            "openRequests": "{count} open request{s}",
+            "getStarted": "Get started now",
+            "verification": "Verification",
+            "emailVerified": "Email verified",
+            "emailPending": "Email pending",
+            "phoneVerified": "Phone verified ✓",
+            "addPhone": "Add phone for trust",
+            "activity": "Activity",
+            "offersCount": "{count} offer{s}",
+            "completed": "{count} completed",
+            "noJobs": "No jobs yet"
+        }
+    },
+    "Sidebar": {
+        "Pro": {
+            "eyebrow": "Pro Area",
+            "title": "SkillFind Pro",
+            "description": "Manage your profile, respond to requests, and grow your business.",
+            "links": {
+                "dashboard": "Dashboard",
+                "matchingRequests": "Matching requests",
+                "myOffers": "My offers",
+                "myJobs": "My jobs",
+                "myProfile": "My profile",
+                "wallet": "Wallet"
+            }
+        },
+        "Client": {
+            "eyebrow": "Client area",
+            "title": "Plan your projects",
+            "description": "Post new service needs, review offers from verified professionals, and keep every conversation in one place.",
+            "links": {
+                "dashboard": "Dashboard",
+                "requests": "Requests",
+                "jobs": "Jobs",
+                "new": "New",
+                "profile": "Profile"
+            }
         }
     }
 }

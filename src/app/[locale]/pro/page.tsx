@@ -17,33 +17,7 @@ import { calculateProfessionalCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
-
-const QUICK_ACTIONS = [
-  {
-    title: "Browse matching requests",
-    description: "See new opportunities that match your services and skills.",
-    href: "/pro/requests",
-    cta: "View requests",
-  },
-  {
-    title: "Manage your offers",
-    description: "Track pending offers and see which ones got accepted.",
-    href: "/pro/offers",
-    cta: "View offers",
-  },
-  {
-    title: "Active jobs",
-    description: "Start work and mark jobs complete when finished.",
-    href: "/pro/jobs",
-    cta: "View jobs",
-  },
-  {
-    title: "Update profile",
-    description: "Keep your bio, services, and portfolio up to date.",
-    href: "/pro/profile",
-    cta: "Edit profile",
-  },
-];
+import { getTranslations } from 'next-intl/server';
 
 export default async function ProDashboardPage() {
   const { userId } = await auth();
@@ -101,6 +75,8 @@ export default async function ProDashboardPage() {
   if (!professional) {
     redirect('/auth-redirect');
   }
+
+  const t = await getTranslations('ProDashboard');
 
   const balanceEuros = (professional.wallet?.balance || 0) / 100;
   const { percentage: profileCompletion, missingSteps } = calculateProfessionalCompletion(professional);
@@ -196,40 +172,40 @@ export default async function ProDashboardPage() {
 
   const highlights = [
     {
-      label: "Profile completion",
+      label: t('highlights.completion'),
       value: `${profileCompletion}%`,
-      helper: profileCompletion < 100 ? "Complete your profile" : "All done!"
+      helper: profileCompletion < 100 ? t('highlights.completeProfile') : t('highlights.allDone')
     },
     {
-      label: "Client Rating",
+      label: t('highlights.rating'),
       value: avgRating,
-      helper: "Based on reviews"
+      helper: t('highlights.basedOnReviews')
     },
     {
-      label: "Pending offers",
+      label: t('highlights.pending'),
       value: `${professional.offers.length}`,
-      helper: professional.offers.length > 0 ? "Awaiting response" : "Send more offers"
+      helper: professional.offers.length > 0 ? t('highlights.awaitingResponse') : t('highlights.sendOffers')
     },
   ];
 
   const nextSteps = [];
   if (profileCompletion < 100) {
-    nextSteps.push("Complete your profile to win more jobs");
+    nextSteps.push(t('nextSteps.completeProfile'));
   }
   if (professional.services.length === 0) {
-    nextSteps.push("Add services to see matching requests");
+    nextSteps.push(t('nextSteps.addServices'));
   }
   if (matchingRequestsToday > 0) {
-    nextSteps.push(`${matchingRequestsToday} new matching requests today - respond quickly!`);
+    nextSteps.push(t('nextSteps.newRequests', { count: matchingRequestsToday }));
   }
   if (professional.offers.length > 0) {
-    nextSteps.push(`${professional.offers.length} pending offers awaiting client decision`);
+    nextSteps.push(t('nextSteps.pendingOffers', { count: professional.offers.length }));
   }
   if (professional.jobs.length > 0) {
-    nextSteps.push(`${professional.jobs.length} active jobs need your attention`);
+    nextSteps.push(t('nextSteps.activeJobs', { count: professional.jobs.length }));
   }
   if (nextSteps.length === 0) {
-    nextSteps.push("Browse matching requests and send offers to get hired");
+    nextSteps.push(t('nextSteps.browse'));
   }
 
   const timeOfDay = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening';
@@ -247,6 +223,33 @@ export default async function ProDashboardPage() {
     ? getProfessionalStatusBanner(professional.status)
     : null;
 
+  const QUICK_ACTIONS = [
+    {
+      title: t('Actions.browseTitle'),
+      description: t('Actions.browseDesc'),
+      href: "/pro/requests",
+      cta: t('Actions.browseCta'),
+    },
+    {
+      title: t('Actions.offersTitle'),
+      description: t('Actions.offersDesc'),
+      href: "/pro/offers",
+      cta: t('Actions.offersCta'),
+    },
+    {
+      title: t('Actions.jobsTitle'),
+      description: t('Actions.jobsDesc'),
+      href: "/pro/jobs",
+      cta: t('Actions.jobsCta'),
+    },
+    {
+      title: t('Actions.profileTitle'),
+      description: t('Actions.profileDesc'),
+      href: "/pro/profile",
+      cta: t('Actions.profileCta'),
+    },
+  ];
+
   return (
     <div className="space-y-6">
       {statusBannerProps && (
@@ -254,10 +257,10 @@ export default async function ProDashboardPage() {
       )}
 
       <DashboardHero
-        eyebrow="Professional dashboard"
-        title={`Good ${timeOfDay}, ${firstName}`}
-        description="See matching requests, send tailored offers, and keep your profile ready for new opportunities."
-        action={{ label: "View requests", href: "/pro/requests" }}
+        eyebrow={t('eyebrow')}
+        title={t('welcome', { period: t(`periods.${timeOfDay}`), name: firstName })}
+        description={t('description')}
+        action={{ label: t('Actions.browseCta'), href: "/pro/requests" }}
         highlights={highlights}
       />
 
@@ -280,8 +283,8 @@ export default async function ProDashboardPage() {
             <CardHeader>
               <SectionHeading
                 variant="section"
-                title="Performance metrics"
-                description="Track your success and visibility on the platform."
+                title={t('metricsTitle')}
+                description={t('metricsDesc')}
               />
             </CardHeader>
             <CardContent>
@@ -296,14 +299,14 @@ export default async function ProDashboardPage() {
         <CardHeader className="flex flex-row items-center justify-between">
           <SectionHeading
             variant="section"
-            title="Matching requests"
-            description="New opportunities that match your services."
+            title={t('requestsTitle')}
+            description={t('requestsDesc')}
           />
           <Link
             href="/pro/requests"
             className="text-xs font-semibold text-[#2563EB] hover:text-[#1d4ed8] transition-colors"
           >
-            View all →
+            {t('viewAll')} →
           </Link>
         </CardHeader>
         <CardContent>
@@ -317,8 +320,8 @@ export default async function ProDashboardPage() {
           <CardHeader>
             <SectionHeading
               variant="section"
-              title="Quick actions"
-              description="Shortcuts to the most common tasks."
+              title={t('quickActionsTitle')}
+              description={t('quickActionsDesc')}
             />
           </CardHeader>
           <CardContent className="space-y-3">
@@ -332,8 +335,8 @@ export default async function ProDashboardPage() {
           <CardHeader>
             <SectionHeading
               variant="section"
-              title="Next steps"
-              description="Suggested actions to grow your business."
+              title={t('nextStepsTitle')}
+              description={t('nextStepsDesc')}
             />
           </CardHeader>
           <CardContent>
