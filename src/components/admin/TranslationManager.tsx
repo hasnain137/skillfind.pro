@@ -20,6 +20,7 @@ export default function TranslationManager({ initialLocales = ['en', 'fr'] }: Tr
     const [translations, setTranslations] = useState<Translation[]>([]);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [publishing, setPublishing] = useState(false);
     const [filter, setFilter] = useState("all"); // 'all', 'missing'
     const [searchTerm, setSearchTerm] = useState("");
     const [supportedLocales, setSupportedLocales] = useState(initialLocales);
@@ -29,6 +30,23 @@ export default function TranslationManager({ initialLocales = ['en', 'fr'] }: Tr
     useEffect(() => {
         fetchTranslations();
     }, []);
+
+    const handlePublish = async () => {
+        try {
+            setPublishing(true);
+            const res = await fetch("/api/admin/translations/publish", {
+                method: "POST",
+            });
+            if (!res.ok) throw new Error("Failed to publish");
+            const data = await res.json();
+            toast.success(data.message || "Translations published successfully!");
+        } catch (error) {
+            toast.error("Failed to publish translations");
+            console.error(error);
+        } finally {
+            setPublishing(false);
+        }
+    };
 
     const fetchTranslations = async () => {
         try {
@@ -148,6 +166,15 @@ export default function TranslationManager({ initialLocales = ['en', 'fr'] }: Tr
                     <button className="flex items-center gap-2 px-3 py-2 rounded-md text-sm bg-black text-white hover:bg-gray-800">
                         <Plus className="h-4 w-4" />
                         Add Language
+                    </button>
+
+                    <button
+                        onClick={handlePublish}
+                        disabled={publishing}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md text-sm bg-green-600 text-white hover:bg-green-700 disabled:opacity-50"
+                    >
+                        {publishing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                        {publishing ? 'Publishing...' : 'Publish Changes'}
                     </button>
                 </div>
             </div>
