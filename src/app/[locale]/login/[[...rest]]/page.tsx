@@ -4,8 +4,10 @@ import { SignIn } from '@clerk/nextjs';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
+import { useLocale } from 'next-intl';
 
 export default function LoginPage() {
+  const locale = useLocale();
   return (
     <div className="flex min-h-screen flex-col">
       <ClientNavbar />
@@ -41,9 +43,9 @@ export default function LoginPage() {
                   },
                 }}
                 routing="path"
-                path="/login"
-                signUpUrl="/signup"
-                afterSignInUrl="/auth-redirect"
+                path={`/${locale}/login`}
+                signUpUrl={`/${locale}/signup`}
+                afterSignInUrl={`/${locale}/auth-redirect`}
               />
             </div>
           </div>
