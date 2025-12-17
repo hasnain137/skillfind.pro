@@ -1,0 +1,79 @@
+{
+    "Common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view": "View",
+        "back": "Back",
+        "next": "Next",
+        "submit": "Submit"
+    },
+    "ProDashboard": {
+        "eyebrow": "Professional Dashboard",
+        "welcome": "Good {period}, {name}!",
+        "description": "Here's what's happening with your business today",
+        "periods": {
+            "morning": "morning",
+            "afternoon": "afternoon",
+            "evening": "evening"
+        },
+        "metricsTitle": "Performance Overview",
+        "metricsDesc": "Track your key metrics",
+        "requestsTitle": "Matching Requests",
+        "requestsDesc": "Requests that match your services",
+        "viewAll": "View All",
+        "quickActionsTitle": "Quick Actions",
+        "quickActionsDesc": "Common tasks",
+        "nextStepsTitle": "Next Steps",
+        "nextStepsDesc": "Recommendations for you",
+        "Actions": {
+            "browseTitle": "Browse Requests",
+            "browseDesc": "Find new opportunities",
+            "browseCta": "Browse",
+            "offersTitle": "My Offers",
+            "offersDesc": "Track your proposals",
+            "offersCta": "View Offers",
+            "jobsTitle": "Active Jobs",
+            "jobsDesc": "Manage current work",
+            "jobsCta": "View Jobs",
+            "profileTitle": "Profile",
+            "profileDesc": "Update your information",
+            "profileCta": "Edit Profile"
+        }
+    },
+    "ClientDashboard": {
+        "eyebrow": "Client Dashboard",
+        "welcome": "Welcome back, {name}!",
+        "description": "Manage your service requests",
+        "sections": {
+            "quickActions": "Quick Actions",
+            "quickActionsDesc": "Common tasks",
+            "recentActivity": "Recent Activity",
+            "recentActivityDesc": "Latest updates",
+            "yourRequests": "Your Requests",
+            "yourRequestsDesc": "All your service requests"
+        },
+        "stats": {
+            "openRequests": "Open Requests",
+            "totalOffers": "Total Offers",
+            "completedRequests": "Completed"
+        },
+        "actions": {
+            "createTitle": "Post a Request",
+            "createDesc": "Find the perfect professional",
+            "createCta": "Create Request",
+            "reviewTitle": "Review Requests",
+            "reviewDesc": "Check your active requests",
+            "reviewCta": "View Requests"
+        },
+        "activity": {
+            "requestCreated": "Request Created",
+            "offerReceivedTitle": "Received {count} offer(s)",
+            "offerInterest": "For: {title}"
+        }
+    }
+}

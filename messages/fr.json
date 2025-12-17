@@ -1,0 +1,79 @@
+{
+    "Common": {
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "success": "Succès",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "view": "Voir",
+        "back": "Retour",
+        "next": "Suivant",
+        "submit": "Soumettre"
+    },
+    "ProDashboard": {
+        "eyebrow": "Tableau de Bord Professionnel",
+        "welcome": "Bon{period}, {name}!",
+        "description": "Voici ce qui se passe avec votre entreprise aujourd'hui",
+        "periods": {
+            "morning": "jour",
+            "afternoon": " après-midi",
+            "evening": "soir"
+        },
+        "metricsTitle": "Aperçu des Performances",
+        "metricsDesc": "Suivez vos indicateurs clés",
+        "requestsTitle": "Demandes Correspondantes",
+        "requestsDesc": "Demandes qui correspondent à vos services",
+        "viewAll": "Voir Tout",
+        "quickActionsTitle": "Actions Rapides",
+        "quickActionsDesc": "Tâches courantes",
+        "nextStepsTitle": "Prochaines Étapes",
+        "nextStepsDesc": "Recommandations pour vous",
+        "Actions": {
+            "browseTitle": "Parcourir les Demandes",
+            "browseDesc": "Trouver de nouvelles opportunités",
+            "browseCta": "Parcourir",
+            "offersTitle": "Mes Offres",
+            "offersDesc": "Suivre vos propositions",
+            "offersCta": "Voir les Offres",
+            "jobsTitle": "Emplois Actifs",
+            "jobsDesc": "Gérer le travail en cours",
+            "jobsCta": "Voir les Emplois",
+            "profileTitle": "Profil",
+            "profileDesc": "Mettre à jour vos informations",
+            "profileCta": "Modifier le Profil"
+        }
+    },
+    "ClientDashboard": {
+        "eyebrow": "Tableau de Bord Client",
+        "welcome": "Bienvenue, {name}!",
+        "description": "Gérez vos demandes de service",
+        "sections": {
+            "quickActions": "Actions Rapides",
+            "quickActionsDesc": "Tâches courantes",
+            "recentActivity": "Activité Récente",
+            "recentActivityDesc": "Dernières mises à jour",
+            "yourRequests": "Vos Demandes",
+            "yourRequestsDesc": "Toutes vos demandes de service"
+        },
+        "stats": {
+            "openRequests": "Demandes Ouvertes",
+            "totalOffers": "Total des Offres",
+            "completedRequests": "Terminées"
+        },
+        "actions": {
+            "createTitle": "Publier une Demande",
+            "createDesc": "Trouvez le professionnel parfait",
+            "createCta": "Créer une Demande",
+            "reviewTitle": "Examiner les Demandes",
+            "reviewDesc": "Vérifiez vos demandes actives",
+            "reviewCta": "Voir les Demandes"
+        },
+        "activity": {
+            "requestCreated": "Demande Créée",
+            "offerReceivedTitle": "Reçu {count} offre(s)",
+            "offerInterest": "Pour: {title}"
+        }
+    }
+}
