@@ -1,7 +1,5 @@
 // src/components/dashboard/RequestTimeline.tsx
-import Link from "next/link";
-import { useTranslations } from 'next-intl';
-import { EmptyState } from "@/components/ui/EmptyState";
+import { Link } from '@/i18n/routing';
 
 interface TimelineRequest {
   id: string;
@@ -16,40 +14,40 @@ interface RequestTimelineProps {
   requests: TimelineRequest[];
 }
 
+const STATUS_CONFIG = {
+  OPEN: {
+    label: 'Open',
+    color: 'bg-blue-100 text-blue-700 border-blue-200',
+    icon: '🔵',
+  },
+  IN_PROGRESS: {
+    label: 'In Progress',
+    color: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+    icon: '🟡',
+  },
+  COMPLETED: {
+    label: 'Completed',
+    color: 'bg-green-100 text-green-700 border-green-200',
+    icon: '🟢',
+  },
+  CANCELLED: {
+    label: 'Cancelled',
+    color: 'bg-gray-100 text-gray-700 border-gray-200',
+    icon: '⚫',
+  },
+};
+
+import { EmptyState } from "@/components/ui/EmptyState";
+
 export function RequestTimeline({ requests }: RequestTimelineProps) {
-  const t = useTranslations('Components.RequestTimeline');
-
-  const STATUS_CONFIG = {
-    OPEN: {
-      label: t('status.OPEN'),
-      color: 'bg-blue-100 text-blue-700 border-blue-200',
-      icon: '🔵',
-    },
-    IN_PROGRESS: {
-      label: t('status.IN_PROGRESS'),
-      color: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-      icon: '🟡',
-    },
-    COMPLETED: {
-      label: t('status.COMPLETED'),
-      color: 'bg-green-100 text-green-700 border-green-200',
-      icon: '🟢',
-    },
-    CANCELLED: {
-      label: t('status.CANCELLED'),
-      color: 'bg-gray-100 text-gray-700 border-gray-200',
-      icon: '⚫',
-    },
-  };
-
   if (requests.length === 0) {
     return (
       <EmptyState
         icon={<span className="text-4xl">📋</span>}
-        title={t('emptyTitle')}
-        description={t('emptyDesc')}
+        title="No requests yet"
+        description="Create your first request to get started and receive offers from professionals."
         action={{
-          label: t('createRequest'),
+          label: "Create Request",
           href: "/client/requests/new",
         }}
       />
@@ -85,12 +83,12 @@ export function RequestTimeline({ requests }: RequestTimelineProps) {
               <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
                 <span className="flex items-center gap-1">
                   <span>📬</span>
-                  <span className="font-semibold text-[#333333]">{t('offers', { count: request.offerCount })}</span>
+                  <span className="font-semibold text-[#333333]">{request.offerCount}</span> offers
                 </span>
                 {request.budget && (
                   <span className="flex items-center gap-1">
                     <span>💰</span>
-                    <span className="font-semibold text-[#333333]">{t('budget', { amount: request.budget })}</span>
+                    <span className="font-semibold text-[#333333]">€{request.budget}</span> budget
                   </span>
                 )}
                 <span className="flex items-center gap-1">

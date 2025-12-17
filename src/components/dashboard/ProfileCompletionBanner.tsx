@@ -22,7 +22,7 @@ export function ProfileCompletionBanner({
   missingSteps = []
 }: ProfileCompletionBannerProps) {
   const router = useRouter();
-  const t = useTranslations('Components.ProfileCompletionBanner');
+  const t = useTranslations('Dashboard.ProfileCompletion');
 
   if (profileCompletion === 100) return null;
 
@@ -86,7 +86,7 @@ export function ProfileCompletionBanner({
               ))}
               {missingSteps.length > 3 && (
                 <span className="text-xs text-[#7C7373] px-2 py-1">
-                  {t('more', { count: missingSteps.length - 3 })}
+                  {t('moreSteps', { count: missingSteps.length - 3 })}
                 </span>
               )}
             </div>
@@ -98,7 +98,7 @@ export function ProfileCompletionBanner({
           onClick={() => router.push(missingSteps[0]?.actionUrl || profileUrl)}
           className="whitespace-nowrap shadow-md hover:shadow-lg"
         >
-          {t('cta')}
+          {t('completeNow')}
         </Button>
       </div>
     </div>

@@ -1,5 +1,7 @@
 // src/components/dashboard/MatchingRequests.tsx
-import Link from "next/link";
+'use client';
+
+import { Link } from '@/i18n/routing';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useTranslations } from 'next-intl';
@@ -21,13 +23,7 @@ interface MatchingRequestsProps {
 }
 
 export function MatchingRequests({ requests }: MatchingRequestsProps) {
-  const t = useTranslations('Components.MatchingRequests');
-
-  // Helper to format days ago
-  function getDaysAgo(date: Date) {
-    const daysAgo = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24));
-    return daysAgo;
-  }
+  const t = useTranslations('Dashboard.MatchingRequests');
 
   if (requests.length === 0) {
     return (
@@ -46,17 +42,16 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
   return (
     <div className="space-y-3">
       {requests.map((request) => {
-        let budgetDisplay = t('budget.unspecified');
-        if (request.budgetMin && request.budgetMax) {
-          budgetDisplay = t('budget.range', { min: request.budgetMin, max: request.budgetMax });
-        } else if (request.budgetMin) {
-          budgetDisplay = t('budget.from', { min: request.budgetMin });
-        }
+        const budgetDisplay = request.budgetMin && request.budgetMax
+          ? `€${request.budgetMin}-${request.budgetMax}`
+          : request.budgetMin
+            ? t('fromBudget', { amount: request.budgetMin })
+            : t('budgetNotSpecified');
 
-        const daysAgo = getDaysAgo(request.createdAt);
-        let timeDisplay = t('time.daysAgo', { count: daysAgo });
-        if (daysAgo === 0) timeDisplay = t('time.today');
-        if (daysAgo === 1) timeDisplay = t('time.yesterday');
+        const daysAgo = Math.floor((Date.now() - new Date(request.createdAt).getTime()) / (1000 * 60 * 60 * 24));
+        // Safe check for Date object or string if passed from server serialization
+
+        const timeDisplay = daysAgo === 0 ? t('today') : daysAgo === 1 ? t('yesterday') : t('daysAgo', { count: daysAgo });
 
         return (
           <Link key={request.id} href={`/pro/requests/${request.id}/offer`} className="block">
@@ -64,7 +59,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
               {/* New Badge */}
               {daysAgo === 0 && (
                 <div className="absolute -top-2 -right-2 rounded-full bg-gradient-to-r from-error to-red-600 px-3 py-1 text-[10px] font-bold text-white shadow-soft z-10">
-                  🔥 {t('new')}
+                  {t('new')}
                 </div>
               )}
 
@@ -97,7 +92,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
 
                   {request.remotePreference !== 'NO_REMOTE' && (
                     <span className="flex items-center gap-1 rounded-md bg-success-light px-2 py-1 font-semibold text-success-dark">
-                      <span>💻</span> {t('remote')}
+                      <span>💻</span> Remote
                     </span>
                   )}
 

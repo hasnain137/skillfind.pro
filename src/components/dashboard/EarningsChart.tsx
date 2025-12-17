@@ -28,7 +28,7 @@ const chartData = [
 ];
 
 export function EarningsChart({ data }: EarningsChartProps) {
-  const t = useTranslations('Components.EarningsChart');
+  const t = useTranslations('Dashboard.EarningsChart');
 
   const growth = data.lastMonth > 0
     ? Math.round(((data.thisMonth - data.lastMonth) / data.lastMonth) * 100)
@@ -76,7 +76,7 @@ export function EarningsChart({ data }: EarningsChartProps) {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value: number) => `€${value}`}
+                tickFormatter={(value) => `€${value}`}
               />
               <Tooltip
                 contentStyle={{
