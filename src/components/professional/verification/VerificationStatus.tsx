@@ -50,17 +50,17 @@ export function VerificationStatus({ status }: VerificationStatusProps) {
         );
     }
 
-    if (status === 'REJECTED' || status === 'SUSPENDED') {
+    if (status === 'SUSPENDED') {
         return (
-            <Card className="bg-red-50 border-red-200" padding="lg">
+            <Card className="bg-yellow-50 border-yellow-200" padding="lg">
                 <div className="flex items-start gap-4">
-                    <div className="bg-red-100 p-2 rounded-full text-red-600">
-                        <XCircle className="h-6 w-6" />
+                    <div className="bg-yellow-100 p-2 rounded-full text-yellow-600">
+                        <AlertCircle className="h-6 w-6" />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-red-900">Verification Failed</h3>
-                        <p className="text-red-700 mt-1">
-                            There was an issue with your verification. Please check your email for details
+                        <h3 className="text-lg font-bold text-yellow-900">Attention Required</h3>
+                        <p className="text-yellow-700 mt-1">
+                            Your verification request was rejected. Please check the rejection reason
                             and upload a valid document to proceed with verification.
                         </p>
                     </div>
