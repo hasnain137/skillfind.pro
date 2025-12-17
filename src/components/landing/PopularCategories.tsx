@@ -6,56 +6,13 @@ import { Stagger } from "@/components/ui/motion/Stagger";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 type Category = {
   name: string;
   description: string;
   icon: string;
 };
-
-// Default fallback categories - 8 for 4-column symmetry
-const FALLBACK_CATEGORIES: Category[] = [
-  {
-    name: "Tutoring",
-    description: "Math, languages, exam prep.",
-    icon: "📚",
-  },
-  {
-    name: "Software & Tech",
-    description: "Websites, apps, tech support.",
-    icon: "💻",
-  },
-  {
-    name: "Design",
-    description: "Logos, UI/UX, graphics.",
-    icon: "🎨",
-  },
-  {
-    name: "Health & Fitness",
-    description: "Training, nutrition, wellness.",
-    icon: "🧘‍♀️",
-  },
-  {
-    name: "Home Services",
-    description: "Cleaning, repairs, moving.",
-    icon: "🏠",
-  },
-  {
-    name: "Business",
-    description: "Consulting, coaching, strategy.",
-    icon: "📈",
-  },
-  {
-    name: "Writing",
-    description: "Content, copywriting, editing.",
-    icon: "✍️",
-  },
-  {
-    name: "Music & Audio",
-    description: "Lessons, production, mixing.",
-    icon: "🎵",
-  },
-];
 
 function CategoryCard({ name, description, icon, id }: Category & { id?: string }) {
   const searchUrl = id ? `/search?category=${id}` : '/search';
@@ -103,6 +60,52 @@ function mapDatabaseCategories(dbCategories: DatabaseCategory[]): (Category & { 
 }
 
 export function PopularCategories({ categories }: PopularCategoriesProps) {
+  const t = useTranslations('Landing.PopularCategories');
+
+  // Default fallback categories - 8 for 4-column symmetry
+  const FALLBACK_CATEGORIES: Category[] = [
+    {
+      name: t('fallback.tutoring.name'),
+      description: t('fallback.tutoring.description'),
+      icon: "📚",
+    },
+    {
+      name: t('fallback.tech.name'),
+      description: t('fallback.tech.description'),
+      icon: "💻",
+    },
+    {
+      name: t('fallback.design.name'),
+      description: t('fallback.design.description'),
+      icon: "🎨",
+    },
+    {
+      name: t('fallback.health.name'),
+      description: t('fallback.health.description'),
+      icon: "🧘‍♀️",
+    },
+    {
+      name: t('fallback.home.name'),
+      description: t('fallback.home.description'),
+      icon: "🏠",
+    },
+    {
+      name: t('fallback.business.name'),
+      description: t('fallback.business.description'),
+      icon: "📈",
+    },
+    {
+      name: t('fallback.writing.name'),
+      description: t('fallback.writing.description'),
+      icon: "✍️",
+    },
+    {
+      name: t('fallback.music.name'),
+      description: t('fallback.music.description'),
+      icon: "🎵",
+    },
+  ];
+
   // Use fallback if fewer than 8 categories in database (need 8 for symmetry)
   const displayCategories = categories && categories.length >= 8
     ? mapDatabaseCategories(categories).slice(0, 8)
@@ -114,13 +117,13 @@ export function PopularCategories({ categories }: PopularCategoriesProps) {
         <div className="mx-auto max-w-3xl text-center mb-12">
           <FadeIn>
             <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-              Most In-Demand
+              {t('eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-[#333333] md:text-4xl">
-              Popular services this week.
+              {t('title')}
             </h2>
             <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
-              Find help for your daily needs or long-term projects.
+              {t('subtitle')}
             </p>
           </FadeIn>
         </div>

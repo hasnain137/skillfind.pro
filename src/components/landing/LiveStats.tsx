@@ -1,5 +1,8 @@
 // src/components/landing/LiveStats.tsx
+'use client';
+
 // Using static data for instant page load - these are approximate counts
+import { useTranslations } from 'next-intl';
 
 function getStats() {
   return {
@@ -11,13 +14,14 @@ function getStats() {
 }
 
 export function LiveStats() {
+  const t = useTranslations('Landing.LiveStats');
   const stats = getStats();
 
   const statItems = [
-    { label: "Verified Professionals", value: stats.totalProfessionals.toLocaleString(), icon: "👥" },
-    { label: "Trusted Reviews", value: stats.totalReviews.toLocaleString(), icon: "⭐" },
-    { label: "Active Requests", value: stats.activeRequests.toLocaleString(), icon: "📋" },
-    { label: "Jobs Completed", value: stats.completedJobs.toLocaleString(), icon: "✅" },
+    { label: t('professionals'), value: stats.totalProfessionals.toLocaleString(), icon: "👥" },
+    { label: t('reviews'), value: stats.totalReviews.toLocaleString(), icon: "⭐" },
+    { label: t('requests'), value: stats.activeRequests.toLocaleString(), icon: "📋" },
+    { label: t('jobs'), value: stats.completedJobs.toLocaleString(), icon: "✅" },
   ];
 
   return (

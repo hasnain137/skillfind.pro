@@ -3,15 +3,16 @@
 
 import { Container } from "@/components/ui/Container";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 type CategoryGroup = {
-  name: string;
+  nameKey: string;
   items: string[];
 };
 
 const CATEGORY_GROUPS: CategoryGroup[] = [
   {
-    name: "Tutoring & Education",
+    nameKey: "tutoring",
     items: [
       "Math tutoring",
       "Science tutoring",
@@ -22,7 +23,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     ],
   },
   {
-    name: "Software & Tech",
+    nameKey: "tech",
     items: [
       "Website development",
       "Bug fixing & troubleshooting",
@@ -33,7 +34,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     ],
   },
   {
-    name: "Design & Creative",
+    nameKey: "design",
     items: [
       "Logo & brand design",
       "UI/UX design",
@@ -44,7 +45,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     ],
   },
   {
-    name: "Business & Career",
+    nameKey: "business",
     items: [
       "CV & resume review",
       "LinkedIn profile help",
@@ -55,7 +56,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     ],
   },
   {
-    name: "Health & Wellness",
+    nameKey: "health",
     items: [
       "Fitness coaching",
       "Nutrition guidance",
@@ -66,7 +67,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     ],
   },
   {
-    name: "Home & Everyday",
+    nameKey: "home",
     items: [
       "Cleaning services",
       "Moving & packing help",
@@ -78,10 +79,12 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
   },
 ];
 
-function CategoryColumn({ name, items }: CategoryGroup) {
+function CategoryColumn({ nameKey, items }: CategoryGroup) {
+  const t = useTranslations('Landing.CategoryDirectory.groups');
+
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-semibold text-[#333333] uppercase tracking-wide">{name}</h3>
+      <h3 className="text-sm font-semibold text-[#333333] uppercase tracking-wide">{t(nameKey)}</h3>
       <ul className="flex flex-col gap-2">
         {items.map((item) => (
           <li key={item}>
@@ -100,27 +103,28 @@ function CategoryColumn({ name, items }: CategoryGroup) {
 }
 
 export function CategoryDirectory() {
+  const t = useTranslations('Landing.CategoryDirectory');
+
   return (
     <section className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center mb-16">
           <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
-            Browse all categories
+            {t('eyebrow')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
-            Explore everything on SkillFind.
+            {t('title')}
           </h2>
           <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto">
-            From tutoring and tech to fitness, design, and home help —
-            we bring all kinds of professionals together in one place.
+            {t('subtitle')}
           </p>
         </div>
 
         {/* Category columns */}
         <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {CATEGORY_GROUPS.map((group) => (
-            <CategoryColumn key={group.name} {...group} />
+            <CategoryColumn key={group.nameKey} {...group} />
           ))}
         </div>
       </Container>
