@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 interface ViewOfferProfileButtonProps {
     offerId: string;
@@ -16,14 +17,12 @@ export default function ViewOfferProfileButton({
     className
 }: ViewOfferProfileButtonProps) {
     const router = useRouter();
+    const t = useTranslations('ClientRequests.actions.viewProfile');
     const [loading, setLoading] = useState(false);
 
     async function handleClick() {
         setLoading(true);
         try {
-            // Record the click (fire and forget, or await?)
-            // Awaiting ensures we record it, but adds delay.
-            // Given it's a billing event, we should probably attempt it.
             await fetch('/api/clicks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -31,7 +30,6 @@ export default function ViewOfferProfileButton({
             });
         } catch (error) {
             console.error('Failed to record click:', error);
-            // Proceed anyway, don't block user navigation
         } finally {
             router.push(`/professionals/${professionalId}`);
         }
@@ -44,7 +42,7 @@ export default function ViewOfferProfileButton({
             onClick={handleClick}
             disabled={loading}
         >
-            {loading ? 'Loading...' : '👤 View Profile'}
+            {loading ? t('loading') : `👤 ${t('button')}`}
         </Button>
     );
 }

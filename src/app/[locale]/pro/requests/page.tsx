@@ -12,6 +12,7 @@ import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/Statu
 
 export default async function ProRequestsPage() {
   const { userId } = await auth();
+  const t = await getTranslations('ProRequests');
   const tRoot = await getTranslations();
   if (!userId) redirect('/login');
 
@@ -70,6 +71,15 @@ export default async function ProRequestsPage() {
     ? getProfessionalStatusBanner(professional.status)
     : null;
 
+  const formatBudget = (request: any) => {
+    if (request.budgetMin && request.budgetMax) {
+      return `€${request.budgetMin}-€${request.budgetMax}`;
+    }
+    if (request.budgetMin) return `From €${request.budgetMin}`;
+    if (request.budgetMax) return `Up to €${request.budgetMax}`;
+    return 'Budget TBD';
+  };
+
   return (
     <div className="space-y-6">
       {/* Status Banner - Using reusable component */}
@@ -82,9 +92,9 @@ export default async function ProRequestsPage() {
       )}
 
       <SectionHeading
-        eyebrow="Matching requests"
-        title="Newest opportunities"
-        description="These requests match your services. Respond quickly to increase your chances."
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
       />
 
       {/* Stats Overview */}
@@ -92,19 +102,19 @@ export default async function ProRequestsPage() {
         <div className="grid gap-4 sm:grid-cols-4">
           <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
             <p className="text-2xl font-bold text-blue-600">{requests.length}</p>
-            <p className="text-xs text-blue-700 font-medium">Total Matches</p>
+            <p className="text-xs text-blue-700 font-medium">{t('stats.matches')}</p>
           </Card>
           <Card padding="lg" className="text-center bg-gradient-to-br from-red-50 to-red-100 border-red-200">
             <p className="text-2xl font-bold text-red-600">{newRequests.length}</p>
-            <p className="text-xs text-red-700 font-medium">New Today</p>
+            <p className="text-xs text-red-700 font-medium">{t('stats.new')}</p>
           </Card>
           <Card padding="lg" className="text-center bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
             <p className="text-2xl font-bold text-orange-600">{urgentRequests.length}</p>
-            <p className="text-xs text-orange-700 font-medium">Urgent</p>
+            <p className="text-xs text-orange-700 font-medium">{t('stats.urgent')}</p>
           </Card>
           <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
             <p className="text-2xl font-bold text-green-600">{professional.services.length}</p>
-            <p className="text-xs text-green-700 font-medium">Your Services</p>
+            <p className="text-xs text-green-700 font-medium">{t('stats.services')}</p>
           </Card>
         </div>
       )}
@@ -112,13 +122,13 @@ export default async function ProRequestsPage() {
       {requests.length === 0 ? (
         <Card level={1} padding="lg" className="text-center py-12 border-dashed">
           <div className="text-5xl mb-4">🔍</div>
-          <h3 className="text-lg font-semibold text-[#333333] mb-2">No matching requests</h3>
+          <h3 className="text-lg font-semibold text-[#333333] mb-2">{t('empty.title')}</h3>
           <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">
-            Try adding more services to your profile to see more opportunities.
+            {t('empty.desc')}
           </p>
           <Link href="/pro/profile">
             <span className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2563EB] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg">
-              <span>⚙️</span> Update Services
+              <span>⚙️</span> {t('empty.action')}
             </span>
           </Link>
         </Card>
@@ -138,12 +148,12 @@ export default async function ProRequestsPage() {
                 {/* Badges */}
                 {isNew && (
                   <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                    🔥 NEW
+                    🔥 {t('card.new')}
                   </div>
                 )}
                 {isUrgent && !isNew && (
                   <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                    ⚡ URGENT
+                    ⚡ {t('card.urgent')}
                   </div>
                 )}
 
@@ -160,13 +170,13 @@ export default async function ProRequestsPage() {
                         </span>
                         <span>•</span>
                         <span className="flex items-center gap-1">
-                          📅 Posted {new Date(request.createdAt).toLocaleDateString()}
+                          📅 {t('card.posted', { date: new Date(request.createdAt).toLocaleDateString() })}
                         </span>
                       </div>
                     </div>
                     {hasMultipleOffers && (
                       <Badge variant="neutral">
-                        {request._count.offers} offers
+                        {t('card.offers_count', { count: request._count.offers })}
                       </Badge>
                     )}
                   </div>
@@ -216,7 +226,7 @@ export default async function ProRequestsPage() {
                         {(request.client.user.firstName || 'C')[0]}
                       </div>
                       <span className="text-xs text-[#7C7373]">
-                        Client: {request.client.user.firstName || 'Client'}
+                        {t('card.client', { name: request.client.user.firstName || 'Client' })}
                       </span>
                     </div>
                     {professional.status === 'ACTIVE' ? (
@@ -224,14 +234,14 @@ export default async function ProRequestsPage() {
                         href={`/pro/requests/${request.id}/offer`}
                         className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
                       >
-                        Send Offer →
+                        {t('card.sendOffer')} →
                       </Link>
                     ) : (
                       <button
                         disabled
                         className="inline-flex items-center justify-center gap-1 rounded-full bg-gray-100 px-4 py-2 text-xs font-semibold text-gray-400 cursor-not-allowed"
                       >
-                        {professional.status === 'PENDING_REVIEW' ? 'Pending Approval' : 'Account Inactive'}
+                        {professional.status === 'PENDING_REVIEW' ? t('card.pending') : t('card.inactive')}
                       </button>
                     )}
                   </div>
@@ -243,13 +253,4 @@ export default async function ProRequestsPage() {
       )}
     </div>
   );
-}
-
-function formatBudget(request: any) {
-  if (request.budgetMin && request.budgetMax) {
-    return `€${request.budgetMin}-€${request.budgetMax}`;
-  }
-  if (request.budgetMin) return `From €${request.budgetMin}`;
-  if (request.budgetMax) return `Up to €${request.budgetMax}`;
-  return 'Budget TBD';
 }

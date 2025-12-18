@@ -1,38 +1,26 @@
 // src/app/pro/jobs/page.tsx
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { getTranslations } from 'next-intl/server';
 import { prisma } from "@/lib/prisma";
 import { getProfessionalWithRelations } from "@/lib/get-professional";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Badge, type BadgeVariant } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 
-const STATUS_VARIANT: Record<string, "primary" | "warning" | "success" | "gray"> = {
-  ACCEPTED: "primary",
-  IN_PROGRESS: "warning",
-  COMPLETED: "success",
-  CANCELLED: "gray",
-  DISPUTED: "gray",
-};
-
-const STATUS_LABEL: Record<string, string> = {
-  ACCEPTED: "Accepted - Ready to start",
-  IN_PROGRESS: "In Progress",
-  COMPLETED: "Completed",
-  CANCELLED: "Cancelled",
-  DISPUTED: "Disputed",
-};
+type JobStatus = "ACCEPTED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | "DISPUTED";
 
 export default async function ProJobsPage() {
   const { userId } = await auth();
+  const t = await getTranslations('ProJobs');
 
   if (!userId) {
     redirect('/login');
   }
 
-  const professional = await getProfessionalWithRelations(userId, {
+  const professional: any = await getProfessionalWithRelations(userId, {
     jobs: {
       include: {
         request: {
@@ -57,39 +45,55 @@ export default async function ProJobsPage() {
     redirect('/auth-redirect');
   }
 
-  const jobs = professional.jobs as any[];
-  const activeJobs = jobs.filter(j => j.status === 'ACCEPTED' || j.status === 'IN_PROGRESS');
-  const completedJobs = jobs.filter(j => j.status === 'COMPLETED');
+  const jobs = professional.jobs || [];
+  const activeJobs = jobs.filter((j: any) => j.status === 'ACCEPTED' || j.status === 'IN_PROGRESS');
+  const completedJobs = jobs.filter((j: any) => j.status === 'COMPLETED');
 
-  const totalEarnings = jobs.reduce((sum, j) => sum + (j.agreedPrice || 0), 0);
-  const pendingJobs = jobs.filter(j => j.status === 'ACCEPTED');
-  const inProgressJobs = jobs.filter(j => j.status === 'IN_PROGRESS');
+  const totalEarnings = jobs.reduce((sum: number, j: any) => sum + (j.agreedPrice || 0), 0);
+  const pendingJobs = jobs.filter((j: any) => j.status === 'ACCEPTED');
+  const inProgressJobs = jobs.filter((j: any) => j.status === 'IN_PROGRESS');
+
+  const STATUS_VARIANT = {
+    ACCEPTED: "primary" as BadgeVariant,
+    IN_PROGRESS: "warning" as BadgeVariant,
+    COMPLETED: "success" as BadgeVariant,
+    CANCELLED: "gray" as BadgeVariant,
+    DISPUTED: "gray" as BadgeVariant,
+  };
+
+  const STATUS_LABEL = {
+    ACCEPTED: t('status.accepted'),
+    IN_PROGRESS: t('status.inProgress'),
+    COMPLETED: t('status.completed'),
+    CANCELLED: t('status.cancelled'),
+    DISPUTED: t('status.disputed'),
+  };
 
   return (
     <div className="space-y-6">
       <SectionHeading
-        eyebrow="Jobs"
-        title="My Jobs"
-        description="Track your hired jobs, start work, and mark them complete when finished."
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
       />
 
       {/* Enhanced Stats */}
       <div className="grid gap-4 sm:grid-cols-4">
         <Card padding="lg" className="text-center bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
           <p className="text-2xl font-bold text-yellow-600">{pendingJobs.length}</p>
-          <p className="text-xs text-yellow-700 font-medium">Ready to Start</p>
+          <p className="text-xs text-yellow-700 font-medium">{t('stats.ready')}</p>
         </Card>
         <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <p className="text-2xl font-bold text-blue-600">{inProgressJobs.length}</p>
-          <p className="text-xs text-blue-700 font-medium">In Progress</p>
+          <p className="text-xs text-blue-700 font-medium">{t('stats.inProgress')}</p>
         </Card>
         <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <p className="text-2xl font-bold text-green-600">{completedJobs.length}</p>
-          <p className="text-xs text-green-700 font-medium">Completed</p>
+          <p className="text-xs text-green-700 font-medium">{t('stats.completed')}</p>
         </Card>
         <Card padding="lg" className="text-center bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <p className="text-2xl font-bold text-purple-600">€{totalEarnings.toFixed(0)}</p>
-          <p className="text-xs text-purple-700 font-medium">Total Earned</p>
+          <p className="text-xs text-purple-700 font-medium">{t('stats.earned')}</p>
         </Card>
       </div>
 
@@ -97,10 +101,10 @@ export default async function ProJobsPage() {
       {activeJobs.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>⚡</span> Active Jobs ({activeJobs.length})
+            <span>⚡</span> {t('active')} ({activeJobs.length})
           </h2>
-          {activeJobs.map((job) => {
-            const statusConfig = STATUS_VARIANT[job.status];
+          {activeJobs.map((job: any) => {
+            const statusConfig = STATUS_VARIANT[job.status as JobStatus];
             const isReadyToStart = job.status === 'ACCEPTED';
 
             return (
@@ -108,7 +112,7 @@ export default async function ProJobsPage() {
                 <Card className="group relative hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
                   {isReadyToStart && (
                     <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                      ✅ Ready
+                      ✅ {t('card.ready')}
                     </div>
                   )}
 
@@ -129,7 +133,7 @@ export default async function ProJobsPage() {
                         </div>
                       </div>
                       <Badge variant={statusConfig}>
-                        {STATUS_LABEL[job.status]}
+                        {STATUS_LABEL[job.status as JobStatus]}
                       </Badge>
                     </div>
 
@@ -143,7 +147,7 @@ export default async function ProJobsPage() {
                         </span>
                       </div>
                       <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
-                        View details →
+                        {t('card.viewDetails')} →
                       </span>
                     </div>
                   </div>
@@ -158,9 +162,9 @@ export default async function ProJobsPage() {
       {completedJobs.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>🟢</span> Completed Jobs ({completedJobs.length})
+            <span>🟢</span> {t('stats.completed')} ({completedJobs.length})
           </h2>
-          {completedJobs.map((job) => (
+          {completedJobs.map((job: any) => (
             <Link key={job.id} href={`/pro/jobs/${job.id}`}>
               <Card className="group hover:border-green-500 hover:shadow-md transition-all duration-200 cursor-pointer bg-gradient-to-br from-green-50 to-white border-green-200" padding="lg">
                 <div className="flex items-start justify-between gap-4">
@@ -171,7 +175,7 @@ export default async function ProJobsPage() {
                       </h3>
                       {job.review && (
                         <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
-                          ✓ Reviewed
+                          ✓ {t('card.reviewed')}
                         </span>
                       )}
                     </div>
@@ -193,7 +197,7 @@ export default async function ProJobsPage() {
                       )}
                     </div>
                   </div>
-                  <Badge variant="success">Completed</Badge>
+                  <Badge variant="success">{t('status.completed')}</Badge>
                 </div>
               </Card>
             </Link>
@@ -205,13 +209,13 @@ export default async function ProJobsPage() {
       {jobs.length === 0 && (
         <Card level={1} padding="lg" className="text-center py-12 border-dashed">
           <div className="text-5xl mb-4">💼</div>
-          <h3 className="text-lg font-semibold text-[#333333] mb-2">No jobs yet</h3>
+          <h3 className="text-lg font-semibold text-[#333333] mb-2">{t('empty.title')}</h3>
           <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">
-            Browse matching requests and send competitive offers to win your first job!
+            {t('empty.desc')}
           </p>
           <Link href="/pro/requests">
             <Button className="shadow-md hover:shadow-lg">
-              Browse Requests →
+              {t('empty.button')} →
             </Button>
           </Link>
         </Card>

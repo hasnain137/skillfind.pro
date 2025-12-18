@@ -1,6 +1,7 @@
 // src/app/pro/wallet/page.tsx
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { getTranslations } from 'next-intl/server';
 import { prisma } from "@/lib/prisma";
 import { getProfessionalByClerkId } from "@/lib/get-professional";
 import { getOrCreateWallet } from "@/lib/services/wallet";
@@ -11,6 +12,7 @@ import { Badge } from "@/components/ui/Badge";
 
 export default async function WalletPage() {
     const { userId } = await auth();
+    const t = await getTranslations('Wallet');
 
     if (!userId) {
         redirect('/login');
@@ -52,9 +54,9 @@ export default async function WalletPage() {
     return (
         <div className="space-y-8 max-w-5xl mx-auto pb-10">
             <SectionHeading
-                eyebrow="Financials"
-                title="Wallet"
-                description="Manage your balance and view your transaction history."
+                eyebrow={t('eyebrow')}
+                title={t('title')}
+                description={t('description')}
             />
 
             <div className="grid gap-6 lg:grid-cols-3">
@@ -75,7 +77,7 @@ export default async function WalletPage() {
 
                         <div className="relative p-8 flex flex-col justify-between h-full min-h-[220px]">
                             <div className="space-y-1">
-                                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Available Balance</p>
+                                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">{t('balance.available')}</p>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-4xl md:text-5xl font-bold tracking-tight">€{balanceEuros.toFixed(2)}</span>
                                     <span className="text-slate-400 font-medium">EUR</span>
@@ -86,19 +88,19 @@ export default async function WalletPage() {
                                 <div className="space-y-4">
                                     {isLowBalance && (
                                         <Badge variant="warning" className="bg-yellow-500/10 text-yellow-200 border-yellow-500/20 backdrop-blur-sm">
-                                            ⚠️ Low Balance
+                                            ⚠️ {t('balance.low')}
                                         </Badge>
                                     )}
                                     <div className="flex items-center gap-3 text-sm text-slate-300">
                                         <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                                        <span>Wallet Active & Ready</span>
+                                        <span>{t('balance.active')}</span>
                                     </div>
                                 </div>
                                 <Button
                                     className="bg-white text-slate-950 hover:bg-blue-50 shadow-lg shadow-white/5 font-semibold px-6"
                                     size="lg"
                                 >
-                                    + Add Funds
+                                    + {t('balance.addFunds')}
                                 </Button>
                             </div>
                         </div>
@@ -108,17 +110,17 @@ export default async function WalletPage() {
                     <Card padding="none" className="overflow-hidden border-slate-200 shadow-sm hidden lg:block">
                         <div className="border-b border-slate-100 bg-slate-50/50 px-6 py-4 flex items-center justify-between">
                             <h3 className="font-semibold text-slate-900 flex items-center gap-2">
-                                Transaction History
+                                {t('transactions.title')}
                             </h3>
                             <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-900">
-                                Export CSV
+                                {t('transactions.export')}
                             </Button>
                         </div>
                         {recentTransactions.length === 0 ? (
                             <div className="p-12 text-center">
                                 <div className="mx-auto h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-2xl mb-3">📝</div>
-                                <h3 className="text-sm font-semibold text-slate-900">No transactions yet</h3>
-                                <p className="text-sm text-slate-500 mt-1">Activity will show up here.</p>
+                                <h3 className="text-sm font-semibold text-slate-900">{t('transactions.empty')}</h3>
+                                <p className="text-sm text-slate-500 mt-1">{t('transactions.emptyDesc')}</p>
                             </div>
                         ) : (
                             <div className="divide-y divide-slate-100">
@@ -145,7 +147,7 @@ export default async function WalletPage() {
                                                     {isDeposit ? '+' : '-'}€{(tx.amount / 100).toFixed(2)}
                                                 </p>
                                                 <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
-                                                    COMPLETED
+                                                    {t('transactions.completed')}
                                                 </span>
                                             </div>
                                         </div>
@@ -161,11 +163,11 @@ export default async function WalletPage() {
                     {/* Stats Grid */}
                     <div className="grid grid-cols-1 gap-4">
                         <Card padding="md" className="border-slate-200">
-                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">Today's Activity</p>
+                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">{t('stats.today')}</p>
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-2xl font-bold text-slate-900">{clicksToday}</p>
-                                    <p className="text-xs text-slate-500">Profile Clicks</p>
+                                    <p className="text-xs text-slate-500">{t('stats.clicks')}</p>
                                 </div>
                                 <div className="h-8 w-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
                                     👁️
@@ -174,11 +176,11 @@ export default async function WalletPage() {
                         </Card>
 
                         <Card padding="md" className="border-slate-200">
-                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">Total Spent</p>
+                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">{t('stats.spent')}</p>
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-2xl font-bold text-slate-900">€{totalSpent.toFixed(2)}</p>
-                                    <p className="text-xs text-slate-500">Last 20 txns</p>
+                                    <p className="text-xs text-slate-500">{t('stats.lastTxns')}</p>
                                 </div>
                                 <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
                                     📉
@@ -187,11 +189,11 @@ export default async function WalletPage() {
                         </Card>
 
                         <Card padding="md" className="border-slate-200">
-                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">Cost Per Lead</p>
+                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">{t('stats.cpl')}</p>
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-2xl font-bold text-slate-900">€0.10</p>
-                                    <p className="text-xs text-slate-500">Flat Rate</p>
+                                    <p className="text-xs text-slate-500">{t('stats.flatRate')}</p>
                                 </div>
                                 <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
                                     🏷️
@@ -202,10 +204,10 @@ export default async function WalletPage() {
 
                     {/* Transaction History (Mobile Only - visible below lg) */}
                     <div className="lg:hidden">
-                        <h3 className="font-semibold text-slate-900 mb-4 px-1">Recent Transactions</h3>
+                        <h3 className="font-semibold text-slate-900 mb-4 px-1">{t('transactions.recent')}</h3>
                         <Card padding="none" className="overflow-hidden border-slate-200 shadow-sm">
                             {recentTransactions.length === 0 ? (
-                                <div className="p-8 text-center text-sm text-slate-500">No transactions yet</div>
+                                <div className="p-8 text-center text-sm text-slate-500">{t('transactions.empty')}</div>
                             ) : (
                                 <div className="divide-y divide-slate-100">
                                     {recentTransactions.map((tx) => {
@@ -233,19 +235,19 @@ export default async function WalletPage() {
                     </div>
 
                     <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                        <h4 className="font-semibold text-slate-900 text-sm mb-2">About Your Wallet</h4>
+                        <h4 className="font-semibold text-slate-900 text-sm mb-2">{t('about.title')}</h4>
                         <ul className="text-xs text-slate-600 space-y-2">
                             <li className="flex gap-2">
                                 <span className="text-slate-400">•</span>
-                                <span>Funds are used to pay for profile views (€0.10/click).</span>
+                                <span>{t('about.point1')}</span>
                             </li>
                             <li className="flex gap-2">
                                 <span className="text-slate-400">•</span>
-                                <span>Auto-reload is not currently enabled.</span>
+                                <span>{t('about.point2')}</span>
                             </li>
                             <li className="flex gap-2">
                                 <span className="text-slate-400">•</span>
-                                <span>Keep at least €2.00 to stay visible.</span>
+                                <span>{t('about.point3')}</span>
                             </li>
                         </ul>
                     </div>

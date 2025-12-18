@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 export default function AcceptOfferButton({
   offerId,
@@ -13,11 +14,11 @@ export default function AcceptOfferButton({
   requestId: string;
 }) {
   const router = useRouter();
+  const t = useTranslations('ClientRequests.actions.accept');
   const [loading, setLoading] = useState(false);
 
   async function handleAccept() {
-    // Use a custom toast for confirmation if desired, or just standard confirm for now
-    if (!confirm('Accept this offer? This will create a job and reject other offers.')) {
+    if (!confirm(t('confirm'))) {
       return;
     }
 
@@ -31,11 +32,11 @@ export default function AcceptOfferButton({
       const data = await response.json();
 
       if (response.ok) {
-        toast.success('Offer accepted successfully!');
+        toast.success(t('success'));
         router.refresh();
       } else {
         // Display the specific error message from the API
-        let errorMessage = data.error?.message || data.message || 'Failed to accept offer';
+        let errorMessage = data.error?.message || data.message || t('error');
 
         // Handle structured validation errors if present
         if (data.error?.code === 'VALIDATION_ERROR' && data.error.details) {
@@ -47,7 +48,7 @@ export default function AcceptOfferButton({
         toast.error(errorMessage);
       }
     } catch (err) {
-      toast.error('An error occurred. Please try again.');
+      toast.error(t('error'));
       console.error('Error accepting offer:', err);
     } finally {
       setLoading(false);
@@ -60,7 +61,7 @@ export default function AcceptOfferButton({
       disabled={loading}
       className="px-4 py-2 text-xs"
     >
-      {loading ? 'Accepting...' : 'Accept Offer'}
+      {loading ? t('loading') : t('button')}
     </Button>
   );
 }

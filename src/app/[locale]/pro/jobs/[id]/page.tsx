@@ -1,11 +1,12 @@
 // src/app/pro/jobs/[id]/page.tsx
 import { auth } from "@clerk/nextjs/server";
 import { redirect, notFound } from "next/navigation";
+import { getTranslations } from 'next-intl/server';
 import { prisma } from "@/lib/prisma";
 import { getProfessionalByClerkId } from "@/lib/get-professional";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Badge, type BadgeVariant } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import StartJobButton from "./StartJobButton";
@@ -15,17 +16,10 @@ type ProJobDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const STATUS_CONFIG = {
-  ACCEPTED: { variant: "primary" as const, label: "Ready to Start", icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
-  IN_PROGRESS: { variant: "warning" as const, label: "In Progress", icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
-  COMPLETED: { variant: "success" as const, label: "Completed", icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
-  CANCELLED: { variant: "gray" as const, label: "Cancelled", icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
-  DISPUTED: { variant: "gray" as const, label: "Disputed", icon: "⚠️", color: "text-orange-600", bgColor: "bg-orange-50" },
-};
-
 export default async function ProJobDetailPage({ params }: ProJobDetailPageProps) {
   const resolvedParams = await params;
   const { userId } = await auth();
+  const t = await getTranslations('ProJobs');
 
   if (!userId) {
     redirect('/login');
@@ -72,6 +66,14 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
     redirect('/pro/jobs');
   }
 
+  const STATUS_CONFIG = {
+    ACCEPTED: { variant: "primary" as BadgeVariant, label: t('status.accepted'), icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
+    IN_PROGRESS: { variant: "warning" as BadgeVariant, label: t('status.inProgress'), icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+    COMPLETED: { variant: "success" as BadgeVariant, label: t('status.completed'), icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
+    CANCELLED: { variant: "gray" as BadgeVariant, label: t('status.cancelled'), icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
+    DISPUTED: { variant: "gray" as BadgeVariant, label: t('status.disputed'), icon: "⚠️", color: "text-orange-600", bgColor: "bg-orange-50" },
+  };
+
   const statusConfig = STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.ACCEPTED;
   const canStart = job.status === 'ACCEPTED';
   const canComplete = job.status === 'IN_PROGRESS';
@@ -93,11 +95,11 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
             <div className="flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
               <span className="flex items-center gap-1">📂 {job.request.category.nameEn}</span>
               <span>•</span>
-              <span className="flex items-center gap-1">🆔 Job #{job.id.substring(0, 8)}</span>
+              <span className="flex items-center gap-1">🆔 {t('detail.job_id', { id: job.id.substring(0, 8) })}</span>
               {job.startedAt && (
                 <>
                   <span>•</span>
-                  <span className="flex items-center gap-1">📅 Started {new Date(job.startedAt).toLocaleDateString()}</span>
+                  <span className="flex items-center gap-1">📅 {t('detail.started_date', { date: new Date(job.startedAt).toLocaleDateString() })}</span>
                 </>
               )}
             </div>
@@ -110,12 +112,12 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
         {/* Job Details */}
         <Card className="lg:col-span-2 space-y-4" padding="lg">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>📋</span> Job Details
+            <span>📋</span> {t('detail.section_details')}
           </h2>
 
           {job.request.description && (
             <div className="bg-[#F9FAFB] p-4 rounded-xl border border-[#E5E7EB]">
-              <p className="text-xs font-medium text-[#7C7373] mb-2">Project Description</p>
+              <p className="text-xs font-medium text-[#7C7373] mb-2">{t('detail.description_label')}</p>
               <p className="text-sm text-[#4B5563] leading-relaxed whitespace-pre-wrap">
                 {job.request.description}
               </p>
@@ -124,13 +126,13 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
 
           <div className="grid gap-3 sm:grid-cols-2">
             <InfoBox icon="📂" label="Category" value={job.request.category.nameEn} />
-            <InfoBox icon="💰" label="Agreed Price" value={job.agreedPrice ? `€${job.agreedPrice.toFixed(2)}` : 'Not specified'} />
-            <InfoBox icon="📅" label="Created" value={new Date(job.createdAt).toLocaleDateString()} />
+            <InfoBox icon="💰" label={t('detail.agreed_price')} value={job.agreedPrice ? `€${job.agreedPrice.toFixed(2)}` : 'Not specified'} />
+            <InfoBox icon="📅" label={t('detail.created_label')} value={new Date(job.createdAt).toLocaleDateString()} />
             {job.startedAt && (
-              <InfoBox icon="🚀" label="Started" value={new Date(job.startedAt).toLocaleDateString()} />
+              <InfoBox icon="🚀" label={t('detail.started_label')} value={new Date(job.startedAt).toLocaleDateString()} />
             )}
             {job.completedAt && (
-              <InfoBox icon="✅" label="Completed" value={new Date(job.completedAt).toLocaleDateString()} />
+              <InfoBox icon="✅" label={t('detail.completed_label')} value={new Date(job.completedAt).toLocaleDateString()} />
             )}
           </div>
 
@@ -138,7 +140,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
           {job.review && (
             <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
               <h3 className="text-sm font-bold text-[#333333] flex items-center gap-2 mb-3">
-                <span>⭐</span> Client Review
+                <span>⭐</span> {t('detail.client_review')}
               </h3>
               <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2">
@@ -155,7 +157,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
                 {!job.review.professionalResponse && (
                   <Link href={`/pro/reviews/${job.review.id}/respond`}>
                     <Button variant="ghost" className="text-xs mt-2 border border-yellow-300">
-                      💬 Respond to Review
+                      💬 {t('detail.respond_review')}
                     </Button>
                   </Link>
                 )}
@@ -165,10 +167,10 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
 
           {/* Additional Request Details */}
           <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
-            <h3 className="text-sm font-bold text-[#333333] mb-3">Original Request Details</h3>
+            <h3 className="text-sm font-bold text-[#333333] mb-3">{t('detail.original_request')}</h3>
             <div className="grid gap-2 text-sm">
               <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-                <span className="text-[#7C7373]">Budget Range:</span>
+                <span className="text-[#7C7373]">{t('detail.budget_range')}:</span>
                 <span className="font-medium text-[#333333]">
                   {job.request.budgetMin && job.request.budgetMax
                     ? `€${job.request.budgetMin} - €${job.request.budgetMax}`
@@ -176,16 +178,16 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
                 </span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-                <span className="text-[#7C7373]">Location Type:</span>
+                <span className="text-[#7C7373]">{t('detail.location_type')}:</span>
                 <span className="font-medium text-[#333333]">{job.request.locationType || 'Not specified'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#E5E7EB]">
-                <span className="text-[#7C7373]">Urgency:</span>
+                <span className="text-[#7C7373]">{t('detail.urgency')}:</span>
                 <span className="font-medium text-[#333333]">{job.request.urgency || 'Not specified'}</span>
               </div>
               {job.request.preferredStartDate && (
                 <div className="flex justify-between py-2">
-                  <span className="text-[#7C7373]">Preferred Start:</span>
+                  <span className="text-[#7C7373]">{t('detail.preferred_start')}:</span>
                   <span className="font-medium text-[#333333]">
                     {new Date(job.request.preferredStartDate).toLocaleDateString()}
                   </span>
@@ -211,7 +213,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
           {/* Client Card */}
           <Card className="space-y-4" padding="lg">
             <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-              <span>👤</span> Client
+              <span>👤</span> {t('detail.client_section')}
             </h2>
 
             <div className="flex items-center gap-3">
@@ -222,7 +224,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
                 <p className="text-sm font-bold text-[#333333]">
                   {job.request.client.user.firstName} {job.request.client.user.lastName}
                 </p>
-                <p className="text-xs text-[#7C7373] mt-1">Client</p>
+                <p className="text-xs text-[#7C7373] mt-1">{t('detail.client_label')}</p>
               </div>
             </div>
 
@@ -251,13 +253,13 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
       {/* Actions */}
       <Card padding="lg" className="space-y-3">
         <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
-          <span>⚡</span> Actions
+          <span>⚡</span> {t('detail.actions_section')}
         </h3>
 
         {canStart && (
           <div className="space-y-2">
             <p className="text-sm text-[#7C7373]">
-              🎉 This job has been accepted by the client. Start working when you're ready!
+              🎉 {t('detail.start_hint')}
             </p>
             <StartJobButton jobId={job.id} />
           </div>
@@ -266,7 +268,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
         {canComplete && (
           <div className="space-y-2">
             <p className="text-sm text-[#7C7373]">
-              🔨 You're currently working on this job. Mark it as complete when finished.
+              🔨 {t('detail.complete_hint')}
             </p>
             <CompleteJobButton jobId={job.id} />
           </div>
@@ -275,7 +277,7 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
         {isCompleted && !job.review && (
           <div className="flex items-center gap-2 rounded-lg bg-green-100 border border-green-200 px-4 py-3 text-sm text-green-700">
             <span>✅</span>
-            <span>Job completed! Waiting for client to leave a review.</span>
+            <span>{t('detail.completed_hint')}</span>
           </div>
         )}
       </Card>

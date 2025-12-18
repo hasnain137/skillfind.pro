@@ -1,11 +1,11 @@
 // src/app/client/jobs/[id]/page.tsx
 import { auth } from '@clerk/nextjs/server';
 import { redirect, notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 import { Link } from '@/i18n/routing';
 import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
-import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Badge, type BadgeVariant } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import CompleteJobButton from './CompleteJobButton';
 
@@ -13,17 +13,10 @@ type JobDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const STATUS_CONFIG = {
-  PENDING: { variant: "primary" as const, label: "Pending", icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
-  IN_PROGRESS: { variant: "warning" as const, label: "In Progress", icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
-  COMPLETED: { variant: "success" as const, label: "Completed", icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
-  CANCELLED: { variant: "gray" as const, label: "Cancelled", icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
-  DISPUTED: { variant: "gray" as const, label: "Disputed", icon: "⚠️", color: "text-orange-600", bgColor: "bg-orange-50" },
-};
-
 export default async function ClientJobDetailPage({ params }: JobDetailPageProps) {
   const resolvedParams = await params;
   const { userId } = await auth();
+  const t = await getTranslations('ClientJobs');
 
   if (!userId) {
     redirect('/login');
@@ -60,6 +53,14 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
     redirect('/client');
   }
 
+  const STATUS_CONFIG = {
+    PENDING: { variant: "primary" as BadgeVariant, label: t('status.pending'), icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
+    IN_PROGRESS: { variant: "warning" as BadgeVariant, label: t('status.inProgress'), icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+    COMPLETED: { variant: "success" as BadgeVariant, label: t('status.completed'), icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
+    CANCELLED: { variant: "gray" as BadgeVariant, label: t('status.cancelled'), icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
+    DISPUTED: { variant: "gray" as BadgeVariant, label: t('status.disputed'), icon: "⚠️", color: "text-orange-600", bgColor: "bg-orange-50" },
+  };
+
   const statusConfig = STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.PENDING;
   const canComplete = job.status === 'IN_PROGRESS';
   const isCompleted = job.status === 'COMPLETED';
@@ -84,13 +85,13 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
               </span>
               <span>•</span>
               <span className="flex items-center gap-1">
-                📅 Started {new Date(job.startedAt || job.createdAt).toLocaleDateString()}
+                📅 {t('detail.started_date', { date: new Date(job.startedAt || job.createdAt).toLocaleDateString() })}
               </span>
               {job.completedAt && (
                 <>
                   <span>•</span>
                   <span className="flex items-center gap-1">
-                    ✅ Completed {new Date(job.completedAt).toLocaleDateString()}
+                    ✅ {t('detail.completed_date', { date: new Date(job.completedAt).toLocaleDateString() })}
                   </span>
                 </>
               )}
@@ -104,12 +105,12 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
         {/* Job Details */}
         <Card className="lg:col-span-2 space-y-4" padding="lg">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>📋</span> Job Details
+            <span>📋</span> {t('detail.section_details')}
           </h2>
 
           {job.request.description && (
             <div className="bg-[#F9FAFB] p-4 rounded-xl border border-[#E5E7EB]">
-              <p className="text-xs font-medium text-[#7C7373] mb-2">Project Description</p>
+              <p className="text-xs font-medium text-[#7C7373] mb-2">{t('detail.description_label')}</p>
               <p className="text-sm text-[#4B5563] leading-relaxed whitespace-pre-wrap">
                 {job.request.description}
               </p>
@@ -118,10 +119,10 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
 
           <div className="grid gap-3 sm:grid-cols-2">
             <InfoBox icon="📂" label="Category" value={job.request.category.nameEn} />
-            <InfoBox icon="💰" label="Agreed Price" value={job.agreedPrice ? `€${job.agreedPrice.toFixed(2)}` : 'Not specified'} />
-            <InfoBox icon="📅" label="Started" value={new Date(job.startedAt || job.createdAt).toLocaleDateString()} />
+            <InfoBox icon="💰" label={t('detail.agreed_price')} value={job.agreedPrice ? `€${job.agreedPrice.toFixed(2)}` : 'Not specified'} />
+            <InfoBox icon="📅" label={t('detail.started_label')} value={new Date(job.startedAt || job.createdAt).toLocaleDateString()} />
             {job.completedAt && (
-              <InfoBox icon="✅" label="Completed" value={new Date(job.completedAt).toLocaleDateString()} />
+              <InfoBox icon="✅" label={t('detail.completed_label')} value={new Date(job.completedAt).toLocaleDateString()} />
             )}
           </div>
 
@@ -129,7 +130,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
           {job.review && (
             <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
               <h3 className="text-sm font-bold text-[#333333] flex items-center gap-2 mb-3">
-                <span>⭐</span> Your Review
+                <span>⭐</span> {t('detail.review_label')}
               </h3>
               <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2">
@@ -153,7 +154,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
           {/* Professional Card */}
           <Card className="space-y-4" padding="lg">
             <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-              <span>👤</span> Professional
+              <span>👤</span> {t('detail.pro_section')}
             </h2>
 
             <div className="flex items-center gap-3">
@@ -195,7 +196,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
 
             <Link href={`/professionals/${job.professionalId}`}>
               <Button variant="ghost" className="w-full text-xs border border-[#E5E7EB]">
-                View Full Profile
+                {t('detail.view_profile')}
               </Button>
             </Link>
           </Card>
@@ -207,7 +208,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
               <p className={`text-lg font-bold ${statusConfig.color} mb-1`}>
                 {statusConfig.label}
               </p>
-              <p className="text-xs text-[#7C7373]">Current Status</p>
+              <p className="text-xs text-[#7C7373]">{t('detail.current_status')}</p>
             </div>
           </Card>
         </div>
@@ -216,7 +217,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
       {/* Actions */}
       <Card padding="lg" className="space-y-3">
         <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
-          <span>⚡</span> Actions
+          <span>⚡</span> {t('detail.actions_section')}
         </h3>
 
         <div className="flex flex-wrap gap-3">
@@ -227,7 +228,7 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
           {isCompleted && !hasReview && (
             <Link href={`/client/jobs/${job.id}/review`}>
               <Button className="shadow-md">
-                ⭐ Leave a Review
+                ⭐ {t('detail.leave_review')}
               </Button>
             </Link>
           )}
@@ -235,13 +236,13 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
           {hasReview && (
             <div className="flex items-center gap-2 rounded-lg bg-green-100 border border-green-200 px-4 py-2 text-sm text-green-700">
               <span>✅</span>
-              <span>Review submitted - Thank you!</span>
+              <span>{t('detail.review_submitted')}</span>
             </div>
           )}
 
           <Link href={`/professionals/${job.professionalId}`}>
             <Button variant="ghost" className="border border-[#E5E7EB]">
-              👤 View Professional Profile
+              👤 {t('detail.view_pro_profile')}
             </Button>
           </Link>
         </div>

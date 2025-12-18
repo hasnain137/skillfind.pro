@@ -801,95 +801,205 @@
                     }
                 }
             }
+        }
+    },
+    "ClientRequests": {
+        "title": "My requests",
+        "eyebrow": "Requests",
+        "description": "Track everything you've posted, check offer counts, and keep conversations organised.",
+        "create": "Create Request",
+        "createFirst": "Create Your First Request",
+        "stats": {
+            "open": "Open",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "totalOffers": "Total Offers"
         },
-        "ClientProfile": {
-            "title": "My Profile",
-            "description": "Manage your personal information and preferences.",
-            "sections": {
-                "basic": "Basic Information",
-                "personal": "Personal Information",
-                "location": "Location",
-                "preferences": "Preferences"
+        "empty": {
+            "title": "No requests yet",
+            "desc": "Start by describing what you need. Verified professionals will send you tailored offers with pricing."
+        },
+        "status": {
+            "open": "Open",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "closed": "Closed"
+        },
+        "card": {
+            "viewDetails": "View details",
+            "new": "NEW",
+            "offers": "{count, plural, =1 {1 offer} other {# offers}}",
+            "offers_zero": "0 offers",
+            "offers_one": "1 offer",
+            "offers_other": "{count} offers",
+            "budget": "Up to {amount}",
+            "posted": "Posted {date}"
+        },
+        "detail": {
+            "bread_dashboard": "Dashboard",
+            "bread_requests": "Requests",
+            "posted": "Posted {date}",
+            "section_details": "Request Details",
+            "desc_label": "Description",
+            "info_category": "Category",
+            "info_budget": "Budget",
+            "info_location": "Location",
+            "info_type": "Type",
+            "info_urgency": "Urgency",
+            "info_start": "Start Date",
+            "active_job": "Active Job",
+            "contact_info": "Contact Information",
+            "pro_label": "Professional",
+            "email_label": "Email",
+            "phone_label": "Phone",
+            "view_job": "View Job Details",
+            "current_status": "Current Status",
+            "overview": "Overview",
+            "offers_received": "Offers Received",
+            "created_label": "Created",
+            "updated_label": "Last Updated",
+            "offers_section": "Offers from Professionals",
+            "offers_hint": "Review each offer carefully and view the professional's profile to learn more.",
+            "no_offers": "No offers yet",
+            "no_offers_desc": "Professionals matching your request will be notified. You can update your request details or share more context to attract the right professionals.",
+            "sent_date": "Sent {date}",
+            "negotiable": "Negotiable"
+        },
+        "actions": {
+            "accept": {
+                "button": "Accept Offer",
+                "loading": "Accepting...",
+                "confirm": "Accept this offer? This will create a job and reject other offers.",
+                "success": "Offer accepted successfully!",
+                "error": "Failed to accept offer"
             },
+            "close": {
+                "button": "Close Request",
+                "loading": "Closing...",
+                "confirm": "Close this request? You will no longer receive offers.",
+                "success": "Request closed",
+                "error": "Failed to close request"
+            },
+            "viewProfile": {
+                "button": "View Profile",
+                "loading": "Loading..."
+            }
+        }
+    },
+    "ProRequests": {
+        "title": "Newest opportunities",
+        "eyebrow": "Matching requests",
+        "description": "These requests match your services. Respond quickly to increase your chances.",
+        "stats": {
+            "matches": "Total Matches",
+            "new": "New Today",
+            "urgent": "Urgent",
+            "services": "Your Services"
+        },
+        "empty": {
+            "title": "No matching requests",
+            "desc": "Try adding more services to your profile to see more opportunities.",
+            "action": "Update Services"
+        },
+        "card": {
+            "new": "NEW",
+            "urgent": "URGENT",
+            "posted": "Posted {date}",
+            "offers_count": "{count} offers",
+            "client": "Client: {name}",
+            "sendOffer": "Send Offer",
+            "pending": "Pending Approval",
+            "inactive": "Account Inactive"
+        }
+    },
+    "ClientProfile": {
+        "title": "My Profile",
+        "description": "Manage your personal information and preferences.",
+        "sections": {
+            "basic": "Basic Information",
+            "personal": "Personal Information",
+            "location": "Location",
+            "preferences": "Preferences"
+        },
+        "fields": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email Address",
+            "emailHint": "Email cannot be changed",
+            "dob": "Date of Birth",
+            "phone": "Phone Number",
+            "phoneHint": "International format: +[country code][number]",
+            "city": "City",
+            "region": "Region/State",
+            "country": "Country",
+            "language": "Preferred Language",
+            "languageHint": "Language for notifications and communications"
+        },
+        "actions": {
+            "save": "Save Changes",
+            "saving": "Saving...",
+            "cancel": "Cancel"
+        },
+        "success": "Profile updated successfully",
+        "error": "Failed to update profile",
+        "updateError": "Failed to update personal information"
+    },
+    "ProProfile": {
+        "title": "Keep your professional profile updated",
+        "description": "Clients want to understand your expertise, services, and availability before sending work.",
+        "tabs": {
+            "info": "Profile Info",
+            "services": "Services",
+            "verification": "Verification"
+        },
+        "completion": {
+            "title": "Profile Completion",
+            "desc": "Complete profiles get 3x more offers!",
+            "missing": "Complete these to reach 100%:"
+        },
+        "info": {
+            "titleLabel": "Professional Title",
+            "titlePlaceholder": "e.g. Senior Math Tutor",
+            "yearsLabel": "Years of Experience",
+            "bioLabel": "Bio",
+            "bioPlaceholder": "Describe your expertise...",
+            "personal": "Personal Information",
+            "location": "Location & Availability",
+            "isAvailable": "Available for work",
+            "remoteLabel": "Remote Work",
+            "remoteOptions": {
+                "YES_AND_ONSITE": "Remote and on-site",
+                "ONLY_REMOTE": "Remote only",
+                "NO_REMOTE": "On-site only"
+            }
+        },
+        "services": {
+            "add": "Add New Service",
+            "edit": "Edit Service",
+            "update": "Update Service",
+            "delete": "Delete",
+            "confirmDelete": "Are you sure you want to delete this service?",
+            "empty": "No services added yet. Add a service to start receiving requests.",
             "fields": {
-                "firstName": "First Name",
-                "lastName": "Last Name",
-                "email": "Email Address",
-                "emailHint": "Email cannot be changed",
-                "dob": "Date of Birth",
-                "phone": "Phone Number",
-                "phoneHint": "International format: +[country code][number]",
-                "city": "City",
-                "region": "Region/State",
-                "country": "Country",
-                "language": "Preferred Language",
-                "languageHint": "Language for notifications and communications"
-            },
-            "actions": {
-                "save": "Save Changes",
-                "saving": "Saving...",
+                "category": "Category",
+                "selectCategory": "Select Category",
+                "subcategory": "Subcategory",
+                "selectSubcategory": "Select Subcategory",
+                "price": "Starting Price (€)",
+                "description": "Description",
+                "descriptionHint": "min 50 characters",
                 "cancel": "Cancel"
             },
-            "success": "Profile updated successfully",
-            "error": "Failed to update profile",
-            "updateError": "Failed to update personal information"
+            "startsFrom": "Starts from €{price}"
         },
-        "ProProfile": {
-            "title": "Keep your professional profile updated",
-            "description": "Clients want to understand your expertise, services, and availability before sending work.",
-            "tabs": {
-                "info": "Profile Info",
-                "services": "Services",
-                "verification": "Verification"
-            },
-            "completion": {
-                "title": "Profile Completion",
-                "desc": "Complete profiles get 3x more offers!",
-                "missing": "Complete these to reach 100%:"
-            },
-            "info": {
-                "titleLabel": "Professional Title",
-                "titlePlaceholder": "e.g. Senior Math Tutor",
-                "yearsLabel": "Years of Experience",
-                "bioLabel": "Bio",
-                "bioPlaceholder": "Describe your expertise...",
-                "personal": "Personal Information",
-                "location": "Location & Availability",
-                "isAvailable": "Available for work",
-                "remoteLabel": "Remote Work",
-                "remoteOptions": {
-                    "YES_AND_ONSITE": "Remote and on-site",
-                    "ONLY_REMOTE": "Remote only",
-                    "NO_REMOTE": "On-site only"
-                }
-            },
-            "services": {
-                "add": "Add New Service",
-                "edit": "Edit Service",
-                "update": "Update Service",
-                "delete": "Delete",
-                "confirmDelete": "Are you sure you want to delete this service?",
-                "empty": "No services added yet. Add a service to start receiving requests.",
-                "fields": {
-                    "category": "Category",
-                    "selectCategory": "Select Category",
-                    "subcategory": "Subcategory",
-                    "selectSubcategory": "Select Subcategory",
-                    "price": "Starting Price (€)",
-                    "description": "Description",
-                    "descriptionHint": "min 50 characters",
-                    "cancel": "Cancel"
-                },
-                "startsFrom": "Starts from €{price}"
-            },
-            "success": "Profile updated successfully",
-            "serviceAdded": "Service added successfully",
-            "serviceUpdated": "Service updated successfully",
-            "serviceDeleted": "Service deleted successfully",
-            "error": "Failed to update profile",
-            "serviceError": "Failed to add service",
-            "deleteError": "Failed to delete service"
-        }
+        "success": "Profile updated successfully",
+        "serviceAdded": "Service added successfully",
+        "serviceUpdated": "Service updated successfully",
+        "serviceDeleted": "Service deleted successfully",
+        "error": "Failed to update profile",
+        "serviceError": "Failed to add service",
+        "deleteError": "Failed to delete service"
     },
     "Verification": {
         "status": {
@@ -958,5 +1068,153 @@
         "success": "Review submitted successfully!",
         "error": "Failed to submit review",
         "selectRating": "Please select a rating"
+    },
+    "ClientJobs": {
+        "title": "My Jobs",
+        "eyebrow": "Jobs",
+        "description": "Track your active and completed jobs",
+        "stats": {
+            "active": "Active Jobs",
+            "completed": "Completed",
+            "total": "Total Jobs",
+            "spent": "Total Spent"
+        },
+        "empty": {
+            "title": "No jobs yet",
+            "desc": "Accept an offer on your requests to create a job and start working with a professional.",
+            "button": "View Requests"
+        },
+        "status": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "disputed": "Disputed"
+        },
+        "detail": {
+            "section_details": "Job Details",
+            "description_label": "Project Description",
+            "agreed_price": "Agreed Price",
+            "started_label": "Started",
+            "completed_label": "Completed",
+            "review_label": "Your Review",
+            "pro_section": "Professional",
+            "view_profile": "View Full Profile",
+            "current_status": "Current Status",
+            "actions_section": "Actions",
+            "leave_review": "Leave a Review",
+            "review_submitted": "Review submitted - Thank you!",
+            "view_pro_profile": "View Professional Profile",
+            "started_date": "Started {date}",
+            "completed_date": "Completed {date}"
+        },
+        "actions": {
+            "complete": {
+                "button": "Mark as Complete",
+                "loading": "Completing...",
+                "confirm": "Mark this job as complete? The professional will be notified.",
+                "success": "Job completed",
+                "error": "Failed to complete job"
+            }
+        }
+    },
+    "ProJobs": {
+        "title": "My Jobs",
+        "eyebrow": "Jobs",
+        "description": "Track your hired jobs, start work, and mark them complete when finished.",
+        "stats": {
+            "ready": "Ready to Start",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "earned": "Total Earned"
+        },
+        "active": "Active Jobs",
+        "empty": {
+            "title": "No jobs yet",
+            "desc": "Browse matching requests and send competitive offers to win your first job!",
+            "button": "Browse Requests"
+        },
+        "card": {
+            "ready": "Ready",
+            "viewDetails": "View details",
+            "reviewed": "Reviewed"
+        },
+        "status": {
+            "accepted": "Accepted - Ready to start",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "disputed": "Disputed"
+        },
+        "detail": {
+            "section_details": "Job Details",
+            "description_label": "Project Description",
+            "agreed_price": "Agreed Price",
+            "created_label": "Created",
+            "started_label": "Started",
+            "completed_label": "Completed",
+            "client_review": "Client Review",
+            "respond_review": "Respond to Review",
+            "original_request": "Original Request Details",
+            "budget_range": "Budget Range",
+            "location_type": "Location Type",
+            "urgency": "Urgency",
+            "preferred_start": "Preferred Start",
+            "client_section": "Client",
+            "client_label": "Client",
+            "actions_section": "Actions",
+            "start_hint": "This job has been accepted by the client. Start working when you're ready!",
+            "complete_hint": "You're currently working on this job. Mark it as complete when finished.",
+            "completed_hint": "Job completed! Waiting for client to leave a review.",
+            "job_id": "Job #{id}",
+            "started_date": "Started {date}"
+        },
+        "actions": {
+            "start": {
+                "button": "Start Job",
+                "loading": "Starting...",
+                "confirm": "Are you ready to start this job?",
+                "error": "Failed to start job"
+            },
+            "complete": {
+                "button": "Mark as Complete",
+                "loading": "Completing...",
+                "confirm": "Mark this job as complete? The client will be notified and asked to leave a review.",
+                "error": "Failed to complete job"
+            }
+        }
+    },
+    "Wallet": {
+        "title": "Wallet",
+        "eyebrow": "Financials",
+        "description": "Manage your balance and view your transaction history.",
+        "balance": {
+            "available": "Available Balance",
+            "low": "Low Balance",
+            "active": "Wallet Active & Ready",
+            "addFunds": "Add Funds"
+        },
+        "transactions": {
+            "title": "Transaction History",
+            "export": "Export CSV",
+            "empty": "No transactions yet",
+            "emptyDesc": "Activity will show up here.",
+            "completed": "COMPLETED",
+            "recent": "Recent Transactions"
+        },
+        "stats": {
+            "today": "Today's Activity",
+            "clicks": "Profile Clicks",
+            "spent": "Total Spent",
+            "lastTxns": "Last 20 txns",
+            "cpl": "Cost Per Lead",
+            "flatRate": "Flat Rate"
+        },
+        "about": {
+            "title": "About Your Wallet",
+            "point1": "Funds are used to pay for profile views (€0.10/click).",
+            "point2": "Auto-reload is not currently enabled.",
+            "point3": "Keep at least €2.00 to stay visible."
+        }
     }
-}
+```

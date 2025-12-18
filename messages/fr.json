@@ -820,6 +820,116 @@
                 }
             }
         },
+        "ClientRequests": {
+            "title": "Mes demandes",
+            "eyebrow": "Demandes",
+            "description": "Suivez tout ce que vous avez posté, vérifiez le nombre d'offres et gardez vos conversations organisées.",
+            "create": "Créer une demande",
+            "createFirst": "Créer votre première demande",
+            "stats": {
+                "open": "Ouvertes",
+                "inProgress": "En cours",
+                "completed": "Terminées",
+                "totalOffers": "Total offres"
+            },
+            "empty": {
+                "title": "Aucune demande pour le moment",
+                "desc": "Commencez par décrire ce dont vous avez besoin. Des professionnels vérifiés vous enverront des offres personnalisées avec des prix."
+            },
+            "status": {
+                "open": "Ouverte",
+                "inProgress": "En cours",
+                "completed": "Terminée",
+                "cancelled": "Annulée",
+                "closed": "Fermée"
+            },
+            "card": {
+                "viewDetails": "Voir les détails",
+                "new": "NOUVEAU",
+                "offers": "{count, plural, =1 {1 offre} other {# offres}}",
+                "offers_zero": "0 offres",
+                "offers_one": "1 offre",
+                "offers_other": "{count} offres",
+                "budget": "Jusqu'à {amount}",
+                "posted": "Posté le {date}"
+            },
+            "detail": {
+                "bread_dashboard": "Tableau de bord",
+                "bread_requests": "Demandes",
+                "posted": "Posté le {date}",
+                "section_details": "Détails de la demande",
+                "desc_label": "Description",
+                "info_category": "Catégorie",
+                "info_budget": "Budget",
+                "info_location": "Lieu",
+                "info_type": "Type",
+                "info_urgency": "Urgence",
+                "info_start": "Date de début",
+                "active_job": "Travail actif",
+                "contact_info": "Informations de contact",
+                "pro_label": "Professionnel",
+                "email_label": "Email",
+                "phone_label": "Téléphone",
+                "view_job": "Voir les détails du travail",
+                "current_status": "Statut actuel",
+                "overview": "Aperçu",
+                "offers_received": "Offres reçues",
+                "created_label": "Créé",
+                "updated_label": "Dernière mise à jour",
+                "offers_section": "Offres des professionnels",
+                "offers_hint": "Examinez chaque offre attentivement et consultez le profil du professionnel pour en savoir plus.",
+                "no_offers": "Aucune offre pour le moment",
+                "no_offers_desc": "Les professionnels correspondant à votre demande seront notifiés. Vous pouvez mettre à jour les détails de votre demande ou partager plus de contexte pour attirer les bons professionnels.",
+                "sent_date": "Envoyé le {date}",
+                "negotiable": "Négociable"
+            },
+            "actions": {
+                "accept": {
+                    "button": "Accepter l'offre",
+                    "loading": "Acceptation...",
+                    "confirm": "Accepter cette offre ? Cela créera un travail et rejettera les autres offres.",
+                    "success": "Offre acceptée avec succès !",
+                    "error": "Échec de l'acceptation de l'offre"
+                },
+                "close": {
+                    "button": "Fermer la demande",
+                    "loading": "Fermeture...",
+                    "confirm": "Fermer cette demande ? Vous ne recevrez plus d'offres.",
+                    "success": "Demande fermée",
+                    "error": "Échec de la fermeture de la demande"
+                },
+                "viewProfile": {
+                    "button": "Voir le profil",
+                    "loading": "Chargement..."
+                }
+            }
+        },
+        "ProRequests": {
+            "title": "Nouvelles opportunités",
+            "eyebrow": "Demandes correspondantes",
+            "description": "Ces demandes correspondent à vos services. Répondez rapidement pour augmenter vos chances.",
+            "stats": {
+                "matches": "Total correspondances",
+                "new": "Nouveau aujourd'hui",
+                "urgent": "Urgent",
+                "services": "Vos services"
+            },
+            "empty": {
+                "title": "Aucune demande correspondante",
+                "desc": "Essayez d'ajouter plus de services à votre profil pour voir plus d'opportunités.",
+                "action": "Mettre à jour les services"
+            },
+            "card": {
+                "new": "NOUVEAU",
+                "urgent": "URGENT",
+                "posted": "Posté le {date}",
+                "offers_count": "{count} offres",
+                "client": "Client : {name}",
+                "sendOffer": "Envoyer une offre",
+                "pending": "En attente d'approbation",
+                "inactive": "Compte inactif"
+            }
+        },
         "ClientProfile": {
             "title": "Mon Profil",
             "description": "Gérez vos informations personnelles et préférences.",
@@ -975,6 +1085,152 @@
             "success": "Avis envoyé avec succès !",
             "error": "Échec de l'envoi de l'avis",
             "selectRating": "Veuillez sélectionner une note"
+        },
+        "ClientJobs": {
+            "title": "Mes travaux",
+            "eyebrow": "Travaux",
+            "description": "Suivez vos travaux actifs et terminés",
+            "stats": {
+                "active": "Travaux actifs",
+                "completed": "Terminés",
+                "total": "Total travaux",
+                "spent": "Total dépensé"
+            },
+            "empty": {
+                "title": "Aucun travail pour le moment",
+                "desc": "Acceptez une offre sur vos demandes pour créer un travail et commencer à travailler avec un professionnel.",
+                "button": "Voir les demandes"
+            },
+            "status": {
+                "pending": "En attente",
+                "inProgress": "En cours",
+                "completed": "Terminé",
+                "cancelled": "Annulé",
+                "disputed": "Contesté"
+            },
+            "detail": {
+                "section_details": "Détails du travail",
+                "description_label": "Description du projet",
+                "agreed_price": "Prix convenu",
+                "started_label": "Commencé",
+                "completed_label": "Terminé",
+                "review_label": "Votre avis",
+                "pro_section": "Professionnel",
+                "view_profile": "Voir le profil complet",
+                "current_status": "Statut actuel",
+                "actions_section": "Actions",
+                "leave_review": "Laisser un avis",
+                "review_submitted": "Avis soumis - Merci !",
+                "view_pro_profile": "Voir le profil du professionnel",
+                "started_date": "Commencé le {date}",
+                "completed_date": "Terminé le {date}"
+            },
+            "actions": {
+                "complete": {
+                    "button": "Marquer comme terminé",
+                    "loading": "Finalisation...",
+                    "confirm": "Marquer ce travail comme terminé ? Le professionnel sera notifié.",
+                    "success": "Travail terminé",
+                    "error": "Échec de la finalisation du travail"
+                }
+            }
+        },
+        "ProJobs": {
+            "title": "Mes travaux",
+            "eyebrow": "Travaux",
+            "description": "Suivez vos travaux, commencez le travail et marquez-les comme terminés une fois finis.",
+            "stats": {
+                "ready": "Prêt à commencer",
+                "inProgress": "En cours",
+                "completed": "Terminés",
+                "earned": "Total gagné"
+            },
+            "active": "Travaux actifs",
+            "empty": {
+                "title": "Aucun travail pour le moment",
+                "desc": "Parcourez les demandes correspondantes et envoyez des offres compétitives pour décrocher votre premier travail !",
+                "button": "Parcourir les demandes"
+            },
+            "card": {
+                "ready": "Prêt",
+                "viewDetails": "Voir les détails",
+                "reviewed": "Evalué"
+            },
+            "status": {
+                "accepted": "Accepté - Prêt à commencer",
+                "inProgress": "En cours",
+                "completed": "Terminé",
+                "cancelled": "Annulé",
+                "disputed": "Contesté"
+            },
+            "detail": {
+                "section_details": "Détails du travail",
+                "description_label": "Description du projet",
+                "agreed_price": "Prix convenu",
+                "created_label": "Créé",
+                "started_label": "Commencé",
+                "completed_label": "Terminé",
+                "client_review": "Avis du client",
+                "respond_review": "Répondre à l'avis",
+                "original_request": "Détails de la demande originale",
+                "budget_range": "Fourchette budgétaire",
+                "location_type": "Type de lieu",
+                "urgency": "Urgence",
+                "preferred_start": "Début préféré",
+                "client_section": "Client",
+                "client_label": "Client",
+                "actions_section": "Actions",
+                "start_hint": "Ce travail a été accepté par le client. Commencez à travailler quand vous êtes prêt !",
+                "complete_hint": "Vous travaillez actuellement sur ce travail. Marquez-le comme terminé une fois fini.",
+                "completed_hint": "Travail terminé ! En attente de l'avis du client.",
+                "job_id": "Travail #{id}",
+                "started_date": "Commencé le {date}"
+            },
+            "actions": {
+                "start": {
+                    "button": "Commencer le travail",
+                    "loading": "Démarrage...",
+                    "confirm": "Êtes-vous prêt à commencer ce travail ?",
+                    "error": "Échec du démarrage du travail"
+                },
+                "complete": {
+                    "button": "Marquer comme terminé",
+                    "loading": "Finalisation...",
+                    "confirm": "Marquer ce travail comme terminé ? Le client sera notifié et invité à laisser un avis.",
+                    "error": "Échec de la finalisation du travail"
+                }
+            }
+        },
+        "Wallet": {
+            "title": "Portefeuille",
+            "eyebrow": "Finances",
+            "description": "Gérez votre solde et consultez votre historique de transactions.",
+            "balance": {
+                "available": "Solde disponible",
+                "low": "Solde faible",
+                "active": "Portefeuille actif & prêt",
+                "addFunds": "Ajouter des fonds"
+            },
+            "transactions": {
+                "title": "Historique des transactions",
+                "export": "Exporter CSV",
+                "empty": "Aucune transaction pour le moment",
+                "emptyDesc": "L'activité apparaîtra ici.",
+                "completed": "TERMINÉ",
+                "recent": "Transactions récentes"
+            },
+            "stats": {
+                "today": "Activité du jour",
+                "clicks": "Clics sur le profil",
+                "spent": "Total dépensé",
+                "lastTxns": "20 dernières txns",
+                "cpl": "Coût par prospect",
+                "flatRate": "Tarif unique"
+            },
+            "about": {
+                "title": "À propos de votre portefeuille",
+                "point1": "Les fonds sont utilisés pour payer les vues de profil (0,10 €/clic).",
+                "point2": "Le rechargement automatique n'est pas activé actuellement.",
+                "point3": "Gardez au moins 2,00 € pour rester visible."
+            }
         }
-    }
-}

@@ -3,14 +3,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 export default function CompleteJobButton({ jobId }: { jobId: string }) {
   const router = useRouter();
+  const t = useTranslations('ClientJobs.actions.complete');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   async function handleComplete() {
-    if (!confirm('Mark this job as complete? The professional will be notified.')) {
+    if (!confirm(t('confirm'))) {
       return;
     }
 
@@ -27,7 +29,7 @@ export default function CompleteJobButton({ jobId }: { jobId: string }) {
       if (response.ok) {
         router.refresh();
       } else {
-        setError(data.message || 'Failed to complete job');
+        setError(data.message || t('error'));
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -39,11 +41,11 @@ export default function CompleteJobButton({ jobId }: { jobId: string }) {
 
   return (
     <div>
-      <Button 
+      <Button
         onClick={handleComplete}
         disabled={loading}
       >
-        {loading ? 'Completing...' : 'Mark as Complete'}
+        {loading ? t('loading') : t('button')}
       </Button>
       {error && (
         <p className="text-xs text-red-600 mt-1">{error}</p>

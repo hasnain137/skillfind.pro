@@ -3,14 +3,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 export default function CompleteJobButton({ jobId }: { jobId: string }) {
   const router = useRouter();
+  const t = useTranslations('ProJobs.actions.complete');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   async function handleComplete() {
-    if (!confirm('Mark this job as complete? The client will be notified and asked to leave a review.')) return;
+    if (!confirm(t('confirm'))) return;
 
     setLoading(true);
     setError('');
@@ -23,7 +25,7 @@ export default function CompleteJobButton({ jobId }: { jobId: string }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to complete job');
+        throw new Error(data.error || t('error'));
       }
 
       // Refresh the page to show updated status
@@ -42,7 +44,7 @@ export default function CompleteJobButton({ jobId }: { jobId: string }) {
         disabled={loading}
         className="w-full sm:w-auto bg-green-600 hover:bg-green-700"
       >
-        {loading ? 'Completing...' : '✅ Mark as Complete'}
+        {loading ? t('loading') : `✅ ${t('button')}`}
       </Button>
       {error && (
         <p className="text-sm text-red-600">{error}</p>

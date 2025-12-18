@@ -1,12 +1,12 @@
 // src/app/client/requests/[id]/page.tsx
 import { auth } from '@clerk/nextjs/server';
 import { redirect, notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 import Link from "next/link";
-import { Badge } from "@/components/ui/Badge";
+import { Badge, type BadgeVariant } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import AcceptOfferButton from './AcceptOfferButton';
 import CloseRequestButton from './CloseRequestButton';
@@ -16,17 +16,20 @@ type RequestDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const STATUS_CONFIG = {
-  OPEN: { variant: "primary" as const, label: "Open", icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
-  IN_PROGRESS: { variant: "warning" as const, label: "In Progress", icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
-  COMPLETED: { variant: "success" as const, label: "Completed", icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
-  CLOSED: { variant: "gray" as const, label: "Closed", icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
-};
+type RequestStatus = "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CLOSED";
 
 export default async function ClientRequestDetailPage({
   params,
 }: RequestDetailPageProps) {
   const resolvedParams = await params;
+  const t = await getTranslations('ClientRequests');
+
+  const STATUS_CONFIG = {
+    OPEN: { variant: "primary" as BadgeVariant, label: t('status.open'), icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
+    IN_PROGRESS: { variant: "warning" as BadgeVariant, label: t('status.inProgress'), icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+    COMPLETED: { variant: "success" as BadgeVariant, label: t('status.completed'), icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
+    CLOSED: { variant: "gray" as BadgeVariant, label: t('status.closed'), icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
+  };
 
   // Get authenticated user
   const { userId } = await auth();
@@ -93,8 +96,8 @@ export default async function ClientRequestDetailPage({
     <div className="space-y-6">
       {/* Breadcrumb Navigation */}
       <Breadcrumb items={[
-        { label: 'Dashboard', href: '/client' },
-        { label: 'Requests', href: '/client/requests' },
+        { label: t('detail.bread_dashboard'), href: '/client' },
+        { label: t('detail.bread_requests'), href: '/client/requests' },
         { label: request.title },
       ]} />
 
@@ -112,7 +115,7 @@ export default async function ClientRequestDetailPage({
             <div className="flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
               <span className="flex items-center gap-1">📂 {request.category.nameEn}</span>
               <span>•</span>
-              <span className="flex items-center gap-1">📅 Posted {new Date(request.createdAt).toLocaleDateString()}</span>
+              <span className="flex items-center gap-1">📅 {t('detail.posted', { date: new Date(request.createdAt).toLocaleDateString() })}</span>
               {request.city && (
                 <>
                   <span>•</span>
@@ -132,12 +135,12 @@ export default async function ClientRequestDetailPage({
         {/* Request Details */}
         <Card className="lg:col-span-2 space-y-4" padding="lg">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>📋</span> Request Details
+            <span>📋</span> {t('detail.section_details')}
           </h2>
 
           {request.description && (
             <div className="bg-[#F9FAFB] p-4 rounded-xl border border-[#E5E7EB]">
-              <p className="text-xs font-medium text-[#7C7373] mb-2">Description</p>
+              <p className="text-xs font-medium text-[#7C7373] mb-2">{t('detail.desc_label')}</p>
               <p className="text-sm text-[#4B5563] leading-relaxed whitespace-pre-wrap">
                 {request.description}
               </p>
@@ -145,40 +148,40 @@ export default async function ClientRequestDetailPage({
           )}
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <InfoBox icon="📂" label="Category" value={request.category.nameEn} />
-            <InfoBox icon="💰" label="Budget" value={formatBudget()} />
-            <InfoBox icon="📍" label="Location" value={request.city ? `${request.city}, ${request.country}` : 'Not specified'} />
-            <InfoBox icon="🏢" label="Type" value={request.locationType === 'REMOTE' ? 'Remote' : 'On-site'} />
+            <InfoBox icon="📂" label={t('detail.info_category')} value={request.category.nameEn} />
+            <InfoBox icon="💰" label={t('detail.info_budget')} value={formatBudget()} />
+            <InfoBox icon="📍" label={t('detail.info_location')} value={request.city ? `${request.city}, ${request.country}` : 'Not specified'} />
+            <InfoBox icon="🏢" label={t('detail.info_type')} value={request.locationType === 'REMOTE' ? 'Remote' : 'On-site'} />
             {request.urgency && (
-              <InfoBox icon="⚡" label="Urgency" value={request.urgency} />
+              <InfoBox icon="⚡" label={t('detail.info_urgency')} value={request.urgency} />
             )}
             {request.preferredStartDate && (
-              <InfoBox icon="📅" label="Start Date" value={new Date(request.preferredStartDate).toLocaleDateString()} />
+              <InfoBox icon="📅" label={t('detail.info_start')} value={new Date(request.preferredStartDate).toLocaleDateString()} />
             )}
           </div>
 
           {request.job && (
             <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
               <h3 className="text-sm font-bold text-[#333333] flex items-center gap-2 mb-3">
-                <span>✅</span> Active Job
+                <span>✅</span> {t('detail.active_job')}
               </h3>
 
               {/* Contact Information Card */}
               <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
-                <h4 className="text-sm font-bold text-green-800 mb-2">Contact Information</h4>
+                <h4 className="text-sm font-bold text-green-800 mb-2">{t('detail.contact_info')}</h4>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div>
-                    <p className="text-xs text-green-600 font-medium">Professional</p>
+                    <p className="text-xs text-green-600 font-medium">{t('detail.pro_label')}</p>
                     <p className="text-sm font-bold text-[#333333]">
                       {request.job.professional.user.firstName} {request.job.professional.user.lastName}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-green-600 font-medium">Email</p>
+                    <p className="text-xs text-green-600 font-medium">{t('detail.email_label')}</p>
                     <p className="text-sm text-[#333333]">{request.job.professional.user.email}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-green-600 font-medium">Phone</p>
+                    <p className="text-xs text-green-600 font-medium">{t('detail.phone_label')}</p>
                     <p className="text-sm text-[#333333]">
                       {request.job.professional.user.phoneNumber || 'Not provided'}
                     </p>
@@ -188,7 +191,7 @@ export default async function ClientRequestDetailPage({
 
               <Link href={`/client/jobs/${request.job.id}`}>
                 <Button variant="ghost" className="w-full sm:w-auto border border-[#E5E7EB]">
-                  View Job Details →
+                  {t('detail.view_job')} →
                 </Button>
               </Link>
             </div>
@@ -204,27 +207,27 @@ export default async function ClientRequestDetailPage({
               <p className={`text-lg font-bold ${statusConfig.color} mb-1`}>
                 {statusConfig.label}
               </p>
-              <p className="text-xs text-[#7C7373]">Current Status</p>
+              <p className="text-xs text-[#7C7373]">{t('detail.current_status')}</p>
             </div>
           </Card>
 
           {/* Stats Card */}
           <Card className="space-y-3" padding="lg">
             <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
-              <span>📊</span> Overview
+              <span>📊</span> {t('detail.overview')}
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between items-center py-2 border-b border-[#E5E7EB]">
-                <span className="text-xs text-[#7C7373]">Offers Received</span>
+                <span className="text-xs text-[#7C7373]">{t('detail.offers_received')}</span>
                 <span className="text-sm font-bold text-[#2563EB]">{request.offers.length}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-[#E5E7EB]">
-                <span className="text-xs text-[#7C7373]">Created</span>
+                <span className="text-xs text-[#7C7373]">{t('detail.created_label')}</span>
                 <span className="text-xs font-medium text-[#333333]">{new Date(request.createdAt).toLocaleDateString()}</span>
               </div>
               {request.updatedAt && new Date(request.updatedAt).getTime() !== new Date(request.createdAt).getTime() && (
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-xs text-[#7C7373]">Last Updated</span>
+                  <span className="text-xs text-[#7C7373]">{t('detail.updated_label')}</span>
                   <span className="text-xs font-medium text-[#333333]">{new Date(request.updatedAt).toLocaleDateString()}</span>
                 </div>
               )}
@@ -238,10 +241,10 @@ export default async function ClientRequestDetailPage({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-[#333333] flex items-center gap-2">
-              <span>💼</span> Offers from Professionals
+              <span>💼</span> {t('detail.offers_section')}
             </h2>
             <p className="text-sm text-[#7C7373] mt-1">
-              {hasOffers ? "Review each offer carefully and view the professional's profile to learn more." : "No offers yet. Professionals matching your request will be notified."}
+              {hasOffers ? t('detail.offers_hint') : t('detail.no_offers_desc')}
             </p>
           </div>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">
@@ -254,9 +257,9 @@ export default async function ClientRequestDetailPage({
           <Card level={2} padding="lg" className="text-center">
             <div className="py-8">
               <span className="text-5xl mb-3 block">📭</span>
-              <p className="text-sm font-medium text-[#7C7373] mb-2">No offers yet</p>
+              <p className="text-sm font-medium text-[#7C7373] mb-2">{t('detail.no_offers')}</p>
               <p className="text-xs text-[#B0B0B0] max-w-md mx-auto">
-                Professionals matching your request will be notified. You can update your request details or share more context to attract the right professionals.
+                {t('detail.no_offers_desc')}
               </p>
             </div>
           </Card>
@@ -294,7 +297,7 @@ export default async function ClientRequestDetailPage({
                     </div>
                     <div className="text-right">
                       <p className="text-lg font-bold text-[#2563EB]">
-                        {offer.proposedPrice ? `€${offer.proposedPrice}` : 'Negotiable'}
+                        {offer.proposedPrice ? `€${offer.proposedPrice}` : t('detail.negotiable')}
                       </p>
                       <Badge variant={offer.status === 'PENDING' ? 'primary' : offer.status === 'ACCEPTED' ? 'success' : 'gray'} className="mt-1">
                         {offer.status}
@@ -310,7 +313,7 @@ export default async function ClientRequestDetailPage({
                   {/* Metadata */}
                   <div className="flex flex-wrap items-center gap-4 text-xs text-[#7C7373]">
                     <span className="flex items-center gap-1">
-                      📅 Sent {new Date(offer.createdAt).toLocaleDateString()}
+                      📅 {t('detail.sent_date', { date: new Date(offer.createdAt).toLocaleDateString() })}
                     </span>
                     {offer.estimatedDuration && (
                       <>

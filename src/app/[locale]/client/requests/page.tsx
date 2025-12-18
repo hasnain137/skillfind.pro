@@ -1,6 +1,6 @@
-// src/app/client/requests/page.tsx
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 import Link from "next/link";
 import { Badge, type BadgeVariant } from "@/components/ui/Badge";
@@ -9,40 +9,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 type RequestStatus = "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
 
-const STATUS_CONFIG = {
-  OPEN: {
-    variant: "primary" as BadgeVariant,
-    label: "Open",
-    icon: "🔵",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
-  },
-  IN_PROGRESS: {
-    variant: "warning" as BadgeVariant,
-    label: "In Progress",
-    icon: "🟡",
-    color: "text-yellow-600",
-    bgColor: "bg-yellow-50",
-  },
-  COMPLETED: {
-    variant: "success" as BadgeVariant,
-    label: "Completed",
-    icon: "🟢",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-  },
-  CANCELLED: {
-    variant: "gray" as BadgeVariant,
-    label: "Cancelled",
-    icon: "⚫",
-    color: "text-gray-600",
-    bgColor: "bg-gray-50",
-  },
-};
-
 export default async function ClientRequestsPage() {
   // Get authenticated user
   const { userId } = await auth();
+  const t = await getTranslations('ClientRequests');
+  const tCommon = await getTranslations('Common');
+
   if (!userId) {
     redirect('/login');
   }
@@ -74,18 +46,50 @@ export default async function ClientRequestsPage() {
   const activeRequests = requests.filter(r => r.status === 'IN_PROGRESS');
   const completedRequests = requests.filter(r => r.status === 'COMPLETED');
 
+  // Status Config with Translations
+  const STATUS_CONFIG = {
+    OPEN: {
+      variant: "primary" as BadgeVariant,
+      label: t('status.open'),
+      icon: "🔵",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+    },
+    IN_PROGRESS: {
+      variant: "warning" as BadgeVariant,
+      label: t('status.inProgress'),
+      icon: "🟡",
+      color: "text-yellow-600",
+      bgColor: "bg-yellow-50",
+    },
+    COMPLETED: {
+      variant: "success" as BadgeVariant,
+      label: t('status.completed'),
+      icon: "🟢",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+    },
+    CANCELLED: {
+      variant: "gray" as BadgeVariant,
+      label: t('status.cancelled'),
+      icon: "⚫",
+      color: "text-gray-600",
+      bgColor: "bg-gray-50",
+    },
+  };
+
   return (
     <div className="space-y-6">
       <SectionHeading
-        eyebrow="Requests"
-        title="My requests"
-        description="Track everything you've posted, check offer counts, and keep conversations organised."
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
         actions={
           <Link
             href="/client/requests/new"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
           >
-            <span>+</span> Create Request
+            <span>+</span> {t('create')}
           </Link>
         }
       />
@@ -95,19 +99,19 @@ export default async function ClientRequestsPage() {
         <div className="grid gap-4 sm:grid-cols-4">
           <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
             <p className="text-2xl font-bold text-blue-600">{openRequests.length}</p>
-            <p className="text-xs text-blue-700 font-medium">Open</p>
+            <p className="text-xs text-blue-700 font-medium">{t('stats.open')}</p>
           </Card>
           <Card padding="lg" className="text-center bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
             <p className="text-2xl font-bold text-yellow-600">{activeRequests.length}</p>
-            <p className="text-xs text-yellow-700 font-medium">In Progress</p>
+            <p className="text-xs text-yellow-700 font-medium">{t('stats.inProgress')}</p>
           </Card>
           <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
             <p className="text-2xl font-bold text-green-600">{completedRequests.length}</p>
-            <p className="text-xs text-green-700 font-medium">Completed</p>
+            <p className="text-xs text-green-700 font-medium">{t('stats.completed')}</p>
           </Card>
           <Card padding="lg" className="text-center bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
             <p className="text-2xl font-bold text-purple-600">{requests.reduce((sum, r) => sum + r.offers.length, 0)}</p>
-            <p className="text-xs text-purple-700 font-medium">Total Offers</p>
+            <p className="text-xs text-purple-700 font-medium">{t('stats.totalOffers')}</p>
           </Card>
         </div>
       )}
@@ -116,15 +120,15 @@ export default async function ClientRequestsPage() {
       {requests.length === 0 ? (
         <Card level={1} padding="lg" className="text-center py-12 border-dashed">
           <div className="text-5xl mb-4">📝</div>
-          <h3 className="text-lg font-semibold text-[#333333] mb-2">No requests yet</h3>
+          <h3 className="text-lg font-semibold text-[#333333] mb-2">{t('empty.title')}</h3>
           <p className="text-sm text-[#7C7373] mb-6 max-w-md mx-auto">
-            Start by describing what you need. Verified professionals will send you tailored offers with pricing.
+            {t('empty.desc')}
           </p>
           <Link
             href="/client/requests/new"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2563EB] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
           >
-            <span>+</span> Create Your First Request
+            <span>+</span> {t('createFirst')}
           </Link>
         </Card>
       ) : (
@@ -133,10 +137,10 @@ export default async function ClientRequestsPage() {
           {openRequests.length > 0 && (
             <div className="space-y-3">
               <h2 className="text-sm font-bold text-[#333333] flex items-center gap-2">
-                <span className="text-lg">🔵</span> Open Requests ({openRequests.length})
+                <span className="text-lg">🔵</span> {t('stats.open')} ({openRequests.length})
               </h2>
               {openRequests.map((req) => (
-                <RequestCard key={req.id} request={req} />
+                <RequestCard key={req.id} request={req} config={STATUS_CONFIG[req.status as RequestStatus]} t={t} />
               ))}
             </div>
           )}
@@ -145,10 +149,10 @@ export default async function ClientRequestsPage() {
           {activeRequests.length > 0 && (
             <div className="space-y-3">
               <h2 className="text-sm font-bold text-[#333333] flex items-center gap-2">
-                <span className="text-lg">🟡</span> In Progress ({activeRequests.length})
+                <span className="text-lg">🟡</span> {t('stats.inProgress')} ({activeRequests.length})
               </h2>
               {activeRequests.map((req) => (
-                <RequestCard key={req.id} request={req} />
+                <RequestCard key={req.id} request={req} config={STATUS_CONFIG[req.status as RequestStatus]} t={t} />
               ))}
             </div>
           )}
@@ -157,10 +161,10 @@ export default async function ClientRequestsPage() {
           {completedRequests.length > 0 && (
             <div className="space-y-3">
               <h2 className="text-sm font-bold text-[#333333] flex items-center gap-2">
-                <span className="text-lg">🟢</span> Completed ({completedRequests.length})
+                <span className="text-lg">🟢</span> {t('stats.completed')} ({completedRequests.length})
               </h2>
               {completedRequests.map((req) => (
-                <RequestCard key={req.id} request={req} />
+                <RequestCard key={req.id} request={req} config={STATUS_CONFIG[req.status as RequestStatus]} t={t} />
               ))}
             </div>
           )}
@@ -170,8 +174,7 @@ export default async function ClientRequestsPage() {
   );
 }
 
-function RequestCard({ request }: { request: any }) {
-  const config = STATUS_CONFIG[request.status as RequestStatus];
+function RequestCard({ request, config, t }: { request: any, config: any, t: any }) {
   const hasOffers = request.offers.length > 0;
   const isNew = (Date.now() - new Date(request.createdAt).getTime()) < 24 * 60 * 60 * 1000; // Less than 24 hours
 
@@ -181,7 +184,7 @@ function RequestCard({ request }: { request: any }) {
         {/* New Badge */}
         {isNew && (
           <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-            NEW
+            {t('card.new')}
           </div>
         )}
 
@@ -198,7 +201,7 @@ function RequestCard({ request }: { request: any }) {
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  📅 {new Date(request.createdAt).toLocaleDateString()}
+                  📅 {t('card.posted', { date: new Date(request.createdAt).toLocaleDateString() })}
                 </span>
               </div>
             </div>
@@ -220,17 +223,17 @@ function RequestCard({ request }: { request: any }) {
             <div className="flex items-center gap-4 text-xs">
               <span className={`flex items-center gap-1 font-semibold ${hasOffers ? 'text-green-600' : 'text-[#7C7373]'}`}>
                 <span>📬</span>
-                {request.offers.length} {request.offers.length === 1 ? 'offer' : 'offers'}
+                {t('card.offers', { count: request.offers.length })}
               </span>
               {request.budgetMax && (
                 <span className="flex items-center gap-1 text-[#7C7373]">
                   <span>💰</span>
-                  Up to €{request.budgetMax}
+                  {t('card.budget', { amount: request.budgetMax })}
                 </span>
               )}
             </div>
             <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
-              View details →
+              {t('card.viewDetails')} →
             </span>
           </div>
         </div>
