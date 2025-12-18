@@ -463,6 +463,7 @@
         },
         "activity": {
             "requestCreated": "Request created",
+            "offerReceivedTitle": "{count} offer received | {count} offers received",
             "offerInterest": "Professionals are interested in: {title}"
         }
     },
@@ -1217,4 +1218,4 @@
             "point3": "Keep at least €2.00 to stay visible."
         }
     }
-```
+}

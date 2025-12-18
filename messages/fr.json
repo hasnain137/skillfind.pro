@@ -400,10 +400,10 @@
             "reviewCta": "Voir demandes"
         },
         "activity": {
-            "requestCreated": "Demande créée",
+            "requestCreated": "Nouvelle demande créée",
             "offerReceived": "Offre reçue",
             "offerReceivedTitle": "{count} offre reçue | {count} offres reçues",
-            "offerInterest": "Des professionnels sont intéressés par : {title}"
+            "offerInterest": "Des professionnels sont intéressés par '{title}'"
         }
     },
     "Search": {
@@ -1234,3 +1234,5 @@
                 "point3": "Gardez au moins 2,00 € pour rester visible."
             }
         }
+    }
+}
