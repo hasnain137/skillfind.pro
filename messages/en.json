@@ -1219,5 +1219,19 @@
             "point2": "Auto-reload is not currently enabled.",
             "point3": "Keep at least €2.00 to stay visible."
         }
+    },
+    "Categories": {
+        "title": "Browse Categories",
+        "subtitle": "Find the right professional by exploring our service categories",
+        "professionals": "professionals",
+        "more": "more",
+        "backToCategories": "Back to Categories",
+        "professionalsAvailable": "professionals available",
+        "subcategories": "subcategories",
+        "subcategoriesTitle": "Subcategories",
+        "viewAllInCategory": "View all professionals →",
+        "topProfessionals": "Top Professionals",
+        "noProfessionals": "No professionals in this category yet",
+        "reviews": "reviews"
     }
 }
