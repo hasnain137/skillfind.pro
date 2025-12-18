@@ -777,5 +777,44 @@ model Translation {
 // LOCALIZATION
 // ============================================
 
+// ============================================
+// NOTIFICATIONS
+// ============================================
 
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String
+  
+  // Notification content
+  type        NotificationType
+  title       String
+  message     String
+  
+  // Link to related entity
+  entityType  String?          // 'offer', 'job', 'review', 'request'
+  entityId    String?
+  actionUrl   String?
+  
+  // Status
+  isRead      Boolean          @default(false)
+  readAt      DateTime?
+  
+  createdAt   DateTime         @default(now())
+  
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
 
+enum NotificationType {
+  NEW_OFFER           // Client receives offer on their request
+  OFFER_ACCEPTED      // Pro's offer was accepted
+  OFFER_REJECTED      // Pro's offer was rejected
+  JOB_STARTED         // Job has started
+  JOB_COMPLETED       // Job was marked complete
+  NEW_REVIEW          // Pro received a review
+  REVIEW_RESPONSE     // Client: pro responded to their review
+  PROFILE_VERIFIED    // Pro: profile was verified
+  LOW_BALANCE         // Pro: wallet balance is low
+  SYSTEM              // General system notification
+}
