@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { useTranslations } from 'next-intl';
 
 type ReviewFormProps = {
     jobId: string;
@@ -13,6 +13,7 @@ type ReviewFormProps = {
 };
 
 export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormProps) {
+    const t = useTranslations('Reviews');
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [rating, setRating] = useState(0);
@@ -23,7 +24,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         if (rating === 0) {
-            toast.error('Please select a rating');
+            toast.error(t('selectRating'));
             return;
         }
 
@@ -44,10 +45,10 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
             const data = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.message || 'Failed to submit review');
+                throw new Error(data.message || t('error'));
             }
 
-            toast.success('Review submitted successfully!');
+            toast.success(t('success'));
             if (onSuccess) onSuccess();
             router.refresh();
         } catch (error: any) {
@@ -60,9 +61,9 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
     return (
         <div className="space-y-6">
             <div className="text-center space-y-2">
-                <h3 className="text-lg font-bold text-[#333333]">Rate your experience</h3>
+                <h3 className="text-lg font-bold text-[#333333]">{t('title')}</h3>
                 <p className="text-sm text-[#7C7373]">
-                    How was your experience with this professional?
+                    {t('desc')}
                 </p>
             </div>
 
@@ -93,10 +94,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
                 <div className="text-center text-sm font-medium text-[#2563EB]">
                     {rating > 0 && (
                         <span>
-                            {rating === 5 ? 'Excellent!' :
-                                rating === 4 ? 'Very Good' :
-                                    rating === 3 ? 'Good' :
-                                        rating === 2 ? 'Fair' : 'Poor'}
+                            {t(`ratings.${rating}` as any)}
                         </span>
                     )}
                 </div>
@@ -104,7 +102,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
                 {/* Feedback */}
                 <div>
                     <label className="block text-sm font-medium text-[#333333] mb-1">
-                        Your Review
+                        {t('label')}
                     </label>
                     <textarea
                         required
@@ -112,7 +110,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         className="w-full rounded-xl border border-[#E5E7EB] p-3 text-sm focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] outline-none transition-all"
-                        placeholder="What went well? What could be improved?"
+                        placeholder={t('placeholder')}
                     />
                 </div>
 
@@ -126,7 +124,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
                         className="h-4 w-4 rounded border-gray-300 text-[#2563EB] focus:ring-[#2563EB]"
                     />
                     <label htmlFor="recommend" className="text-sm font-medium text-[#333333]">
-                        I would recommend this professional
+                        {t('recommend')}
                     </label>
                 </div>
 
@@ -138,7 +136,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
                             onClick={onCancel}
                             className="flex-1 bg-white border border-[#E5E7EB] text-[#333333] hover:bg-[#F3F4F6]"
                         >
-                            Cancel
+                            {t('cancel')}
                         </Button>
                     )}
                     <Button
@@ -146,7 +144,7 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
                         disabled={loading || rating === 0}
                         className="flex-1 bg-[#2563EB] hover:bg-[#1d4ed8] text-white"
                     >
-                        {loading ? 'Submitting...' : 'Submit Review'}
+                        {loading ? t('submitting') : t('submit')}
                     </Button>
                 </div>
             </form>

@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { DocumentUpload } from '@/components/professional/verification/DocumentUpload';
 import { VerificationStatus } from '@/components/professional/verification/VerificationStatus';
+import { useTranslations } from 'next-intl';
 
 type Category = {
     id: string;
@@ -33,6 +34,7 @@ type Service = {
 
 type Profile = {
     id: string;
+    status: 'ACTIVE' | 'PENDING_REVIEW' | 'SUSPENDED' | 'REJECTED';
     title: string | null;
     bio: string | null;
     yearsOfExperience: number | null;
@@ -56,6 +58,7 @@ type ProfileFormProps = {
 };
 
 export default function ProfileForm({ initialProfile, categories }: ProfileFormProps) {
+    const t = useTranslations('ProProfile');
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<'info' | 'services' | 'verification'>('info');
     const [loading, setLoading] = useState(false);
@@ -106,7 +109,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 body: JSON.stringify(profileData),
             });
 
-            if (!profileResponse.ok) throw new Error('Failed to update profile');
+            if (!profileResponse.ok) throw new Error(t('error'));
 
             // Update personal information (user table fields)
             const userResponse = await fetch('/api/user/profile', {
@@ -115,12 +118,12 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 body: JSON.stringify(personalData),
             });
 
-            if (!userResponse.ok) throw new Error('Failed to update personal information');
+            if (!userResponse.ok) throw new Error(t('error'));
 
-            setSuccess('Profile updated successfully');
+            setSuccess(t('success'));
             router.refresh();
         } catch (err) {
-            setError('Failed to update profile');
+            setError(t('error'));
         } finally {
             setLoading(false);
         }
@@ -154,15 +157,15 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 }
 
                 // Handle generic API errors
-                throw new Error(data.message || data.error?.message || 'Failed to add service');
+                throw new Error(data.message || data.error?.message || t('serviceError'));
             }
 
-            setSuccess('Service added successfully');
+            setSuccess(t('serviceAdded'));
             setIsAddingService(false);
             setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
             router.refresh();
         } catch (err: any) {
-            setError(err.message || 'Failed to add service');
+            setError(err.message || t('serviceError'));
         } finally {
             setLoading(false);
         }
@@ -197,23 +200,23 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         .join('. ');
                     throw new Error(validationMessages);
                 }
-                throw new Error(data.message || data.error?.message || 'Failed to update service');
+                throw new Error(data.message || data.error?.message || t('error'));
             }
 
-            setSuccess('Service updated successfully');
+            setSuccess(t('serviceUpdated'));
             setIsAddingService(false);
             setEditingServiceId(null);
             setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
             router.refresh();
         } catch (err: any) {
-            setError(err.message || 'Failed to update service');
+            setError(err.message || t('error'));
         } finally {
             setLoading(false);
         }
     }
 
     async function handleDeleteService(serviceId: string) {
-        if (!confirm('Are you sure you want to delete this service?')) return;
+        if (!confirm(t('services.confirmDelete'))) return;
 
         setLoading(true);
         try {
@@ -221,12 +224,12 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 method: 'DELETE',
             });
 
-            if (!response.ok) throw new Error('Failed to delete service');
+            if (!response.ok) throw new Error(t('deleteError'));
 
-            setSuccess('Service deleted successfully');
+            setSuccess(t('serviceDeleted'));
             router.refresh();
         } catch (err) {
-            setError('Failed to delete service');
+            setError(t('deleteError'));
         } finally {
             setLoading(false);
         }
@@ -235,7 +238,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
     const startEditing = (service: Service) => {
         setEditingServiceId(service.id);
         setNewService({
-            categoryId: service.subcategory.category.nameEn, // Note: This is just for display/logic, strict ID might be needed if we allowed changing category
+            categoryId: service.subcategory.category.nameEn,
             subcategoryId: service.subcategory.id,
             priceFrom: service.priceFrom?.toString() || '',
             description: service.description || '',
@@ -267,7 +270,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         : 'border-transparent text-[#7C7373] hover:text-[#333333]'
                         }`}
                 >
-                    Profile Info
+                    {t('tabs.info')}
                 </button>
                 <button
                     onClick={() => setActiveTab('services')}
@@ -276,7 +279,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         : 'border-transparent text-[#7C7373] hover:text-[#333333]'
                         }`}
                 >
-                    Services ({initialProfile.services.length})
+                    {t('tabs.services')} ({initialProfile.services.length})
                 </button>
                 <button
                     onClick={() => setActiveTab('verification')}
@@ -285,7 +288,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         : 'border-transparent text-[#7C7373] hover:text-[#333333]'
                         }`}
                 >
-                    Verification
+                    {t('tabs.verification')}
                     {initialProfile.isVerified && <Badge className="ml-2 bg-green-100 text-green-700 hover:bg-green-200">✓</Badge>}
                 </button>
             </div>
@@ -302,17 +305,17 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                     <Card padding="lg" className="space-y-4">
                         <div className="grid gap-4 md:grid-cols-2">
                             <div>
-                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Professional Title</label>
+                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.titleLabel')}</label>
                                 <input
                                     type="text"
                                     value={profileData.title}
                                     onChange={e => setProfileData({ ...profileData, title: e.target.value })}
                                     className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
-                                    placeholder="e.g. Senior Math Tutor"
+                                    placeholder={t('info.titlePlaceholder')}
                                 />
                             </div>
                             <div>
-                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Years of Experience</label>
+                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.yearsLabel')}</label>
                                 <input
                                     type="number"
                                     value={profileData.yearsOfExperience}
@@ -323,25 +326,26 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         </div>
 
                         <div>
-                            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Bio</label>
+                            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.bioLabel')}</label>
                             <textarea
                                 rows={4}
                                 value={profileData.bio}
                                 onChange={e => setProfileData({ ...profileData, bio: e.target.value })}
                                 className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
-                                placeholder="Describe your expertise..."
+                                placeholder={t('info.bioPlaceholder')}
                             />
                         </div>
 
                         {/* Personal Information Section */}
                         <div className="border-t border-[#E5E7EB] pt-6 mt-6">
                             <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
-                                <span>👤</span> Personal Information
+                                <span>👤</span> {t('info.personal')}
                             </h4>
 
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
                                     <label htmlFor="dob" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
+                                        {/* Using static fallback until translation keys are fully synced if needed */}
                                         Date of Birth
                                     </label>
                                     <input
@@ -374,12 +378,12 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         {/* Location & Availability Section */}
                         <div className="border-t border-[#E5E7EB] pt-6 mt-6">
                             <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
-                                <span>📍</span> Location & Availability
+                                <span>📍</span> {t('info.location')}
                             </h4>
 
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">City</label>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.city') || 'City'}</label>
                                     <input
                                         type="text"
                                         placeholder="Paris"
@@ -389,7 +393,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                     />
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Country</label>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.country') || 'Country'}</label>
                                     <select
                                         value={profileData.country}
                                         onChange={e => setProfileData({ ...profileData, country: e.target.value })}
@@ -417,19 +421,19 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                             onChange={e => setProfileData({ ...profileData, isAvailable: e.target.checked })}
                                             className="rounded border-gray-300 text-[#2563EB] focus:ring-[#2563EB]"
                                         />
-                                        Available for work
+                                        {t('info.isAvailable')}
                                     </label>
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Remote Work</label>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.remoteLabel')}</label>
                                     <select
                                         value={profileData.remoteAvailability}
                                         onChange={e => setProfileData({ ...profileData, remoteAvailability: e.target.value as 'YES_AND_ONSITE' | 'ONLY_REMOTE' | 'NO_REMOTE' })}
                                         className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                                     >
-                                        <option value="YES_AND_ONSITE">Remote and on-site</option>
-                                        <option value="ONLY_REMOTE">Remote only</option>
-                                        <option value="NO_REMOTE">On-site only</option>
+                                        <option value="YES_AND_ONSITE">{t('info.remoteOptions.YES_AND_ONSITE')}</option>
+                                        <option value="ONLY_REMOTE">{t('info.remoteOptions.ONLY_REMOTE')}</option>
+                                        <option value="NO_REMOTE">{t('info.remoteOptions.NO_REMOTE')}</option>
                                     </select>
                                 </div>
                             </div>
@@ -451,47 +455,45 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                             setEditingServiceId(null);
                             setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
                             setIsAddingService(true);
-                        }}>Add New Service</Button>
+                        }}>{t('services.add')}</Button>
                     ) : (
                         <Card padding="lg" className="space-y-4 border-[#2563EB]">
                             <h3 className="font-semibold text-[#333333]">
-                                {editingServiceId ? 'Edit Service' : 'Add New Service'}
+                                {editingServiceId ? t('services.edit') : t('services.add')}
                             </h3>
                             <form onSubmit={editingServiceId ? handleUpdateService : handleAddService} className="space-y-4">
                                 <div className="grid gap-4 md:grid-cols-2">
                                     <div>
-                                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Category</label>
+                                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.category')}</label>
                                         <select
                                             value={newService.categoryId}
                                             onChange={e => setNewService({ ...newService, categoryId: e.target.value, subcategoryId: '' })}
                                             className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3 py-2 text-sm"
                                             required
-                                            disabled={!!editingServiceId} // Cannot change category when editing
+                                            disabled={!!editingServiceId}
                                         >
-                                            <option value="">Select Category</option>
+                                            <option value="">{t('services.fields.selectCategory')}</option>
                                             {categories.map(c => (
                                                 <option key={c.id} value={c.id}>{c.nameEn}</option>
                                             ))}
-                                            {/* Fallback for editing if category not in list (edge case) */}
                                             {editingServiceId && !categories.find(c => c.id === newService.categoryId) && (
                                                 <option value={newService.categoryId}>{newService.categoryId}</option>
                                             )}
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Subcategory</label>
+                                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.subcategory')}</label>
                                         <select
                                             value={newService.subcategoryId}
                                             onChange={e => setNewService({ ...newService, subcategoryId: e.target.value })}
                                             className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3 py-2 text-sm"
-                                            disabled={!newService.categoryId || !!editingServiceId} // Cannot change subcategory when editing
+                                            disabled={!newService.categoryId || !!editingServiceId}
                                             required
                                         >
-                                            <option value="">Select Subcategory</option>
+                                            <option value="">{t('services.fields.selectSubcategory')}</option>
                                             {selectedCategory?.subcategories.map(s => (
                                                 <option key={s.id} value={s.id}>{s.nameEn}</option>
                                             ))}
-                                            {/* Fallback for editing */}
                                             {editingServiceId && !selectedCategory?.subcategories.find(s => s.id === newService.subcategoryId) && (
                                                 <option value={newService.subcategoryId}>Current Subcategory</option>
                                             )}
@@ -500,7 +502,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                 </div>
 
                                 <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Starting Price (€)</label>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.price')}</label>
                                     <input
                                         type="number"
                                         value={newService.priceFrom}
@@ -512,7 +514,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                 </div>
 
                                 <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Description</label>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.description')}</label>
                                     <textarea
                                         value={newService.description}
                                         onChange={e => setNewService({ ...newService, description: e.target.value })}
@@ -520,14 +522,14 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                         placeholder="Describe what you offer..."
                                         rows={3}
                                     />
-                                    <p className="mt-1 text-xs text-[#B0B0B0]">min 50 characters</p>
+                                    <p className="mt-1 text-xs text-[#B0B0B0]">{t('services.fields.descriptionHint')}</p>
                                 </div>
 
                                 <div className="flex gap-2">
                                     <Button type="submit" disabled={loading}>
-                                        {editingServiceId ? 'Update Service' : 'Add Service'}
+                                        {editingServiceId ? t('services.update') : t('services.add')}
                                     </Button>
-                                    <Button type="button" variant="ghost" onClick={cancelEdit}>Cancel</Button>
+                                    <Button type="button" variant="ghost" onClick={cancelEdit}>{t('services.fields.cancel') || 'Cancel'}</Button>
                                 </div>
                             </form>
                         </Card>
@@ -541,7 +543,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                     <p className="text-xs text-[#7C7373]">{service.subcategory.category.nameEn}</p>
                                     <p className="mt-2 text-sm text-[#4B5563]">{service.description}</p>
                                     <p className="mt-1 text-sm font-medium text-[#2563EB]">
-                                        Starts from €{service.priceFrom}
+                                        {t('services.startsFrom', { price: service.priceFrom })}
                                     </p>
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -550,21 +552,21 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                         onClick={() => startEditing(service)}
                                         className="text-xs px-2 py-1 h-auto"
                                     >
-                                        ✏️ Edit
+                                        ✏️ {t('services.edit')}
                                     </Button>
                                     <Button
                                         variant="ghost"
                                         onClick={() => handleDeleteService(service.id)}
                                         className="text-xs px-2 py-1 h-auto text-red-600 hover:text-red-700 hover:bg-red-50"
                                     >
-                                        🗑️ Delete
+                                        🗑️ {t('services.delete')}
                                     </Button>
                                 </div>
                             </Card>
                         ))}
                         {initialProfile.services.length === 0 && (
                             <p className="text-center text-sm text-[#7C7373] py-8">
-                                No services added yet. Add a service to start receiving requests.
+                                {t('services.empty')}
                             </p>
                         )}
                     </div>
@@ -574,9 +576,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
             {activeTab === 'verification' && (
                 <div className="space-y-6">
                     <VerificationStatus
-                        isVerified={initialProfile.isVerified}
-                        verificationMethod={initialProfile.verificationMethod}
-                        documents={initialProfile.documents || []}
+                        status={initialProfile.status || 'REJECTED'}
                     />
 
                     <DocumentUpload

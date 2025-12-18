@@ -7,6 +7,7 @@ import {
     DialogTitle,
 } from '@/components/ui/Modal';
 import ReviewForm from './ReviewForm';
+import { useTranslations } from 'next-intl';
 
 type ReviewModalProps = {
     isOpen: boolean;
@@ -16,11 +17,13 @@ type ReviewModalProps = {
 };
 
 export default function ReviewModal({ isOpen, onClose, jobId, onSuccess }: ReviewModalProps) {
+    const t = useTranslations('Reviews');
+
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
             <DialogContent className="max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Write a Review</DialogTitle>
+                    <DialogTitle>{t('modalTitle')}</DialogTitle>
                 </DialogHeader>
                 <ReviewForm
                     jobId={jobId}

@@ -589,5 +589,374 @@
         "trustedReviews": "Trusted Reviews",
         "activeRequests": "Active Requests",
         "jobsCompleted": "Jobs Completed"
+    },
+    "RequestForm": {
+        "eyebrow": "New request",
+        "title": "Describe what you need",
+        "description": "Share enough detail so professionals can respond with accurate offers. You can edit the request later if anything changes.",
+        "tips": {
+            "title": "Tips for Great Requests",
+            "specific": {
+                "title": "Be specific",
+                "desc": "Detail what you need done"
+            },
+            "budget": {
+                "title": "Set budget",
+                "desc": "Helps pros send accurate offers"
+            },
+            "timeline": {
+                "title": "Add timeline",
+                "desc": "When do you need it completed?"
+            },
+            "context": {
+                "title": "Include context",
+                "desc": "Share any relevant background"
+            }
+        },
+        "sections": {
+            "basics": {
+                "title": "Task basics",
+                "desc": "Pick the best matching category and give your request a clear title."
+            },
+            "details": {
+                "title": "Details",
+                "desc": "Add context, goals, expectations or anything else that helps a pro understand the job."
+            },
+            "location": {
+                "title": "Location and format",
+                "desc": "Tell us where you are and whether online sessions work."
+            },
+            "timing": {
+                "title": "Timing",
+                "desc": "How urgently do you need this completed?"
+            },
+            "budget": {
+                "title": "Budget (optional)",
+                "desc": "Optional, but helpful for professionals to tailor their offer."
+            }
+        },
+        "fields": {
+            "category": "Category",
+            "selectCategory": "Select a category",
+            "subcategory": "Subcategory",
+            "selectSubcategory": "Select a subcategory",
+            "title": "What exactly do you need?",
+            "titlePlaceholder": "e.g. Math tutor for 10th grade algebra",
+            "description": "Describe your task",
+            "descriptionPlaceholder": "Add any details that will help professionals understand what you need, your expectations, and any important context.",
+            "noContactInfo": "Avoid sharing phone numbers or email here. You can exchange contacts once you choose a professional.",
+            "location": "Location (city)",
+            "locationPlaceholder": "e.g. Berlin, Vienna, online only",
+            "format": "Preferred format",
+            "formats": {
+                "ONLINE_OR_OFFLINE": "Online or in person is fine",
+                "ONLINE_ONLY": "Online only",
+                "IN_PERSON_ONLY": "In person only"
+            },
+            "timings": {
+                "URGENT": "🔥 Urgent",
+                "URGENT_DESC": "Within 24-48 hours",
+                "SOON": "⚡ Soon",
+                "SOON_DESC": "Within a week",
+                "FLEXIBLE": "📅 Flexible",
+                "FLEXIBLE_DESC": "No rush, take your time",
+                "SCHEDULED": "🗓️ Specific date",
+                "SCHEDULED_DESC": "I have a deadline"
+            },
+            "budgetMin": "Min budget (EUR)",
+            "budgetMax": "Max budget (EUR)",
+            "budgetHint": "Leave blank if you prefer professionals to suggest a price."
+        },
+        "actions": {
+            "publish": "Publish request",
+            "publishing": "Publishing...",
+            "publishedDesc": "Once published, matching professionals will start receiving your request."
+        },
+        "success": {
+            "title": "Request published!",
+            "desc": "Matching professionals will start sending you offers."
+        },
+        "error": {
+            "title": "Failed to create request",
+            "generic": "Something went wrong"
+        }
+    },
+    "OfferForm": {
+        "page": {
+            "eyebrow": "Send offer",
+            "title": "Reply to this client request",
+            "description": "Share your proposed price, timing and a friendly message. Clients see the first 10 qualified offers.",
+            "closedTitle": "Request Closed",
+            "closedDesc": "This request is no longer accepting offers.",
+            "closedMessage": "The client has closed this request or accepted another offer.",
+            "budgetSpecified": "Budget not specified"
+        },
+        "pricing": {
+            "title": "Pricing",
+            "desc": "Set your price and payment terms",
+            "proposedPrice": "Proposed price (€)",
+            "hint": "The amount you'll receive {type}",
+            "hintTotal": "total",
+            "hintHourly": "per hour",
+            "typeLabel": "Pricing type",
+            "types": {
+                "fixed": "💼 Fixed Price - One-time payment",
+                "hourly": "⏱️ Hourly Rate - Per hour of work"
+            }
+        },
+        "proposal": {
+            "title": "Your Proposal",
+            "desc": "Tell the client why you're the right fit",
+            "messageLabel": "Message to client",
+            "messagePlaceholder": "Share your experience and explain how you can help with this request...\n\n• Why are you a good fit?\n• What's your relevant experience?\n• How will you approach this project?\n• What can the client expect from you?",
+            "minChars": "{count}/50 characters minimum",
+            "chars": "{count} characters"
+        },
+        "availability": {
+            "title": "Availability",
+            "desc": "Help the client plan ahead (optional)",
+            "earliest": "Earliest availability",
+            "earliestPlaceholder": "e.g. Available from Monday",
+            "duration": "Estimated duration",
+            "durationPlaceholder": "e.g. 2-3 weeks"
+        },
+        "tips": {
+            "title": "Tips for a Great Offer",
+            "items": {
+                "specific": "Be specific about your relevant experience and skills",
+                "needs": "Show that you understand the client's needs",
+                "approach": "Explain your approach to solving their problem",
+                "expectations": "Set realistic expectations for timeline and deliverables"
+            }
+        },
+        "actions": {
+            "ready": "Ready to send your offer?",
+            "cancel": "Cancel",
+            "sending": "⏳ Sending...",
+            "send": "✉️ Send Offer",
+            "legal": "By sending an offer, you agree to our terms of service and privacy policy."
+        },
+        "validation": {
+            "invalidPrice": "Please enter a valid price",
+            "minPrice": "Price must be at least €1",
+            "shortMessage": "Please provide a more detailed message (at least 50 characters)"
+        },
+        "success": {
+            "title": "Offer sent successfully!",
+            "desc": "The client will be notified of your offer."
+        },
+        "error": {
+            "title": "Failed to send offer",
+            "generic": "An error occurred. Please try again."
+        }
+    },
+    "ProOffers": {
+        "eyebrow": "Offers",
+        "title": "My Offers",
+        "description": "Track all offers you've sent and their outcomes.",
+        "stats": {
+            "pending": "Pending",
+            "accepted": "Accepted",
+            "profileViewed": "Profile Viewed",
+            "successRate": "Success Rate"
+        },
+        "empty": {
+            "title": "No offers sent yet",
+            "desc": "Browse matching requests and send your first offer to get hired!",
+            "action": "Browse Requests"
+        },
+        "sections": {
+            "pending": "Pending Offers",
+            "accepted": "Accepted Offers",
+            "rejected": "Not Selected"
+        },
+        "status": {
+            "pending": "Pending",
+            "accepted": "Accepted ✓",
+            "rejected": "Not Selected",
+            "withdrawn": "Withdrawn"
+        },
+        "card": {
+            "viewed": "👁️ Viewed",
+            "messageLabel": "Your offer message:",
+            "waiting": "⏳ Waiting for response",
+            "tips": {
+                "title": "Tips for Winning More Offers",
+                "items": {
+                    "respond": {
+                        "title": "Respond Quickly",
+                        "desc": "Clients value fast replies. Be among the first to send an offer."
+                    },
+                    "personalize": {
+                        "title": "Personalize Messages",
+                        "desc": "Show you understand their specific needs in your offer."
+                    },
+                    "price": {
+                        "title": "Price Fairly",
+                        "desc": "Be competitive but reflect your expertise and value."
+                    },
+                    "trust": {
+                        "title": "Build Trust",
+                        "desc": "Complete profile with portfolio and collect positive reviews."
+                    }
+                }
+            }
+        },
+        "ClientProfile": {
+            "title": "My Profile",
+            "description": "Manage your personal information and preferences.",
+            "sections": {
+                "basic": "Basic Information",
+                "personal": "Personal Information",
+                "location": "Location",
+                "preferences": "Preferences"
+            },
+            "fields": {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email Address",
+                "emailHint": "Email cannot be changed",
+                "dob": "Date of Birth",
+                "phone": "Phone Number",
+                "phoneHint": "International format: +[country code][number]",
+                "city": "City",
+                "region": "Region/State",
+                "country": "Country",
+                "language": "Preferred Language",
+                "languageHint": "Language for notifications and communications"
+            },
+            "actions": {
+                "save": "Save Changes",
+                "saving": "Saving...",
+                "cancel": "Cancel"
+            },
+            "success": "Profile updated successfully",
+            "error": "Failed to update profile",
+            "updateError": "Failed to update personal information"
+        },
+        "ProProfile": {
+            "title": "Keep your professional profile updated",
+            "description": "Clients want to understand your expertise, services, and availability before sending work.",
+            "tabs": {
+                "info": "Profile Info",
+                "services": "Services",
+                "verification": "Verification"
+            },
+            "completion": {
+                "title": "Profile Completion",
+                "desc": "Complete profiles get 3x more offers!",
+                "missing": "Complete these to reach 100%:"
+            },
+            "info": {
+                "titleLabel": "Professional Title",
+                "titlePlaceholder": "e.g. Senior Math Tutor",
+                "yearsLabel": "Years of Experience",
+                "bioLabel": "Bio",
+                "bioPlaceholder": "Describe your expertise...",
+                "personal": "Personal Information",
+                "location": "Location & Availability",
+                "isAvailable": "Available for work",
+                "remoteLabel": "Remote Work",
+                "remoteOptions": {
+                    "YES_AND_ONSITE": "Remote and on-site",
+                    "ONLY_REMOTE": "Remote only",
+                    "NO_REMOTE": "On-site only"
+                }
+            },
+            "services": {
+                "add": "Add New Service",
+                "edit": "Edit Service",
+                "update": "Update Service",
+                "delete": "Delete",
+                "confirmDelete": "Are you sure you want to delete this service?",
+                "empty": "No services added yet. Add a service to start receiving requests.",
+                "fields": {
+                    "category": "Category",
+                    "selectCategory": "Select Category",
+                    "subcategory": "Subcategory",
+                    "selectSubcategory": "Select Subcategory",
+                    "price": "Starting Price (€)",
+                    "description": "Description",
+                    "descriptionHint": "min 50 characters",
+                    "cancel": "Cancel"
+                },
+                "startsFrom": "Starts from €{price}"
+            },
+            "success": "Profile updated successfully",
+            "serviceAdded": "Service added successfully",
+            "serviceUpdated": "Service updated successfully",
+            "serviceDeleted": "Service deleted successfully",
+            "error": "Failed to update profile",
+            "serviceError": "Failed to add service",
+            "deleteError": "Failed to delete service"
+        }
+    },
+    "Verification": {
+        "status": {
+            "active": {
+                "title": "Profile Verified",
+                "badge": "Active",
+                "desc": "Your profile is verified and active. You can receive job requests and send offers to clients."
+            },
+            "pending": {
+                "title": "Verification Pending",
+                "desc": "Your documents have been submitted and are currently under review by our team. You will be notified once the verification process is complete."
+            },
+            "rejected": {
+                "title": "Attention Required",
+                "desc": "Your verification request was rejected. Please check the rejection reason and upload a valid document to proceed with verification."
+            },
+            "notVerified": {
+                "title": "Profile Not Verified",
+                "desc": "Please upload at least one official identity document (ID Card, Passport, or Business License) to verify your account. Verified profiles get 3x more jobs."
+            }
+        },
+        "upload": {
+            "title": "Upload Verification Documents",
+            "desc": "Please upload official documents to verify your identity and expertise. Once approved by our team, your profile will receive a \"Verified\" badge.",
+            "label": "Document Type",
+            "types": {
+                "IDENTITY_CARD": "Identity Card (ID)",
+                "PASSPORT": "Passport",
+                "DRIVERS_LICENSE": "Driver's License",
+                "BUSINESS_LICENSE": "Business License / Kbis",
+                "DIPLOMA": "Diploma / Degree",
+                "CERTIFICATION": "Professional Certification",
+                "PORTFOLIO_SAMPLE": "Portfolio Sample",
+                "OTHER": "Other Document"
+            },
+            "button": "Select File",
+            "uploading": "Uploading...",
+            "hint": "Accepted formats: PDF, JPG, PNG (Max 5MB)",
+            "uploadedTitle": "Uploaded Documents",
+            "empty": "No documents uploaded yet.",
+            "success": "Document uploaded successfully!",
+            "deleted": "Document deleted",
+            "error": "Failed to upload file",
+            "deleteError": "Could not delete document",
+            "confirmDelete": "Are you sure you want to delete this document?",
+            "tooLarge": "File is too large. Max 5MB allowed."
+        }
+    },
+    "Reviews": {
+        "title": "Rate your experience",
+        "modalTitle": "Write a Review",
+        "desc": "How was your experience with this professional?",
+        "ratings": {
+            "5": "Excellent!",
+            "4": "Very Good",
+            "3": "Good",
+            "2": "Fair",
+            "1": "Poor"
+        },
+        "label": "Your Review",
+        "placeholder": "What went well? What could be improved?",
+        "recommend": "I would recommend this professional",
+        "cancel": "Cancel",
+        "submit": "Submit Review",
+        "submitting": "Submitting...",
+        "success": "Review submitted successfully!",
+        "error": "Failed to submit review",
+        "selectRating": "Please select a rating"
     }
 }

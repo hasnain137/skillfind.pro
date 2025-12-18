@@ -8,9 +8,12 @@ import Link from 'next/link';
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import ProfileForm from "./ProfileForm";
+import { getTranslations } from 'next-intl/server';
 
 export default async function ProProfilePage() {
   const { userId } = await auth();
+  const t = await getTranslations('ProProfile');
+
   if (!userId) redirect('/login');
 
   const professional: any = await getProfessionalWithRelations(userId, {
@@ -38,8 +41,8 @@ export default async function ProProfilePage() {
     <div className="space-y-6">
       <SectionHeading
         eyebrow="Profile"
-        title="Keep your professional profile updated"
-        description="Clients want to understand your expertise, services, and availability before sending work."
+        title={t('title')}
+        description={t('description')}
       />
 
       {/* Profile Completion Card */}
@@ -47,10 +50,10 @@ export default async function ProProfilePage() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
-              <span>📊</span> Profile Completion
+              <span>📊</span> {t('completion.title')}
             </h3>
             <p className="text-xs text-[#7C7373] mt-1">
-              Complete profiles get 3x more offers!
+              {t('completion.desc')}
             </p>
           </div>
           <div className="text-right">
@@ -68,7 +71,7 @@ export default async function ProProfilePage() {
 
         {profileCompletion < 100 && (
           <div className="mt-4 space-y-2">
-            <p className="text-xs font-semibold text-[#333333]">Complete these to reach 100%:</p>
+            <p className="text-xs font-semibold text-[#333333]">{t('completion.missing')}</p>
             <div className="grid gap-2 sm:grid-cols-2 text-xs text-[#7C7373]">
               {completionData.missingSteps.map((step) => (
                 <Link key={step.id} href={step.actionUrl || '#'}>

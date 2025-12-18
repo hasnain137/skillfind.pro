@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef } from 'react';
@@ -7,25 +6,28 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { toast } from 'sonner';
 import { Loader2, Upload, FileText, X, CheckCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface DocumentUploadProps {
     onUploadSuccess: () => void;
     existingDocuments: any[];
 }
 
-const DOCUMENT_TYPES = [
-    { value: 'IDENTITY_CARD', label: 'Identity Card (ID)' },
-    { value: 'PASSPORT', label: 'Passport' },
-    { value: 'DRIVERS_LICENSE', label: 'Driver\'s License' },
-    { value: 'BUSINESS_LICENSE', label: 'Business License / Kbis' },
-    { value: 'DIPLOMA', label: 'Diploma / Degree' },
-    { value: 'CERTIFICATION', label: 'Professional Certification' },
-    { value: 'PORTFOLIO_SAMPLE', label: 'Portfolio Sample' },
-    { value: 'OTHER', label: 'Other Document' },
-];
-
 export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentUploadProps) {
+    const t = useTranslations('Verification.upload');
     const [isUploading, setIsUploading] = useState(false);
+    // Keys match the enum values in JSON
+    const DOCUMENT_TYPES = [
+        { value: 'IDENTITY_CARD', label: t('types.IDENTITY_CARD') },
+        { value: 'PASSPORT', label: t('types.PASSPORT') },
+        { value: 'DRIVERS_LICENSE', label: t('types.DRIVERS_LICENSE') },
+        { value: 'BUSINESS_LICENSE', label: t('types.BUSINESS_LICENSE') },
+        { value: 'DIPLOMA', label: t('types.DIPLOMA') },
+        { value: 'CERTIFICATION', label: t('types.CERTIFICATION') },
+        { value: 'PORTFOLIO_SAMPLE', label: t('types.PORTFOLIO_SAMPLE') },
+        { value: 'OTHER', label: t('types.OTHER') },
+    ];
+
     const [selectedType, setSelectedType] = useState(DOCUMENT_TYPES[0].value);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,7 +37,7 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
 
         // Validate size (5MB)
         if (file.size > 5 * 1024 * 1024) {
-            toast.error('File is too large. Max 5MB allowed.');
+            toast.error(t('tooLarge'));
             return;
         }
 
@@ -52,7 +54,7 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
 
             if (!uploadRes.ok) {
                 const error = await uploadRes.json();
-                throw new Error(error.error || 'Failed to upload file');
+                throw new Error(error.error || t('error'));
             }
 
             const { url: fileUrl } = await uploadRes.json();
@@ -70,10 +72,10 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
             });
 
             if (!metadataRes.ok) {
-                throw new Error('Failed to save document info');
+                throw new Error(t('error'));
             }
 
-            toast.success('Document uploaded successfully!');
+            toast.success(t('success'));
             onUploadSuccess();
 
             // Reset input
@@ -81,43 +83,42 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
 
         } catch (error) {
             console.error(error);
-            toast.error(error instanceof Error ? error.message : 'Upload failed');
+            toast.error(error instanceof Error ? error.message : t('error'));
         } finally {
             setIsUploading(false);
         }
     };
 
     const handleDelete = async (documentId: string) => {
-        if (!confirm('Are you sure you want to delete this document?')) return;
+        if (!confirm(t('confirmDelete'))) return;
 
         try {
             const res = await fetch(`/api/professionals/documents/upload?documentId=${documentId}`, {
                 method: 'DELETE',
             });
 
-            if (!res.ok) throw new Error('Failed to delete');
+            if (!res.ok) throw new Error(t('deleteError'));
 
-            toast.success('Document deleted');
+            toast.success(t('deleted'));
             onUploadSuccess();
         } catch (error) {
             console.error(error);
-            toast.error('Could not delete document');
+            toast.error(t('deleteError'));
         }
     };
 
     return (
         <div className="space-y-6">
             <Card padding="lg">
-                <h3 className="text-lg font-bold text-[#333333] mb-4">Upload Verification Documents</h3>
+                <h3 className="text-lg font-bold text-[#333333] mb-4">{t('title')}</h3>
                 <p className="text-sm text-[#7C7373] mb-6">
-                    Please upload official documents to verify your identity and expertise.
-                    Once approved by our team, your profile will receive a &quot;Verified&quot; badge.
+                    {t('desc')}
                 </p>
 
                 <div className="flex gap-4 items-end mb-6">
                     <div className="flex-1">
                         <label className="block text-sm font-medium text-[#7C7373] mb-1.5">
-                            Document Type
+                            {t('label')}
                         </label>
                         <select
                             value={selectedType}
@@ -148,12 +149,12 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
                             {isUploading ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Uploading...
+                                    {t('uploading')}
                                 </>
                             ) : (
                                 <>
                                     <Upload className="mr-2 h-4 w-4" />
-                                    Select File
+                                    {t('button')}
                                 </>
                             )}
                         </Button>
@@ -161,15 +162,15 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
                 </div>
 
                 <p className="text-xs text-[#7C7373] flex items-center gap-2">
-                    <span>ℹ️ Accepted formats: PDF, JPG, PNG (Max 5MB)</span>
+                    <span>ℹ️ {t('hint')}</span>
                 </p>
             </Card>
 
             <div className="space-y-4">
-                <h4 className="text-base font-bold text-[#333333]">Uploaded Documents</h4>
+                <h4 className="text-base font-bold text-[#333333]">{t('uploadedTitle')}</h4>
                 {existingDocuments.length === 0 ? (
                     <div className="text-center py-8 bg-gray-50 rounded-xl border border-dashed border-[#E5E7EB]">
-                        <p className="text-[#7C7373] text-sm">No documents uploaded yet.</p>
+                        <p className="text-[#7C7373] text-sm">{t('empty')}</p>
                     </div>
                 ) : (
                     <div className="grid gap-3">

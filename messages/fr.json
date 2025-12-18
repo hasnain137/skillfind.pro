@@ -605,6 +605,376 @@
                 "defaultTitle": "Aucun élément",
                 "defaultDescription": "Les éléments apparaîtront ici une fois disponibles."
             }
+        },
+        "RequestForm": {
+            "eyebrow": "Nouvelle demande",
+            "title": "Décrivez votre besoin",
+            "description": "Partagez suffisamment de détails pour que les professionnels puissent répondre avec des offres précises. Vous pourrez modifier la demande plus tard.",
+            "tips": {
+                "title": "Conseils pour une bonne demande",
+                "specific": {
+                    "title": "Soyez précis",
+                    "desc": "Détaillez ce qui doit être fait"
+                },
+                "budget": {
+                    "title": "Définir budget",
+                    "desc": "Aide les pros à envoyer des offres précises"
+                },
+                "timeline": {
+                    "title": "Ajouter délais",
+                    "desc": "Pour quand en avez-vous besoin ?"
+                },
+                "context": {
+                    "title": "Inclure contexte",
+                    "desc": "Partagez tout contexte pertinent"
+                }
+            },
+            "sections": {
+                "basics": {
+                    "title": "Bases de la tâche",
+                    "desc": "Choisissez la meilleure catégorie et donnez un titre clair."
+                },
+                "details": {
+                    "title": "Détails",
+                    "desc": "Ajoutez contexte, objectifs, attentes ou tout ce qui aide un pro à comprendre le travail."
+                },
+                "location": {
+                    "title": "Lieu et format",
+                    "desc": "Dites-nous où vous êtes et si les sessions en ligne fonctionnent."
+                },
+                "timing": {
+                    "title": "Timing",
+                    "desc": "Quelle est l'urgence ?"
+                },
+                "budget": {
+                    "title": "Budget (optionnel)",
+                    "desc": "Optionnel, mais utile pour que les pros adaptent leur offre."
+                }
+            },
+            "fields": {
+                "category": "Catégorie",
+                "selectCategory": "Sélectionner une catégorie",
+                "subcategory": "Sous-catégorie",
+                "selectSubcategory": "Sélectionner une sous-catégorie",
+                "title": "De quoi avez-vous besoin exactement ?",
+                "titlePlaceholder": "ex: Prof de maths pour algèbre 3ème",
+                "description": "Décrivez votre tâche",
+                "descriptionPlaceholder": "Ajoutez tous les détails qui aideront les professionnels à comprendre vos besoins...",
+                "noContactInfo": "Évitez de partager téléphone/email ici. Vous pourrez échanger après avoir choisi un pro.",
+                "location": "Lieu (ville)",
+                "locationPlaceholder": "ex: Paris, Lyon, en ligne seulement",
+                "format": "Format préféré",
+                "formats": {
+                    "ONLINE_OR_OFFLINE": "En ligne ou en personne",
+                    "ONLINE_ONLY": "En ligne seulement",
+                    "IN_PERSON_ONLY": "En personne seulement"
+                },
+                "timings": {
+                    "URGENT": "🔥 Urgent",
+                    "URGENT_DESC": "Sous 24-48 heures",
+                    "SOON": "⚡ Bientôt",
+                    "SOON_DESC": "Sous une semaine",
+                    "FLEXIBLE": "📅 Flexible",
+                    "FLEXIBLE_DESC": "Pas d'urgence",
+                    "SCHEDULED": "🗓️ Date précise",
+                    "SCHEDULED_DESC": "J'ai une date limite"
+                },
+                "budgetMin": "Budget min (€)",
+                "budgetMax": "Budget max (€)",
+                "budgetHint": "Laisser vide pour laisser les pros suggérer un prix."
+            },
+            "actions": {
+                "publish": "Publier la demande",
+                "publishing": "Publication...",
+                "publishedDesc": "Une fois publiée, les professionnels correspondants recevront votre demande."
+            },
+            "success": {
+                "title": "Demande publiée !",
+                "desc": "Les professionnels correspondants vont commencer à vous envoyer des offres."
+            },
+            "error": {
+                "title": "Échec de création",
+                "generic": "Une erreur est survenue"
+            }
+        },
+        "OfferForm": {
+            "page": {
+                "eyebrow": "Envoyer offre",
+                "title": "Répondre à cette demande",
+                "description": "Partagez votre prix, délais et un message amical. Les clients voient les 10 premières offres qualifiées.",
+                "closedTitle": "Demande fermée",
+                "closedDesc": "Cette demande n'accepte plus d'offres.",
+                "closedMessage": "Le client a fermé cette demande ou accepté une autre offre.",
+                "budgetSpecified": "Budget non spécifié"
+            },
+            "pricing": {
+                "title": "Tarification",
+                "desc": "Définissez votre prix et conditions",
+                "proposedPrice": "Prix proposé (€)",
+                "hint": "Le montant que vous recevrez {type}",
+                "hintTotal": "au total",
+                "hintHourly": "par heure",
+                "typeLabel": "Type de tarification",
+                "types": {
+                    "fixed": "💼 Prix Fixe - Paiement unique",
+                    "hourly": "⏱️ Taux Horaire - Par heure de travail"
+                }
+            },
+            "proposal": {
+                "title": "Votre Proposition",
+                "desc": "Dites au client pourquoi vous êtes le bon choix",
+                "messageLabel": "Message au client",
+                "messagePlaceholder": "Partagez votre expérience et expliquez comment vous pouvez aider...\n\n• Pourquoi êtes-vous qualifié ?\n• Quelle est votre expérience relative ?\n• Comment allez-vous aborder ce projet ?",
+                "minChars": "{count}/50 caractères minimum",
+                "chars": "{count} caractères"
+            },
+            "availability": {
+                "title": "Disponibilité",
+                "desc": "Aidez le client à planifier (optionnel)",
+                "earliest": "Première disponibilité",
+                "earliestPlaceholder": "ex: Disponible dès lundi",
+                "duration": "Durée estimée",
+                "durationPlaceholder": "ex: 2-3 semaines"
+            },
+            "tips": {
+                "title": "Conseils pour une bonne offre",
+                "items": {
+                    "specific": "Soyez précis sur votre expérience et compétences",
+                    "needs": "Montrez que vous comprenez les besoins du client",
+                    "approach": "Expliquez votre approche pour résoudre leur problème",
+                    "expectations": "Fixez des attentes réalistes pour les délais"
+                }
+            },
+            "actions": {
+                "ready": "Prêt à envoyer ?",
+                "cancel": "Annuler",
+                "sending": "⏳ Envoi...",
+                "send": "✉️ Envoyer l'offre",
+                "legal": "En envoyant une offre, vous acceptez nos conditions d'utilisation."
+            },
+            "validation": {
+                "invalidPrice": "Veuillez entrer un prix valide",
+                "minPrice": "Le prix doit être d'au moins 1 €",
+                "shortMessage": "Veuillez fournir un message plus détaillé (au moins 50 caractères)"
+            },
+            "success": {
+                "title": "Offre envoyée avec succès !",
+                "desc": "Le client sera notifié de votre offre."
+            },
+            "error": {
+                "title": "Échec de l'envoi",
+                "generic": "Une erreur est survenue."
+            }
+        },
+        "ProOffers": {
+            "eyebrow": "Offres",
+            "title": "Mes Offres",
+            "description": "Suivez toutes les offres envoyées et leurs résultats.",
+            "stats": {
+                "pending": "En attente",
+                "accepted": "Acceptées",
+                "profileViewed": "Profil vu",
+                "successRate": "Taux de succès"
+            },
+            "empty": {
+                "title": "Aucune offre envoyée",
+                "desc": "Parcourez les demandes correspondantes et envoyez votre première offre !",
+                "action": "Parcourir les demandes"
+            },
+            "sections": {
+                "pending": "Offres en attente",
+                "accepted": "Offres acceptées",
+                "rejected": "Non retenu"
+            },
+            "status": {
+                "pending": "En attente",
+                "accepted": "Accepté ✓",
+                "rejected": "Non retenu",
+                "withdrawn": "Retiré"
+            },
+            "card": {
+                "viewed": "👁️ Vu",
+                "messageLabel": "Votre message :",
+                "waiting": "⏳ En attente de réponse",
+                "acceptedCheckJobs": "✓ Accepté - Voir Jobs"
+            },
+            "tips": {
+                "title": "Conseils pour gagner plus d'offres",
+                "items": {
+                    "respond": {
+                        "title": "Répondez vite",
+                        "desc": "Les clients aiment la rapidité. Soyez parmi les premiers."
+                    },
+                    "personalize": {
+                        "title": "Personnalisez",
+                        "desc": "Montrez que vous comprenez leurs besoins spécifiques."
+                    },
+                    "price": {
+                        "title": "Prix juste",
+                        "desc": "Soyez compétitif tout en reflétant votre expertise."
+                    },
+                    "trust": {
+                        "title": "Inspirez confiance",
+                        "desc": "Complétez votre profil et récoltez des avis positifs."
+                    }
+                }
+            }
+        },
+        "ClientProfile": {
+            "title": "Mon Profil",
+            "description": "Gérez vos informations personnelles et préférences.",
+            "sections": {
+                "basic": "Informations de base",
+                "personal": "Informations personnelles",
+                "location": "Localisation",
+                "preferences": "Préférences"
+            },
+            "fields": {
+                "firstName": "Prénom",
+                "lastName": "Nom",
+                "email": "Adresse Email",
+                "emailHint": "L'email ne peut pas être modifié",
+                "dob": "Date de naissance",
+                "phone": "Numéro de téléphone",
+                "phoneHint": "Format international : +[code pays][numéro]",
+                "city": "Ville",
+                "region": "Région",
+                "country": "Pays",
+                "language": "Langue préférée",
+                "languageHint": "Langue pour les notifications"
+            },
+            "actions": {
+                "save": "Enregistrer",
+                "saving": "Enregistrement...",
+                "cancel": "Annuler"
+            },
+            "success": "Profil mis à jour avec succès",
+            "error": "Échec de la mise à jour du profil",
+            "updateError": "Échec de la mise à jour des infos personnelles"
+        },
+        "ProProfile": {
+            "title": "Gardez votre profil professionnel à jour",
+            "description": "Les clients veulent comprendre votre expertise et vos services avant d'envoyer une demande.",
+            "tabs": {
+                "info": "Infos Profil",
+                "services": "Services",
+                "verification": "Vérification"
+            },
+            "completion": {
+                "title": "Complétion du Profil",
+                "desc": "Les profils complets reçoivent 3x plus d'offres !",
+                "missing": "Complétez ceci pour atteindre 100% :"
+            },
+            "info": {
+                "titleLabel": "Titre Professionnel",
+                "titlePlaceholder": "ex: Prof de Maths Senior",
+                "yearsLabel": "Années d'expérience",
+                "bioLabel": "Bio",
+                "bioPlaceholder": "Décrivez votre expertise...",
+                "personal": "Informations personnelles",
+                "location": "Localisation & Disponibilité",
+                "isAvailable": "Disponible pour travailler",
+                "remoteLabel": "Travail à distance",
+                "remoteOptions": {
+                    "YES_AND_ONSITE": "À distance et sur place",
+                    "ONLY_REMOTE": "À distance uniquement",
+                    "NO_REMOTE": "Sur place uniquement"
+                }
+            },
+            "services": {
+                "add": "Ajouter un service",
+                "edit": "Modifier le service",
+                "update": "Mettre à jour",
+                "delete": "Supprimer",
+                "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce service ?",
+                "empty": "Aucun service ajouté. Ajoutez un service pour recevoir des demandes.",
+                "fields": {
+                    "category": "Catégorie",
+                    "selectCategory": "Sélectionner une catégorie",
+                    "subcategory": "Sous-catégorie",
+                    "selectSubcategory": "Sélectionner une sous-catégorie",
+                    "price": "Prix de départ (€)",
+                    "description": "Description",
+                    "descriptionHint": "min 50 caractères",
+                    "cancel": "Annuler"
+                },
+                "startsFrom": "À partir de {price} €"
+            },
+            "success": "Profil mis à jour avec succès",
+            "serviceAdded": "Service ajouté avec succès",
+            "serviceUpdated": "Service mis à jour avec succès",
+            "serviceDeleted": "Service supprimé avec succès",
+            "error": "Échec de la mise à jour",
+            "serviceError": "Échec de l'ajout du service",
+            "deleteError": "Échec de la suppression"
+        },
+        "Verification": {
+            "status": {
+                "active": {
+                    "title": "Profil Vérifié",
+                    "badge": "Actif",
+                    "desc": "Votre profil est vérifié et actif. Vous pouvez recevoir des demandes et envoyer des offres."
+                },
+                "pending": {
+                    "title": "Vérification en attente",
+                    "desc": "Vos documents ont été soumis et sont en cours d'examen. Vous serez notifié une fois la vérification terminée."
+                },
+                "rejected": {
+                    "title": "Attention requise",
+                    "desc": "Votre demande de vérification a été rejetée. Veuillez vérifier la raison du rejet et télécharger un document valide."
+                },
+                "notVerified": {
+                    "title": "Profil non vérifié",
+                    "desc": "Veuillez télécharger au moins un document d'identité officiel (CNI, Passeport, Kbis) pour vérifier votre compte. Les profils vérifiés obtiennent 3x plus de jobs."
+                }
+            },
+            "upload": {
+                "title": "Télécharger Documents de Vérification",
+                "desc": "Veuillez télécharger des documents officiels pour vérifier votre identité et expertise. Une fois approuvé, vous recevrez un badge \"Vérifié\".",
+                "label": "Type de document",
+                "types": {
+                    "IDENTITY_CARD": "Carte d'identité (CNI)",
+                    "PASSPORT": "Passeport",
+                    "DRIVERS_LICENSE": "Permis de conduire",
+                    "BUSINESS_LICENSE": "Kbis / Licence Pro",
+                    "DIPLOMA": "Diplôme",
+                    "CERTIFICATION": "Certification Pro",
+                    "PORTFOLIO_SAMPLE": "Exemple de Portfolio",
+                    "OTHER": "Autre Document"
+                },
+                "button": "Choisir un fichier",
+                "uploading": "Envoi...",
+                "hint": "Formats acceptés : PDF, JPG, PNG (Max 5MB)",
+                "uploadedTitle": "Documents Téléchargés",
+                "empty": "Aucun document téléchargé.",
+                "success": "Document téléchargé avec succès !",
+                "deleted": "Document supprimé",
+                "error": "Échec du téléchargement",
+                "deleteError": "Impossible de supprimer le document",
+                "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce document ?",
+                "tooLarge": "Fichier trop volumineux. Max 5MB."
+            }
+        },
+        "Reviews": {
+            "title": "Évaluez votre expérience",
+            "modalTitle": "Écrire un avis",
+            "desc": "Comment s'est passée votre expérience avec ce professionnel ?",
+            "ratings": {
+                "5": "Excellent !",
+                "4": "Très bien",
+                "3": "Bien",
+                "2": "Correct",
+                "1": "Mauvais"
+            },
+            "label": "Votre Avis",
+            "placeholder": "Qu'est-ce qui s'est bien passé ? Que peut-on améliorer ?",
+            "recommend": "Je recommande ce professionnel",
+            "cancel": "Annuler",
+            "submit": "Envoyer l'avis",
+            "submitting": "Envoi...",
+            "success": "Avis envoyé avec succès !",
+            "error": "Échec de l'envoi de l'avis",
+            "selectRating": "Veuillez sélectionner une note"
         }
     }
 }

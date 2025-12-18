@@ -5,9 +5,11 @@ import { getClientWithRelations } from "@/lib/get-professional";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import ClientProfileForm from "./ClientProfileForm";
+import { getTranslations } from 'next-intl/server';
 
 export default async function ClientProfilePage() {
   const { userId } = await auth();
+  const t = await getTranslations('ClientProfile');
 
   if (!userId) {
     redirect('/login');
@@ -33,8 +35,8 @@ export default async function ClientProfilePage() {
     <div className="space-y-6">
       <SectionHeading
         variant="page"
-        title="My Profile"
-        description="Manage your personal information and preferences."
+        title={t('title')}
+        description={t('description')}
       />
 
       <Card padding="lg">

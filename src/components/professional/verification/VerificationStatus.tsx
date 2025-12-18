@@ -4,12 +4,15 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { CheckCircle2, Clock, XCircle, AlertCircle } from 'lucide-react';
 import { ProfessionalStatus } from '@prisma/client';
+import { useTranslations } from 'next-intl';
 
 interface VerificationStatusProps {
     status: ProfessionalStatus;
 }
 
 export function VerificationStatus({ status }: VerificationStatusProps) {
+    const t = useTranslations('Verification.status');
+
     if (status === 'ACTIVE') {
         return (
             <Card className="bg-green-50 border-green-200" padding="lg">
@@ -19,11 +22,11 @@ export function VerificationStatus({ status }: VerificationStatusProps) {
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
-                            <h3 className="text-lg font-bold text-green-900">Profile Verified</h3>
-                            <Badge className="bg-green-200 text-green-800 hover:bg-green-300">Active</Badge>
+                            <h3 className="text-lg font-bold text-green-900">{t('active.title')}</h3>
+                            <Badge className="bg-green-200 text-green-800 hover:bg-green-300">{t('active.badge')}</Badge>
                         </div>
                         <p className="text-green-700 mt-1">
-                            Your profile is verified and active. You can receive job requests and send offers to clients.
+                            {t('active.desc')}
                         </p>
                     </div>
                 </div>
@@ -39,10 +42,9 @@ export function VerificationStatus({ status }: VerificationStatusProps) {
                         <Clock className="h-6 w-6" />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-yellow-900">Verification Pending</h3>
+                        <h3 className="text-lg font-bold text-yellow-900">{t('pending.title')}</h3>
                         <p className="text-yellow-700 mt-1">
-                            Your documents have been submitted and are currently under review by our team.
-                            You will be notified once the verification process is complete.
+                            {t('pending.desc')}
                         </p>
                     </div>
                 </div>
@@ -58,10 +60,9 @@ export function VerificationStatus({ status }: VerificationStatusProps) {
                         <AlertCircle className="h-6 w-6" />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-yellow-900">Attention Required</h3>
+                        <h3 className="text-lg font-bold text-yellow-900">{t('rejected.title')}</h3>
                         <p className="text-yellow-700 mt-1">
-                            Your verification request was rejected. Please check the rejection reason
-                            and upload a valid document to proceed with verification.
+                            {t('rejected.desc')}
                         </p>
                     </div>
                 </div>
@@ -76,10 +77,9 @@ export function VerificationStatus({ status }: VerificationStatusProps) {
                     <AlertCircle className="h-6 w-6" />
                 </div>
                 <div>
-                    <h3 className="text-lg font-bold text-gray-900">Profile Not Verified</h3>
+                    <h3 className="text-lg font-bold text-gray-900">{t('notVerified.title')}</h3>
                     <p className="text-gray-600 mt-1">
-                        Please upload at least one official identity document (ID Card, Passport, or Business License)
-                        to verify your account. Verified profiles get 3x more jobs.
+                        {t('notVerified.desc')}
                     </p>
                 </div>
             </div>

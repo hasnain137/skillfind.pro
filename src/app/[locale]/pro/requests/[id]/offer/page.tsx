@@ -6,6 +6,7 @@ import { getProfessionalByClerkId } from "@/lib/get-professional";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import OfferForm from "./OfferForm";
+import { getTranslations } from 'next-intl/server';
 
 type OfferPageProps = {
   params: Promise<{ id: string }>;
@@ -14,6 +15,7 @@ type OfferPageProps = {
 export default async function ProOfferPage({ params }: OfferPageProps) {
   const resolvedParams = await params;
   const { userId } = await auth();
+  const t = await getTranslations('OfferForm.page');
 
   if (!userId) {
     redirect('/login');
@@ -48,13 +50,13 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
     return (
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Send offer"
-          title="Request Closed"
-          description="This request is no longer accepting offers."
+          eyebrow={t('eyebrow')}
+          title={t('closedTitle')}
+          description={t('closedDesc')}
         />
         <Card padding="lg" level={2}>
           <p className="text-sm text-[#7C7373]">
-            The client has closed this request or accepted another offer.
+            {t('closedMessage')}
           </p>
         </Card>
       </div>
@@ -64,9 +66,9 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
   return (
     <div className="space-y-6">
       <SectionHeading
-        eyebrow="Send offer"
-        title="Reply to this client request"
-        description="Share your proposed price, timing and a friendly message. Clients see the first 10 qualified offers."
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        description={t('description')}
       />
 
       <Card padding="lg" className="space-y-3" level={2}>
@@ -84,7 +86,7 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
               {request.budgetMin ? `€${request.budgetMin}` : ''}
               {request.budgetMin && request.budgetMax ? ' - ' : ''}
               {request.budgetMax ? `€${request.budgetMax}` : ''}
-              {!request.budgetMin && !request.budgetMax ? 'Budget not specified' : ''}
+              {!request.budgetMin && !request.budgetMax ? t('budgetSpecified') : ''}
             </p>
           </div>
         </div>
@@ -101,4 +103,3 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
     </div>
   );
 }
-

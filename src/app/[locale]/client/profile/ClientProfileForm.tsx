@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 type ClientProfile = {
     id: string;
@@ -24,6 +25,7 @@ type ClientProfileFormProps = {
 };
 
 export default function ClientProfileForm({ initialClient }: ClientProfileFormProps) {
+    const t = useTranslations('ClientProfile');
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -77,12 +79,12 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 }),
             });
 
-            if (!userResponse.ok) throw new Error('Failed to update personal information');
+            if (!userResponse.ok) throw new Error(t('updateError'));
 
-            setSuccess('Profile updated successfully');
+            setSuccess(t('success'));
             router.refresh();
         } catch (err) {
-            setError('Failed to update profile');
+            setError(t('error'));
         } finally {
             setLoading(false);
         }
@@ -105,13 +107,13 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
             {/* Basic Information Section */}
             <div>
                 <h3 className="text-base font-bold text-[#333333] mb-4 flex items-center gap-2">
-                    <span>👤</span> Basic Information
+                    <span>👤</span> {t('sections.basic')}
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label htmlFor="firstName" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            First Name
+                            {t('fields.firstName')}
                         </label>
                         <input
                             id="firstName"
@@ -124,7 +126,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     </div>
                     <div>
                         <label htmlFor="lastName" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            Last Name
+                            {t('fields.lastName')}
                         </label>
                         <input
                             id="lastName"
@@ -137,7 +139,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     </div>
                     <div>
                         <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            Email Address
+                            {t('fields.email')}
                         </label>
                         <input
                             id="email"
@@ -147,7 +149,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                             className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm bg-gray-50 text-gray-500 cursor-not-allowed"
                         />
                         <p className="mt-1 text-xs text-[#B0B0B0]">
-                            Email cannot be changed
+                            {t('fields.emailHint')}
                         </p>
                     </div>
                 </div>
@@ -156,13 +158,13 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
             {/* Personal Information Section */}
             <div className="border-t border-[#E5E7EB] pt-6">
                 <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
-                    <span>📋</span> Personal Information
+                    <span>📋</span> {t('sections.personal')}
                 </h4>
 
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label htmlFor="dob" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            Date of Birth
+                            {t('fields.dob')}
                         </label>
                         <input
                             id="dob"
@@ -174,7 +176,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     </div>
                     <div>
                         <label htmlFor="phone" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            Phone Number
+                            {t('fields.phone')}
                         </label>
                         <input
                             id="phone"
@@ -185,7 +187,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                             className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                         />
                         <p className="mt-1 text-xs text-[#B0B0B0]">
-                            International format: +[country code][number]
+                            {t('fields.phoneHint')}
                         </p>
                     </div>
                 </div>
@@ -194,12 +196,12 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
             {/* Location Section */}
             <div className="border-t border-[#E5E7EB] pt-6">
                 <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
-                    <span>📍</span> Location
+                    <span>📍</span> {t('sections.location')}
                 </h4>
 
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">City</label>
+                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('fields.city')}</label>
                         <input
                             type="text"
                             placeholder="Paris"
@@ -209,7 +211,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                         />
                     </div>
                     <div>
-                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Region/State</label>
+                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('fields.region')}</label>
                         <input
                             type="text"
                             placeholder="Île-de-France"
@@ -219,7 +221,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                         />
                     </div>
                     <div>
-                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Country</label>
+                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('fields.country')}</label>
                         <select
                             value={clientData.country}
                             onChange={e => setClientData({ ...clientData, country: e.target.value })}
@@ -242,13 +244,13 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
             {/* Preferences Section */}
             <div className="border-t border-[#E5E7EB] pt-6">
                 <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
-                    <span>⚙️</span> Preferences
+                    <span>⚙️</span> {t('sections.preferences')}
                 </h4>
 
                 <div className="grid gap-4 md:grid-cols-2">
                     <div>
                         <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            Preferred Language
+                            {t('fields.language')}
                         </label>
                         <select
                             value={clientData.preferredLanguage}
@@ -261,7 +263,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                             <option value="es">Español</option>
                         </select>
                         <p className="mt-1 text-xs text-[#B0B0B0]">
-                            Language for notifications and communications
+                            {t('fields.languageHint')}
                         </p>
                     </div>
                 </div>
@@ -275,10 +277,10 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     onClick={() => router.push('/client')}
                     disabled={loading}
                 >
-                    Cancel
+                    {t('actions.cancel')}
                 </Button>
                 <Button type="submit" disabled={loading}>
-                    {loading ? 'Saving...' : 'Save Changes'}
+                    {loading ? t('actions.saving') : t('actions.save')}
                 </Button>
             </div>
         </form>
