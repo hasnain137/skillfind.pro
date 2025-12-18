@@ -483,9 +483,9 @@
             "stars": "{count}+ stars",
             "priceLabel": "Max hourly rate (€)",
             "pricePlaceholder": "e.g. 50",
-            "apply": "Apply Filters",
+            "apply": "Apply filters",
             "clear": "Clear all",
-            "showResults": "Show Results"
+            "showResults": "Show results"
         },
         "results": {
             "searching": "Searching...",

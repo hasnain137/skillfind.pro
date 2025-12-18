@@ -423,173 +423,188 @@
             "stars": "{count}+ étoiles",
             "priceLabel": "Tarif horaire max (€)",
             "pricePlaceholder": "ex. 50",
-            "apply": "Appliquer",
-            "clear": "Effacer",
-            "showResults": "Voir résultats"
+            "placeholder": "Trouver un professionnel...",
+            "button": "Rechercher",
+            "legal": "Les clients ne paient aucun frais. Les professionnels paient uniquement lorsque vous consultez leur profil.",
+            "empty": {
+                "title": "Aucun professionnel trouvé",
+                "desc": "Essayez d'ajuster vos filtres ou parcourez toutes les catégories.",
+                "action": "Effacer filtres"
+            },
+            "results": {
+                "searching": "Recherche en cours...",
+                "count": "{count} professionnel trouvé | {count} professionnels trouvés",
+                "forQuery": " pour \"{query}\"",
+                "previous": "Précédent",
+                "next": "Suivant",
+                "pageInfo": "Page {page} sur {total}"
+            },
+            "filters": {
+                "title": "Filtres",
+                "searchLabel": "Recherche",
+                "searchPlaceholder": "Mots-clés...",
+                "locationLabel": "Lieu",
+                "locationPlaceholder": "Ville ou Code postal...",
+                "categoryLabel": "Catégorie",
+                "allCategories": "Toutes les catégories",
+                "remoteLabel": "À distance seulement",
+                "ratingLabel": "Note minimum",
+                "anyRating": "Toute note",
+                "stars": "{count} étoiles & plus",
+                "priceLabel": "Prix max/heure",
+                "pricePlaceholder": "ex: 50",
+                "apply": "Appliquer filtres",
+                "clear": "Effacer tout",
+                "showResults": "Voir les résultats"
+            }
         },
-        "results": {
-            "searching": "Recherche en cours...",
-            "count": "{count} professionnel trouvé | {count} professionnels trouvés",
-            "forQuery": " pour \"{query}\"",
-            "previous": "Précédent",
-            "next": "Suivant",
-            "pageInfo": "Page {page} sur {total}"
-        },
-        "empty": {
-            "title": "Aucun professionnel trouvé",
-            "desc": "Essayez d'ajuster vos filtres ou parcourez toutes les catégories.",
-            "action": "Effacer filtres"
-        },
-        "placeholder": "Trouver un professionnel...",
-        "button": "Rechercher",
-        "legal": "Les clients ne paient aucun frais. Les professionnels paient uniquement lorsque vous consultez leur profil."
-    },
-    "SuggestedSkills": {
-        "badge": "Idées pour commencer",
-        "title": "Vous ne savez pas quoi chercher ?",
-        "subtitle": "Voici quelques exemples d'utilisation de SkillFind. Appuyez sur une compétence pour explorer les professionnels de ce domaine.",
-        "skills": {
-            "mathExam": "Maths et préparation aux examens",
-            "languageTutoring": "Cours de langue",
-            "careerCoaching": "CV et coaching de carrière",
-            "frontendDebug": "Correction de bugs Frontend",
-            "brandDesign": "Logo et design de marque",
-            "fitnessNutrition": "Fitness et nutrition",
-            "mentalWellbeing": "Soutien au bien-être mental",
-            "homeCleaning": "Nettoyage à domicile",
-            "movingHelp": "Aide au déménagement",
-            "resumeReview": "Revue de CV et LinkedIn",
-            "websiteTroubleshoot": "Dépannage de site web",
-            "socialMedia": "Support réseaux sociaux"
-        }
-    },
-    "PublicProfile": {
-        "unavailable": {
-            "title": "Profil indisponible",
-            "description": "Ce profil professionnel n'est pas actif pour le moment.",
-            "cta": "Parcourir d'autres pros"
-        },
-        "hero": {
-            "verified": "Vérifié",
+        "ProfessionalCard": {
+            "priceFrom": "Dès {price} €/h",
+            "contactForPricing": "Contacter pour prix",
+            "defaultService": "Service professionnel",
             "reviews": "{count} avis",
-            "remote": "Disponible à distance",
-            "memberSince": "Membre depuis {date}",
-            "sendRequest": "Envoyer demande",
-            "jobsDone": "Travaux faits",
-            "yearsExp": "Années d'exp"
+            "remote": "À distance",
+            "moreServices": "+{count} de plus",
+            "viewProfile": "Voir le profil"
         },
-        "sections": {
-            "about": "À propos",
-            "services": "Services proposés",
-            "reviews": "Avis récents ({count})",
-            "quickStats": "Stat. rapides",
-            "location": "Lieu",
-            "experience": "Expérience"
+        "SuggestedSkills": {
+            "badge": "Idées pour commencer",
+            "title": "Vous ne savez pas quoi chercher ?",
+            "subtitle": "Voici quelques exemples d'utilisation de SkillFind. Appuyez sur une compétence pour explorer les professionnels de ce domaine.",
+            "skills": {
+                "mathExam": "Maths et préparation aux examens",
+                "languageTutoring": "Cours de langue",
+                "careerCoaching": "CV et coaching de carrière",
+                "frontendDebug": "Correction de bugs Frontend",
+                "brandDesign": "Logo et design de marque",
+                "fitnessNutrition": "Fitness et nutrition",
+                "mentalWellbeing": "Soutien au bien-être mental",
+                "homeCleaning": "Nettoyage à domicile",
+                "movingHelp": "Aide au déménagement",
+                "resumeReview": "Revue de CV et LinkedIn",
+                "websiteTroubleshoot": "Dépannage de site web",
+                "socialMedia": "Support réseaux sociaux"
+            }
         },
-        "services": {
-            "perProject": "par projet",
-            "startsAt": "À partir de"
-        },
-        "reviews": {
-            "wouldRecommend": "Recommanderait",
-            "responseFromPro": "Réponse du pro :"
-        },
-        "cta": {
-            "readyToHire": "Prêt à engager {name} ?",
-            "signInDesc": "Connectez-vous pour envoyer une demande ou un message.",
-            "getStarted": "Commencer",
-            "signInLink": "Déjà un compte ? Connexion"
-        },
-        "stats": {
-            "completion": "Complétion profil",
-            "completedJobs": "Travaux terminés",
-            "avgRating": "Note moyenne",
-            "noRatings": "Pas encore de note",
-            "totalReviews": "Total avis"
-        },
-        "location": {
-            "remoteAvailable": "Disponible pour télétravail"
-        },
-        "experience": {
-            "years": "{count} ans",
-            "desc": "d'expérience pro"
-        }
-    },
-    "ProfessionalCard": {
-        "priceFrom": "À partir de {price} €/h",
-        "contactForPricing": "Contactez pour tarif",
-        "defaultService": "Professionnel",
-        "reviews": "{count} avis",
-        "remote": "À distance",
-        "moreServices": "+{count} de plus",
-        "viewProfile": "Voir le profil"
-    },
-    "LiveStats": {
-        "verifiedPros": "Professionnels Vérifiés",
-        "trustedReviews": "Avis Vérifiés",
-        "activeRequests": "Demandes Actives",
-        "jobsCompleted": "Missions Réalisées"
-    },
-    "Components": {
-        "AdminDashboard": {
-            "eyebrow": "Aperçu",
-            "title": "État du système",
-            "description": "Métriques clés et surveillance.",
-            "metrics": {
-                "totalUsers": "Utilisateurs totaux",
-                "professionals": "Professionnels",
-                "clients": "Clients",
-                "pendingVerifications": "Vérifications en attente",
-                "totalRevenue": "Revenu total"
+        "PublicProfile": {
+            "unavailable": {
+                "title": "Profil indisponible",
+                "description": "Ce profil professionnel n'est pas actif pour le moment.",
+                "cta": "Parcourir d'autres pros"
             },
-            "recentActivity": "Activité récente",
-            "activityComingSoon": "Flux d'activité bientôt disponible...",
-            "systemHealth": "Santé système",
-            "allSystemsOperational": "Tous les systèmes opérationnels"
+            "hero": {
+                "verified": "Vérifié",
+                "reviews": "{count} avis",
+                "remote": "Disponible à distance",
+                "memberSince": "Membre depuis {date}",
+                "sendRequest": "Envoyer demande",
+                "jobsDone": "Travaux faits",
+                "yearsExp": "Années d'exp"
+            },
+            "sections": {
+                "about": "À propos",
+                "services": "Services proposés",
+                "reviews": "Avis récents ({count})",
+                "quickStats": "Stat. rapides",
+                "location": "Lieu",
+                "experience": "Expérience"
+            },
+            "services": {
+                "perProject": "par projet",
+                "startsAt": "À partir de"
+            },
+            "reviews": {
+                "wouldRecommend": "Recommanderait",
+                "responseFromPro": "Réponse du pro :"
+            },
+            "cta": {
+                "readyToHire": "Prêt à engager {name} ?",
+                "signInDesc": "Connectez-vous pour envoyer une demande ou un message.",
+                "getStarted": "Commencer",
+                "signInLink": "Déjà un compte ? Connexion"
+            },
+            "stats": {
+                "completion": "Complétion profil",
+                "completedJobs": "Travaux terminés",
+                "avgRating": "Note moyenne",
+                "noRatings": "Pas encore de note",
+                "totalReviews": "Total avis"
+            },
+            "location": {
+                "remoteAvailable": "Disponible pour télétravail"
+            },
+            "experience": {
+                "years": "{count} ans",
+                "desc": "d'expérience pro"
+            }
         },
-        "AdminSidebar": {
-            "title": "Panneau Admin",
-            "backToSite": "← Retour au site",
-            "nav": {
-                "overview": "Aperçu",
-                "professionals": "Professionnels",
-                "clients": "Clients",
+        "LiveStats": {
+            "verifiedPros": "Professionnels Vérifiés",
+            "trustedReviews": "Avis Vérifiés",
+            "activeRequests": "Demandes Actives",
+            "jobsCompleted": "Missions Réalisées"
+        },
+        "Components": {
+            "AdminDashboard": {
+                "eyebrow": "Aperçu",
+                "title": "État du système",
+                "description": "Métriques clés et surveillance.",
+                "metrics": {
+                    "totalUsers": "Utilisateurs totaux",
+                    "professionals": "Professionnels",
+                    "clients": "Clients",
+                    "pendingVerifications": "Vérifications en attente",
+                    "totalRevenue": "Revenu total"
+                },
+                "recentActivity": "Activité récente",
+                "activityComingSoon": "Flux d'activité bientôt disponible...",
+                "systemHealth": "Santé système",
+                "allSystemsOperational": "Tous les systèmes opérationnels"
+            },
+            "AdminSidebar": {
+                "title": "Panneau Admin",
+                "backToSite": "← Retour au site",
+                "nav": {
+                    "overview": "Aperçu",
+                    "professionals": "Professionnels",
+                    "clients": "Clients",
+                    "categories": "Catégories",
+                    "reviews": "Avis",
+                    "transactions": "Transactions",
+                    "translations": "Traductions",
+                    "settings": "Paramètres"
+                }
+            },
+            "ClientNavbar": {
+                "howItWorks": "Comment ça marche",
                 "categories": "Catégories",
-                "reviews": "Avis",
-                "transactions": "Transactions",
-                "translations": "Traductions",
-                "settings": "Paramètres"
+                "topProfessionals": "Meilleurs professionnels",
+                "forProfessionals": "Pour les professionnels",
+                "login": "Connexion",
+                "signup": "S'inscrire"
+            },
+            "StatusBanner": {
+                "pendingReview": {
+                    "title": "Compte en cours d'examen",
+                    "description": "Votre profil est en cours d'examen par notre équipe. Vous pouvez parcourir et mettre à jour votre profil, mais vous ne pouvez pas encore envoyer d'offres."
+                },
+                "suspended": {
+                    "title": "Compte suspendu",
+                    "description": "Votre compte a été suspendu. Veuillez contacter le support pour résoudre ce problème."
+                },
+                "banned": {
+                    "title": "Compte banni",
+                    "description": "Votre compte a été désactivé. Veuillez contacter le support pour plus d'informations."
+                },
+                "incomplete": {
+                    "title": "Complétez votre profil",
+                    "description": "Veuillez compléter les détails de votre profil pour être vérifié et commencer à recevoir des demandes."
+                }
+            },
+            "EmptyState": {
+                "defaultTitle": "Aucun élément",
+                "defaultDescription": "Les éléments apparaîtront ici une fois disponibles."
             }
-        },
-        "ClientNavbar": {
-            "howItWorks": "Comment ça marche",
-            "categories": "Catégories",
-            "topProfessionals": "Meilleurs professionnels",
-            "forProfessionals": "Pour les professionnels",
-            "login": "Connexion",
-            "signup": "S'inscrire"
-        },
-        "StatusBanner": {
-            "pendingReview": {
-                "title": "Compte en cours d'examen",
-                "description": "Votre profil est en cours d'examen par notre équipe. Vous pouvez parcourir et mettre à jour votre profil, mais vous ne pouvez pas encore envoyer d'offres."
-            },
-            "suspended": {
-                "title": "Compte suspendu",
-                "description": "Votre compte a été suspendu. Veuillez contacter le support pour résoudre ce problème."
-            },
-            "banned": {
-                "title": "Compte banni",
-                "description": "Votre compte a été désactivé. Veuillez contacter le support pour plus d'informations."
-            },
-            "incomplete": {
-                "title": "Complétez votre profil",
-                "description": "Veuillez compléter les détails de votre profil pour être vérifié et commencer à recevoir des demandes."
-            }
-        },
-        "EmptyState": {
-            "defaultTitle": "Aucun élément",
-            "defaultDescription": "Les éléments apparaîtront ici une fois disponibles."
         }
     }
 }
