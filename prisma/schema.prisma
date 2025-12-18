@@ -292,6 +292,7 @@ model Category {
   
   subcategories   Subcategory[]
   requests        Request[]
+  adCampaigns     AdCampaign[]
   
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -818,3 +819,80 @@ enum NotificationType {
   LOW_BALANCE         // Pro: wallet balance is low
   SYSTEM              // General system notification
 }
+
+// ============================================
+// ADVERTISEMENT CAMPAIGNS
+// ============================================
+
+model AdCampaign {
+  id          String           @id @default(cuid())
+  
+  // Campaign details
+  name        String
+  description String?          @db.Text
+  imageUrl    String?
+  linkUrl     String?
+  
+  // Targeting
+  categoryId  String?
+  category    Category?        @relation(fields: [categoryId], references: [id])
+  targetCity  String?
+  targetRegion String?
+  targetCountry String?
+  
+  // Budget and duration
+  budgetCents Int              @default(0)          // Total budget in cents
+  spentCents  Int              @default(0)          // Amount spent
+  costPerClick Int             @default(10)         // Cost per click in cents (€0.10 default)
+  startDate   DateTime
+  endDate     DateTime
+  
+  // Status
+  status      AdCampaignStatus @default(DRAFT)
+  
+  // Stats
+  impressions Int              @default(0)
+  clicks      Int              @default(0)
+  
+  // Audit
+  createdBy   String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  
+  // Relations
+  adClicks    AdClick[]
+  
+  @@index([status])
+  @@index([categoryId])
+  @@index([startDate, endDate])
+  @@index([targetCity])
+  @@map("ad_campaigns")
+}
+
+model AdClick {
+  id           String     @id @default(cuid())
+  campaignId   String
+  campaign     AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  // Tracking
+  userId       String?             // Logged in user (optional)
+  ipAddress    String?
+  userAgent    String?
+  referrer     String?
+  
+  clickedAt    DateTime   @default(now())
+  
+  @@index([campaignId])
+  @@index([clickedAt])
+  @@map("ad_clicks")
+}
+
+enum AdCampaignStatus {
+  DRAFT
+  PENDING_PAYMENT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+

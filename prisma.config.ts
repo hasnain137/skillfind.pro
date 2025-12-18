@@ -4,6 +4,7 @@ import { defineConfig, env } from 'prisma/config';
 export default defineConfig({
     schema: 'prisma/schema.prisma',
     datasource: {
-        url: env('DATABASE_URL'), // Use DATABASE_URL for application and migrations
+        // Use DATABASE_URL without pgbouncer=true for migrations/push
+        url: env('DATABASE_URL')?.replace('?pgbouncer=true', '') || env('DATABASE_URL'),
     },
 });

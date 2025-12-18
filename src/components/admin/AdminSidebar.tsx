@@ -18,6 +18,7 @@ export function AdminSidebar() {
         { name: t('nav.categories'), href: '/admin/categories', icon: '📂' },
         { name: t('nav.reviews'), href: '/admin/reviews', icon: '⭐' },
         { name: t('nav.transactions'), href: '/admin/financials/transactions', icon: '💰' },
+        { name: 'Advertising', href: '/admin/ads', icon: '📢' },
         { name: t('nav.translations'), href: '/admin/translations', icon: '🌍' },
         { name: t('nav.settings'), href: '/admin/settings', icon: '⚙️' },
     ];
