@@ -8,7 +8,8 @@
         "profile": "Profil",
         "admin": "Admin",
         "menu": "Menu",
-        "language": "Langue"
+        "language": "Langue",
+        "close": "Fermer"
     },
     "Landing": {
         "heroTitle": "Trouvez le professionnel idéal pour vos besoins",
@@ -16,7 +17,20 @@
     },
     "Auth": {
         "loginTitle": "Connectez-vous à votre compte",
-        "signupTitle": "Créer un compte"
+        "signupTitle": "Créer un compte",
+        "joinHeader": "Rejoindre SkillFind",
+        "joinSubheader": "Créez votre compte pour commencer",
+        "welcomeHeader": "Bon retour",
+        "welcomeSubheader": "Connectez-vous à votre compte SkillFind",
+        "forgotPassword": {
+            "title": "Réinitialiser mot de passe",
+            "subtitle": "Entrez votre email et nous vous enverrons un lien de réinitialisation",
+            "emailLabel": "Adresse email",
+            "emailPlaceholder": "vous@exemple.com",
+            "submit": "Envoyer le lien",
+            "rememberPassword": "Mot de passe retrouvé ?",
+            "signIn": "Se connecter"
+        }
     },
     "Navbar": {
         "howItWorks": "Comment ça marche",
@@ -136,11 +150,10 @@
         "moreServices": "+{count} autres services",
         "moreService": "+{count} autre service",
         "badge": "Professionnels en vedette",
-        "title": "Rencontrez des experts très bien notés.",
-        "subtitle": "Ces professionnels ont été vérifiés et évalués par des clients comme vous.",
-        "emptyTitle": "Nos professionnels les mieux notés apparaîtront ici bientôt.",
-        "emptySubtitle": "Commencez à explorer en recherchant le service dont vous avez besoin ou parcourez par catégorie.",
-        "viewAll": "Voir tous les professionnels"
+        "title": "Rencontrez certains des experts que les clients embauchent sur SkillFind.",
+        "subtitle": "Ce ne sont que quelques exemples. Vous verrez encore plus de professionnels correspondants une fois que vous publierez une demande ou effectuerez une recherche par catégorie.",
+        "reviews": "avis",
+        "online": "Disponible en ligne"
     },
     "DualCTA": {
         "clientBadge": "Pour les Clients",
@@ -294,18 +307,26 @@
             "profileDesc": "Gardez votre bio, services et portfolio à jour.",
             "profileCta": "Éditer le profil"
         },
-        "Steps": {
-            "profile": "Complétez votre profil pour gagner plus d'emplois",
-            "services": "Ajoutez des services pour voir les demandes correspondantes",
-            "matching": "{count} nouvelles demandes correspondantes aujourd'hui - répondez vite !",
-            "offers": "{count} offres en attente de décision client",
-            "jobs": "{count} emplois actifs nécessitent votre attention",
-            "default": "Parcourez les demandes et envoyez des offres pour être embauché"
-        },
         "Highlights": {
-            "profile": "Complétion du profil",
+            "profile": "Profil complet",
             "wallet": "Solde du portefeuille",
-            "pending": "Offres en attente"
+            "pending": "Offres en attente",
+            "allDone": "Tout est prêt !",
+            "topUp": "Recharge recommandée",
+            "goodBalance": "Solde suffisant",
+            "awaitingResponse": "En attente de réponse",
+            "sendOffers": "Envoyer plus d'offres"
+        },
+        "Metrics": {
+            "responseTimeValue": "< 2 heures"
+        },
+        "Steps": {
+            "profile": "Complétez vos informations de profil",
+            "services": "Ajoutez votre première catégorie de service",
+            "matching": "Répondre à {count} demande correspondante | Répondre à {count} demandes correspondantes",
+            "offers": "Suivi de {count} offre en attente | Suivi de {count} offres en attente",
+            "jobs": "Terminer {count} job actif | Terminer {count} jobs actifs",
+            "default": "Parcourir plus de demandes"
         }
     },
     "Layouts": {
@@ -418,6 +439,28 @@
             "title": "Aucun professionnel trouvé",
             "desc": "Essayez d'ajuster vos filtres ou parcourez toutes les catégories.",
             "action": "Effacer filtres"
+        },
+        "placeholder": "Trouver un professionnel...",
+        "button": "Rechercher",
+        "legal": "Les clients ne paient aucun frais. Les professionnels paient uniquement lorsque vous consultez leur profil."
+    },
+    "SuggestedSkills": {
+        "badge": "Idées pour commencer",
+        "title": "Vous ne savez pas quoi chercher ?",
+        "subtitle": "Voici quelques exemples d'utilisation de SkillFind. Appuyez sur une compétence pour explorer les professionnels de ce domaine.",
+        "skills": {
+            "mathExam": "Maths et préparation aux examens",
+            "languageTutoring": "Cours de langue",
+            "careerCoaching": "CV et coaching de carrière",
+            "frontendDebug": "Correction de bugs Frontend",
+            "brandDesign": "Logo et design de marque",
+            "fitnessNutrition": "Fitness et nutrition",
+            "mentalWellbeing": "Soutien au bien-être mental",
+            "homeCleaning": "Nettoyage à domicile",
+            "movingHelp": "Aide au déménagement",
+            "resumeReview": "Revue de CV et LinkedIn",
+            "websiteTroubleshoot": "Dépannage de site web",
+            "socialMedia": "Support réseaux sociaux"
         }
     },
     "PublicProfile": {

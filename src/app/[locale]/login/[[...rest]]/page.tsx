@@ -4,10 +4,11 @@ import { SignIn } from '@clerk/nextjs';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function LoginPage() {
   const locale = useLocale();
+  const t = useTranslations('Auth');
   return (
     <div className="flex min-h-screen flex-col">
       <ClientNavbar />
@@ -17,10 +18,10 @@ export default function LoginPage() {
             {/* Header */}
             <div className="mb-8 text-center">
               <h1 className="text-2xl font-semibold tracking-tight text-surface-900 md:text-3xl">
-                Welcome back
+                {t('welcomeHeader')}
               </h1>
               <p className="mt-2 text-sm text-surface-600">
-                Sign in to your SkillFind account
+                {t('welcomeSubheader')}
               </p>
             </div>
 

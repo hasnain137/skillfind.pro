@@ -4,10 +4,11 @@ import { SignUp } from '@clerk/nextjs';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function SignupPage() {
   const locale = useLocale();
+  const t = useTranslations('Auth');
   return (
     <div className="flex min-h-screen flex-col">
       <ClientNavbar />
@@ -17,10 +18,10 @@ export default function SignupPage() {
             {/* Header */}
             <div className="mb-8 text-center">
               <h1 className="text-2xl font-semibold tracking-tight text-surface-900 md:text-3xl">
-                Join SkillFind
+                {t('joinHeader')}
               </h1>
               <p className="mt-2 text-sm text-surface-600">
-                Create your account to get started
+                {t('joinSubheader')}
               </p>
             </div>
 

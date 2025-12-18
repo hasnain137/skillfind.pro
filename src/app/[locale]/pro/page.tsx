@@ -152,17 +152,17 @@ export default async function ProDashboardPage() {
     {
       label: t('Highlights.profile'),
       value: `${profileCompletion}%`,
-      helper: profileCompletion < 100 ? t('Steps.profile') : "All done!" // Fallback English for "All done!" or add key?
+      helper: profileCompletion < 100 ? t('Steps.profile') : t('Highlights.allDone')
     },
     {
       label: t('Highlights.wallet'),
       value: `€${balanceEuros.toFixed(2)}`,
-      helper: balanceEuros < 5 ? "Top up recommended" : "Good balance" // These are tough to translate without keys
+      helper: balanceEuros < 5 ? t('Highlights.topUp') : t('Highlights.goodBalance')
     },
     {
       label: t('Highlights.pending'),
       value: `${professional.offers.length}`,
-      helper: professional.offers.length > 0 ? "Awaiting response" : "Send more offers"
+      helper: professional.offers.length > 0 ? t('Highlights.awaitingResponse') : t('Highlights.sendOffers')
     },
   ];
 
@@ -222,7 +222,7 @@ export default async function ProDashboardPage() {
     acceptanceRate,
     averageRating: professional.averageRating,
     totalReviews: professional.totalReviews,
-    responseTime: '< 2 hours',
+    responseTime: t('Metrics.responseTimeValue'),
   };
 
   const statusBannerProps = getProfessionalStatusBanner(professional.status);

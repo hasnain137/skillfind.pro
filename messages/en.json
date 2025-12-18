@@ -8,7 +8,8 @@
         "profile": "Profile",
         "admin": "Admin",
         "menu": "Menu",
-        "language": "Language"
+        "language": "Language",
+        "close": "Close"
     },
     "Landing": {
         "heroTitle": "Find the perfect professional for your needs",
@@ -16,7 +17,20 @@
     },
     "Auth": {
         "loginTitle": "Log in to your account",
-        "signupTitle": "Create an account"
+        "signupTitle": "Create an account",
+        "joinHeader": "Join SkillFind",
+        "joinSubheader": "Create your account to get started",
+        "welcomeHeader": "Welcome back",
+        "welcomeSubheader": "Sign in to your SkillFind account",
+        "forgotPassword": {
+            "title": "Reset password",
+            "subtitle": "Enter your email and we'll send you a reset link",
+            "emailLabel": "Email address",
+            "emailPlaceholder": "you@example.com",
+            "submit": "Send reset link",
+            "rememberPassword": "Remember your password?",
+            "signIn": "Sign in"
+        }
     },
     "Navbar": {
         "howItWorks": "How it works",
@@ -194,15 +208,14 @@
         "verified": "Verified",
         "contactForPricing": "Contact for pricing",
         "startingFrom": "Starting from",
-        "viewProfile": "View Profile",
+        "viewProfile": "View profile",
         "moreServices": "+{count} more services",
         "moreService": "+{count} more service",
         "badge": "Featured professionals",
-        "title": "Meet highly rated experts.",
-        "subtitle": "These professionals have been vetted and reviewed by clients just like you.",
-        "emptyTitle": "Our top-rated professionals will appear here soon.",
-        "emptySubtitle": "Start exploring by searching for the service you need or browse by category.",
-        "viewAll": "View All Professionals"
+        "title": "Meet some of the experts clients are hiring on SkillFind.",
+        "subtitle": "These are just a few examples. You'll see even more matching professionals once you post a request or search by category.",
+        "reviews": "reviews",
+        "online": "Online available"
     },
     "DualCTA": {
         "clientBadge": "For Clients",
@@ -356,18 +369,26 @@
             "profileDesc": "Keep your bio, services, and portfolio up to date.",
             "profileCta": "Edit profile"
         },
-        "Steps": {
-            "profile": "Complete your profile to win more jobs",
-            "services": "Add services to see matching requests",
-            "matching": "{count} new matching requests today - respond quickly!",
-            "offers": "{count} pending offers awaiting client decision",
-            "jobs": "{count} active jobs need your attention",
-            "default": "Browse matching requests and send offers to get hired"
-        },
         "Highlights": {
-            "profile": "Profile completion",
-            "wallet": "Wallet balance",
-            "pending": "Pending offers"
+            "profile": "Profile Complete",
+            "wallet": "Wallet Balance",
+            "pending": "Pending Offers",
+            "allDone": "All done!",
+            "topUp": "Top up recommended",
+            "goodBalance": "Good balance",
+            "awaitingResponse": "Awaiting response",
+            "sendOffers": "Send more offers"
+        },
+        "Metrics": {
+            "responseTimeValue": "< 2 hours"
+        },
+        "Steps": {
+            "profile": "Complete your profile information",
+            "services": "Add your first service category",
+            "matching": "Respond to {count} matching request | Respond to {count} matching requests",
+            "offers": "Follow up on {count} pending offer | Follow up on {count} pending offers",
+            "jobs": "Complete {count} active job | Complete {count} active jobs",
+            "default": "Browse more requests"
         }
     },
     "Layouts": {
@@ -442,8 +463,6 @@
         },
         "activity": {
             "requestCreated": "Request created",
-            "offerReceived": "Offer received",
-            "offerReceivedTitle": "{count} offer received | {count} offers received",
             "offerInterest": "Professionals are interested in: {title}"
         }
     },
@@ -480,6 +499,28 @@
             "title": "No professionals found",
             "desc": "Try adjusting your search filters or browse all categories to find the right professional for your needs.",
             "action": "Clear filters"
+        },
+        "placeholder": "Find a professional...",
+        "button": "Find",
+        "legal": "Clients don't pay any fees. Professionals pay only when you view their profile."
+    },
+    "SuggestedSkills": {
+        "badge": "Ideas to get started",
+        "title": "Not sure what to search for?",
+        "subtitle": "Here are some common things people use SkillFind for. Tap a skill to explore professionals in that area.",
+        "skills": {
+            "mathExam": "Math & exam prep",
+            "languageTutoring": "Language tutoring",
+            "careerCoaching": "CV & career coaching",
+            "frontendDebug": "Frontend bug fixing",
+            "brandDesign": "Logo & brand design",
+            "fitnessNutrition": "Fitness & nutrition",
+            "mentalWellbeing": "Mental wellbeing support",
+            "homeCleaning": "Home cleaning",
+            "movingHelp": "Moving & packing help",
+            "resumeReview": "Resume & LinkedIn review",
+            "websiteTroubleshoot": "Website troubleshooting",
+            "socialMedia": "Social media support"
         }
     },
     "PublicProfile": {

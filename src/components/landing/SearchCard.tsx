@@ -6,9 +6,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 
+import { useTranslations } from 'next-intl';
+
 export function SearchCard({ className = "" }: { className?: string }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
+  const t = useTranslations('Search');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ export function SearchCard({ className = "" }: { className?: string }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Find a professional..."
+            placeholder={t('placeholder')}
             className="w-full h-12 rounded-xl border border-[#E5E7EB] bg-white pl-12 pr-4 text-base text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/20 transition-all"
           />
         </div>
@@ -37,12 +40,12 @@ export function SearchCard({ className = "" }: { className?: string }) {
           type="submit"
           className="h-12 px-8 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold rounded-xl shrink-0"
         >
-          Find
+          {t('button')}
         </Button>
       </form>
 
       <p className="mt-3 text-xs text-[#7C7373]">
-        Clients don&apos;t pay any fees. Professionals pay only when you view their profile.
+        {t('legal')}
       </p>
     </div>
   );

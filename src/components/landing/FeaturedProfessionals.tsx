@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Link } from '@/i18n/routing';
 import { Avatar } from "@/components/ui/Avatar";
+import { useTranslations } from 'next-intl';
 
 type Professional = {
   id: string;
@@ -82,8 +83,8 @@ const FEATURED_PROFESSIONALS: Professional[] = [
 
 
 
-function ProfessionalCard(pro: Professional) {
-  const { id, name, role, location, isOnline, rating, reviews, priceFrom } =
+function ProfessionalCard(pro: Professional & { t: any }) {
+  const { id, name, role, location, isOnline, rating, reviews, priceFrom, t } =
     pro;
 
   return (
@@ -104,14 +105,14 @@ function ProfessionalCard(pro: Professional) {
       <div className="flex items-center gap-2 text-xs text-[#7C7373]">
         <span className="text-[#F59E0B]">★</span>
         <span className="font-semibold text-[#333333]">{rating.toFixed(1)}</span>
-        <span>({reviews} reviews)</span>
+        <span>({reviews} {t('reviews')})</span>
       </div>
 
       <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#7C7373]">
         <span className="rounded-full bg-[#F3F4F6] px-2 py-0.5">{location}</span>
         {isOnline && (
           <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] text-[#166534]">
-            Online available
+            {t('online')}
           </span>
         )}
       </div>
@@ -121,7 +122,7 @@ function ProfessionalCard(pro: Professional) {
       <div className="mt-1">
         <Link href={`/professionals/${id}`}>
           <Button className="w-full justify-center py-2.5 text-xs">
-            View profile
+            {t('viewProfile')}
           </Button>
         </Link>
       </div>
@@ -130,6 +131,8 @@ function ProfessionalCard(pro: Professional) {
 }
 
 export function FeaturedProfessionals() {
+  const t = useTranslations('FeaturedProfessionals');
+
   return (
     <section
       id="top-professionals"
@@ -138,27 +141,26 @@ export function FeaturedProfessionals() {
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C7373]">
-            Featured professionals
+            {t('badge')}
           </p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#333333] md:text-3xl">
-            Meet some of the experts clients are hiring on SkillFind.
+            {t('title')}
           </h2>
           <p className="mt-3 text-sm text-[#7C7373] md:text-base">
-            These are just a few examples. You&apos;ll see even more matching
-            professionals once you post a request or search by category.
+            {t('subtitle')}
           </p>
         </div>
 
         <div className="mt-8">
           <div className="flex gap-4 overflow-x-auto pb-2 sm:hidden">
             {FEATURED_PROFESSIONALS.map((pro) => (
-              <ProfessionalCard key={pro.id} {...pro} />
+              <ProfessionalCard key={pro.id} {...pro} t={t} />
             ))}
           </div>
 
           <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {FEATURED_PROFESSIONALS.map((pro) => (
-              <ProfessionalCard key={pro.id} {...pro} />
+              <ProfessionalCard key={pro.id} {...pro} t={t} />
             ))}
           </div>
         </div>
