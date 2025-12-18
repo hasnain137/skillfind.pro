@@ -12,15 +12,17 @@ interface TrendData {
   label?: string;
 }
 
+type IconBadgeColor = 'blue' | 'green' | 'purple' | 'orange' | 'red' | 'gray';
+
 interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   label: string;
   value: string | number;
   helperText?: string;
   icon?: React.ReactNode;
+  iconColor?: IconBadgeColor;
   trend?: TrendData;
   animate?: boolean;
-  variant?: 'default' | 'gradient';
-  gradientColor?: 'blue' | 'green' | 'orange' | 'purple' | 'red';
+  variant?: 'default' | 'featured' | 'compact';
 }
 
 // Animated counter hook
@@ -61,33 +63,23 @@ function useAnimatedCounter(end: number, duration: number = 800, animate: boolea
   return count;
 }
 
-// Trend indicator styles using design tokens
+// Trend indicator styles
 const TREND_STYLES: Record<TrendDirection, { bg: string; text: string; icon: string }> = {
   up: {
-    bg: 'bg-success-light',
-    text: 'text-success-dark',
+    bg: 'bg-green-100',
+    text: 'text-green-700',
     icon: '↑',
   },
   down: {
-    bg: 'bg-error-light',
-    text: 'text-error-dark',
+    bg: 'bg-red-100',
+    text: 'text-red-700',
     icon: '↓',
   },
   neutral: {
-    bg: 'bg-[#F3F4F6]',
-    text: 'text-[#7C7373]',
+    bg: 'bg-gray-100',
+    text: 'text-gray-600',
     icon: '→',
   },
-};
-
-// Gradient backgrounds
-const GRADIENT_COLORS: Record<string, string> = {
-  blue: 'from-[#EFF6FF] to-[#DBEAFE] border-[#BFDBFE]',
-  green: 'from-[#F0FDF4] to-[#DCFCE7] border-[#BBF7D0]',
-  orange: 'from-[#FFF7ED] to-[#FFEDD5] border-[#FED7AA]',
-  purple: 'from-[#FAF5FF] to-[#F3E8FF] border-[#E9D5FF]',
-  red: 'from-[#FEF2F2] to-[#FEE2E2] border-[#FECACA]',
-  default: '', // Handle default properly
 };
 
 export function StatCard({
@@ -95,10 +87,10 @@ export function StatCard({
   value,
   helperText,
   icon,
+  iconColor = 'blue',
   trend,
   animate = true,
   variant = 'default',
-  gradientColor,
   className = "",
   ...props
 }: StatCardProps) {
@@ -106,63 +98,82 @@ export function StatCard({
   const isNumeric = !isNaN(numericValue) && typeof value === 'number';
   const displayValue = isNumeric ? useAnimatedCounter(numericValue, 800, animate) : value;
 
-  const cardClass = variant === 'gradient' && gradientColor
-    ? `bg-gradient-to-br ${GRADIENT_COLORS[gradientColor]}`
-    : '';
+  const isFeatured = variant === 'featured';
+  const isCompact = variant === 'compact';
+
+  // Card variant classes
+  const cardClasses = isFeatured
+    ? 'card-featured rounded-2xl'
+    : 'glass-card hover:shadow-glass-hover hover:scale-[1.01] rounded-2xl';
+
+  // Padding based on variant
+  const paddingClass = isCompact ? 'p-4' : isFeatured ? 'p-6' : 'p-5';
+
+  // Value size
+  const valueClass = isFeatured
+    ? 'text-stat-value text-stat-value-lg'
+    : isCompact
+      ? 'text-xl font-bold text-[#111827]'
+      : 'text-stat-value';
 
   return (
     <Card
       level={1}
       className={`
-        glass-card hover:shadow-glass-hover transition-all duration-300
-        hover:scale-[1.02] ${cardClass} ${className}
+        ${cardClasses} transition-all duration-300 ${className}
       `.trim().replace(/\s+/g, ' ')}
+      padding="none"
       {...props}
     >
-      <CardContent>
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
+      <div className={paddingClass}>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
             {/* Label */}
-            <p className="text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">
+            <p className={`text-stat-label ${isFeatured ? 'text-white/80' : ''}`}>
               {label}
             </p>
 
             {/* Value */}
-            <p className="mt-1.5 text-2xl font-bold text-[#1F2937] tabular-nums tracking-tight">
+            <p className={`mt-2 tabular-nums ${valueClass}`}>
               {displayValue}
             </p>
 
             {/* Trend Indicator */}
             {trend && (
-              <div className="mt-2.5 flex items-center gap-1.5">
+              <div className="mt-3 flex items-center gap-2">
                 <span className={`
-                    inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[10px] font-bold
-                    ${TREND_STYLES[trend.direction].bg} ${TREND_STYLES[trend.direction].text}
+                  inline-flex items-center gap-0.5 px-2 py-1 rounded-lg text-xs font-semibold
+                  ${TREND_STYLES[trend.direction].bg} ${TREND_STYLES[trend.direction].text}
                 `}>
                   {TREND_STYLES[trend.direction].icon} {Math.abs(trend.value)}%
                 </span>
                 {trend.label && (
-                  <span className="text-[10px] text-[#6B7280]">{trend.label}</span>
+                  <span className={`text-xs ${isFeatured ? 'text-white/70' : 'text-gray-500'}`}>
+                    {trend.label}
+                  </span>
                 )}
               </div>
             )}
 
             {/* Helper Text */}
             {helperText && !trend && (
-              <p className="mt-1.5 text-[11px] text-[#6B7280]">{helperText}</p>
+              <p className={`mt-2 text-helper ${isFeatured ? 'text-white/70' : ''}`}>
+                {helperText}
+              </p>
             )}
           </div>
 
-          {/* Icon with gradient background */}
+          {/* Icon Badge */}
           {icon && (
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] text-lg shrink-0 shadow-sm">
+            <div className={`icon-badge ${isCompact ? 'icon-badge-sm' : ''} icon-badge-${iconColor}`}>
               {icon}
             </div>
           )}
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }
+
 
 

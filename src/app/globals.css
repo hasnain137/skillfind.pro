@@ -203,6 +203,124 @@
     animation-delay: 0.25s;
   }
 
+  /* ======================================== */
+  /* Icon Badges (Gradient Background)        */
+  /* ======================================== */
+  .icon-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .icon-badge-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .icon-badge-lg {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 22px;
+  }
+
+  .icon-badge-blue {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+
+  .icon-badge-green {
+    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  }
+
+  .icon-badge-purple {
+    background: linear-gradient(135deg, #A855F7 0%, #9333EA 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.25);
+  }
+
+  .icon-badge-orange {
+    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  }
+
+  .icon-badge-red {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+  }
+
+  .icon-badge-gray {
+    background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(75, 85, 99, 0.2);
+  }
+
+  /* ======================================== */
+  /* Typography Scale                         */
+  /* ======================================== */
+  .text-stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #111827;
+  }
+
+  .text-stat-value-lg {
+    font-size: 32px;
+  }
+
+  .text-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6B7280;
+  }
+
+  .text-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+  }
+
+  .text-helper {
+    font-size: 13px;
+    color: #9CA3AF;
+  }
+
+  /* ======================================== */
+  /* Featured Card (Gradient Background)      */
+  /* ======================================== */
+  .card-featured {
+    background: linear-gradient(135deg, #2563EB 0%, #1D4FD8 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+  }
+
+  .card-featured .text-stat-value,
+  .card-featured .text-stat-label,
+  .card-featured .text-card-title {
+    color: white;
+  }
+
+  .card-featured .text-stat-label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {
 
