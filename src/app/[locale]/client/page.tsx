@@ -6,7 +6,7 @@ import { ActionCard } from "@/components/ui/ActionCard";
 import { Card } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StatCard } from "@/components/ui/StatCard";
+import { ClientStats } from "@/components/dashboard/ClientStats";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
@@ -148,7 +148,8 @@ export default async function ClientDashboardPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Hero Section */}
       <DashboardHero
         eyebrow={t('eyebrow')}
         title={t('welcome', { name: firstName })}
@@ -157,59 +158,72 @@ export default async function ClientDashboardPage() {
         highlights={heroHighlights}
       />
 
-      {/* Profile Completion Banner */}
-      <ProfileCompletionBanner
-        profileCompletion={completion}
-        userRole="CLIENT"
-        missingSteps={missingSteps}
+      {/* Stats Overview */}
+      <ClientStats
+        data={{
+          openRequests,
+          totalOffers,
+          completedRequests
+        }}
       />
 
-      <section className="grid gap-3 sm:grid-cols-3" data-tour="stats">
-        {stats.map((stat) => (
-          <StatCard
-            key={stat.label}
-            label={stat.label}
-            value={stat.value}
-            icon={stat.icon}
-          />
-        ))}
-      </section>
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Quick Actions */}
-        <Card level={2} padding="lg" className="space-y-4" data-tour="quick-actions">
-          <SectionHeading
-            variant="section"
-            title={t('sections.quickActions')}
-            description={t('sections.quickActionsDesc')}
-          />
-          <div className="space-y-3">
-            {QUICK_ACTIONS.map((action) => (
-              <ActionCard key={action.href} {...action} />
-            ))}
+        {/* Left Column (Main Content) */}
+        <div className="lg:col-span-2 space-y-8">
+
+          {/* Recent Activity */}
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('sections.recentActivity')}
+              description={t('sections.recentActivityDesc')}
+            />
+            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+              <div className="p-6">
+                <ActivityFeed activities={activities} />
+              </div>
+            </Card>
           </div>
-        </Card>
 
-        {/* Activity Feed */}
-        <Card level={1} padding="lg" className="space-y-4" data-tour="activity">
-          <SectionHeading
-            variant="section"
-            title={t('sections.recentActivity')}
-            description={t('sections.recentActivityDesc')}
+          {/* Request Timeline / Active Requests */}
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('sections.yourRequests')}
+              description={t('sections.yourRequestsDesc')}
+            />
+            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+              <div className="p-6">
+                <RequestTimeline requests={timelineRequests} />
+              </div>
+            </Card>
+          </div>
+        </div>
+
+        {/* Right Column (Sidebar) */}
+        <div className="space-y-8">
+
+          {/* Profile Completion */}
+          <ProfileCompletionBanner
+            profileCompletion={completion}
+            userRole="CLIENT"
+            missingSteps={missingSteps}
           />
-          <ActivityFeed activities={activities} />
-        </Card>
-      </div>
 
-      {/* Request Timeline */}
-      <Card level={1} padding="lg" className="space-y-4">
-        <SectionHeading
-          variant="section"
-          title={t('sections.yourRequests')}
-          description={t('sections.yourRequestsDesc')}
-        />
-        <RequestTimeline requests={timelineRequests} />
-      </Card>
+          {/* Quick Actions */}
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('sections.quickActions')}
+              description={t('sections.quickActionsDesc')}
+            />
+            <div className="grid gap-3">
+              {QUICK_ACTIONS.map((action) => (
+                <ActionCard key={action.href} {...action} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
       <WelcomeModal userRole="CLIENT" firstName={firstName} />
       <ClientDashboardTour />
