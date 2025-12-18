@@ -119,17 +119,25 @@
   /* Premium Glass Card (iOS 26 Liquid Glass) */
   /* ======================================== */
   .glass-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.85);
+    /* Slightly more opaque for better readability */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.02),
+      0 2px 4px -1px rgba(0, 0, 0, 0.02),
+      0 0 0 1px rgba(0, 0, 0, 0.02);
+    /* Subtle internal stroke */
     transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
   .glass-card:hover {
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 32px -4px rgba(0, 0, 0, 0.08),
+      0 4px 8px -2px rgba(0, 0, 0, 0.04);
+    border-color: rgba(255, 255, 255, 0.8);
   }
 
   /* Glass Sidebar */
@@ -271,55 +279,67 @@
   /* Typography Scale                         */
   /* ======================================== */
   .text-stat-value {
-    font-size: 28px;
+    font-size: 30px;
+    /* Increased slightly */
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: #111827;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    /* Tighter tracking */
+    color: #18181B;
+    /* Zinc-900 */
   }
 
   .text-stat-value-lg {
-    font-size: 32px;
+    font-size: 36px;
+    letter-spacing: -0.04em;
   }
 
   .text-stat-label {
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #6B7280;
+    letter-spacing: 0.06em;
+    /* Wider tracking for caps */
+    color: #71717A;
+    /* Zinc-500 */
   }
 
   .text-card-title {
-    font-size: 14px;
+    font-size: 15px;
+    /* Slightly larger */
     font-weight: 600;
-    color: #1F2937;
+    letter-spacing: -0.01em;
+    color: #27272A;
+    /* Zinc-800 */
   }
 
   .text-helper {
     font-size: 13px;
-    color: #9CA3AF;
+    color: #A1A1AA;
+    /* Zinc-400 */
+    font-weight: 500;
   }
 
   /* ======================================== */
   /* Featured Card (Gradient Background)      */
   /* ======================================== */
   .card-featured {
-    background: linear-gradient(135deg, #2563EB 0%, #1D4FD8 100%);
+    background: linear-gradient(135deg, #2563EB 0%, #172554 100%);
+    /* Deeper blue gradient */
     color: white;
-    border: none;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.4);
   }
 
   .card-featured .text-stat-value,
-  .card-featured .text-stat-label,
   .card-featured .text-card-title {
     color: white;
   }
 
   .card-featured .text-stat-label {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
   }
+
 
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {

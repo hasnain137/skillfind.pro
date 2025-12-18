@@ -26,19 +26,23 @@ export function DashboardHero({
   highlights = [],
 }: DashboardHeroProps) {
   return (
-    <div className="rounded-3xl bg-gradient-to-r from-[#EFF6FF] via-white to-white p-6 shadow-soft ring-1 ring-[#DBEAFE]/50">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#7C7373]">
-            {eyebrow}
+    <div className="rounded-3xl bg-gradient-to-r from-[#EFF6FF] to-white p-8 shadow-sm border border-[#E5E7EB] text-[#1F2937] relative overflow-hidden">
+
+      {/* Abstract Background Shapes - lighter for this variant */}
+      <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        <div className="space-y-2 max-w-2xl">
+          <p className="text-xs font-bold uppercase tracking-widest text-[#3B4D9D]">
+            Overview
           </p>
-          <h1 className="text-2xl font-semibold text-[#333333]">{title}</h1>
-          <p className="text-sm text-[#7C7373]">{description}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-[#111827]">{title}</h1>
+          <p className="text-[#6B7280] text-lg leading-relaxed max-w-lg">{description}</p>
         </div>
         {action ? (
           <Link
             href={action.href}
-            className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-[#1d4ed8]"
+            className="inline-flex items-center justify-center rounded-xl bg-[#3B4D9D] text-white px-6 py-3 text-sm font-bold shadow-lg transition transform hover:scale-105 hover:bg-[#2a3a7a]"
           >
             <span className="leading-none">{action.label}</span>
           </Link>
@@ -46,18 +50,21 @@ export function DashboardHero({
       </div>
 
       {highlights.length ? (
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-3 relative z-10">
           {highlights.map((item) => (
             <div
               key={item.label}
-              className="rounded-2xl bg-white/70 p-4 shadow-soft-xs ring-1 ring-black/[0.02] backdrop-blur"
+              className="rounded-2xl bg-white/60 backdrop-blur-md p-5 shadow-sm border border-white/40 hover:scale-105 transition-all duration-300"
             >
-              <p className="text-[11px] text-[#7C7373]">{item.label}</p>
-              <p className="text-xl font-semibold text-[#333333]">
-                {item.value}
-              </p>
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">{item.label}</p>
+              <div className="flex items-end gap-2">
+                <p className="text-2xl font-bold text-gray-900">
+                  {item.value}
+                </p>
+              </div>
+
               {item.helper ? (
-                <p className="text-[11px] text-[#7C7373]">{item.helper}</p>
+                <p className="text-xs font-medium text-gray-400 mt-2">{item.helper}</p>
               ) : null}
             </div>
           ))}

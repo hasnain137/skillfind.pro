@@ -53,28 +53,28 @@ export default async function ProOffersPage() {
       {/* Enhanced Stats */}
       {offers.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-4">
-          <Card level={2} className="text-center bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
-            <CardContent className="p-4">
-              <p className="text-2xl font-bold text-yellow-600">{pendingOffers.length}</p>
-              <p className="text-xs text-yellow-700 font-medium">{t('stats.pending')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-yellow-50 to-white border-yellow-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-yellow-600">{pendingOffers.length}</p>
+              <p className="text-[10px] text-yellow-700 font-medium uppercase tracking-wide">{t('stats.pending')}</p>
             </CardContent>
           </Card>
-          <Card level={2} className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-            <CardContent className="p-4">
-              <p className="text-2xl font-bold text-green-600">{acceptedOffers.length}</p>
-              <p className="text-xs text-green-700 font-medium">{t('stats.accepted')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-green-50 to-white border-green-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-green-600">{acceptedOffers.length}</p>
+              <p className="text-[10px] text-green-700 font-medium uppercase tracking-wide">{t('stats.accepted')}</p>
             </CardContent>
           </Card>
-          <Card level={2} className="text-center bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-            <CardContent className="p-4">
-              <p className="text-2xl font-bold text-purple-600">{clickedOffers.length}</p>
-              <p className="text-xs text-purple-700 font-medium">{t('stats.profileViewed')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-purple-50 to-white border-purple-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-purple-600">{clickedOffers.length}</p>
+              <p className="text-[10px] text-purple-700 font-medium uppercase tracking-wide">{t('stats.profileViewed')}</p>
             </CardContent>
           </Card>
-          <Card level={2} className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-            <CardContent className="p-4">
-              <p className="text-2xl font-bold text-blue-600">{successRate}%</p>
-              <p className="text-xs text-blue-700 font-medium">{t('stats.successRate')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-blue-600">{successRate}%</p>
+              <p className="text-[10px] text-blue-700 font-medium uppercase tracking-wide">{t('stats.successRate')}</p>
             </CardContent>
           </Card>
         </div>

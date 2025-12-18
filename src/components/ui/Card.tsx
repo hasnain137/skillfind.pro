@@ -10,21 +10,21 @@ import { fadeIn } from "@/lib/motion-variants"
 // ============================================
 
 const cardVariants = cva(
-  "rounded-2xl transition-all duration-200 ease-out",
+  "rounded-3xl transition-all duration-300 ease-out", // Updated to rounded-3xl and smoother transition
   {
     variants: {
       level: {
         0: "bg-transparent border-none shadow-none", // Page background blend
-        1: "bg-white border border-zinc-200 shadow-soft bg-noise", // Standard Container
-        2: "bg-zinc-50 border border-zinc-200", // Nested (Alternating)
-        3: "bg-zinc-100 border-none", // Deep nested
+        1: "bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg hover:shadow-xl hover:bg-white/80", // Glass Container
+        2: "bg-white/40 backdrop-blur-md border border-white/30", // Nested Glass
+        3: "bg-white/20 border-none", // Deep nested
       },
       interactive: {
-        true: "cursor-pointer hover:shadow-medium hover:border-zinc-300 active:scale-[0.995]",
+        true: "cursor-pointer hover:scale-[1.01] active:scale-[0.99]",
         false: "",
       },
       glass: {
-        true: "glass border-white/20 shadow-float",
+        true: "bg-white/60 backdrop-blur-2xl border-white/50 shadow-xl",
         false: "",
       },
     },

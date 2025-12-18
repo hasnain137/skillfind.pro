@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { prisma } from "@/lib/prisma";
 import { getProfessionalWithRelations } from "@/lib/get-professional";
 import Link from "next/link";
-import { Card } from "@/components/ui/Card";
+import { Card, CardContent } from "@/components/ui/Card";
 import { Badge, type BadgeVariant } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -79,21 +79,29 @@ export default async function ProJobsPage() {
 
       {/* Enhanced Stats */}
       <div className="grid gap-4 sm:grid-cols-4">
-        <Card padding="lg" className="text-center bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
-          <p className="text-2xl font-bold text-yellow-600">{pendingJobs.length}</p>
-          <p className="text-xs text-yellow-700 font-medium">{t('stats.ready')}</p>
+        <Card level={1} className="text-center bg-gradient-to-br from-yellow-50 to-white border-yellow-200" padding="md">
+          <CardContent className="p-3">
+            <p className="text-xl font-bold text-yellow-600">{pendingJobs.length}</p>
+            <p className="text-[10px] text-yellow-700 font-medium uppercase tracking-wide">{t('stats.ready')}</p>
+          </CardContent>
         </Card>
-        <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-          <p className="text-2xl font-bold text-blue-600">{inProgressJobs.length}</p>
-          <p className="text-xs text-blue-700 font-medium">{t('stats.inProgress')}</p>
+        <Card level={1} className="text-center bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="md">
+          <CardContent className="p-3">
+            <p className="text-xl font-bold text-blue-600">{inProgressJobs.length}</p>
+            <p className="text-[10px] text-blue-700 font-medium uppercase tracking-wide">{t('stats.inProgress')}</p>
+          </CardContent>
         </Card>
-        <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-          <p className="text-2xl font-bold text-green-600">{completedJobs.length}</p>
-          <p className="text-xs text-green-700 font-medium">{t('stats.completed')}</p>
+        <Card level={1} className="text-center bg-gradient-to-br from-green-50 to-white border-green-200" padding="md">
+          <CardContent className="p-3">
+            <p className="text-xl font-bold text-green-600">{completedJobs.length}</p>
+            <p className="text-[10px] text-green-700 font-medium uppercase tracking-wide">{t('stats.completed')}</p>
+          </CardContent>
         </Card>
-        <Card padding="lg" className="text-center bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-          <p className="text-2xl font-bold text-purple-600">€{totalEarnings.toFixed(0)}</p>
-          <p className="text-xs text-purple-700 font-medium">{t('stats.earned')}</p>
+        <Card level={1} className="text-center bg-gradient-to-br from-purple-50 to-white border-purple-200" padding="md">
+          <CardContent className="p-3">
+            <p className="text-xl font-bold text-purple-600">€{totalEarnings.toFixed(0)}</p>
+            <p className="text-[10px] text-purple-700 font-medium uppercase tracking-wide">{t('stats.earned')}</p>
+          </CardContent>
         </Card>
       </div>
 
@@ -109,48 +117,50 @@ export default async function ProJobsPage() {
 
             return (
               <Link key={job.id} href={`/pro/jobs/${job.id}`}>
-                <Card className="group relative hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer" padding="lg">
-                  {isReadyToStart && (
-                    <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                      ✅ {t('card.ready')}
-                    </div>
-                  )}
+                <Card interactive level={1} className="group hover:border-primary-600 transition-all duration-200">
+                  <CardContent className="p-4">
+                    {isReadyToStart && (
+                      <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
+                        ✅ {t('card.ready')}
+                      </div>
+                    )}
 
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors truncate">
-                          {job.request.title}
-                        </h3>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
-                          <span className="flex items-center gap-1">
-                            📂 {job.request.category.nameEn}
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-bold text-[#333333] group-hover:text-[#2563EB] transition-colors truncate">
+                            {job.request.title}
+                          </h3>
+                          <div className="flex items-center gap-2 mt-1 text-xs text-[#7C7373]">
+                            <span className="flex items-center gap-1">
+                              📂 {job.request.category.nameEn}
+                            </span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1">
+                              👤 {job.request.client.user.firstName}
+                            </span>
+                          </div>
+                        </div>
+                        <Badge variant={statusConfig}>
+                          {STATUS_LABEL[job.status as JobStatus]}
+                        </Badge>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
+                        <div className="flex items-center gap-4 text-xs">
+                          <span className="flex items-center gap-1 font-semibold text-green-600">
+                            💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
                           </span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
-                            👤 {job.request.client.user.firstName}
+                          <span className="flex items-center gap-1 text-[#7C7373]">
+                            📅 {new Date(job.createdAt).toLocaleDateString()}
                           </span>
                         </div>
-                      </div>
-                      <Badge variant={statusConfig}>
-                        {STATUS_LABEL[job.status as JobStatus]}
-                      </Badge>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
-                      <div className="flex items-center gap-4 text-xs">
-                        <span className="flex items-center gap-1 font-semibold text-green-600">
-                          💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
-                        </span>
-                        <span className="flex items-center gap-1 text-[#7C7373]">
-                          📅 {new Date(job.createdAt).toLocaleDateString()}
+                        <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
+                          {t('card.viewDetails')} →
                         </span>
                       </div>
-                      <span className="text-xs font-semibold text-[#2563EB] group-hover:translate-x-1 transition-transform">
-                        {t('card.viewDetails')} →
-                      </span>
                     </div>
-                  </div>
+                  </CardContent>
                 </Card>
               </Link>
             );
@@ -166,39 +176,41 @@ export default async function ProJobsPage() {
           </h2>
           {completedJobs.map((job: any) => (
             <Link key={job.id} href={`/pro/jobs/${job.id}`}>
-              <Card className="group hover:border-green-500 hover:shadow-md transition-all duration-200 cursor-pointer bg-gradient-to-br from-green-50 to-white border-green-200" padding="lg">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-base font-bold text-[#333333] group-hover:text-green-600 transition-colors truncate">
-                        {job.request.title}
-                      </h3>
-                      {job.review && (
-                        <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
-                          ✓ {t('card.reviewed')}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3 text-xs text-[#7C7373]">
-                      <span className="flex items-center gap-1">
-                        ✅ {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1 font-semibold text-green-600">
-                        💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
-                      </span>
-                      {job.review && (
-                        <>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
-                            ⭐ {job.review.rating}/5
+              <Card interactive level={1} className="group hover:border-green-500 transition-all duration-200">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-base font-bold text-[#333333] group-hover:text-green-600 transition-colors truncate">
+                          {job.request.title}
+                        </h3>
+                        {job.review && (
+                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
+                            ✓ {t('card.reviewed')}
                           </span>
-                        </>
-                      )}
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-[#7C7373]">
+                        <span className="flex items-center gap-1">
+                          ✅ {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1 font-semibold text-green-600">
+                          💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
+                        </span>
+                        {job.review && (
+                          <>
+                            <span>•</span>
+                            <span className="flex items-center gap-1">
+                              ⭐ {job.review.rating}/5
+                            </span>
+                          </>
+                        )}
+                      </div>
                     </div>
+                    <Badge variant="success">{t('status.completed')}</Badge>
                   </div>
-                  <Badge variant="success">{t('status.completed')}</Badge>
-                </div>
+                </CardContent>
               </Card>
             </Link>
           ))}

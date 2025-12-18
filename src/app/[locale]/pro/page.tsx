@@ -143,10 +143,42 @@ export default async function ProDashboardPage() {
     }
   });
 
+  const hour = new Date().getHours();
+  const timeOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+
   const thisMonth = new Date();
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
+
+  // Calculate Chart Data (Last 6 Months)
+  const chartData = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date();
+    d.setMonth(d.getMonth() - i);
+    const monthName = d.toLocaleString('default', { month: 'short' });
+    const monthStart = new Date(d.getFullYear(), d.getMonth(), 1);
+    const monthEnd = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+
+    const monthlyTotal = completedJobs
+      .filter(job => job.completedAt && job.completedAt >= monthStart && job.completedAt <= monthEnd)
+      .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+
+    chartData.push({ name: monthName, value: monthlyTotal });
+  }
+
+  const totalEarnings = completedJobs.reduce((sum, job) => {
+    const amount = job.request.budgetMax || job.request.budgetMin || 0;
+    return sum + amount;
+  }, 0);
+
+  const thisMonthEarnings = completedJobs
+    .filter(job => job.completedAt && job.completedAt >= new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
+    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
+
+  const lastMonthEarnings = completedJobs
+    .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
+    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
 
   const highlights = [
     {
@@ -166,47 +198,12 @@ export default async function ProDashboardPage() {
     },
   ];
 
-  const nextSteps = [];
-  if (profileCompletion < 100) {
-    nextSteps.push(t('Steps.profile'));
-  }
-  if (professional.services.length === 0) {
-    nextSteps.push(t('Steps.services'));
-  }
-  if (matchingRequestsToday > 0) {
-    nextSteps.push(t('Steps.matching', { count: matchingRequestsToday }));
-  }
-  if (professional.offers.length > 0) {
-    nextSteps.push(t('Steps.offers', { count: professional.offers.length }));
-  }
-  if (professional.jobs.length > 0) {
-    nextSteps.push(t('Steps.jobs', { count: professional.jobs.length }));
-  }
-  if (nextSteps.length === 0) {
-    nextSteps.push(t('Steps.default'));
-  }
 
-  const hour = new Date().getHours();
-  const timeOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
 
   const profileViews = 0; // Not tracked in schema yet
   const acceptanceRate = allOffers.length > 0
     ? Math.round((allOffers.filter(o => o.status === 'ACCEPTED').length / allOffers.length) * 100)
     : 0;
-
-
-  const totalEarnings = completedJobs.reduce((sum, job) => {
-    const amount = job.request.budgetMax || job.request.budgetMin || 0;
-    return sum + amount;
-  }, 0);
-
-  const thisMonthEarnings = completedJobs
-    .filter(job => job.completedAt && job.completedAt >= new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
-    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
-
-  const lastMonthEarnings = completedJobs
-    .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
-    .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
 
   const earningsData = {
     totalEarnings,
@@ -214,6 +211,7 @@ export default async function ProDashboardPage() {
     lastMonth: lastMonthEarnings,
     pendingPayouts: balanceEuros,
     completedJobs: completedJobs.length,
+    chartData, // Pass the real data
   };
 
   const metricsData = {
@@ -234,6 +232,28 @@ export default async function ProDashboardPage() {
     href: key === 'browse' ? '/pro/requests' : key === 'offers' ? '/pro/offers' : key === 'jobs' ? '/pro/jobs' : '/pro/profile',
     cta: t(`Actions.${key}Cta`)
   }));
+
+  const nextSteps = [];
+  if (profileCompletion < 100) {
+    nextSteps.push({ label: t('Steps.profile'), href: '/pro/profile' });
+  }
+  if (professional.services.length === 0) {
+    nextSteps.push({ label: t('Steps.services'), href: '/pro/profile' });
+  }
+  if (matchingRequestsToday > 0) {
+    nextSteps.push({ label: t('Steps.matching', { count: matchingRequestsToday }), href: '/pro/requests' });
+  }
+  if (professional.offers.length > 0) {
+    nextSteps.push({ label: t('Steps.offers', { count: professional.offers.length }), href: '/pro/offers' });
+  }
+  if (professional.jobs.length > 0) {
+    nextSteps.push({ label: t('Steps.jobs', { count: professional.jobs.length }), href: '/pro/jobs' });
+  }
+  if (nextSteps.length === 0) {
+    nextSteps.push({ label: t('Steps.default'), href: '/pro/requests' });
+  }
+
+
 
   return (
     <div className="space-y-6">
@@ -259,94 +279,109 @@ export default async function ProDashboardPage() {
         missingSteps={missingSteps}
       />
 
-      {/* Main Grid */}
-      <div className="grid gap-6 lg:grid-cols-3" data-tour="earnings">
-        {/* Earnings */}
-        <div className="lg:col-span-1 space-y-6">
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* Left Column - Main Content (Span 2) */}
+        <div className="lg:col-span-2 space-y-8">
+
+          {/* Performance Metrics */}
+          <Card level={1} className="border border-white/40 shadow-lg">
+            <CardHeader className="pb-2 border-b border-gray-100/50">
+              <div className="px-1">
+                <SectionHeading
+                  variant="section"
+                  title={t('metricsTitle')}
+                  description={t('metricsDesc')}
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6 flex flex-col">
+              <PerformanceMetrics data={metricsData} />
+            </CardContent>
+          </Card>
+
+          {/* Matching Requests */}
+          <Card level={1} className="border border-white/40 shadow-lg">
+            <CardHeader className="pb-2 border-b border-gray-100/50">
+              <div className="flex flex-row items-center justify-between px-1">
+                <SectionHeading
+                  variant="section"
+                  title={t('requestsTitle')}
+                  description={t('requestsDesc')}
+                />
+                <Link
+                  href="/pro/requests"
+                  className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors tracking-wide uppercase"
+                >
+                  {t('viewAll')} →
+                </Link>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6 flex flex-col">
+              <MatchingRequests requests={matchingRequests as any} />
+            </CardContent>
+          </Card>
+
+          {/* Quick Actions */}
+          <div className="space-y-4">
+            <div className="px-1">
+              <SectionHeading
+                variant="section"
+                title={t('quickActionsTitle')}
+                description={t('quickActionsDesc')}
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {quickActions.map((action) => (
+                <ActionCard key={action.href} {...action} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Sidebar (Span 1) */}
+        <div className="space-y-6">
+          {/* Earnings (Top Priority for Pro) */}
+          <EarningsChart data={earningsData} />
+
+          {/* Status Card */}
           <StatusCard
             status={professional.status}
             isVerified={professional.isVerified}
             verificationMethod={professional.verificationMethod}
           />
-          <EarningsChart data={earningsData} />
-        </div>
 
-        {/* Performance Metrics */}
-        <div className="lg:col-span-2" data-tour="stats">
-          <Card level={1} className="space-y-4 h-full">
-            <CardHeader>
-              <SectionHeading
-                variant="section"
-                title={t('metricsTitle')}
-                description={t('metricsDesc')}
-              />
+          {/* Next Steps */}
+          <Card level={1} className="border border-white/40 shadow-lg">
+            <CardHeader className="pb-2 border-b border-gray-100/50">
+              <div className="px-1">
+                <SectionHeading
+                  variant="section"
+                  title={t('nextStepsTitle')}
+                  description={t('nextStepsDesc')}
+                />
+              </div>
             </CardHeader>
-            <CardContent>
-              <PerformanceMetrics data={metricsData} />
+            <CardContent className="pt-6 flex flex-col">
+              <ul className="space-y-3">
+                {nextSteps.map((step, index) => (
+                  <li key={index}>
+                    <Link href={step.href} className="glass-card flex items-start gap-4 p-4 rounded-xl hover:bg-white/90 transition-colors group cursor-pointer block">
+                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white shadow-md ring-2 ring-primary-100 group-hover:scale-110 transition-transform">
+                        {index + 1}
+                      </div>
+                      <span className="text-sm font-medium text-slate-700 pt-0.5 leading-snug group-hover:text-primary-700 transition-colors">
+                        {step.label}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </div>
       </div>
 
-      {/* Matching Requests */}
-      <Card level={1} className="space-y-4" data-tour="matching-requests">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <SectionHeading
-            variant="section"
-            title={t('requestsTitle')}
-            description={t('requestsDesc')}
-          />
-          <Link
-            href="/pro/requests"
-            className="text-xs font-semibold text-[#2563EB] hover:text-[#1d4ed8] transition-colors"
-          >
-            {t('viewAll')} →
-          </Link>
-        </CardHeader>
-        <CardContent>
-          <MatchingRequests requests={matchingRequests as any} />
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions & Next Steps */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card level={1} className="space-y-4">
-          <CardHeader>
-            <SectionHeading
-              variant="section"
-              title={t('quickActionsTitle')}
-              description={t('quickActionsDesc')}
-            />
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {quickActions.map((action) => (
-              <ActionCard key={action.href} {...action} />
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card level={1} className="space-y-4">
-          <CardHeader>
-            <SectionHeading
-              variant="section"
-              title={t('nextStepsTitle')}
-              description={t('nextStepsDesc')}
-            />
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {nextSteps.map((step, index) => (
-                <li key={index} className="flex items-start gap-3 rounded-lg bg-[#FAFAFA] p-3 shadow-sm border border-[#E5E7EB]">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#2563EB] text-xs font-bold text-white">
-                    {index + 1}
-                  </div>
-                  <span className="text-sm text-[#333333]">{step}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
       <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />
       <ProDashboardTour />
     </div>

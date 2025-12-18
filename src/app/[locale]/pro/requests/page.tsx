@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getProfessionalWithRelations } from "@/lib/get-professional";
-import { Card } from "@/components/ui/Card";
+import { Card, CardContent } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/StatusBanner";
@@ -100,21 +100,29 @@ export default async function ProRequestsPage() {
       {/* Stats Overview */}
       {requests.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-4">
-          <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-            <p className="text-2xl font-bold text-blue-600">{requests.length}</p>
-            <p className="text-xs text-blue-700 font-medium">{t('stats.matches')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-blue-600">{requests.length}</p>
+              <p className="text-[10px] text-blue-700 font-medium uppercase tracking-wide">{t('stats.matches')}</p>
+            </CardContent>
           </Card>
-          <Card padding="lg" className="text-center bg-gradient-to-br from-red-50 to-red-100 border-red-200">
-            <p className="text-2xl font-bold text-red-600">{newRequests.length}</p>
-            <p className="text-xs text-red-700 font-medium">{t('stats.new')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-red-50 to-white border-red-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-red-600">{newRequests.length}</p>
+              <p className="text-[10px] text-red-700 font-medium uppercase tracking-wide">{t('stats.new')}</p>
+            </CardContent>
           </Card>
-          <Card padding="lg" className="text-center bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
-            <p className="text-2xl font-bold text-orange-600">{urgentRequests.length}</p>
-            <p className="text-xs text-orange-700 font-medium">{t('stats.urgent')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-orange-50 to-white border-orange-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-orange-600">{urgentRequests.length}</p>
+              <p className="text-[10px] text-orange-700 font-medium uppercase tracking-wide">{t('stats.urgent')}</p>
+            </CardContent>
           </Card>
-          <Card padding="lg" className="text-center bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-            <p className="text-2xl font-bold text-green-600">{professional.services.length}</p>
-            <p className="text-xs text-green-700 font-medium">{t('stats.services')}</p>
+          <Card level={1} className="text-center bg-gradient-to-br from-green-50 to-white border-green-200" padding="md">
+            <CardContent className="p-3">
+              <p className="text-xl font-bold text-green-600">{professional.services.length}</p>
+              <p className="text-[10px] text-green-700 font-medium uppercase tracking-wide">{t('stats.services')}</p>
+            </CardContent>
           </Card>
         </div>
       )}

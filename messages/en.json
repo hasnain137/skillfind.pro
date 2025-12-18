@@ -285,7 +285,8 @@
             "daysAgo": "{count} days ago",
             "new": "🔥 NEW",
             "sendOffer": "Send your offer",
-            "remote": "Remote"
+            "remote": "Remote",
+            "viewAll": "View all"
         }
     },
     "CategoryDirectory": {
@@ -391,6 +392,66 @@
             "offers": "Follow up on {count} pending offer | Follow up on {count} pending offers",
             "jobs": "Complete {count} active job | Complete {count} active jobs",
             "default": "Browse more requests"
+        }
+    },
+    "ProProfile": {
+        "title": "Keep your professional profile updated",
+        "description": "Clients want to understand your expertise, services, and availability before sending work.",
+        "error": "An error occurred. Please try again.",
+        "success": "Profile updated successfully.",
+        "serviceError": "Failed to add service. Please try again.",
+        "serviceAdded": "Service added successfully.",
+        "serviceUpdated": "Service updated successfully.",
+        "deleteError": "Failed to delete service.",
+        "serviceDeleted": "Service deleted successfully.",
+        "completion": {
+            "title": "Profile Completion",
+            "desc": "Complete profiles get 3x more offers!",
+            "missing": "Complete these to reach 100%:"
+        },
+        "tabs": {
+            "info": "Information",
+            "services": "Services",
+            "verification": "Verification"
+        },
+        "info": {
+            "titleLabel": "Professional Title",
+            "titlePlaceholder": "e.g. Senior Mathematics Tutor",
+            "yearsLabel": "Years of Experience",
+            "bioLabel": "Bio",
+            "bioPlaceholder": "Tell clients about your expertise and background...",
+            "personal": "Personal Information",
+            "location": "Location & Availability",
+            "isAvailable": "Available for new jobs",
+            "remoteLabel": "Remote Availability",
+            "remoteOptions": {
+                "YES_AND_ONSITE": "Remote & On-site",
+                "ONLY_REMOTE": "Remote Only",
+                "NO_REMOTE": "On-site Only"
+            }
+        },
+        "services": {
+            "title": "My Services",
+            "empty": "No services added yet. Add your first service to start receiving requests.",
+            "add": "Add Service",
+            "edit": "Edit Service",
+            "contact": "Contact",
+            "update": "Update Service",
+            "confirmDelete": "Are you sure you want to delete this service?",
+            "delete": "Delete",
+            "startsFrom": "Starts at €{price}",
+            "fields": {
+                "city": "City",
+                "country": "Country",
+                "category": "Category",
+                "selectCategory": "Select a category",
+                "subcategory": "Subcategory",
+                "selectSubcategory": "Select a subcategory",
+                "price": "Starting Price (€)",
+                "description": "Service Description",
+                "descriptionHint": "Briefly describe what's included in this service.",
+                "cancel": "Cancel"
+            }
         }
     },
     "Layouts": {
@@ -948,62 +1009,6 @@
         "success": "Profile updated successfully",
         "error": "Failed to update profile",
         "updateError": "Failed to update personal information"
-    },
-    "ProProfile": {
-        "title": "Keep your professional profile updated",
-        "description": "Clients want to understand your expertise, services, and availability before sending work.",
-        "tabs": {
-            "info": "Profile Info",
-            "services": "Services",
-            "verification": "Verification"
-        },
-        "completion": {
-            "title": "Profile Completion",
-            "desc": "Complete profiles get 3x more offers!",
-            "missing": "Complete these to reach 100%:"
-        },
-        "info": {
-            "titleLabel": "Professional Title",
-            "titlePlaceholder": "e.g. Senior Math Tutor",
-            "yearsLabel": "Years of Experience",
-            "bioLabel": "Bio",
-            "bioPlaceholder": "Describe your expertise...",
-            "personal": "Personal Information",
-            "location": "Location & Availability",
-            "isAvailable": "Available for work",
-            "remoteLabel": "Remote Work",
-            "remoteOptions": {
-                "YES_AND_ONSITE": "Remote and on-site",
-                "ONLY_REMOTE": "Remote only",
-                "NO_REMOTE": "On-site only"
-            }
-        },
-        "services": {
-            "add": "Add New Service",
-            "edit": "Edit Service",
-            "update": "Update Service",
-            "delete": "Delete",
-            "confirmDelete": "Are you sure you want to delete this service?",
-            "empty": "No services added yet. Add a service to start receiving requests.",
-            "fields": {
-                "category": "Category",
-                "selectCategory": "Select Category",
-                "subcategory": "Subcategory",
-                "selectSubcategory": "Select Subcategory",
-                "price": "Starting Price (€)",
-                "description": "Description",
-                "descriptionHint": "min 50 characters",
-                "cancel": "Cancel"
-            },
-            "startsFrom": "Starts from €{price}"
-        },
-        "success": "Profile updated successfully",
-        "serviceAdded": "Service added successfully",
-        "serviceUpdated": "Service updated successfully",
-        "serviceDeleted": "Service deleted successfully",
-        "error": "Failed to update profile",
-        "serviceError": "Failed to add service",
-        "deleteError": "Failed to delete service"
     },
     "Verification": {
         "status": {

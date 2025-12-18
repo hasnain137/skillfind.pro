@@ -331,6 +331,66 @@
             "default": "Parcourir plus de demandes"
         }
     },
+    "ProProfile": {
+        "title": "Gardez votre profil professionnel à jour",
+        "description": "Les clients veulent comprendre votre expertise et vos services avant d'envoyer une demande.",
+        "error": "Une erreur est survenue. Veuillez réessayer.",
+        "success": "Profil mis à jour avec succès.",
+        "serviceError": "Échec de l'ajout du service. Veuillez réessayer.",
+        "serviceAdded": "Service ajouté avec succès.",
+        "serviceUpdated": "Service mis à jour avec succès.",
+        "deleteError": "Échec de la suppression du service.",
+        "serviceDeleted": "Service supprimé avec succès.",
+        "completion": {
+            "title": "Complétion du Profil",
+            "desc": "Les profils complets reçoivent 3x plus d'offres !",
+            "missing": "Complétez ceci pour atteindre 100% :"
+        },
+        "tabs": {
+            "info": "Informations",
+            "services": "Services",
+            "verification": "Vérification"
+        },
+        "info": {
+            "titleLabel": "Titre Professionnel",
+            "titlePlaceholder": "ex: Professeur de Mathématiques Senior",
+            "yearsLabel": "Années d'Expérience",
+            "bioLabel": "Bio",
+            "bioPlaceholder": "Parlez aux clients de votre expertise et parcours...",
+            "personal": "Informations Personnelles",
+            "location": "Lieu et Disponibilité",
+            "isAvailable": "Disponible pour nouveaux jobs",
+            "remoteLabel": "Disponibilité à distance",
+            "remoteOptions": {
+                "YES_AND_ONSITE": "Distance & Sur site",
+                "ONLY_REMOTE": "Distance seulement",
+                "NO_REMOTE": "Sur site seulement"
+            }
+        },
+        "services": {
+            "title": "Mes Services",
+            "empty": "Aucun service ajouté. Ajoutez votre premier service pour recevoir des demandes.",
+            "add": "Ajouter Service",
+            "edit": "Modifier Service",
+            "contact": "Contact",
+            "update": "Mettre à jour",
+            "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce service ?",
+            "delete": "Supprimer",
+            "startsFrom": "À partir de {price} €",
+            "fields": {
+                "city": "Ville",
+                "country": "Pays",
+                "category": "Catégorie",
+                "selectCategory": "Sélectionner une catégorie",
+                "subcategory": "Sous-catégorie",
+                "selectSubcategory": "Sélectionner une sous-catégorie",
+                "price": "Prix de départ (€)",
+                "description": "Description du service",
+                "descriptionHint": "Décrivez brièvement ce qui est inclus dans ce service.",
+                "cancel": "Annuler"
+            }
+        }
+    },
     "Layouts": {
         "Pro": {
             "badge": "Espace Pro",
@@ -963,62 +1023,6 @@
             "success": "Profil mis à jour avec succès",
             "error": "Échec de la mise à jour du profil",
             "updateError": "Échec de la mise à jour des infos personnelles"
-        },
-        "ProProfile": {
-            "title": "Gardez votre profil professionnel à jour",
-            "description": "Les clients veulent comprendre votre expertise et vos services avant d'envoyer une demande.",
-            "tabs": {
-                "info": "Infos Profil",
-                "services": "Services",
-                "verification": "Vérification"
-            },
-            "completion": {
-                "title": "Complétion du Profil",
-                "desc": "Les profils complets reçoivent 3x plus d'offres !",
-                "missing": "Complétez ceci pour atteindre 100% :"
-            },
-            "info": {
-                "titleLabel": "Titre Professionnel",
-                "titlePlaceholder": "ex: Prof de Maths Senior",
-                "yearsLabel": "Années d'expérience",
-                "bioLabel": "Bio",
-                "bioPlaceholder": "Décrivez votre expertise...",
-                "personal": "Informations personnelles",
-                "location": "Localisation & Disponibilité",
-                "isAvailable": "Disponible pour travailler",
-                "remoteLabel": "Travail à distance",
-                "remoteOptions": {
-                    "YES_AND_ONSITE": "À distance et sur place",
-                    "ONLY_REMOTE": "À distance uniquement",
-                    "NO_REMOTE": "Sur place uniquement"
-                }
-            },
-            "services": {
-                "add": "Ajouter un service",
-                "edit": "Modifier le service",
-                "update": "Mettre à jour",
-                "delete": "Supprimer",
-                "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce service ?",
-                "empty": "Aucun service ajouté. Ajoutez un service pour recevoir des demandes.",
-                "fields": {
-                    "category": "Catégorie",
-                    "selectCategory": "Sélectionner une catégorie",
-                    "subcategory": "Sous-catégorie",
-                    "selectSubcategory": "Sélectionner une sous-catégorie",
-                    "price": "Prix de départ (€)",
-                    "description": "Description",
-                    "descriptionHint": "min 50 caractères",
-                    "cancel": "Annuler"
-                },
-                "startsFrom": "À partir de {price} €"
-            },
-            "success": "Profil mis à jour avec succès",
-            "serviceAdded": "Service ajouté avec succès",
-            "serviceUpdated": "Service mis à jour avec succès",
-            "serviceDeleted": "Service supprimé avec succès",
-            "error": "Échec de la mise à jour",
-            "serviceError": "Échec de l'ajout du service",
-            "deleteError": "Échec de la suppression"
         },
         "Verification": {
             "status": {
