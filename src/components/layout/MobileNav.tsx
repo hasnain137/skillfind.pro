@@ -69,7 +69,7 @@ export function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 z-50 h-full w-[85vw] max-w-sm bg-white/90 backdrop-blur-3xl shadow-2xl border-l border-white/50 supports-[backdrop-filter]:bg-white/60"
+              className="fixed right-0 top-0 z-50 h-full w-[85vw] max-w-sm bg-white shadow-2xl border-l border-gray-100"
             >
               <div className="flex h-16 items-center justify-between border-b border-[#E5E7EB] px-4">
                 <span className="text-lg font-semibold text-slate-900">{tCommon('menu')}</span>
