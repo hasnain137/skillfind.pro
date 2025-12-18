@@ -24,6 +24,7 @@ import { getTranslations } from 'next-intl/server';
 export default async function ProDashboardPage() {
   const { userId } = await auth();
   const t = await getTranslations('ProDashboard');
+  const tRoot = await getTranslations();
 
   if (!userId) {
     redirect('/login');
@@ -237,7 +238,11 @@ export default async function ProDashboardPage() {
   return (
     <div className="space-y-6">
       {statusBannerProps && (
-        <StatusBanner {...statusBannerProps} />
+        <StatusBanner
+          status={statusBannerProps.status}
+          title={tRoot(statusBannerProps.title)}
+          description={tRoot(statusBannerProps.description)}
+        />
       )}
 
       <DashboardHero

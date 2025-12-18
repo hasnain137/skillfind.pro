@@ -5,20 +5,24 @@ import { useState } from 'react';
 import { Link } from '@/i18n/routing';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations('Navbar');
+  const tCommon = useTranslations('Common');
+  const tSearch = useTranslations('Search');
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
   const links = [
-    { href: '/#how-it-works', label: 'How it works' },
-    { href: '/#categories', label: 'Categories' },
-    { href: '/#top-professionals', label: 'Top professionals' },
-    { href: '/#for-professionals', label: 'For professionals' },
-    { href: '/search', label: 'Find Professionals' },
+    { href: '/#how-it-works', label: t('howItWorks') },
+    { href: '/#categories', label: t('categories') },
+    { href: '/#top-professionals', label: t('topProfessionals') },
+    { href: '/#for-professionals', label: t('forProfessionals') },
+    { href: '/search', label: tSearch('title') },
   ];
 
   return (
@@ -68,7 +72,7 @@ export function MobileNav() {
               className="fixed right-0 top-0 z-50 h-full w-[85vw] max-w-sm bg-white/90 backdrop-blur-3xl shadow-2xl border-l border-white/50 supports-[backdrop-filter]:bg-white/60"
             >
               <div className="flex h-16 items-center justify-between border-b border-[#E5E7EB] px-4">
-                <span className="text-lg font-semibold text-slate-900">Menu</span>
+                <span className="text-lg font-semibold text-slate-900">{tCommon('menu')}</span>
                 <button
                   onClick={closeMenu}
                   className="rounded-full p-2 text-[#7C7373] hover:bg-[#F3F4F6] focus:outline-none"
@@ -98,7 +102,7 @@ export function MobileNav() {
 
                 {/* Language Selector */}
                 <div className="mt-4 border-t border-[#E5E7EB] pt-4">
-                  <label className="mb-2 block text-xs font-medium text-[#7C7373]">Language</label>
+                  <label className="mb-2 block text-xs font-medium text-[#7C7373]">{tCommon('language')}</label>
                   <select
                     className="w-full rounded-lg border border-[#E5E7EB] bg-white px-3 py-2 text-sm font-medium text-[#7C7373]"
                     defaultValue="en"

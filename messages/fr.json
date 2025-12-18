@@ -3,8 +3,12 @@
         "welcome": "Bienvenue sur SkillFind",
         "dashboard": "Tableau de bord",
         "signIn": "Se connecter",
+        "signUp": "S'inscrire",
         "signOut": "Se déconnecter",
-        "profile": "Profil"
+        "profile": "Profil",
+        "admin": "Admin",
+        "menu": "Menu",
+        "language": "Langue"
     },
     "Landing": {
         "heroTitle": "Trouvez le professionnel idéal pour vos besoins",
@@ -203,7 +207,8 @@
             "yesterday": "Hier",
             "daysAgo": "il y a {count} jours",
             "new": "🔥 NOUVEAU",
-            "sendOffer": "Envoyer votre offre"
+            "sendOffer": "Envoyer votre offre",
+            "remote": "À distance"
         }
     },
     "CategoryDirectory": {

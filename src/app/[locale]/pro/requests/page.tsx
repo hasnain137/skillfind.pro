@@ -1,5 +1,6 @@
 // src/app/pro/requests/page.tsx
 import { auth } from "@clerk/nextjs/server";
+import { getTranslations } from 'next-intl/server';
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
@@ -11,6 +12,7 @@ import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/Statu
 
 export default async function ProRequestsPage() {
   const { userId } = await auth();
+  const tRoot = await getTranslations();
   if (!userId) redirect('/login');
 
   const professional: any = await getProfessionalWithRelations(userId, {
@@ -72,7 +74,11 @@ export default async function ProRequestsPage() {
     <div className="space-y-6">
       {/* Status Banner - Using reusable component */}
       {statusBannerProps && (
-        <StatusBanner {...statusBannerProps} />
+        <StatusBanner
+          status={statusBannerProps.status}
+          title={tRoot(statusBannerProps.title)}
+          description={tRoot(statusBannerProps.description)}
+        />
       )}
 
       <SectionHeading

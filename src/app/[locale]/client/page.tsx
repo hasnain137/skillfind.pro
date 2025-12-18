@@ -73,7 +73,7 @@ export default async function ClientDashboardPage() {
     {
       label: t('highlights.activity'),
       value: t('highlights.offersCount', { count: totalOffers, s: totalOffers !== 1 ? 's' : '' }),
-      helper: completedRequests > 0 ? t('highlights.completed', { count: completedRequests }) : t('highlights.noJobs')
+      helper: completedRequests > 0 ? t('highlights.completedRequests', { count: completedRequests }) : t('highlights.noJobs')
     },
   ];
 
@@ -134,16 +134,16 @@ export default async function ClientDashboardPage() {
 
   const QUICK_ACTIONS = [
     {
-      title: t('actions.newRequestTitle'),
-      description: t('actions.newRequestDesc'),
+      title: t('actions.createTitle'),
+      description: t('actions.createDesc'),
       href: "/client/requests/new",
-      cta: t('actions.newRequestCta'),
+      cta: t('actions.createCta'),
     },
     {
-      title: t('actions.reviewRequestsTitle'),
-      description: t('actions.reviewRequestsDesc'),
+      title: t('actions.reviewTitle'),
+      description: t('actions.reviewDesc'),
       href: "/client/requests",
-      cta: t('actions.reviewRequestsCta'),
+      cta: t('actions.reviewCta'),
     },
   ];
 

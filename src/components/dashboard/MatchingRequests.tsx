@@ -92,7 +92,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
 
                   {request.remotePreference !== 'NO_REMOTE' && (
                     <span className="flex items-center gap-1 rounded-md bg-success-light px-2 py-1 font-semibold text-success-dark">
-                      <span>💻</span> Remote
+                      <span>💻</span> {t('remote')}
                     </span>
                   )}
 

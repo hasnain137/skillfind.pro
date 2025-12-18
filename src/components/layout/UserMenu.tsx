@@ -2,9 +2,11 @@
 
 import { UserButton, useUser } from '@clerk/nextjs';
 import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 export function UserMenu() {
   const { user, isLoaded } = useUser();
+  const t = useTranslations('Common');
 
   if (!isLoaded) {
     return (
@@ -19,13 +21,13 @@ export function UserMenu() {
           href="/login"
           className="text-sm font-medium text-[#7C7373] hover:text-[#333333] transition-colors"
         >
-          Sign in
+          {t('signIn')}
         </Link>
         <Link
           href="/signup"
           className="rounded-xl bg-[#2563EB] px-4 py-2 text-sm font-medium text-white hover:bg-[#1D4FD8] transition-colors"
         >
-          Sign up
+          {t('signUp')}
         </Link>
       </div>
     );
@@ -38,13 +40,13 @@ export function UserMenu() {
         href={user.publicMetadata?.role === 'PROFESSIONAL' ? '/pro' : user.publicMetadata?.role === 'ADMIN' ? '/admin' : '/client'}
         className="text-sm font-medium text-[#7C7373] hover:text-[#333333] transition-colors"
       >
-        Dashboard
+        {t('dashboard')}
       </Link>
 
       {/* Admin Badge */}
       {user.publicMetadata?.role === 'ADMIN' && (
         <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800">
-          Admin
+          {t('admin')}
         </span>
       )}
 

@@ -3,8 +3,12 @@
         "welcome": "Welcome to SkillFind",
         "dashboard": "Dashboard",
         "signIn": "Sign In",
+        "signUp": "Sign Up",
         "signOut": "Sign Out",
-        "profile": "Profile"
+        "profile": "Profile",
+        "admin": "Admin",
+        "menu": "Menu",
+        "language": "Language"
     },
     "Landing": {
         "heroTitle": "Find the perfect professional for your needs",
@@ -265,7 +269,8 @@
             "yesterday": "Yesterday",
             "daysAgo": "{count} days ago",
             "new": "🔥 NEW",
-            "sendOffer": "Send your offer"
+            "sendOffer": "Send your offer",
+            "remote": "Remote"
         }
     },
     "CategoryDirectory": {

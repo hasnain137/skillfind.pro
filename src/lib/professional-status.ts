@@ -1,40 +1,38 @@
 import { StatusType } from "@/components/ui/StatusBanner";
 
 // Helper function to map professional status to banner props
+// Returns translation keys for title and description to be translated by the caller
 export function getProfessionalStatusBanner(status: string): {
     status: StatusType;
     title: string;
     description: string;
 } | null {
-    if (!status) return null;
-
     switch (status) {
         case 'PENDING_REVIEW':
             return {
                 status: 'pending',
-                title: 'Account Under Review',
-                description: "Your profile is currently being reviewed by our team. You can browse and update your profile, but cannot send offers yet.",
+                title: 'Components.StatusBanner.pendingReview.title',
+                description: 'Components.StatusBanner.pendingReview.description',
             };
         case 'SUSPENDED':
             return {
                 status: 'error',
-                title: 'Account Suspended',
-                description: "Your account has been suspended. Please contact support to resolve this issue.",
+                title: 'Components.StatusBanner.suspended.title',
+                description: 'Components.StatusBanner.suspended.description',
             };
         case 'BANNED':
             return {
                 status: 'error',
-                title: 'Account Banned',
-                description: "Your account has been deactivated. Please contact support for more information.",
+                title: 'Components.StatusBanner.banned.title',
+                description: 'Components.StatusBanner.banned.description',
             };
         case 'INCOMPLETE':
             return {
                 status: 'info',
-                title: 'Complete Your Profile',
-                description: "Please complete your profile details to get verified and start receiving requests.",
+                title: 'Components.StatusBanner.incomplete.title',
+                description: 'Components.StatusBanner.incomplete.description',
             };
         default:
             return null;
     }
 }
-
