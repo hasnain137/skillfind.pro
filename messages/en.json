@@ -783,6 +783,7 @@
             "viewed": "👁️ Viewed",
             "messageLabel": "Your offer message:",
             "waiting": "⏳ Waiting for response",
+            "acceptedCheckJobs": "✓ Accepted - View Jobs",
             "tips": {
                 "title": "Tips for Winning More Offers",
                 "items": {

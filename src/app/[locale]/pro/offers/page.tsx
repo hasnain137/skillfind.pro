@@ -134,16 +134,17 @@ export default async function ProOffersPage() {
       )}
 
       {/* Tips */}
-      <Card level={2} className="bg-gradient-to-br from-blue-50 to-white border-blue-200">
+      <Card level={2} className="glass-card bg-gradient-to-br from-blue-50/80 to-white/90">
         <CardContent>
-          <h2 className="text-base font-bold text-[#333333] flex items-center gap-2 mb-4">
-            <span>💡</span> {t('tips.title')}
+          <h2 className="text-base font-bold text-[#1F2937] flex items-center gap-2 mb-4">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] flex items-center justify-center text-white text-sm">💡</span>
+            {t('card.tips.title')}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2">
-            <TipCard icon="⚡" title={t('tips.items.respond.title')} description={t('tips.items.respond.desc')} />
-            <TipCard icon="✍️" title={t('tips.items.personalize.title')} description={t('tips.items.personalize.desc')} />
-            <TipCard icon="💰" title={t('tips.items.price.title')} description={t('tips.items.price.desc')} />
-            <TipCard icon="⭐" title={t('tips.items.trust.title')} description={t('tips.items.trust.desc')} />
+            <TipCard icon="⚡" title={t('card.tips.items.respond.title')} description={t('card.tips.items.respond.desc')} />
+            <TipCard icon="✍️" title={t('card.tips.items.personalize.title')} description={t('card.tips.items.personalize.desc')} />
+            <TipCard icon="💰" title={t('card.tips.items.price.title')} description={t('card.tips.items.price.desc')} />
+            <TipCard icon="⭐" title={t('card.tips.items.trust.title')} description={t('card.tips.items.trust.desc')} />
           </div>
         </CardContent>
       </Card>

@@ -30,18 +30,18 @@ export default async function ProLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] pb-20 lg:pb-0">
+    <div className="min-h-screen bg-[#F3F4F6] bg-mesh-gradient pb-20 lg:pb-0">
       <Navbar />
       <div className="py-6 lg:py-10">
         <Container className="flex flex-col gap-6 lg:flex-row">
           {/* Desktop Sidebar - Hidden on mobile */}
-          <aside className="hidden lg:block rounded-2xl border border-[#DDE7FF] bg-gradient-to-b from-white via-[#F7FAFF] to-[#EEF2FF] p-5 shadow-sm lg:w-64 h-fit sticky top-24">
+          <aside className="hidden lg:block glass-sidebar rounded-2xl p-5 lg:w-64 h-fit sticky top-24">
             <div className="flex items-start justify-between mb-4">
               <div className="space-y-1">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7C7373]">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6B7280]">
                   {t('eyebrow')}
                 </p>
-                <h2 className="text-lg font-semibold text-[#333333]">
+                <h2 className="text-lg font-semibold text-[#1F2937] tracking-tight">
                   {t('title')}
                 </h2>
               </div>
@@ -50,15 +50,15 @@ export default async function ProLayout({
 
             <SidebarNav links={SIDEBAR_LINKS} />
 
-            <div className="mt-8 pt-4 border-t border-[#E5E7EB]">
-              <p className="text-xs text-[#7C7373]">
+            <div className="mt-8 pt-4 border-t border-[#E5E7EB]/60">
+              <p className="text-xs text-[#6B7280] leading-relaxed">
                 {t('description')}
               </p>
             </div>
           </aside>
 
           <div className="flex-1">
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4 lg:p-6 shadow-sm min-h-[600px]">
+            <div className="glass-card rounded-2xl p-4 lg:p-6 min-h-[600px]">
               {children}
             </div>
           </div>

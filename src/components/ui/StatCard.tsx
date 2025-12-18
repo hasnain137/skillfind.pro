@@ -114,10 +114,8 @@ export function StatCard({
     <Card
       level={1}
       className={`
-        hover:shadow-soft transition-shadow duration-200
-        animate-fade-in-up
-        ${cardClass}
-        ${className}
+        glass-card hover:shadow-glass-hover transition-all duration-300
+        hover:scale-[1.02] ${cardClass} ${className}
       `.trim().replace(/\s+/g, ' ')}
       {...props}
     >
@@ -125,12 +123,12 @@ export function StatCard({
         <div className="flex items-start justify-between">
           <div className="flex-1">
             {/* Label */}
-            <p className="text-[11px] font-semibold text-[#7C7373] uppercase tracking-wider">
+            <p className="text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">
               {label}
             </p>
 
             {/* Value */}
-            <p className="mt-1.5 text-2xl font-bold text-[#333333] tabular-nums">
+            <p className="mt-1.5 text-2xl font-bold text-[#1F2937] tabular-nums tracking-tight">
               {displayValue}
             </p>
 
@@ -138,26 +136,26 @@ export function StatCard({
             {trend && (
               <div className="mt-2.5 flex items-center gap-1.5">
                 <span className={`
-                    inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold
+                    inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[10px] font-bold
                     ${TREND_STYLES[trend.direction].bg} ${TREND_STYLES[trend.direction].text}
                 `}>
                   {TREND_STYLES[trend.direction].icon} {Math.abs(trend.value)}%
                 </span>
                 {trend.label && (
-                  <span className="text-[10px] text-[#7C7373]">{trend.label}</span>
+                  <span className="text-[10px] text-[#6B7280]">{trend.label}</span>
                 )}
               </div>
             )}
 
             {/* Helper Text */}
             {helperText && !trend && (
-              <p className="mt-1.5 text-[11px] text-[#7C7373]">{helperText}</p>
+              <p className="mt-1.5 text-[11px] text-[#6B7280]">{helperText}</p>
             )}
           </div>
 
-          {/* Icon */}
+          {/* Icon with gradient background */}
           {icon && (
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F3F4F6] text-lg shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] text-lg shrink-0 shadow-sm">
               {icon}
             </div>
           )}

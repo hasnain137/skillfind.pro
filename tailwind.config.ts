@@ -139,6 +139,19 @@ const config: Config = {
                 'float': '0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04)', // Modal
                 'glow-sm': '0 0 10px rgba(37, 99, 235, 0.15)',
                 'glow': '0 0 20px rgba(37, 99, 235, 0.2)',
+                // Premium Glass Shadows (iOS 26 Liquid Glass)
+                'glass': '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+                'glass-sm': '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                'glass-hover': '0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+                'glow-blue': '0 0 30px rgba(37, 99, 235, 0.15)',
+            },
+
+            // Premium Background Gradients
+            backgroundImage: {
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                'gradient-glass': 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+                'gradient-mesh': 'radial-gradient(at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 50%), radial-gradient(at 80% 20%, rgba(147, 197, 253, 0.1) 0%, transparent 40%), radial-gradient(at 50% 80%, rgba(219, 234, 254, 0.15) 0%, transparent 50%)',
+                'gradient-blue': 'linear-gradient(135deg, #2563EB 0%, #1D4FD8 100%)',
             },
 
             // 4. ANIMATIONS (Subtle & Professional)
