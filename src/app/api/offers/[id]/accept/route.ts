@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { requireClient } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { NotFoundError, ForbiddenError, BadRequestError } from '@/lib/errors';
+import { notifyOfferAccepted } from '@/lib/services/notifications';
 
 export async function POST(
   request: NextRequest,
@@ -104,6 +105,15 @@ export async function POST(
       return { acceptedOffer, job };
     });
 
+    // Notify professional that their offer was accepted (don't block response)
+    const clientName = `${client.user.firstName} ${client.user.lastName}`.trim() || 'A client';
+    notifyOfferAccepted(
+      offer.professional.user.id,
+      clientName,
+      offer.request.title,
+      result.job.id
+    ).catch(err => console.error('Failed to send notification:', err));
+
     // Phone numbers are now revealed (both parties can see)
     return successResponse(
       {
@@ -138,3 +148,4 @@ export async function POST(
     return handleApiError(error);
   }
 }
+

@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { NotFoundError, ForbiddenError, BadRequestError } from '@/lib/errors';
+import { notifyJobCompleted } from '@/lib/services/notifications';
 
 export async function POST(
   request: NextRequest,
@@ -13,12 +14,24 @@ export async function POST(
     const { userId, role } = await requireAuth();
     const { id } = await context.params;
 
-    // Get job
+    // Get job with professional user info for the notification
     const job = await prisma.job.findUnique({
       where: { id },
       include: {
-        client: true,
-        professional: true,
+        client: {
+          include: {
+            user: {
+              select: { id: true },
+            },
+          },
+        },
+        professional: {
+          include: {
+            user: {
+              select: { firstName: true, lastName: true },
+            },
+          },
+        },
       },
     });
 
@@ -56,7 +69,7 @@ export async function POST(
 
     // Complete the job and request in a transaction
     const updatedJob = await prisma.$transaction(async (tx) => {
-      const job = await tx.job.update({
+      const completedJob = await tx.job.update({
         where: { id },
         data: {
           status: 'COMPLETED',
@@ -66,16 +79,30 @@ export async function POST(
 
       // Also mark request as completed so client sees it correctly
       await tx.request.update({
-        where: { id: job.requestId },
+        where: { id: completedJob.requestId },
         data: {
           status: 'COMPLETED',
         },
       });
 
-      return job;
+      // Increment professional's completed jobs count
+      await tx.professional.update({
+        where: { id: job.professionalId },
+        data: {
+          completedJobs: { increment: 1 },
+        },
+      });
+
+      return completedJob;
     });
 
-    // TODO: Send notification to client asking for review
+    // Notify client that job is complete and ask for review (don't block response)
+    const proName = `${job.professional.user.firstName} ${job.professional.user.lastName}`.trim() || 'Your professional';
+    notifyJobCompleted(
+      job.client.user.id,
+      proName,
+      updatedJob.id
+    ).catch(err => console.error('Failed to send notification:', err));
 
     return successResponse(
       {
@@ -92,3 +119,4 @@ export async function POST(
     return handleApiError(error);
   }
 }
+

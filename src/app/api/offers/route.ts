@@ -6,6 +6,7 @@ import { requireAuth, requireProfessional } from '@/lib/auth';
 import { successResponse, handleApiError, createdResponse } from '@/lib/api-response';
 import { createOfferSchema, listOffersSchema } from '@/lib/validations/offer';
 import { NotFoundError, BadRequestError, LimitExceededError, ForbiddenError } from '@/lib/errors';
+import { notifyNewOffer } from '@/lib/services/notifications';
 
 
 
@@ -239,6 +240,13 @@ export async function POST(request: NextRequest) {
     const serviceRequest = await prisma.request.findUnique({
       where: { id: data.requestId },
       include: {
+        client: {
+          include: {
+            user: {
+              select: { id: true },
+            },
+          },
+        },
         _count: {
           select: { offers: true },
         },
@@ -311,6 +319,15 @@ export async function POST(request: NextRequest) {
         },
       });
     });
+
+    // Notify client about new offer (don't block response on this)
+    const proName = `${professional.user.firstName} ${professional.user.lastName}`.trim() || 'A professional';
+    notifyNewOffer(
+      serviceRequest.client.user.id,
+      proName,
+      serviceRequest.title,
+      serviceRequest.id
+    ).catch(err => console.error('Failed to send notification:', err));
 
     return createdResponse(
       {

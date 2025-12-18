@@ -4,6 +4,7 @@ import { requireClient } from '@/lib/auth';
 import { successResponse, handleApiError, createdResponse } from '@/lib/api-response';
 import { z } from 'zod';
 import { BadRequestError, NotFoundError, ForbiddenError } from '@/lib/errors';
+import { notifyNewReview } from '@/lib/services/notifications';
 
 // Schema for review submission
 const createReviewSchema = z.object({
@@ -23,17 +24,29 @@ export async function POST(request: NextRequest) {
     // Get client profile
     const client = await prisma.client.findUnique({
       where: { userId },
+      include: {
+        user: {
+          select: { firstName: true, lastName: true },
+        },
+      },
     });
 
     if (!client) {
       throw new NotFoundError('Client profile');
     }
 
-    // Get job
+    // Get job with professional user for notification
     const job = await prisma.job.findUnique({
       where: { id: data.jobId },
       include: {
         review: true,
+        professional: {
+          include: {
+            user: {
+              select: { id: true },
+            },
+          },
+        },
       },
     });
 
@@ -97,8 +110,18 @@ export async function POST(request: NextRequest) {
       return newReview;
     });
 
+    // Notify professional about new review (don't block response)
+    const clientName = `${client.user.firstName} ${client.user.lastName}`.trim() || 'A client';
+    notifyNewReview(
+      job.professional.user.id,
+      clientName,
+      data.rating,
+      job.id
+    ).catch(err => console.error('Failed to send notification:', err));
+
     return createdResponse({ review }, 'Review submitted successfully');
   } catch (error) {
     return handleApiError(error);
   }
 }
+
