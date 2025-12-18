@@ -13,6 +13,7 @@ export function AdminSidebar() {
         { name: t('nav.overview'), href: '/admin', icon: '📊' },
         { name: t('nav.professionals'), href: '/admin/professionals', icon: '👨‍💼' },
         { name: t('nav.clients'), href: '/admin/clients', icon: '👥' },
+        { name: 'Disputes', href: '/admin/disputes', icon: '⚠️' },
         { name: t('nav.categories'), href: '/admin/categories', icon: '📂' },
         { name: t('nav.reviews'), href: '/admin/reviews', icon: '⭐' },
         { name: t('nav.transactions'), href: '/admin/financials/transactions', icon: '💰' },
