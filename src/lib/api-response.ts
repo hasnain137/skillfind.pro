@@ -159,6 +159,9 @@ export function handleApiError(error: unknown): NextResponse<ApiErrorResponse> {
     if (error.message === 'USER_NOT_FOUND') {
       return errorResponse(404, 'NOT_FOUND', 'User not found');
     }
+    if (error.message === 'BANNED') {
+      return errorResponse(403, 'FORBIDDEN', 'Your account has been banned');
+    }
 
     // Development mode: show full error
     if (process.env.NODE_ENV === 'development') {

@@ -153,7 +153,9 @@
         "title": "Rencontrez certains des experts que les clients embauchent sur SkillFind.",
         "subtitle": "Ce ne sont que quelques exemples. Vous verrez encore plus de professionnels correspondants une fois que vous publierez une demande ou effectuerez une recherche par catégorie.",
         "reviews": "avis",
-        "online": "Disponible en ligne"
+        "online": "Disponible en ligne",
+        "emptyTitle": "Aucun professionnel en vedette pour le moment",
+        "emptySubtitle": "Revenez plus tard ou recherchez un service spécifique."
     },
     "DualCTA": {
         "clientBadge": "Pour les Clients",
@@ -365,7 +367,7 @@
             "verification": "Vérification",
             "activity": "Activité",
             "reviewOffers": "Examiner offres",
-            "waitingOffers": "En attente d'offres",
+            "waitingForOffers": "En attente d'offres",
             "createRequest": "Créer demande",
             "offersToReview": "{count} offre à voir | {count} offres à voir",
             "openRequests": "{count} demande ouverte | {count} demandes ouvertes",

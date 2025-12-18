@@ -17,7 +17,7 @@ export interface AuthContext {
  */
 export async function requireAuth(): Promise<AuthContext> {
   const { userId: clerkId } = await auth();
-  
+
   if (!clerkId) {
     throw new Error('UNAUTHORIZED');
   }
@@ -29,6 +29,10 @@ export async function requireAuth(): Promise<AuthContext> {
 
   if (!user) {
     throw new Error('USER_NOT_FOUND');
+  }
+
+  if (user.isBanned) {
+    throw new Error('BANNED');
   }
 
   return {
@@ -47,9 +51,9 @@ export async function requireRole(
   allowedRoles: UserRole | UserRole[]
 ): Promise<AuthContext> {
   const authContext = await requireAuth();
-  
+
   const roles = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
-  
+
   if (!roles.includes(authContext.role)) {
     throw new Error('FORBIDDEN');
   }
@@ -128,7 +132,7 @@ export function requireAge18Plus(dateOfBirth: Date): void {
   const today = new Date();
   const age = today.getFullYear() - dateOfBirth.getFullYear();
   const monthDiff = today.getMonth() - dateOfBirth.getMonth();
-  
+
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dateOfBirth.getDate())) {
     // Birthday hasn't occurred this year yet
     if (age - 1 < 18) {

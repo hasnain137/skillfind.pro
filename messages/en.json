@@ -215,7 +215,9 @@
         "title": "Meet some of the experts clients are hiring on SkillFind.",
         "subtitle": "These are just a few examples. You'll see even more matching professionals once you post a request or search by category.",
         "reviews": "reviews",
-        "online": "Online available"
+        "online": "Online available",
+        "emptyTitle": "No featured professionals yet",
+        "emptySubtitle": "Check back later or search for a specific service."
     },
     "DualCTA": {
         "clientBadge": "For Clients",
@@ -427,7 +429,7 @@
             "verification": "Verification",
             "activity": "Activity",
             "reviewOffers": "Review offers",
-            "waitingOffers": "Waiting for offers",
+            "waitingForOffers": "Waiting for offers",
             "createRequest": "Create a request",
             "offersToReview": "{count} offer to review | {count} offers to review",
             "openRequests": "{count} open request | {count} open requests",
