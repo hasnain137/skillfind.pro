@@ -41,6 +41,7 @@
         "signup": "S'inscrire"
     },
     "Sidebar": {
+        "more": "Plus",
         "Pro": {
             "eyebrow": "Espace Pro",
             "title": "Gestion de compte",

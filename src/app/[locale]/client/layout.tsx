@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from '@/i18n/routing';
 import { ClientUserButton } from "@/components/layout/ClientUserButton";
+import { NotificationBell } from "@/components/layout/NotificationBell";
 import { SidebarNav } from "@/components/layout/SidebarNav";
 import { MobileDashboardNav } from "@/components/layout/MobileDashboardNav";
 import { auth } from "@clerk/nextjs/server";
@@ -91,6 +92,8 @@ export default async function ClientLayout({
         {/* Top Header Bar */}
         <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-200 px-8 py-4 flex items-center justify-end gap-4">
           <div className="flex items-center gap-4">
+            <NotificationBell />
+            <div className="h-8 w-px bg-gray-200 mx-2 hidden sm:block"></div>
             <ClientUserButton />
           </div>
         </header>
