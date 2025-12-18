@@ -1,7 +1,8 @@
 // src/components/layout/MobileNav.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from '@/i18n/routing';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +14,11 @@ export function MobileNav() {
   const t = useTranslations('Navbar');
   const tCommon = useTranslations('Common');
   const tSearch = useTranslations('Search');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
@@ -50,26 +56,32 @@ export function MobileNav() {
         </div>
       </button>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
+      {/* Mobile Menu Portal */}
+      {mounted && isOpen && createPortal(
+        <AnimatePresence mode="wait">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999]"
+          >
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
               onClick={closeMenu}
               aria-hidden="true"
             />
 
-            {/* Mobile Menu Drawer */}
+            {/* Menu Drawer */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 z-50 h-full w-[85vw] max-w-sm bg-white shadow-2xl border-l border-gray-100"
+              className="absolute right-0 top-0 h-full w-[85vw] max-w-sm bg-white shadow-2xl border-l border-gray-100"
             >
               <div className="flex h-16 items-center justify-between border-b border-[#E5E7EB] px-4">
                 <span className="text-lg font-semibold text-slate-900">{tCommon('menu')}</span>
@@ -114,9 +126,10 @@ export function MobileNav() {
                 </div>
               </nav>
             </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          </motion.div>
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }
