@@ -740,6 +740,7 @@
                     "SCHEDULED": "🗓️ Date précise",
                     "SCHEDULED_DESC": "J'ai une date limite"
                 },
+                "preferredDate": "Pour quand en avez-vous besoin ?",
                 "budgetMin": "Budget min (€)",
                 "budgetMax": "Budget max (€)",
                 "budgetHint": "Laisser vide pour laisser les pros suggérer un prix."

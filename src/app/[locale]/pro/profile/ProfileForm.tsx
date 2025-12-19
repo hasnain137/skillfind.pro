@@ -9,6 +9,7 @@ import { FormField, FormInput, FormTextarea, FormSelect } from '@/components/ui/
 import { DocumentUpload } from '@/components/professional/verification/DocumentUpload';
 import { VerificationStatus } from '@/components/professional/verification/VerificationStatus';
 import { useTranslations } from 'next-intl';
+import { LocationSelector } from '@/components/ui/LocationSelector';
 
 type Category = {
     id: string;
@@ -409,35 +410,16 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                 <span>📍</span> {t('info.location')}
                             </h4>
 
-                            <div className="grid gap-4 md:grid-cols-2">
-                                <FormField label={t('services.fields.city') || 'City'} required error={cityError}>
-                                    <FormInput
-                                        type="text"
-                                        placeholder="Paris"
-                                        value={profileData.city}
-                                        hasError={!!cityError}
-                                        onChange={e => setProfileData({ ...profileData, city: e.target.value })}
-                                        onBlur={() => handleBlur('city', profileData.city)}
-                                    />
-                                </FormField>
-                                <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.country') || 'Country'}</label>
-                                    <select
-                                        value={profileData.country}
-                                        onChange={e => setProfileData({ ...profileData, country: e.target.value })}
-                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
-                                    >
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                        <option value="ES">Spain</option>
-                                        <option value="IT">Italy</option>
-                                        <option value="GB">United Kingdom</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="AU">Australia</option>
-                                        <option value="OTHER">Other</option>
-                                    </select>
-                                </div>
+                            <div className="mt-4">
+                                <LocationSelector
+                                    countryCode={profileData.country || ''}
+                                    cityName={profileData.city || ''}
+                                    onCountryChange={(code) => setProfileData(prev => ({ ...prev, country: code }))}
+                                    onCityChange={(city) => setProfileData(prev => ({ ...prev, city: city }))}
+                                    countryError={!!cityError && !profileData.country ? 'Country is required' : undefined}
+                                    cityError={cityError}
+                                    required
+                                />
                             </div>
 
                             <div className="grid gap-4 md:grid-cols-2 mt-4">

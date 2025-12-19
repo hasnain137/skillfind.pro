@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollapsibleTips } from "@/components/ui/CollapsibleTips";
 import { FormField, FormInput, FormTextarea, FormSelect } from "@/components/ui/FormField";
+import { LocationSelector } from "@/components/ui/LocationSelector";
 import { useTranslations } from 'next-intl';
 
 export default function NewClientRequestPage() {
@@ -30,8 +31,10 @@ export default function NewClientRequestPage() {
     title: '',
     description: '',
     location: '',
+    country: 'FR',
     preferredFormat: 'ONLINE_OR_OFFLINE',
     timing: '',
+    preferredStartDate: '',
     budgetMin: '',
     budgetMax: '',
   });
@@ -75,6 +78,11 @@ export default function NewClientRequestPage() {
         return !value ? 'Location is required' : '';
       case 'timing':
         return !value ? 'Please select urgency' : '';
+      case 'preferredStartDate':
+        if (formData.timing === 'SCHEDULED' && !value) {
+          return 'Please select a date';
+        }
+        return '';
       default:
         return '';
     }
@@ -92,7 +100,7 @@ export default function NewClientRequestPage() {
     const errors: Record<string, string> = {};
     let isValid = true;
 
-    ['categoryId', 'subcategoryId', 'title', 'description', 'location', 'timing'].forEach(field => {
+    ['categoryId', 'subcategoryId', 'title', 'description', 'location', 'timing', 'preferredStartDate'].forEach(field => {
       const error = validateField(field, formData[field as keyof typeof formData]);
       if (error) {
         errors[field] = error;
@@ -101,7 +109,15 @@ export default function NewClientRequestPage() {
     });
 
     setFieldErrors(errors);
-    setTouched({ categoryId: true, subcategoryId: true, title: true, description: true, location: true, timing: true });
+    setTouched({
+      categoryId: true,
+      subcategoryId: true,
+      title: true,
+      description: true,
+      location: true,
+      timing: true,
+      preferredStartDate: true
+    });
     return isValid;
   };
 
@@ -126,9 +142,13 @@ export default function NewClientRequestPage() {
         description: formData.description,
         locationType: formData.preferredFormat === 'ONLINE' ? 'REMOTE' : 'ON_SITE',
         city: formData.location,
-        country: 'FR', // Default country
+        country: formData.country, // Dynamic country
         urgency: formData.timing === 'URGENT' ? 'URGENT' : formData.timing === 'SOON' ? 'SOON' : 'FLEXIBLE',
       };
+
+      if (formData.timing === 'SCHEDULED' && formData.preferredStartDate) {
+        requestData.preferredStartDate = new Date(formData.preferredStartDate);
+      }
 
       // Only include budget fields if they have values
       if (formData.budgetMin) {
@@ -330,26 +350,22 @@ export default function NewClientRequestPage() {
             description={t('sections.location.desc')}
           />
           <div className="grid gap-3 md:grid-cols-2">
-            <FormField
-              label={t('fields.location')}
-              required
-              error={touched.location ? fieldErrors.location : undefined}
-            >
-              <FormInput
-                type="text"
-                required
-                value={formData.location}
-                hasError={touched.location && !!fieldErrors.location}
-                onChange={(e) => {
-                  setFormData({ ...formData, location: e.target.value });
+            <div className="md:col-span-2">
+              <LocationSelector
+                countryCode={formData.country}
+                cityName={formData.location}
+                onCountryChange={(code) => setFormData({ ...formData, country: code })}
+                onCityChange={(city) => {
+                  setFormData({ ...formData, location: city });
                   if (touched.location) {
-                    setFieldErrors(prev => ({ ...prev, location: validateField('location', e.target.value) }));
+                    setFieldErrors(prev => ({ ...prev, location: validateField('location', city) }));
                   }
                 }}
-                onBlur={() => handleBlur('location')}
-                placeholder={t('fields.locationPlaceholder')}
+                countryError={!formData.country ? 'Country is required' : undefined}
+                cityError={touched.location ? fieldErrors.location : undefined}
+                required
               />
-            </FormField>
+            </div>
             <FormField label={t('fields.format')}>
               <FormSelect
                 value={formData.preferredFormat}
@@ -403,6 +419,40 @@ export default function NewClientRequestPage() {
               </label>
             ))}
           </div>
+
+          {formData.timing === 'SCHEDULED' && (
+            <div className="mt-4 animate-in fade-in slide-in-from-top-2">
+              <FormField
+                label={t('fields.preferredDate')}
+                required
+                error={touched.preferredStartDate ? fieldErrors.preferredStartDate : undefined}
+              >
+                <input
+                  type="date"
+                  min={new Date().toISOString().split('T')[0]}
+                  value={formData.preferredStartDate}
+                  onChange={(e) => {
+                    setFormData({ ...formData, preferredStartDate: e.target.value });
+                    if (touched.preferredStartDate) {
+                      setFieldErrors(prev => ({
+                        ...prev,
+                        preferredStartDate: validateField('preferredStartDate', e.target.value)
+                      }));
+                    }
+                  }}
+                  onBlur={() => handleBlur('preferredStartDate')}
+                  className={`
+                    w-full rounded-xl border px-3.5 py-2.5 text-sm text-[#333333] 
+                    placeholder:text-[#B0B0B0] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15
+                    ${touched.preferredStartDate && fieldErrors.preferredStartDate
+                      ? 'border-red-300 focus:border-red-500'
+                      : 'border-[#E5E7EB] focus:border-[#2563EB]'
+                    }
+                  `}
+                />
+              </FormField>
+            </div>
+          )}
         </Card>
 
         <Card className="space-y-3" padding="lg">

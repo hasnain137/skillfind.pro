@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { FormField, FormInput, FormSelect } from '@/components/ui/FormField';
 import { useTranslations } from 'next-intl';
+import { LocationSelector } from '@/components/ui/LocationSelector';
 
 type ClientProfile = {
     id: string;
@@ -193,14 +194,13 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 </h4>
 
                 <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('fields.city')}</label>
-                        <input
-                            type="text"
-                            placeholder="Paris"
-                            value={clientData.city}
-                            onChange={e => setClientData({ ...clientData, city: e.target.value })}
-                            className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                    <div className="md:col-span-2">
+                        <LocationSelector
+                            countryCode={clientData.country || ''}
+                            cityName={clientData.city || ''}
+                            onCountryChange={(code) => setClientData(prev => ({ ...prev, country: code }))}
+                            onCityChange={(city) => setClientData(prev => ({ ...prev, city: city }))}
+                            required
                         />
                     </div>
                     <div>
@@ -208,28 +208,10 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                         <input
                             type="text"
                             placeholder="Île-de-France"
-                            value={clientData.region}
+                            value={clientData.region || ''}
                             onChange={e => setClientData({ ...clientData, region: e.target.value })}
                             className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                         />
-                    </div>
-                    <div>
-                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('fields.country')}</label>
-                        <select
-                            value={clientData.country}
-                            onChange={e => setClientData({ ...clientData, country: e.target.value })}
-                            className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
-                        >
-                            <option value="FR">France</option>
-                            <option value="DE">Germany</option>
-                            <option value="ES">Spain</option>
-                            <option value="IT">Italy</option>
-                            <option value="GB">United Kingdom</option>
-                            <option value="US">United States</option>
-                            <option value="CA">Canada</option>
-                            <option value="AU">Australia</option>
-                            <option value="OTHER">Other</option>
-                        </select>
                     </div>
                 </div>
             </div>

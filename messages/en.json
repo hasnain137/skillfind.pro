@@ -726,6 +726,7 @@
                 "SCHEDULED": "🗓️ Specific date",
                 "SCHEDULED_DESC": "I have a deadline"
             },
+            "preferredDate": "When do you need this?",
             "budgetMin": "Min budget (EUR)",
             "budgetMax": "Max budget (EUR)",
             "budgetHint": "Leave blank if you prefer professionals to suggest a price."
