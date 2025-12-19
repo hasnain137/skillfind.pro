@@ -23,6 +23,12 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
         proposedPrice: '',
         pricingType: 'fixed', // 'hourly' | 'fixed'
         message: '',
+        // Structured availability fields
+        startType: 'asap', // 'asap', 'tomorrow', 'fewDays', 'specific'
+        startDate: '',
+        durationValue: '',
+        durationUnit: 'days', // 'hours', 'days', 'weeks', 'months'
+        // These will be computed from the above on submit
         estimatedDuration: '',
         availableTimeSlots: '',
     });
@@ -36,6 +42,12 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                 return '';
             case 'message':
                 if (formData.message.length < 50) return t('validation.shortMessage');
+                return '';
+            case 'durationValue':
+                if (formData.durationValue && parseFloat(formData.durationValue) <= 0) return 'Invalid duration';
+                return '';
+            case 'startDate':
+                if (formData.startType === 'specific' && !formData.startDate) return 'Date required';
                 return '';
             default:
                 return '';
@@ -69,6 +81,20 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
             return;
         }
 
+        // Format availability data
+        let formattedAvailability = '';
+        if (formData.startType === 'asap') formattedAvailability = '🚀 ASAP';
+        else if (formData.startType === 'tomorrow') formattedAvailability = '📅 Tomorrow';
+        else if (formData.startType === 'fewDays') formattedAvailability = '🕒 In a few days';
+        else if (formData.startType === 'specific' && formData.startDate) {
+            formattedAvailability = `🎯 ${new Date(formData.startDate).toLocaleDateString()}`;
+        }
+
+        let formattedDuration = '';
+        if (formData.durationValue) {
+            formattedDuration = `${formData.durationValue} ${t(`availability.durationUnits.${formData.durationUnit}`)}`;
+        }
+
         try {
             const response = await fetch('/api/offers', {
                 method: 'POST',
@@ -79,8 +105,8 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                     requestId,
                     proposedPrice: parseFloat(formData.proposedPrice),
                     message: formData.message,
-                    estimatedDuration: formData.estimatedDuration,
-                    availableTimeSlots: formData.availableTimeSlots || undefined,
+                    estimatedDuration: formattedDuration || undefined,
+                    availableTimeSlots: formattedAvailability || undefined,
                 }),
             });
 
@@ -202,8 +228,8 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         onBlur={() => setTouched(prev => ({ ...prev, message: true }))}
                         className={`w-full rounded-xl border-2 px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:outline-none focus:ring-4 transition-all ${messageError
-                                ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/30'
-                                : 'border-[#E5E7EB] focus:border-[#2563EB] focus:ring-[#2563EB]/10'
+                            ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/30'
+                            : 'border-[#E5E7EB] focus:border-[#2563EB] focus:ring-[#2563EB]/10'
                             }`}
                         placeholder={t('proposal.messagePlaceholder')}
                     />
@@ -224,30 +250,67 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                     <p className="text-xs text-[#7C7373]">{t('availability.desc')}</p>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-6">
+                    {/* Start Date Selection */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-[#333333]">
-                            {t('availability.earliest')}
+                        <label className="mb-3 block text-sm font-semibold text-[#333333]">
+                            {t('availability.startType.label')}
                         </label>
-                        <input
-                            type="text"
-                            value={formData.availableTimeSlots}
-                            onChange={(e) => setFormData({ ...formData, availableTimeSlots: e.target.value })}
-                            className="w-full rounded-xl border-2 border-[#E5E7EB] px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-4 focus:ring-[#2563EB]/10 transition-all"
-                            placeholder={t('availability.earliestPlaceholder')}
-                        />
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                            {(['asap', 'tomorrow', 'fewDays', 'specific'] as const).map((type) => (
+                                <button
+                                    key={type}
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, startType: type })}
+                                    className={`px-4 py-3 rounded-xl border-2 text-xs font-semibold transition-all ${formData.startType === type
+                                        ? 'border-[#2563EB] bg-blue-50 text-[#2563EB] shadow-sm'
+                                        : 'border-[#E5E7EB] text-[#7C7373] hover:border-[#D1D5DB] hover:bg-gray-50'
+                                        }`}
+                                >
+                                    {t(`availability.startType.${type}`)}
+                                </button>
+                            ))}
+                        </div>
+
+                        {formData.startType === 'specific' && (
+                            <div className="mt-4 animate-in fade-in slide-in-from-top-2">
+                                <input
+                                    type="date"
+                                    min={new Date().toISOString().split('T')[0]}
+                                    value={formData.startDate}
+                                    onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                                    className="w-full rounded-xl border-2 border-[#E5E7EB] px-4 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none transition-all"
+                                />
+                            </div>
+                        )}
                     </div>
-                    <div>
-                        <label className="mb-2 block text-sm font-medium text-[#333333]">
+
+                    {/* Duration Selection */}
+                    <div className="pt-2">
+                        <label className="mb-2 block text-sm font-semibold text-[#333333]">
                             {t('availability.duration')}
                         </label>
-                        <input
-                            type="text"
-                            value={formData.estimatedDuration}
-                            onChange={(e) => setFormData({ ...formData, estimatedDuration: e.target.value })}
-                            className="w-full rounded-xl border-2 border-[#E5E7EB] px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-4 focus:ring-[#2563EB]/10 transition-all"
-                            placeholder={t('availability.durationPlaceholder')}
-                        />
+                        <div className="flex gap-3">
+                            <input
+                                type="number"
+                                min="0.5"
+                                step="0.5"
+                                value={formData.durationValue}
+                                onChange={(e) => setFormData({ ...formData, durationValue: e.target.value })}
+                                className="flex-1 rounded-xl border-2 border-[#E5E7EB] px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none transition-all"
+                                placeholder="0"
+                            />
+                            <select
+                                value={formData.durationUnit}
+                                onChange={(e) => setFormData({ ...formData, durationUnit: e.target.value })}
+                                className="w-32 lg:w-40 rounded-xl border-2 border-[#E5E7EB] bg-white px-4 py-3 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none transition-all"
+                            >
+                                <option value="hours">{t('availability.durationUnits.hours')}</option>
+                                <option value="days">{t('availability.durationUnits.days')}</option>
+                                <option value="weeks">{t('availability.durationUnits.weeks')}</option>
+                                <option value="months">{t('availability.durationUnits.months')}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </Card>
@@ -298,3 +361,4 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
         </form>
     );
 }
+

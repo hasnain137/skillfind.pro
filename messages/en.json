@@ -782,7 +782,20 @@
             "earliest": "Earliest availability",
             "earliestPlaceholder": "e.g. Available from Monday",
             "duration": "Estimated duration",
-            "durationPlaceholder": "e.g. 2-3 weeks"
+            "durationPlaceholder": "e.g. 2-3 weeks",
+            "startType": {
+                "label": "When can you start?",
+                "asap": "🚀 As soon as possible",
+                "tomorrow": "📅 Tomorrow",
+                "fewDays": "🕒 In a few days",
+                "specific": "🎯 Specific date"
+            },
+            "durationUnits": {
+                "hours": "Hours",
+                "days": "Days",
+                "weeks": "Weeks",
+                "months": "Months"
+            }
         },
         "tips": {
             "title": "Tips for a Great Offer",
