@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
+import { AlertTriangle, RefreshCw, Home, ArrowLeft } from 'lucide-react';
 
 export default function Error({
     error,
@@ -13,34 +14,67 @@ export default function Error({
 }) {
     useEffect(() => {
         // Log the error to an error reporting service
-        console.error(error);
+        console.error('Application error:', error);
     }, [error]);
 
     return (
-        <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-surface-50 px-4 text-center">
+        <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-gradient-to-b from-red-50 to-white px-4 text-center">
             <Container>
-                <div className="space-y-4">
-                    <h1 className="text-4xl font-bold text-surface-900">Something went wrong!</h1>
-                    <p className="text-surface-600 max-w-md mx-auto">
-                        An unexpected error has occurred. We apologize for the inconvenience.
-                    </p>
-                    <div className="pt-6 flex justify-center gap-4">
+                <div className="max-w-md mx-auto space-y-6">
+                    {/* Error Icon */}
+                    <div className="mx-auto w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+                        <AlertTriangle className="h-8 w-8 text-red-600" />
+                    </div>
+
+                    {/* Error Message */}
+                    <div className="space-y-2">
+                        <h1 className="text-2xl font-bold text-[#333333]">Something went wrong</h1>
+                        <p className="text-[#7C7373]">
+                            An unexpected error occurred. We apologize for the inconvenience.
+                        </p>
+                    </div>
+
+                    {/* Error Details (for debugging) */}
+                    {error.digest && (
+                        <div className="bg-gray-100 rounded-lg px-4 py-2 text-xs text-[#7C7373]">
+                            <span className="font-medium">Error ID:</span> {error.digest}
+                        </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
                         <Button
                             onClick={() => reset()}
-                            variant="default"
-                            className="shadow-soft"
+                            className="gap-2"
                         >
-                            Try again
+                            <RefreshCw className="h-4 w-4" />
+                            Try Again
                         </Button>
                         <Button
                             variant="outline"
-                            onClick={() => window.location.href = '/'}
+                            onClick={() => window.history.back()}
+                            className="gap-2"
                         >
-                            Go Home
+                            <ArrowLeft className="h-4 w-4" />
+                            Go Back
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            onClick={() => window.location.href = '/'}
+                            className="gap-2"
+                        >
+                            <Home className="h-4 w-4" />
+                            Home
                         </Button>
                     </div>
+
+                    {/* Help Text */}
+                    <p className="text-xs text-[#B0B0B0] pt-4">
+                        If this problem persists, please contact support.
+                    </p>
                 </div>
             </Container>
         </div>
     );
 }
+
