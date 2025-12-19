@@ -1114,7 +1114,8 @@
             "review_submitted": "Review submitted - Thank you!",
             "view_pro_profile": "View Professional Profile",
             "started_date": "Started {date}",
-            "completed_date": "Completed {date}"
+            "completed_date": "Completed {date}",
+            "contact_exchanged": "Contact Exchanged"
         },
         "actions": {
             "complete": {
@@ -1175,7 +1176,8 @@
             "complete_hint": "You're currently working on this job. Mark it as complete when finished.",
             "completed_hint": "Job completed! Waiting for client to leave a review.",
             "job_id": "Job #{id}",
-            "started_date": "Started {date}"
+            "started_date": "Started {date}",
+            "contact_exchanged": "Contact Exchanged"
         },
         "actions": {
             "start": {

@@ -88,6 +88,9 @@ export default async function ProJobDetailPage({ params }: ProJobDetailPageProps
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">{statusConfig.icon}</span>
               <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
+              <Badge variant="success" className="bg-emerald-100 text-emerald-700 border-emerald-200">
+                📞 {t('detail.contact_exchanged')}
+              </Badge>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-[#333333] mb-2">
               {job.request.title}

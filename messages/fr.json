@@ -1128,7 +1128,8 @@
                 "review_submitted": "Avis soumis - Merci !",
                 "view_pro_profile": "Voir le profil du professionnel",
                 "started_date": "Commencé le {date}",
-                "completed_date": "Terminé le {date}"
+                "completed_date": "Terminé le {date}",
+                "contact_exchanged": "Contact Échangé"
             },
             "actions": {
                 "complete": {
@@ -1189,7 +1190,8 @@
                 "complete_hint": "Vous travaillez actuellement sur ce travail. Marquez-le comme terminé une fois fini.",
                 "completed_hint": "Travail terminé ! En attente de l'avis du client.",
                 "job_id": "Travail #{id}",
-                "started_date": "Commencé le {date}"
+                "started_date": "Commencé le {date}",
+                "contact_exchanged": "Contact Échangé"
             },
             "actions": {
                 "start": {
