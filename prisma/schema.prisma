@@ -817,6 +817,7 @@ enum NotificationType {
   REVIEW_RESPONSE     // Client: pro responded to their review
   PROFILE_VERIFIED    // Pro: profile was verified
   LOW_BALANCE         // Pro: wallet balance is low
+  WALLET_DEBIT        // Pro: click charge applied
   SYSTEM              // General system notification
 }
 

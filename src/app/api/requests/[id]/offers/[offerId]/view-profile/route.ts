@@ -6,6 +6,7 @@ import { requireClient } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { NotFoundError, ForbiddenError, InsufficientBalanceError } from '@/lib/errors';
 import { recordClickAndCharge } from '@/lib/services/click-billing';
+import { notifyClickCharge, notifyLowBalance } from '@/lib/services/notifications';
 
 interface RouteParams {
   params: Promise<{
@@ -120,6 +121,36 @@ export async function POST(request: NextRequest, context: RouteParams) {
         clientId: client.id,
         clickType: 'PROFILE_VIEW',
       });
+
+      // Notify professional about the charge
+      // Get updated wallet balance and client name for notification
+      const clientUser = await prisma.user.findUnique({
+        where: { id: client.userId },
+        select: { firstName: true, lastName: true },
+      });
+      const clientName = clientUser
+        ? `${clientUser.firstName || 'A client'} ${clientUser.lastName || ''}`.trim()
+        : 'A client';
+
+      // Get updated wallet balance
+      const updatedWallet = await prisma.wallet.findUnique({
+        where: { professionalId: offer.professionalId },
+        select: { balance: true },
+      });
+      const newBalance = updatedWallet?.balance ?? 0;
+
+      // Send notification to professional
+      await notifyClickCharge(
+        offer.professional.user.clerkId,
+        10, // €0.10 = 10 cents
+        clientName,
+        newBalance
+      );
+
+      // If balance is low (below €2), send low balance warning
+      if (newBalance < 200) {
+        await notifyLowBalance(offer.professional.user.clerkId, newBalance);
+      }
 
       return successResponse(
         {

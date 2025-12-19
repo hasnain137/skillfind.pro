@@ -158,3 +158,21 @@ export async function notifyLowBalance(
         actionUrl: '/pro/wallet',
     });
 }
+
+/**
+ * Notify professional when a click charge is applied
+ */
+export async function notifyClickCharge(
+    proUserId: string,
+    amountCents: number,
+    clientName: string,
+    remainingBalanceCents: number
+) {
+    return createNotification({
+        userId: proUserId,
+        type: 'WALLET_DEBIT',
+        title: `€${(amountCents / 100).toFixed(2)} charged`,
+        message: `${clientName} viewed your profile. Balance: €${(remainingBalanceCents / 100).toFixed(2)}`,
+        actionUrl: '/pro/wallet',
+    });
+}
