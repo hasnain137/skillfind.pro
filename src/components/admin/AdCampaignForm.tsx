@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { FileText, Target, DollarSign, Settings } from 'lucide-react';
 
 interface Category {
     id: string;
@@ -78,7 +79,10 @@ export function AdCampaignForm({ categories, initialData, isEditing }: AdCampaig
             )}
 
             <Card padding="lg">
-                <h3 className="text-lg font-bold text-[#333333] mb-4">Campaign Details</h3>
+                <h3 className="text-lg font-bold text-[#333333] mb-4 flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-blue-500" />
+                    Campaign Details
+                </h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                         <label className="block text-sm font-medium text-[#333333] mb-1">Name *</label>
@@ -106,7 +110,20 @@ export function AdCampaignForm({ categories, initialData, isEditing }: AdCampaig
                             value={formData.imageUrl}
                             onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                             className="w-full px-3 py-2 border border-[#E5E7EB] rounded-lg focus:ring-2 focus:ring-blue-500"
+                            placeholder="https://example.com/ad-image.jpg"
                         />
+                        {formData.imageUrl && (
+                            <div className="mt-2 rounded-lg overflow-hidden border border-[#E5E7EB] bg-gray-50">
+                                <img
+                                    src={formData.imageUrl}
+                                    alt="Ad preview"
+                                    className="w-full h-32 object-cover"
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).style.display = 'none';
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-[#333333] mb-1">Link URL</label>
@@ -115,13 +132,17 @@ export function AdCampaignForm({ categories, initialData, isEditing }: AdCampaig
                             value={formData.linkUrl}
                             onChange={(e) => setFormData({ ...formData, linkUrl: e.target.value })}
                             className="w-full px-3 py-2 border border-[#E5E7EB] rounded-lg focus:ring-2 focus:ring-blue-500"
+                            placeholder="https://example.com/landing-page"
                         />
                     </div>
                 </div>
             </Card>
 
             <Card padding="lg">
-                <h3 className="text-lg font-bold text-[#333333] mb-4">Targeting</h3>
+                <h3 className="text-lg font-bold text-[#333333] mb-4 flex items-center gap-2">
+                    <Target className="h-5 w-5 text-green-500" />
+                    Targeting
+                </h3>
                 <div className="grid gap-4 sm:grid-cols-3">
                     <div>
                         <label className="block text-sm font-medium text-[#333333] mb-1">Category</label>
@@ -164,7 +185,10 @@ export function AdCampaignForm({ categories, initialData, isEditing }: AdCampaig
             </Card>
 
             <Card padding="lg">
-                <h3 className="text-lg font-bold text-[#333333] mb-4">Budget & Duration</h3>
+                <h3 className="text-lg font-bold text-[#333333] mb-4 flex items-center gap-2">
+                    <DollarSign className="h-5 w-5 text-yellow-500" />
+                    Budget & Duration
+                </h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                         <label className="block text-sm font-medium text-[#333333] mb-1">Budget (€)</label>
@@ -213,7 +237,10 @@ export function AdCampaignForm({ categories, initialData, isEditing }: AdCampaig
             </Card>
 
             <Card padding="lg">
-                <h3 className="text-lg font-bold text-[#333333] mb-4">Status</h3>
+                <h3 className="text-lg font-bold text-[#333333] mb-4 flex items-center gap-2">
+                    <Settings className="h-5 w-5 text-gray-500" />
+                    Status
+                </h3>
                 <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}

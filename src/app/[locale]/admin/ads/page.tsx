@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Link } from '@/i18n/routing';
 import { AdCampaignsList } from '@/components/admin/AdCampaignsList';
+import { AdClickStatsChart } from '@/components/admin/AdClickStatsChart';
 
 export default async function AdminAdsPage() {
     // Get summary stats
@@ -50,7 +51,11 @@ export default async function AdminAdsPage() {
                 </Card>
             </div>
 
+            {/* Click Statistics Chart */}
+            <AdClickStatsChart days={7} />
+
             <AdCampaignsList />
         </div>
     );
 }
+
