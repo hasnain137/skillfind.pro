@@ -20,6 +20,7 @@ import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
 import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { getTranslations } from 'next-intl/server';
+import { Search, Send, Briefcase, User } from 'lucide-react';
 
 export default async function ProDashboardPage() {
   const { userId } = await auth();
@@ -225,12 +226,33 @@ export default async function ProDashboardPage() {
 
   const statusBannerProps = getProfessionalStatusBanner(professional.status);
 
-  const quickActionKeys = ['browse', 'offers', 'jobs', 'profile'];
-  const quickActions = quickActionKeys.map(key => ({
-    title: t(`Actions.${key}Title`),
-    description: t(`Actions.${key}Desc`),
-    href: key === 'browse' ? '/pro/requests' : key === 'offers' ? '/pro/offers' : key === 'jobs' ? '/pro/jobs' : '/pro/profile',
-    cta: t(`Actions.${key}Cta`)
+  const quickActions = [
+    {
+      key: 'browse',
+      href: '/pro/requests',
+      icon: <Search className="w-5 h-5" />
+    },
+    {
+      key: 'offers',
+      href: '/pro/offers',
+      icon: <Send className="w-5 h-5" />
+    },
+    {
+      key: 'jobs',
+      href: '/pro/jobs',
+      icon: <Briefcase className="w-5 h-5" />
+    },
+    {
+      key: 'profile',
+      href: '/pro/profile',
+      icon: <User className="w-5 h-5" />
+    }
+  ].map(action => ({
+    title: t(`Actions.${action.key}Title`),
+    description: t(`Actions.${action.key}Desc`),
+    href: action.href,
+    cta: t(`Actions.${action.key}Cta`),
+    icon: action.icon
   }));
 
   const nextSteps = [];

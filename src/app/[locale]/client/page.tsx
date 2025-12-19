@@ -14,6 +14,7 @@ import { calculateClientCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ClientDashboardTour } from "@/components/onboarding/ClientDashboardTour";
 import { getTranslations } from 'next-intl/server';
+import { PlusCircle, FileText } from 'lucide-react';
 
 export default async function ClientDashboardPage() {
   // Get authenticated user
@@ -138,12 +139,14 @@ export default async function ClientDashboardPage() {
       description: t('actions.createDesc'),
       href: "/client/requests/new",
       cta: t('actions.createCta'),
+      icon: <PlusCircle className="w-5 h-5" />,
     },
     {
       title: t('actions.reviewTitle'),
       description: t('actions.reviewDesc'),
       href: "/client/requests",
       cta: t('actions.reviewCta'),
+      icon: <FileText className="w-5 h-5" />,
     },
   ];
 

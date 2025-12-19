@@ -42,8 +42,7 @@ export function ActivityFeed({ activities }: ActivityFeedProps) {
 
     if (diffMins < 1) return t('justNow');
     if (diffMins < 60) return t('minAgo', { count: diffMins });
-    if (diffHours < 24) return t('hoursAgo', { count: diffHours }); // Note: I used 'hoursAgo' for plural in JSON, 'hourAgo' for singular. 
-    // Logic refinement: 
+
     if (diffHours === 1) return t('hourAgo', { count: 1 });
     if (diffHours < 24) return t('hoursAgo', { count: diffHours });
 
