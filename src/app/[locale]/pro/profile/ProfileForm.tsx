@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { FormField, FormInput, FormTextarea, FormSelect } from '@/components/ui/FormField';
 import { DocumentUpload } from '@/components/professional/verification/DocumentUpload';
 import { VerificationStatus } from '@/components/professional/verification/VerificationStatus';
 import { useTranslations } from 'next-intl';
@@ -64,6 +65,30 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+    // Field validation
+    const getFieldError = (name: string, value: string): string => {
+        switch (name) {
+            case 'title':
+                if (!value) return 'Professional title is required';
+                if (value.length < 5) return 'Title must be at least 5 characters';
+                return '';
+            case 'bio':
+                if (!value) return 'Bio is required';
+                if (value.length < 10) return 'Bio must be at least 10 characters';
+                return '';
+            case 'city':
+                if (!value) return 'City is required';
+                return '';
+            default:
+                return '';
+        }
+    };
+
+    const handleBlur = (name: string, value: string) => {
+        setTouched(prev => ({ ...prev, [name]: true }));
+    };
 
     // Profile State
     const [profileData, setProfileData] = useState({
@@ -75,6 +100,11 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
         isAvailable: initialProfile.isAvailable,
         remoteAvailability: initialProfile.remoteAvailability || 'YES_AND_ONSITE',
     });
+
+    // Get errors based on touched state
+    const titleError = touched.title ? getFieldError('title', profileData.title) : '';
+    const bioError = touched.bio ? getFieldError('bio', profileData.bio) : '';
+    const cityError = touched.city ? getFieldError('city', profileData.city) : '';
 
     // Personal Information State (User table fields)
     const [personalData, setPersonalData] = useState({
@@ -304,37 +334,35 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 <form onSubmit={handleProfileUpdate}>
                     <Card padding="lg" className="space-y-4">
                         <div className="grid gap-4 md:grid-cols-2">
-                            <div>
-                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.titleLabel')}</label>
-                                <input
+                            <FormField label={t('info.titleLabel')} required error={titleError}>
+                                <FormInput
                                     type="text"
                                     value={profileData.title}
+                                    hasError={!!titleError}
                                     onChange={e => setProfileData({ ...profileData, title: e.target.value })}
-                                    className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                    onBlur={() => handleBlur('title', profileData.title)}
                                     placeholder={t('info.titlePlaceholder')}
                                 />
-                            </div>
-                            <div>
-                                <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.yearsLabel')}</label>
-                                <input
+                            </FormField>
+                            <FormField label={t('info.yearsLabel')}>
+                                <FormInput
                                     type="number"
                                     value={profileData.yearsOfExperience}
                                     onChange={e => setProfileData({ ...profileData, yearsOfExperience: parseInt(e.target.value) || 0 })}
-                                    className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                                 />
-                            </div>
+                            </FormField>
                         </div>
 
-                        <div>
-                            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('info.bioLabel')}</label>
-                            <textarea
+                        <FormField label={t('info.bioLabel')} required error={bioError}>
+                            <FormTextarea
                                 rows={4}
                                 value={profileData.bio}
+                                hasError={!!bioError}
                                 onChange={e => setProfileData({ ...profileData, bio: e.target.value })}
-                                className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                onBlur={() => handleBlur('bio', profileData.bio)}
                                 placeholder={t('info.bioPlaceholder')}
                             />
-                        </div>
+                        </FormField>
 
                         {/* Personal Information Section */}
                         <div className="border-t border-[#E5E7EB] pt-6 mt-6">
@@ -382,16 +410,16 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                             </h4>
 
                             <div className="grid gap-4 md:grid-cols-2">
-                                <div>
-                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.city') || 'City'}</label>
-                                    <input
+                                <FormField label={t('services.fields.city') || 'City'} required error={cityError}>
+                                    <FormInput
                                         type="text"
                                         placeholder="Paris"
                                         value={profileData.city}
+                                        hasError={!!cityError}
                                         onChange={e => setProfileData({ ...profileData, city: e.target.value })}
-                                        className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
+                                        onBlur={() => handleBlur('city', profileData.city)}
                                     />
-                                </div>
+                                </FormField>
                                 <div>
                                     <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('services.fields.country') || 'Country'}</label>
                                     <select

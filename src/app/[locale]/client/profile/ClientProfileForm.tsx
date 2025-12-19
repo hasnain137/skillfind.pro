@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { FormField, FormInput, FormSelect } from '@/components/ui/FormField';
 import { useTranslations } from 'next-intl';
 
 type ClientProfile = {
@@ -111,32 +112,24 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                 </h3>
 
                 <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                        <label htmlFor="firstName" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            {t('fields.firstName')}
-                        </label>
-                        <input
+                    <FormField label={t('fields.firstName')}>
+                        <FormInput
                             id="firstName"
                             type="text"
                             placeholder="John"
                             value={personalData.firstName}
                             onChange={e => setPersonalData({ ...personalData, firstName: e.target.value })}
-                            className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="lastName" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            {t('fields.lastName')}
-                        </label>
-                        <input
+                    </FormField>
+                    <FormField label={t('fields.lastName')}>
+                        <FormInput
                             id="lastName"
                             type="text"
                             placeholder="Doe"
                             value={personalData.lastName}
                             onChange={e => setPersonalData({ ...personalData, lastName: e.target.value })}
-                            className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
                         />
-                    </div>
+                    </FormField>
                     <div>
                         <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
                             {t('fields.email')}
