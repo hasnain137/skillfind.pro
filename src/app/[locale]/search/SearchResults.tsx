@@ -59,6 +59,7 @@ export function SearchResults() {
   const location = searchParams.get('location') || '';
   const category = searchParams.get('category') || '';
   const minRating = searchParams.get('minRating') || '';
+  const minPrice = searchParams.get('minPrice') || '';
   const maxPrice = searchParams.get('maxPrice') || '';
   const remote = searchParams.get('remote') || '';
 
@@ -78,6 +79,7 @@ export function SearchResults() {
       if (location) params.set('location', location);
       if (category) params.set('category', category);
       if (minRating) params.set('minRating', minRating);
+      if (minPrice) params.set('minPrice', minPrice);
       if (maxPrice) params.set('maxPrice', maxPrice);
       if (remote) params.set('remote', remote);
 

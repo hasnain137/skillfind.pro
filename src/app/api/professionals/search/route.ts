@@ -14,6 +14,7 @@ const searchProfessionalsSchema = z.object({
   location: z.string().optional(),
   remote: z.string().optional().transform(val => val === 'true'),
   minRating: z.string().optional().transform(val => val ? parseFloat(val) : undefined).pipe(z.number().min(0).max(5).optional()),
+  minPrice: z.string().optional().transform(val => val ? parseInt(val) : undefined).pipe(z.number().int().min(0).optional()),
   maxPrice: z.string().optional().transform(val => val ? parseInt(val) : undefined).pipe(z.number().int().min(0).optional()),
   search: z.string().optional(),
 });
@@ -30,6 +31,7 @@ export async function GET(request: NextRequest) {
       location: searchParams.get('location'),
       remote: searchParams.get('remote'),
       minRating: searchParams.get('minRating'),
+      minPrice: searchParams.get('minPrice'),
       maxPrice: searchParams.get('maxPrice'),
       search: searchParams.get('search'),
     };
@@ -43,6 +45,7 @@ export async function GET(request: NextRequest) {
       location: params.location || undefined,
       remote: params.remote === 'true',
       minRating: params.minRating ? parseFloat(params.minRating) : undefined,
+      minPrice: params.minPrice ? parseInt(params.minPrice) : undefined,
       maxPrice: params.maxPrice ? parseInt(params.maxPrice) : undefined,
       search: params.search || undefined,
     };
@@ -86,11 +89,18 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    // Filter by hourly rate (from profile)
-    if (filters.maxPrice) {
-      whereClause.profile = {
-        hourlyRateMax: {
-          lte: filters.maxPrice,
+    // Filter by price range (from services priceFrom)
+    if (filters.minPrice || filters.maxPrice) {
+      const priceFilter: any = {};
+      if (filters.minPrice) {
+        priceFilter.gte = filters.minPrice;
+      }
+      if (filters.maxPrice) {
+        priceFilter.lte = filters.maxPrice;
+      }
+      whereClause.services = {
+        some: {
+          priceFrom: priceFilter,
         },
       };
     }
@@ -98,7 +108,7 @@ export async function GET(request: NextRequest) {
     // Filter by services (category or subcategory)
     if (filters.category || filters.subcategory) {
       const serviceWhere: any = {};
-      
+
       if (filters.subcategory) {
         serviceWhere.subcategoryId = filters.subcategory;
       } else if (filters.category) {
@@ -190,52 +200,52 @@ export async function GET(request: NextRequest) {
     let professionals;
     try {
       professionals = await prisma.professional.findMany({
-      where: whereClause,
-      include: {
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            avatar: true,
+        where: whereClause,
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              avatar: true,
+            },
           },
-        },
-        profile: {
-          select: {
-            hourlyRateMin: true,
-            hourlyRateMax: true,
-            portfolioImages: true,
+          profile: {
+            select: {
+              hourlyRateMin: true,
+              hourlyRateMax: true,
+              portfolioImages: true,
+            },
           },
-        },
-        services: {
-          include: {
-            subcategory: {
-              select: {
-                id: true,
-                nameEn: true,
-                nameFr: true,
-                category: {
-                  select: {
-                    id: true,
-                    nameEn: true,
-                    nameFr: true,
+          services: {
+            include: {
+              subcategory: {
+                select: {
+                  id: true,
+                  nameEn: true,
+                  nameFr: true,
+                  category: {
+                    select: {
+                      id: true,
+                      nameEn: true,
+                      nameFr: true,
+                    },
                   },
                 },
               },
             },
           },
-        },
-        _count: {
-          select: {
-            jobs: true,
+          _count: {
+            select: {
+              jobs: true,
+            },
           },
         },
-      },
-      orderBy: [
-        { averageRating: 'desc' },
-        { totalReviews: 'desc' },
-        { createdAt: 'desc' },
-      ],
+        orderBy: [
+          { averageRating: 'desc' },
+          { totalReviews: 'desc' },
+          { createdAt: 'desc' },
+        ],
         skip: (filters.page - 1) * filters.limit,
         take: filters.limit,
       });
@@ -262,9 +272,9 @@ export async function GET(request: NextRequest) {
       yearsOfExperience: pro.yearsOfExperience,
       hourlyRate: pro.profile
         ? {
-            min: pro.profile.hourlyRateMin,
-            max: pro.profile.hourlyRateMax,
-          }
+          min: pro.profile.hourlyRateMin,
+          max: pro.profile.hourlyRateMax,
+        }
         : null,
       remoteAvailability: pro.remoteAvailability,
       averageRating: pro.averageRating,
