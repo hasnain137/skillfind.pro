@@ -60,6 +60,7 @@
             "description": "Gérez vos demandes et recrutements.",
             "links": {
                 "dashboard": "Tableau de bord",
+                "browse": "Trouver des pros",
                 "requests": "Mes demandes",
                 "jobs": "Historique",
                 "new": "Nouveau projet",

@@ -68,7 +68,16 @@ export default async function ProLayout({
       {/* Main Content Area */}
       <main className="lg:pl-72 min-h-screen flex flex-col">
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-200 px-8 py-4 flex items-center justify-end gap-4">
+        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-200 px-8 py-4 flex items-center justify-between gap-4">
+          <div className="flex-1 max-w-xl">
+            <Link
+              href="/pro/requests"
+              className="w-full flex items-center gap-3 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-sm transition-all group"
+            >
+              <span className="text-gray-400 group-hover:text-primary transition-colors">🔍</span>
+              <span>Browse matching requests...</span>
+            </Link>
+          </div>
           <div className="flex items-center gap-4">
             <NotificationBell />
             <div className="h-8 w-px bg-gray-200 mx-2 hidden sm:block"></div>

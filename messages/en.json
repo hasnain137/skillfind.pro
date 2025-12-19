@@ -60,6 +60,7 @@
             "description": "Manage your requests and hires.",
             "links": {
                 "dashboard": "Dashboard",
+                "browse": "Find Professionals",
                 "requests": "My Requests",
                 "jobs": "My Hires",
                 "new": "New Request",

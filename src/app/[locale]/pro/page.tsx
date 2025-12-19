@@ -285,52 +285,45 @@ export default async function ProDashboardPage() {
         <div className="lg:col-span-2 space-y-8">
 
           {/* Performance Metrics */}
-          <Card level={1} className="border border-white/40 shadow-lg">
-            <CardHeader className="pb-2 border-b border-gray-100/50">
-              <div className="px-1">
-                <SectionHeading
-                  variant="section"
-                  title={t('metricsTitle')}
-                  description={t('metricsDesc')}
-                />
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('metricsTitle')}
+              description={t('metricsDesc')}
+            />
+            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+              <div className="p-6">
+                <PerformanceMetrics data={metricsData} />
               </div>
-            </CardHeader>
-            <CardContent className="pt-6 flex flex-col">
-              <PerformanceMetrics data={metricsData} />
-            </CardContent>
-          </Card>
+            </Card>
+          </div>
 
           {/* Matching Requests */}
-          <Card level={1} className="border border-white/40 shadow-lg">
-            <CardHeader className="pb-2 border-b border-gray-100/50">
-              <div className="flex flex-row items-center justify-between px-1">
-                <SectionHeading
-                  variant="section"
-                  title={t('requestsTitle')}
-                  description={t('requestsDesc')}
-                />
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('requestsTitle')}
+              description={t('requestsDesc')}
+              actions={
                 <Link
                   href="/pro/requests"
                   className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors tracking-wide uppercase"
                 >
                   {t('viewAll')} →
                 </Link>
+              }
+            />
+            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+              <div className="p-6">
+                <MatchingRequests requests={matchingRequests as any} />
               </div>
-            </CardHeader>
-            <CardContent className="pt-6 flex flex-col">
-              <MatchingRequests requests={matchingRequests as any} />
-            </CardContent>
-          </Card>
+            </Card>
+          </div>
 
           {/* Quick Actions */}
           <div className="space-y-4">
-            <div className="px-1">
-              <SectionHeading
-                variant="section"
-                title={t('quickActionsTitle')}
-                description={t('quickActionsDesc')}
-              />
-            </div>
+            <SectionHeading
+              title={t('quickActionsTitle')}
+              description={t('quickActionsDesc')}
+            />
             <div className="grid gap-4 sm:grid-cols-2">
               {quickActions.map((action) => (
                 <ActionCard key={action.href} {...action} />
@@ -340,7 +333,7 @@ export default async function ProDashboardPage() {
         </div>
 
         {/* Right Column - Sidebar (Span 1) */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Earnings (Top Priority for Pro) */}
           <EarningsChart data={earningsData} />
 
@@ -352,33 +345,30 @@ export default async function ProDashboardPage() {
           />
 
           {/* Next Steps */}
-          <Card level={1} className="border border-white/40 shadow-lg">
-            <CardHeader className="pb-2 border-b border-gray-100/50">
-              <div className="px-1">
-                <SectionHeading
-                  variant="section"
-                  title={t('nextStepsTitle')}
-                  description={t('nextStepsDesc')}
-                />
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('nextStepsTitle')}
+              description={t('nextStepsDesc')}
+            />
+            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+              <div className="p-6">
+                <ul className="space-y-3">
+                  {nextSteps.map((step, index) => (
+                    <li key={index}>
+                      <Link href={step.href} className="glass-card flex items-start gap-4 p-4 rounded-xl hover:bg-white/90 transition-colors group cursor-pointer block">
+                        <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white shadow-md ring-2 ring-primary-100 group-hover:scale-110 transition-transform">
+                          {index + 1}
+                        </div>
+                        <span className="text-sm font-medium text-slate-700 pt-0.5 leading-snug group-hover:text-primary-700 transition-colors">
+                          {step.label}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </CardHeader>
-            <CardContent className="pt-6 flex flex-col">
-              <ul className="space-y-3">
-                {nextSteps.map((step, index) => (
-                  <li key={index}>
-                    <Link href={step.href} className="glass-card flex items-start gap-4 p-4 rounded-xl hover:bg-white/90 transition-colors group cursor-pointer block">
-                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white shadow-md ring-2 ring-primary-100 group-hover:scale-110 transition-transform">
-                        {index + 1}
-                      </div>
-                      <span className="text-sm font-medium text-slate-700 pt-0.5 leading-snug group-hover:text-primary-700 transition-colors">
-                        {step.label}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+            </Card>
+          </div>
         </div>
       </div>
 
