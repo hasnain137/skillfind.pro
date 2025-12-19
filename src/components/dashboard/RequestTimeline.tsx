@@ -18,26 +18,27 @@ const STATUS_CONFIG = {
   OPEN: {
     label: 'Open',
     color: 'bg-blue-100 text-blue-700 border-blue-200',
-    icon: '🔵',
+    icon: <Circle className="w-4 h-4 fill-current" />,
   },
   IN_PROGRESS: {
     label: 'In Progress',
     color: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-    icon: '🟡',
+    icon: <Clock className="w-4 h-4" />,
   },
   COMPLETED: {
     label: 'Completed',
     color: 'bg-green-100 text-green-700 border-green-200',
-    icon: '🟢',
+    icon: <CheckCircle className="w-4 h-4" />,
   },
   CANCELLED: {
     label: 'Cancelled',
     color: 'bg-gray-100 text-gray-700 border-gray-200',
-    icon: '⚫',
+    icon: <XCircle className="w-4 h-4" />,
   },
 };
 
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Circle, Clock, CheckCircle, XCircle } from 'lucide-react';
 
 export function RequestTimeline({ requests }: RequestTimelineProps) {
   if (requests.length === 0) {
@@ -58,7 +59,7 @@ export function RequestTimeline({ requests }: RequestTimelineProps) {
     <div className="space-y-4">
       {requests.map((request, index) => (
         <Link key={request.id} href={`/client/requests/${request.id}`}>
-          <div className="group relative flex items-start gap-4 rounded-xl border border-[#E5E7EB] bg-white p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+          <div className="group relative flex items-start gap-4 rounded-xl border border-white/40 bg-white/70 backdrop-blur-xl p-4 shadow-sm hover:shadow-md hover:border-[#3B4D9D]/20 hover:-translate-y-0.5 transition-all duration-200">
             {/* Timeline Line */}
             {index < requests.length - 1 && (
               <div className="absolute left-7 top-12 h-[calc(100%+1rem)] w-0.5 bg-gradient-to-b from-[#2563EB] to-transparent" />

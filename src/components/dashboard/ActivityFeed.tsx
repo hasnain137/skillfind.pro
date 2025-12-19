@@ -1,7 +1,7 @@
-// src/components/dashboard/ActivityFeed.tsx
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Mail, FileText, CheckCircle, Star } from 'lucide-react';
 
 interface Activity {
   id: string;
@@ -17,10 +17,10 @@ interface ActivityFeedProps {
 }
 
 const ACTIVITY_ICONS = {
-  offer_received: '📬',
-  request_created: '📝',
-  job_completed: '✅',
-  review_left: '⭐',
+  offer_received: <Mail className="w-5 h-5 text-blue-500" />,
+  request_created: <FileText className="w-5 h-5 text-green-500" />,
+  job_completed: <CheckCircle className="w-5 h-5 text-purple-500" />,
+  review_left: <Star className="w-5 h-5 text-yellow-500" />,
 };
 
 const ACTIVITY_COLORS = {

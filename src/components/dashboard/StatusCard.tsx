@@ -51,7 +51,7 @@ export function StatusCard({ status, isVerified, verificationMethod }: StatusCar
                 </div>
 
                 {/* Verification Status */}
-                <div className="flex justify-between items-center group">
+                <div className="flex justify-between items-center p-4 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all hover:border-gray-200">
                     <span className="text-sm font-bold text-gray-400 uppercase tracking-wide">Verification</span>
                     {isVerified ? (
                         <span className="flex items-center text-green-600 text-sm font-bold gap-1.5 bg-green-50 px-3 py-1.5 rounded-xl border border-green-100">
@@ -66,15 +66,15 @@ export function StatusCard({ status, isVerified, verificationMethod }: StatusCar
                 </div>
 
                 {/* Offer Capability */}
-                <div className="flex justify-between items-center text-sm">
+                <div className="flex justify-between items-center text-sm p-4 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all hover:border-gray-200">
                     <span className="text-sm font-bold text-gray-400 uppercase tracking-wide">Offers</span>
                     {canSendOffers ? (
-                        <div className="flex items-center gap-2 text-[#333333] font-bold bg-white px-3 py-1.5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="flex items-center gap-2 text-[#333333] font-bold bg-green-50 px-3 py-1.5 rounded-xl border border-green-100 shadow-sm">
                             <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
                             Enabled
                         </div>
                     ) : (
-                        <div className="flex items-center gap-2 text-red-600 font-bold bg-white px-3 py-1.5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="flex items-center gap-2 text-red-600 font-bold bg-red-50 px-3 py-1.5 rounded-xl border border-red-100 shadow-sm">
                             <XCircle className="w-4 h-4" />
                             Disabled
                         </div>
