@@ -57,8 +57,10 @@ export default function ClientOffersPage({ params }: { params: Promise<{ locale:
                 const response = await fetch('/api/offers?limit=50');
                 const data = await response.json();
 
+                console.log('Offers API response:', data); // Debug log
+
                 if (data.success) {
-                    const fetchedOffers = data.data.offers;
+                    const fetchedOffers = data.data?.offers || [];
                     setOffers(fetchedOffers);
 
                     // Calculate stats
@@ -99,7 +101,7 @@ export default function ClientOffersPage({ params }: { params: Promise<{ locale:
                 // Refresh offers
                 const res = await fetch('/api/offers?limit=50');
                 const newData = await res.json();
-                if (newData.success) setOffers(newData.data.offers);
+                if (newData.success) setOffers(newData.data?.offers || []);
             } else {
                 toast.error(data.error || 'Failed to accept offer');
             }
