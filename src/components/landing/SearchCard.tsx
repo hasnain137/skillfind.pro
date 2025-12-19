@@ -2,7 +2,7 @@
 'use client';
 
 import { Button } from "@/components/ui/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 
@@ -14,7 +14,9 @@ export function SearchCard({ className = "" }: { className?: string }) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const t = useTranslations('Search');
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   // Simple debounce
   useEffect(() => {
@@ -25,6 +27,7 @@ export function SearchCard({ className = "" }: { className?: string }) {
           const data = await res.json();
           setSuggestions(data.suggestions || []);
           setShowSuggestions(true);
+          setSelectedIndex(-1); // Reset selection on new results
         } catch (err) {
           console.error(err);
         }
@@ -37,9 +40,16 @@ export function SearchCard({ className = "" }: { className?: string }) {
     return () => clearTimeout(timer);
   }, [query]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setShowSuggestions(false);
+
+    // Check if an item is selected via keyboard
+    if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+      handleSuggestionClick(suggestions[selectedIndex].url);
+      return;
+    }
+
     const params = new URLSearchParams();
     if (query) params.set('search', query);
     router.push(`/search?${params.toString()}`);
@@ -48,6 +58,35 @@ export function SearchCard({ className = "" }: { className?: string }) {
   const handleSuggestionClick = (url: string) => {
     setShowSuggestions(false);
     router.push(url);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev < suggestions.length - 1 ? prev + 1 : 0));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev > 0 ? prev - 1 : suggestions.length - 1));
+    } else if (e.key === 'Enter') {
+      // If index is selected, handleSearch will pick it up, or we can explicit call here
+      if (selectedIndex >= 0) {
+        e.preventDefault();
+        handleSuggestionClick(suggestions[selectedIndex].url);
+      }
+    } else if (e.key === 'Escape') {
+      setShowSuggestions(false);
+    }
+  };
+
+  // Helper to highlight matching text
+  const highlightText = (text: string, highlight: string) => {
+    if (!highlight.trim()) return text;
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return parts.map((part, i) =>
+      part.toLowerCase() === highlight.toLowerCase() ? <strong key={i} className="text-[#3B4D9D] font-bold">{part}</strong> : part
+    );
   };
 
   return (
@@ -60,6 +99,7 @@ export function SearchCard({ className = "" }: { className?: string }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // Delay to allow click
             placeholder={t('placeholder')}
@@ -68,19 +108,26 @@ export function SearchCard({ className = "" }: { className?: string }) {
 
           {/* Suggestions Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-[#E5E7EB] overflow-hidden z-50">
+            <div
+              ref={suggestionsRef}
+              className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-[#E5E7EB] overflow-hidden z-50 max-h-[300px] overflow-y-auto"
+            >
               {suggestions.map((item, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => handleSuggestionClick(item.url)}
-                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50 text-left border-b last:border-0 border-gray-100 transition-colors"
+                  onMouseEnter={() => setSelectedIndex(idx)}
+                  className={`w-full px-4 py-3 flex items-center gap-3 text-left border-b last:border-0 border-gray-100 transition-colors ${idx === selectedIndex ? 'bg-blue-50/50' : 'hover:bg-gray-50'
+                    }`}
                 >
                   <span className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 text-[#3B4D9D]">
                     {item.type === 'PROFESSIONAL' ? '👤' : item.type === 'CATEGORY' ? '📂' : '🔧'}
                   </span>
                   <div>
-                    <p className="text-sm font-medium text-[#333333]">{item.label}</p>
+                    <p className="text-sm font-medium text-[#333333]">
+                      {highlightText(item.label, query)}
+                    </p>
                     <p className="text-xs text-[#7C7373]">{item.subLabel}</p>
                   </div>
                 </button>
