@@ -22,13 +22,13 @@ export async function GET(request: NextRequest) {
         // Get daily clicks for the period
         const clicks = await prisma.adClick.findMany({
             where: {
-                createdAt: {
+                clickedAt: {
                     gte: startDate,
                     lte: endDate,
                 },
             },
             select: {
-                createdAt: true,
+                clickedAt: true,
             },
         });
 
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 
         // Count clicks per day
         clicks.forEach(click => {
-            const dateStr = click.createdAt.toISOString().split('T')[0];
+            const dateStr = click.clickedAt.toISOString().split('T')[0];
             if (dailyStats[dateStr]) {
                 dailyStats[dateStr].clicks++;
             }
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
         // Get previous period clicks for comparison
         const previousClicks = await prisma.adClick.count({
             where: {
-                createdAt: {
+                clickedAt: {
                     gte: previousStartDate,
                     lt: startDate,
                 },

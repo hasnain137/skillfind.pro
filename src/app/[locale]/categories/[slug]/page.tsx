@@ -93,9 +93,9 @@ export default async function CategoryPage({ params }: PageProps) {
                             ← {t('backToCategories')}
                         </Link>
                         <h1 className="text-3xl font-bold mb-2">{category.nameEn}</h1>
-                        {category.descriptionEn && (
+                        {category.description && (
                             <p className="text-white/80 max-w-2xl">
-                                {category.descriptionEn}
+                                {category.description}
                             </p>
                         )}
                         <div className="mt-4 flex gap-2 text-sm">

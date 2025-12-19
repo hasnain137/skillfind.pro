@@ -35,7 +35,7 @@ type Service = {
 
 type Profile = {
     id: string;
-    status: 'ACTIVE' | 'PENDING_REVIEW' | 'SUSPENDED' | 'REJECTED';
+    status: 'ACTIVE' | 'PENDING_REVIEW' | 'SUSPENDED';
     title: string | null;
     bio: string | null;
     yearsOfExperience: number | null;
@@ -571,7 +571,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                                     <p className="text-xs text-[#7C7373]">{service.subcategory.category.nameEn}</p>
                                     <p className="mt-2 text-sm text-[#4B5563]">{service.description}</p>
                                     <p className="mt-1 text-sm font-medium text-[#2563EB]">
-                                        {t('services.startsFrom', { price: service.priceFrom })}
+                                        {t('services.startsFrom', { price: service.priceFrom ?? 0 })}
                                     </p>
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -604,7 +604,7 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
             {activeTab === 'verification' && (
                 <div className="space-y-6">
                     <VerificationStatus
-                        status={initialProfile.status || 'REJECTED'}
+                        status={initialProfile.status || 'PENDING_REVIEW'}
                     />
 
                     <DocumentUpload

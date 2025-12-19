@@ -4,6 +4,7 @@ import { HTMLAttributes, forwardRef } from "react";
 export type BadgeVariant =
   | "default"
   | "primary"
+  | "secondary"
   | "success"
   | "warning"
   | "error"
@@ -29,6 +30,8 @@ const VARIANTS: Record<BadgeVariant, string> = {
     "bg-surface-100 text-surface-700",
   primary:
     "bg-primary-100 text-primary-700",
+  secondary:
+    "bg-surface-200 text-surface-600",
   success:
     "bg-success-light text-success-dark",
   warning:
@@ -53,6 +56,7 @@ const SIZES: Record<BadgeSize, string> = {
 const DOT_COLORS: Record<BadgeVariant, string> = {
   default: "bg-surface-500",
   primary: "bg-primary-500",
+  secondary: "bg-surface-400",
   success: "bg-success",
   warning: "bg-warning",
   error: "bg-error",
