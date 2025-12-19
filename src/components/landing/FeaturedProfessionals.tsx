@@ -88,13 +88,13 @@ function ProfessionalCard(pro: Professional & { t: any }) {
     pro;
 
   return (
-    <div className="flex min-w-[260px] flex-col gap-3 rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-[#E5E7EB]/40 transition hover:-translate-y-0.5 hover:shadow-md">
+    <div className="flex min-w-[260px] flex-col gap-3 rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ring-1 ring-gray-900/5">
       <div className="flex items-center gap-3">
         <Avatar
           firstName={name.split(' ')[0]}
           lastName={name.split(' ')[1]}
           size="md"
-          className="h-10 w-10"
+          className="h-10 w-10 ring-2 ring-white"
         />
         <div>
           <h3 className="text-sm font-semibold text-[#333333]">{name}</h3>
@@ -109,9 +109,9 @@ function ProfessionalCard(pro: Professional & { t: any }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#7C7373]">
-        <span className="rounded-full bg-[#F3F4F6] px-2 py-0.5">{location}</span>
+        <span className="rounded-full bg-white/50 border border-gray-100 px-2 py-0.5">{location}</span>
         {isOnline && (
-          <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] text-[#166534]">
+          <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2 py-0.5 text-[11px] text-emerald-700">
             {t('online')}
           </span>
         )}
@@ -121,7 +121,7 @@ function ProfessionalCard(pro: Professional & { t: any }) {
 
       <div className="mt-1">
         <Link href={`/professionals/${id}`}>
-          <Button className="w-full justify-center py-2.5 text-xs">
+          <Button className="w-full justify-center py-2.5 text-xs bg-white hover:bg-gray-50 text-[#333333] border border-gray-200 shadow-sm hover:border-gray-300">
             {t('viewProfile')}
           </Button>
         </Link>

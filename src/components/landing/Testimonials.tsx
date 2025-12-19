@@ -65,7 +65,7 @@ function TestimonialCard({ review, index, t }: { review: Review; index: number; 
             {review.client.user.firstName} {review.client.user.lastName[0]}.
           </p>
           <p className="text-xs text-[#7C7373]">
-            {t('hiredFor')} <span className="text-[#2563EB]">Services</span>
+            {t('hiredFor')} <span className="text-[#3B4D9D]">Services</span>
           </p>
         </div>
       </div>
@@ -110,7 +110,7 @@ export function Testimonials() {
     <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-[#E5E7EB]">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
+          <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">
             {t('badge')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">

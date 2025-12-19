@@ -10,15 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-[#2563EB] to-[#1D4FD8] text-white shadow-md hover:shadow-lg hover:shadow-[#2563EB]/20 hover:from-[#1D4FD8] hover:to-[#1e40af]",
+        default: "bg-gradient-to-r from-[#3B4D9D] to-[#304090] text-white shadow-md hover:shadow-lg hover:shadow-[#3B4D9D]/20 hover:from-[#304090] hover:to-[#2A3A80]",
         destructive:
           "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md hover:shadow-lg hover:from-red-600 hover:to-red-700",
         outline:
-          "border border-[#E5E7EB] bg-white/80 backdrop-blur-sm hover:bg-white hover:border-[#2563EB]/30 hover:shadow-sm",
+          "border border-[#E5E7EB] bg-white/80 backdrop-blur-sm hover:bg-white hover:border-[#3B4D9D]/30 hover:shadow-sm",
         secondary:
           "bg-[#F3F4F6] text-[#374151] hover:bg-[#E5E7EB] shadow-sm",
         ghost: "hover:bg-[#F3F4F6] hover:text-[#1F2937]",
-        link: "text-[#2563EB] underline-offset-4 hover:underline",
+        link: "text-[#3B4D9D] underline-offset-4 hover:underline",
         // Premium glass button
         glass: "glass-card text-[#1F2937] hover:shadow-glass-hover",
       },

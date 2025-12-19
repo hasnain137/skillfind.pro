@@ -35,9 +35,19 @@ const getCategories = unstable_cache(
           description: true,
           icon: true,
           slug: true,
+          subcategories: {
+            select: {
+              id: true,
+              nameEn: true,
+              slug: true,
+            }
+          }
+        },
+        where: {
+          isActive: true
         },
         orderBy: {
-          nameEn: 'asc',
+          sortOrder: 'asc',
         },
       });
 
@@ -47,8 +57,8 @@ const getCategories = unstable_cache(
       return []; // Return empty array on error, component will use fallback
     }
   },
-  ['categories'],
-  { revalidate: 86400, tags: ['categories'] }
+  ['categories-v3'],
+  { revalidate: 60, tags: ['categories-v3'] }
 );
 
 function FeaturedProfessionalsSkeleton() {
@@ -87,7 +97,7 @@ export default async function HomePage() {
         <SuggestedSkills />
         <TrustSection />
         <DualCTA />
-        <CategoryDirectory />
+        <CategoryDirectory categories={categories} />
       </main>
       <Footer />
     </div>

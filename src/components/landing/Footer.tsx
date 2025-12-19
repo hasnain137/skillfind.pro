@@ -36,17 +36,17 @@ export function Footer() { // Not async
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/search" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="/search" className="hover:text-[#3B4D9D] transition-colors">
                     {t('browseCategories')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#top-professionals" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="#top-professionals" className="hover:text-[#3B4D9D] transition-colors">
                     {t('featuredPros')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#how-it-works" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="#how-it-works" className="hover:text-[#3B4D9D] transition-colors">
                     {t('howItWorks')}
                   </Link>
                 </li>
@@ -59,19 +59,14 @@ export function Footer() { // Not async
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/signup" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="/signup" className="hover:text-[#3B4D9D] transition-colors">
                     {t('becomePro')}
                   </Link>
                 </li>
                 <li>
-                  <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    {t('pricing')}
-                  </button>
-                </li>
-                <li>
-                  <button type="button" className="hover:text-[#2563EB] transition-colors">
-                    {t('help')}
-                  </button>
+                  <Link href="/learn-more" className="hover:text-[#3B4D9D] transition-colors">
+                    Benefits
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -82,19 +77,19 @@ export function Footer() { // Not async
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <button type="button" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="/learn-more" className="hover:text-[#3B4D9D] transition-colors">
                     {t('about')}
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/legal" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="/legal" className="hover:text-[#3B4D9D] transition-colors">
                     Legal Notice
                   </Link>
                 </li>
                 <li>
-                  <button type="button" className="hover:text-[#2563EB] transition-colors">
+                  <Link href="/legal" className="hover:text-[#3B4D9D] transition-colors">
                     {t('privacy')}
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -106,7 +101,7 @@ export function Footer() { // Not async
           <p>© {new Date().getFullYear()} {t('rightsReserved')}</p>
 
           <div className="flex items-center gap-6">
-            <LanguageSwitcher className="rounded-lg pl-3 pr-8 py-1.5 focus:border-[#2563EB] focus:ring-1" />
+            <LanguageSwitcher className="rounded-lg pl-3 pr-8 py-1.5 focus:border-[#3B4D9D] focus:ring-1" />
             <span>{t('madeWithLove')}</span>
           </div>
         </div>

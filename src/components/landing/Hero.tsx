@@ -13,17 +13,23 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden border-b border-[#E5E7EB] bg-white pt-8 pb-12 md:pt-16 md:pb-20 lg:pt-24 lg:pb-28">
+      {/* Background Mesh Gradients */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-100/40 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-100/40 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2" />
+      </div>
+
       <Container className="relative z-10">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
 
           {/* Left Column: Text & Search */}
           <FadeIn className="flex flex-col gap-6 text-center lg:text-left">
             <div>
-              <FadeIn delay={0.2} className="inline-flex items-center rounded-full bg-[#EFF6FF] px-3 py-1 text-xs font-medium text-[#2563EB] ring-1 ring-inset ring-[#2563EB]/10 mb-4">
+              <FadeIn delay={0.2} className="inline-flex items-center rounded-full bg-[#3B4D9D]/10 px-3 py-1 text-xs font-medium text-[#3B4D9D] ring-1 ring-inset ring-[#3B4D9D]/20 mb-4">
                 {t('badge')}
               </FadeIn>
               <h1 className="text-4xl font-semibold tracking-tighter text-[#333333] sm:text-5xl md:text-6xl">
-                {t('titlePrefix')} <span className="text-[#2563EB]">{t('titleHighlight')}</span> {t('titleSuffix')}
+                {t('titlePrefix')} <span className="text-[#3B4D9D]">{t('titleHighlight')}</span> {t('titleSuffix')}
               </h1>
               <p className="mt-4 text-lg text-[#7C7373] max-w-2xl mx-auto lg:mx-0">
                 {t('subtitle')}
@@ -63,7 +69,7 @@ export function Hero() {
           >
             <div className="relative mx-auto w-full max-w-[600px] aspect-[4/3]">
               {/* Decorative elements behind image */}
-              <div className="absolute -top-4 -right-4 h-full w-full rounded-2xl bg-[#2563EB]/10 -z-10" />
+              <div className="absolute -top-4 -right-4 h-full w-full rounded-2xl bg-[#3B4D9D]/10 -z-10" />
               <div className="absolute -bottom-4 -left-4 h-full w-full rounded-2xl bg-[#F3F4F6] -z-10" />
 
               <Image

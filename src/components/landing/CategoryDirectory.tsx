@@ -22,28 +22,30 @@ interface CategoryDirectoryProps {
 }
 
 function CategoryColumn({ category }: { category: Category }) {
-  if (!category.subcategories || category.subcategories.length === 0) {
-    return null;
-  }
+  const subcategories = category.subcategories || [];
 
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-[#333333] uppercase tracking-wide">
         {category.nameEn}
       </h3>
-      <ul className="flex flex-col gap-2">
-        {category.subcategories.map((sub) => (
-          <li key={sub.id}>
-            <Link
-              href={`/search?subcategory=${sub.id}`}
-              className="group flex items-center justify-between rounded-lg p-2 text-sm text-[#7C7373] transition-all hover:bg-[#F3F4F6] hover:text-[#2563EB] hover:pl-3"
-            >
-              <span>{sub.nameEn}</span>
-              <span className="opacity-0 transition-opacity group-hover:opacity-100">→</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {subcategories.length > 0 ? (
+        <ul className="flex flex-col gap-2">
+          {subcategories.map((sub) => (
+            <li key={sub.id}>
+              <Link
+                href={`/search?subcategory=${sub.id}`}
+                className="group flex items-center justify-between rounded-lg p-2 text-sm text-[#7C7373] transition-all hover:bg-gray-50 hover:text-primary hover:pl-3"
+              >
+                <span>{sub.nameEn}</span>
+                <span className="opacity-0 transition-opacity group-hover:opacity-100">→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm text-gray-400 italic px-2">No subcategories yet</p>
+      )}
     </div>
   );
 }
@@ -51,15 +53,15 @@ function CategoryColumn({ category }: { category: Category }) {
 export function CategoryDirectory({ categories = [] }: CategoryDirectoryProps) {
   const t = useTranslations('CategoryDirectory');
 
-  // Filter out empty categories to keep the design clean
-  const activeCategories = categories.filter(c => c.subcategories && c.subcategories.length > 0);
+  // Show all provided categories
+  const activeCategories = categories;
 
   return (
-    <section className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">
+    <section id="categories" className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
+          <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">
             {t('badge')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">

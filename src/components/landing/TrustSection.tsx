@@ -48,35 +48,46 @@ export function TrustSection() {
   ];
 
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section className="bg-[#FAFAFA] py-24 md:py-32">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
+        <div className="grid gap-16 lg:grid-cols-2 lg:gap-24 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="md:pr-12"
           >
-            <h2 className="text-3xl font-semibold tracking-tight text-[#333333] sm:text-4xl mb-6">
+            <span className="inline-block py-1 px-3 rounded-full bg-[#3B4D9D]/10 text-[#3B4D9D] text-sm font-semibold mb-6">
+              Why SkillFind?
+            </span>
+            <h2 className="text-4xl font-semibold tracking-tight text-[#333333] sm:text-5xl mb-6 leading-tight">
               {t('title')}
             </h2>
-            <p className="text-lg text-[#7C7373] mb-8 leading-relaxed">
+            <p className="text-xl text-[#7C7373] mb-10 leading-relaxed font-light">
               {t('subtitle')}
             </p>
-            <div className="flex gap-4">
+
+            <div className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border border-[#E5E7EB]">
               <div className="flex -space-x-4">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-slate-200" />
+                  <div key={i} className="h-12 w-12 rounded-full border-2 border-white bg-slate-200" />
                 ))}
               </div>
-              <div className="text-sm font-medium">
-                <p className="text-[#333333]">{t('rating')}</p>
-                <p className="text-[#7C7373]">{t('ratingSub')}</p>
+              <div>
+                <div className="flex items-center gap-1 mb-1">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-amber-400 text-sm">★</span>
+                  ))}
+                </div>
+                <div className="text-sm font-medium">
+                  <p className="text-[#333333] font-bold">{t('rating')}</p>
+                  <p className="text-[#7C7373] text-xs">{t('ratingSub')}</p>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2">
             {benefits.map((item, index) => (
               <motion.div
                 key={item.title}
@@ -84,14 +95,14 @@ export function TrustSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex flex-col gap-3"
+                className="flex flex-col gap-4 group"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#3B4D9D] text-white shadow-lg shadow-blue-900/10 group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#333333]">{item.title}</h3>
-                  <p className="mt-2 text-sm text-[#7C7373] leading-relaxed">
+                  <h3 className="text-lg font-semibold text-[#333333] mb-2">{item.title}</h3>
+                  <p className="text-[#7C7373] leading-relaxed">
                     {item.description}
                   </p>
                 </div>

@@ -2,7 +2,7 @@
 
 import { getInitials } from '@/lib/utils';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 interface AvatarProps {
     src?: string | null;
@@ -22,6 +22,12 @@ const SIZES = {
 export function Avatar({ src, firstName = '', lastName = '', size = 'md', className = '' }: AvatarProps) {
     const [imageError, setImageError] = useState(false);
     const initials = getInitials(firstName, lastName);
+    const isMounted = useRef(false);
+
+    useEffect(() => {
+        isMounted.current = true;
+        return () => { isMounted.current = false; };
+    }, []);
 
     if (src && !imageError) {
         return (
@@ -31,7 +37,12 @@ export function Avatar({ src, firstName = '', lastName = '', size = 'md', classN
                     alt={`${firstName} ${lastName}`}
                     fill
                     className="object-cover"
-                    onError={() => setImageError(true)}
+                    onError={() => {
+                        // Prevent state update if not mounted
+                        if (isMounted.current) {
+                            setImageError(true);
+                        }
+                    }}
                 />
             </div>
         );

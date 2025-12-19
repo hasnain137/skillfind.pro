@@ -45,7 +45,6 @@
         "Pro": {
             "eyebrow": "Espace Pro",
             "title": "Gestion de compte",
-            "description": "Accès premium pour prestataires.",
             "links": {
                 "dashboard": "Tableau de bord",
                 "matchingRequests": "Demandes",
@@ -156,17 +155,15 @@
         "reviews": "avis",
         "online": "Disponible en ligne",
         "emptyTitle": "Aucun professionnel en vedette pour le moment",
-        "emptySubtitle": "Revenez plus tard ou recherchez un service spécifique."
+        "emptySubtitle": "Revenez plus tard ou recherchez un service spécifique.",
+        "viewAll": "Voir tous les professionnels"
     },
     "DualCTA": {
-        "clientBadge": "Pour les Clients",
-        "clientTitle": "Besoin d'aide pour un projet ?",
-        "clientDesc": "Trouvez des professionnels de confiance pour toute tâche. Du tutorat aux réparations domiciliaires, nous avons ce qu'il vous faut.",
-        "clientButton": "Trouver un professionnel",
-        "proBadge": "Pour les Professionnels",
-        "proTitle": "Développez votre activité",
-        "proDesc": "Rejoignez plus de 5 000 experts recevant des leads de qualité quotidiennement. Fixez vos tarifs et travaillez selon vos conditions.",
-        "proButton": "Rejoindre en tant que Pro"
+        "unifiedTitle": "Prêt à commencer ?",
+        "unifiedSubtitle": "Rejoignez notre communauté aujourd'hui.",
+        "unifiedDesc": "Que vous cherchiez de l'aide ou du travail, SkillFind est l'endroit pour vous.",
+        "unifiedButton": "Commencer",
+        "learnMore": "En savoir plus"
     },
     "Testimonials": {
         "badge": "Témoignages Clients",

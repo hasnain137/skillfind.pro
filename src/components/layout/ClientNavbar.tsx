@@ -17,11 +17,11 @@ export function ClientNavbar() {
         {/* Left: Logo + language */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#3B4D9D] text-xs font-bold text-white">
               SF
             </div>
             <span className="text-lg font-semibold tracking-tight">
-              Skill<span className="text-[#2563EB]">Find</span>
+              Skill<span className="text-[#3B4D9D]">Find</span>
             </span>
           </Link>
 
@@ -68,7 +68,7 @@ export function ClientNavbar() {
               </Link>
               <Link
                 href="/signup"
-                className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
+                className="inline-flex items-center justify-center rounded-full bg-[#3B4D9D] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3B4D9D]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#3B4D9D]"
               >
                 {t('signup')}
               </Link>

@@ -104,7 +104,7 @@ export function MobileNav() {
                     href={link.href}
                     onClick={closeMenu}
                     className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${pathname === link.href
-                      ? 'bg-[#2563EB]/10 text-[#2563EB]'
+                      ? 'bg-[#3B4D9D]/10 text-[#3B4D9D]'
                       : 'text-[#7C7373] hover:bg-[#F3F4F6] hover:text-[#333333]'
                       }`}
                   >

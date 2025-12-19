@@ -50,19 +50,19 @@ const config: Config = {
                 },
 
                 primary: {
+                    DEFAULT: "hsl(var(--primary))",
+                    foreground: "hsl(var(--primary-foreground))",
                     50: '#eff6ff',
                     100: '#dbeafe',
                     200: '#bfdbfe',
                     300: '#93c5fd',
                     400: '#60a5fa',
                     500: '#3b82f6',
-                    600: '#2563EB', // Main brand color
+                    600: '#3B4D9D', // Main brand color (New Blue)
                     700: '#1d4ed8',
                     800: '#1e40af',
                     900: '#1e3a8a',
                     950: '#172554',
-                    DEFAULT: "hsl(var(--primary))",
-                    foreground: "hsl(var(--primary-foreground))",
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",

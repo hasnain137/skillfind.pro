@@ -26,7 +26,7 @@ export function UserMenu() {
         </Link>
         <Link
           href="/signup"
-          className="rounded-xl bg-[#2563EB] px-4 py-2 text-sm font-medium text-white hover:bg-[#1D4FD8] transition-colors"
+          className="rounded-xl bg-[#3B4D9D] px-4 py-2 text-sm font-medium text-white hover:bg-[#304090] transition-colors"
         >
           {t('signUp')}
         </Link>

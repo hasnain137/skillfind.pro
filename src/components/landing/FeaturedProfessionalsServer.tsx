@@ -76,8 +76,8 @@ const getFeaturedProfessionals = unstable_cache(
       return [];
     }
   },
-  ['featured-professionals-v2'],
-  { revalidate: 3600, tags: ['featured-professionals-v2'] }
+  ['featured-professionals-v3'],
+  { revalidate: 60, tags: ['featured-professionals-v3'] }
 );
 
 function ProfessionalCard({
@@ -102,10 +102,10 @@ function ProfessionalCard({
   const additionalServices = services.length > 1 ? services.length - 1 : 0;
 
   return (
-    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#2563EB]/20">
+    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#3B4D9D]/20">
       {/* Top Badge - Verified */}
       {isVerified && (
-        <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#2563EB] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
+        <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#3B4D9D] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
           <span>✓</span> {t('verified')}
         </div>
       )}
@@ -123,12 +123,12 @@ function ProfessionalCard({
           <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-green-500 border-2 border-white ring-2 ring-green-100" title="Available now" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-[#333333] truncate group-hover:text-[#2563EB] transition-colors">
+          <h3 className="text-lg font-semibold text-[#333333] truncate group-hover:text-[#3B4D9D] transition-colors">
             {user.firstName} {user.lastName}
           </h3>
           <p className="text-sm font-medium text-[#7C7373] mt-0.5">{primaryService}</p>
           {additionalServices > 0 && (
-            <p className="text-xs text-[#2563EB] font-bold mt-1">
+            <p className="text-xs text-[#3B4D9D] font-bold mt-1">
               {t('moreServices', { count: additionalServices })}
             </p>
           )}
@@ -173,7 +173,7 @@ function ProfessionalCard({
       <div className="border-t border-[#E5E7EB] pt-4 mt-auto">
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-medium text-[#7C7373] uppercase tracking-wide">{t('startingFrom')}</span>
-          <span className="text-lg font-bold text-[#2563EB]">{priceDisplay}</span>
+          <span className="text-lg font-bold text-[#3B4D9D]">{priceDisplay}</span>
         </div>
 
         {/* CTA Button */}
@@ -200,7 +200,7 @@ export async function FeaturedProfessionalsServer() {
       >
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
+            <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">
               {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">
@@ -222,7 +222,7 @@ export async function FeaturedProfessionalsServer() {
     >
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
+          <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">
             {t('badge')}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#333333] md:text-4xl">

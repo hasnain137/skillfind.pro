@@ -29,7 +29,7 @@ export function LiveStats() {
           {statItems.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className="text-2xl font-bold text-[#2563EB] mb-0.5">
+              <div className="text-2xl font-bold text-[#3B4D9D] mb-0.5">
                 {stat.value}
               </div>
               <div className="text-xs text-[#7C7373] font-medium">

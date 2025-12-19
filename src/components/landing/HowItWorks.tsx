@@ -48,7 +48,7 @@ export function HowItWorks() {
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
           <FadeIn>
-            <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
+            <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">
               {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-[#333333] md:text-4xl">
@@ -65,7 +65,7 @@ export function HowItWorks() {
             <motion.div key={step.number} variants={{ initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }}>
               <div className="relative group h-full p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                 {/* Icon */}
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#2563EB] group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#3B4D9D] group-hover:bg-[#3B4D9D] group-hover:text-white transition-colors duration-300">
                   {step.icon}
                 </div>
 
@@ -78,7 +78,7 @@ export function HowItWorks() {
                 </p>
 
                 {/* Step number watermark */}
-                <div className="absolute top-4 right-6 text-6xl font-black text-[#333333]/10 -z-0 select-none pointer-events-none group-hover:text-[#2563EB]/20 transition-colors">
+                <div className="absolute top-4 right-6 text-6xl font-black text-[#333333]/10 -z-0 select-none pointer-events-none group-hover:text-[#3B4D9D]/20 transition-colors">
                   {step.number}
                 </div>
               </div>

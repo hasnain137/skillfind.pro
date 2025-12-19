@@ -45,7 +45,6 @@
         "Pro": {
             "eyebrow": "Professional Area",
             "title": "Account Management",
-            "description": "Premium access for service providers.",
             "links": {
                 "dashboard": "Dashboard",
                 "matchingRequests": "Requests",
@@ -218,17 +217,15 @@
         "reviews": "reviews",
         "online": "Online available",
         "emptyTitle": "No featured professionals yet",
-        "emptySubtitle": "Check back later or search for a specific service."
+        "emptySubtitle": "Check back later or search for a specific service.",
+        "viewAll": "View all professionals"
     },
     "DualCTA": {
-        "clientBadge": "For Clients",
-        "clientTitle": "Need help with a project?",
-        "clientDesc": "Find trusted professionals for any task. From tutoring to home repairs, we have you covered.",
-        "clientButton": "Find a Professional",
-        "proBadge": "For Professionals",
-        "proTitle": "Grow your business",
-        "proDesc": "Join 5,000+ experts receiving quality leads daily. Set your rates and work on your terms.",
-        "proButton": "Join as a Pro"
+        "unifiedTitle": "Ready to get started?",
+        "unifiedSubtitle": "Join our community today.",
+        "unifiedDesc": "Whether you're looking for help or looking for work, SkillFind is the place for you.",
+        "unifiedButton": "Get Started",
+        "learnMore": "Learn more"
     },
     "Testimonials": {
         "badge": "Client Success Stories",

@@ -62,7 +62,7 @@ export async function Navbar() {
               </Link>
               <Link
                 href="/signup"
-                className="inline-flex items-center justify-center rounded-full bg-[#2563EB] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4FD8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB]"
+                className="inline-flex items-center justify-center rounded-full bg-[#3B4D9D] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#3B4D9D]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#3B4D9D]"
               >
                 {t('signup')}
               </Link>

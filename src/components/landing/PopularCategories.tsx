@@ -22,10 +22,14 @@ function CategoryCard({ name, description, icon, id }: Category & { id?: string 
       <div className="group h-full p-4 rounded-xl bg-white border border-[#E5E7EB] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
         {/* Icon + Title Row */}
         <div className="flex items-center gap-3 mb-2">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EFF6FF] text-xl group-hover:bg-[#2563EB] transition-colors duration-200">
-            <span className="group-hover:scale-110 transition-transform">{icon}</span>
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EFF6FF] text-xl group-hover:bg-[#3B4D9D] transition-colors duration-200">
+            {icon.startsWith('http') || icon.startsWith('/') ? (
+              <img src={icon} alt={name} className="h-6 w-6 object-contain group-hover:scale-110 transition-transform" />
+            ) : (
+              <span className="group-hover:scale-110 transition-transform">{icon}</span>
+            )}
           </div>
-          <h3 className="text-base font-semibold text-[#333333] group-hover:text-[#2563EB] transition-colors">
+          <h3 className="text-base font-semibold text-[#333333] group-hover:text-[#3B4D9D] transition-colors">
             {name}
           </h3>
         </div>
@@ -72,7 +76,7 @@ export function PopularCategories({ categories }: PopularCategoriesProps) {
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-12">
           <FadeIn>
-            <p className="text-sm font-bold uppercase tracking-wider text-[#2563EB]">
+            <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">
               {t('badge')}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-[#333333] md:text-4xl">

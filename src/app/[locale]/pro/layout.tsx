@@ -50,11 +50,7 @@ export default async function ProLayout({
           </div>
 
           {/* Description text from translation */}
-          <div className="mx-3 p-4 rounded-xl bg-white/5 border border-white/5">
-            <p className="text-xs text-white/60 leading-relaxed">
-              {t('description')}
-            </p>
-          </div>
+
         </div>
 
         {/* Sidebar Footer - Back to Home */}

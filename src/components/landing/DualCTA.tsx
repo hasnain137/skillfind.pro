@@ -10,54 +10,53 @@ export function DualCTA() {
   const t = useTranslations('DualCTA');
 
   return (
-    <section id="for-professionals" className="py-20 md:py-24 bg-white">
+    <section className="py-20 md:py-24 bg-white">
       <Container>
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="relative overflow-hidden rounded-3xl bg-[#3B4D9D] px-6 py-16 shadow-2xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
+          <svg
+            viewBox="0 0 1024 1024"
+            className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
+            aria-hidden="true"
+          >
+            <circle cx={512} cy={512} r={512} fill="url(#gradient)" fillOpacity="0.7" />
+            <defs>
+              <radialGradient id="gradient">
+                <stop stopColor="#7775D6" />
+                <stop offset={1} stopColor="#3B4D9D" />
+              </radialGradient>
+            </defs>
+          </svg>
 
-          {/* Client CTA */}
-          <div className="relative overflow-hidden rounded-3xl bg-[#333333] p-8 md:p-12 text-center md:text-left">
-            <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-blue-600/20 blur-3xl" />
-
-            <div className="relative z-10 flex flex-col h-full items-start">
-              <span className="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400 ring-1 ring-inset ring-blue-500/20 mb-6">
-                {t('clientBadge')}
-              </span>
-              <h3 className="text-3xl font-bold text-white mb-4">
-                {t('clientTitle')}
-              </h3>
-              <p className="text-gray-300 mb-8 max-w-sm leading-relaxed">
-                {t('clientDesc')}
-              </p>
-              <Link href="/search" className="mt-auto">
-                <Button className="bg-white text-[#333333] hover:bg-gray-100 border-none font-bold px-8">
-                  {t('clientButton')}
+          <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
+            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              {t('unifiedTitle') || "Ready to get started?"}
+              <br />
+              {t('unifiedSubtitle') || "Join our community today."}
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-blue-100">
+              {t('unifiedDesc') || "Whether you're looking for help or looking for work, SkillFind is the place for you."}
+            </p>
+            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
+              <Link href="/signup">
+                <Button className="bg-white text-[#3B4D9D] hover:bg-gray-100 border-none font-bold px-8 py-3 text-base">
+                  {t('unifiedButton') || "Get Started"}
                 </Button>
+              </Link>
+              <Link href="/learn-more" className="text-sm font-semibold leading-6 text-white hover:text-blue-100 transition-colors">
+                {t('learnMore') || "Learn more"} <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
 
-          {/* Professional CTA */}
-          <div className="relative overflow-hidden rounded-3xl bg-blue-600 p-8 md:p-12 text-center md:text-left">
-            <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-
-            <div className="relative z-10 flex flex-col h-full items-start">
-              <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white ring-1 ring-inset ring-white/20 mb-6">
-                {t('proBadge')}
-              </span>
-              <h3 className="text-3xl font-bold text-white mb-4">
-                {t('proTitle')}
-              </h3>
-              <p className="text-blue-100 mb-8 max-w-sm leading-relaxed">
-                {t('proDesc')}
-              </p>
-              <Link href="/signup" className="mt-auto">
-                <Button className="bg-[#333333] text-white hover:bg-gray-800 border-none font-bold px-8">
-                  {t('proButton')}
-                </Button>
-              </Link>
-            </div>
+          <div className="relative mt-16 h-80 lg:mt-8">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2850&q=80"
+              alt="App screenshot"
+              width={1824}
+              height={1080}
+              className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
+            />
           </div>
-
         </div>
       </Container>
     </section>

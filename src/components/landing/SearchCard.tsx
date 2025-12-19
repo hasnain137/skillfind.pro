@@ -31,14 +31,14 @@ export function SearchCard({ className = "" }: { className?: string }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('placeholder')}
-            className="w-full h-12 rounded-xl border border-[#E5E7EB] bg-white pl-12 pr-4 text-base text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/20 transition-all"
+            className="w-full h-12 rounded-xl border border-[#E5E7EB] bg-white pl-12 pr-4 text-base text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#3B4D9D] focus:outline-none focus:ring-2 focus:ring-[#3B4D9D]/20 transition-all"
           />
         </div>
 
         {/* Find Button */}
         <Button
           type="submit"
-          className="h-12 px-8 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold rounded-xl shrink-0"
+          className="h-12 px-8 bg-[#3B4D9D] hover:bg-[#3B4D9D]/90 text-white font-semibold rounded-xl shrink-0"
         >
           {t('button')}
         </Button>
