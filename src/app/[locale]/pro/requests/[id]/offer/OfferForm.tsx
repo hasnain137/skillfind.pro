@@ -17,6 +17,7 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [touched, setTouched] = useState<Record<string, boolean>>({});
 
     const [formData, setFormData] = useState({
         proposedPrice: '',
@@ -25,6 +26,24 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
         estimatedDuration: '',
         availableTimeSlots: '',
     });
+
+    // Field validation
+    const getFieldError = (name: string): string => {
+        switch (name) {
+            case 'proposedPrice':
+                if (!formData.proposedPrice) return t('validation.invalidPrice');
+                if (parseFloat(formData.proposedPrice) < 1) return t('validation.minPrice');
+                return '';
+            case 'message':
+                if (formData.message.length < 50) return t('validation.shortMessage');
+                return '';
+            default:
+                return '';
+        }
+    };
+
+    const priceError = touched.proposedPrice ? getFieldError('proposedPrice') : '';
+    const messageError = touched.message ? getFieldError('message') : '';
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -130,13 +149,23 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                                 step="0.01"
                                 value={formData.proposedPrice}
                                 onChange={(e) => setFormData({ ...formData, proposedPrice: e.target.value })}
-                                className="w-full rounded-xl border-2 border-[#E5E7EB] pl-9 pr-4 py-3 text-base font-semibold text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-4 focus:ring-[#2563EB]/10 transition-all"
+                                onBlur={() => setTouched(prev => ({ ...prev, proposedPrice: true }))}
+                                className={`w-full rounded-xl border-2 pl-9 pr-4 py-3 text-base font-semibold text-[#333333] placeholder:text-[#B0B0B0] focus:outline-none focus:ring-4 transition-all ${priceError
+                                    ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/30'
+                                    : 'border-[#E5E7EB] focus:border-[#2563EB] focus:ring-[#2563EB]/10'
+                                    }`}
                                 placeholder="0.00"
                             />
                         </div>
-                        <p className="mt-1.5 text-xs text-[#7C7373] flex items-center gap-1">
-                            💡 {t('pricing.hint', { type: priceLabel })}
-                        </p>
+                        {priceError ? (
+                            <p className="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                                ⚠ {priceError}
+                            </p>
+                        ) : (
+                            <p className="mt-1.5 text-xs text-[#7C7373] flex items-center gap-1">
+                                💡 {t('pricing.hint', { type: priceLabel })}
+                            </p>
+                        )}
                     </div>
                     <div>
                         <label className="mb-2 block text-sm font-medium text-[#333333]">
@@ -171,12 +200,16 @@ export default function OfferForm({ requestId, requestTitle }: OfferFormProps) {
                         rows={8}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full rounded-xl border-2 border-[#E5E7EB] px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-4 focus:ring-[#2563EB]/10 transition-all"
+                        onBlur={() => setTouched(prev => ({ ...prev, message: true }))}
+                        className={`w-full rounded-xl border-2 px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:outline-none focus:ring-4 transition-all ${messageError
+                                ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/30'
+                                : 'border-[#E5E7EB] focus:border-[#2563EB] focus:ring-[#2563EB]/10'
+                            }`}
                         placeholder={t('proposal.messagePlaceholder')}
                     />
                     <div className="mt-2 flex items-center justify-between text-xs">
-                        <p className={`font-medium ${formData.message.length >= 50 ? 'text-green-600' : 'text-[#7C7373]'}`}>
-                            {formData.message.length >= 50 ? '✅' : '⚠️'} {t('proposal.minChars', { count: formData.message.length })}
+                        <p className={`font-medium ${formData.message.length >= 50 ? 'text-green-600' : messageError ? 'text-red-600' : 'text-[#7C7373]'}`}>
+                            {formData.message.length >= 50 ? '✅' : messageError ? '⚠' : '⚠️'} {t('proposal.minChars', { count: formData.message.length })}
                         </p>
                         <p className="text-[#B0B0B0]">{t('proposal.chars', { count: formData.message.length })}</p>
                     </div>

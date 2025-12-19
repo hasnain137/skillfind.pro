@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollapsibleTips } from "@/components/ui/CollapsibleTips";
+import { FormField, FormInput, FormTextarea, FormSelect } from "@/components/ui/FormField";
 import { useTranslations } from 'next-intl';
 
 export default function NewClientRequestPage() {
@@ -15,6 +16,8 @@ export default function NewClientRequestPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [categories, setCategories] = useState<Array<{
     id: string;
     nameEn: string;
@@ -52,8 +55,65 @@ export default function NewClientRequestPage() {
   // Get subcategories for selected category
   const activeSubcategories = categories.find(c => c.id === formData.categoryId)?.subcategories || [];
 
+  // Field validation
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'categoryId':
+        return !value ? 'Please select a category' : '';
+      case 'subcategoryId':
+        return !value ? 'Please select a subcategory' : '';
+      case 'title':
+        if (!value) return 'Title is required';
+        if (value.length < 10) return 'Title must be at least 10 characters';
+        if (value.length > 100) return 'Title must be less than 100 characters';
+        return '';
+      case 'description':
+        if (!value) return 'Description is required';
+        if (value.length < 30) return 'Description must be at least 30 characters';
+        return '';
+      case 'location':
+        return !value ? 'Location is required' : '';
+      case 'timing':
+        return !value ? 'Please select urgency' : '';
+      default:
+        return '';
+    }
+  };
+
+  // Handle field blur (mark as touched)
+  const handleBlur = (name: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }));
+    const fieldError = validateField(name, formData[name as keyof typeof formData]);
+    setFieldErrors(prev => ({ ...prev, [name]: fieldError }));
+  };
+
+  // Validate all fields
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    let isValid = true;
+
+    ['categoryId', 'subcategoryId', 'title', 'description', 'location', 'timing'].forEach(field => {
+      const error = validateField(field, formData[field as keyof typeof formData]);
+      if (error) {
+        errors[field] = error;
+        isValid = false;
+      }
+    });
+
+    setFieldErrors(errors);
+    setTouched({ categoryId: true, subcategoryId: true, title: true, description: true, location: true, timing: true });
+    return isValid;
+  };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Validate all fields first
+    if (!validateForm()) {
+      toast.error('Please fix the errors below');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
@@ -153,19 +213,26 @@ export default function NewClientRequestPage() {
             description={t('sections.basics.desc')}
           />
           <div className="grid gap-3 md:grid-cols-2">
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                {t('fields.category')} *
-              </label>
-              <select
+            <FormField
+              label={t('fields.category')}
+              required
+              error={touched.categoryId ? fieldErrors.categoryId : undefined}
+            >
+              <FormSelect
                 required
                 value={formData.categoryId}
-                onChange={(e) => setFormData({
-                  ...formData,
-                  categoryId: e.target.value,
-                  subcategoryId: '' // Reset subcategory when category changes
-                })}
-                className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+                hasError={touched.categoryId && !!fieldErrors.categoryId}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    categoryId: e.target.value,
+                    subcategoryId: '' // Reset subcategory when category changes
+                  });
+                  if (touched.categoryId) {
+                    setFieldErrors(prev => ({ ...prev, categoryId: validateField('categoryId', e.target.value) }));
+                  }
+                }}
+                onBlur={() => handleBlur('categoryId')}
               >
                 <option value="">{t('fields.selectCategory')}</option>
                 {categories.map((cat) => (
@@ -173,19 +240,26 @@ export default function NewClientRequestPage() {
                     {cat.nameEn}
                   </option>
                 ))}
-              </select>
-            </div>
+              </FormSelect>
+            </FormField>
 
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                {t('fields.subcategory')} *
-              </label>
-              <select
+            <FormField
+              label={t('fields.subcategory')}
+              required
+              error={touched.subcategoryId ? fieldErrors.subcategoryId : undefined}
+            >
+              <FormSelect
                 required
                 value={formData.subcategoryId}
-                onChange={(e) => setFormData({ ...formData, subcategoryId: e.target.value })}
+                hasError={touched.subcategoryId && !!fieldErrors.subcategoryId}
+                onChange={(e) => {
+                  setFormData({ ...formData, subcategoryId: e.target.value });
+                  if (touched.subcategoryId) {
+                    setFieldErrors(prev => ({ ...prev, subcategoryId: validateField('subcategoryId', e.target.value) }));
+                  }
+                }}
+                onBlur={() => handleBlur('subcategoryId')}
                 disabled={!formData.categoryId}
-                className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15 disabled:bg-gray-50 disabled:text-gray-400"
               >
                 <option value="">{t('fields.selectSubcategory')}</option>
                 {activeSubcategories.map((sub) => (
@@ -193,22 +267,30 @@ export default function NewClientRequestPage() {
                     {sub.nameEn}
                   </option>
                 ))}
-              </select>
-            </div>
+              </FormSelect>
+            </FormField>
 
-            <div className="md:col-span-2">
-              <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                {t('fields.title')} *
-              </label>
-              <input
+            <FormField
+              label={t('fields.title')}
+              required
+              error={touched.title ? fieldErrors.title : undefined}
+              className="md:col-span-2"
+            >
+              <FormInput
                 type="text"
                 required
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+                hasError={touched.title && !!fieldErrors.title}
+                onChange={(e) => {
+                  setFormData({ ...formData, title: e.target.value });
+                  if (touched.title) {
+                    setFieldErrors(prev => ({ ...prev, title: validateField('title', e.target.value) }));
+                  }
+                }}
+                onBlur={() => handleBlur('title')}
                 placeholder={t('fields.titlePlaceholder')}
               />
-            </div>
+            </FormField>
           </div>
         </Card>
 
@@ -218,22 +300,27 @@ export default function NewClientRequestPage() {
             title={t('sections.details.title')}
             description={t('sections.details.desc')}
           />
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-              {t('fields.description')} *
-            </label>
-            <textarea
+          <FormField
+            label={t('fields.description')}
+            required
+            error={touched.description ? fieldErrors.description : undefined}
+            hint={!touched.description || !fieldErrors.description ? t('fields.noContactInfo') : undefined}
+          >
+            <FormTextarea
               rows={4}
               required
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+              hasError={touched.description && !!fieldErrors.description}
+              onChange={(e) => {
+                setFormData({ ...formData, description: e.target.value });
+                if (touched.description) {
+                  setFieldErrors(prev => ({ ...prev, description: validateField('description', e.target.value) }));
+                }
+              }}
+              onBlur={() => handleBlur('description')}
               placeholder={t('fields.descriptionPlaceholder')}
             />
-            <p className="mt-1 text-[11px] text-[#7C7373]">
-              {t('fields.noContactInfo')}
-            </p>
-          </div>
+          </FormField>
         </Card>
 
         <Card className="space-y-4" padding="lg">
@@ -243,35 +330,38 @@ export default function NewClientRequestPage() {
             description={t('sections.location.desc')}
           />
           <div className="grid gap-3 md:grid-cols-2">
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                {t('fields.location')} *
-              </label>
-              <input
+            <FormField
+              label={t('fields.location')}
+              required
+              error={touched.location ? fieldErrors.location : undefined}
+            >
+              <FormInput
                 type="text"
                 required
                 value={formData.location}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="w-full rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+                hasError={touched.location && !!fieldErrors.location}
+                onChange={(e) => {
+                  setFormData({ ...formData, location: e.target.value });
+                  if (touched.location) {
+                    setFieldErrors(prev => ({ ...prev, location: validateField('location', e.target.value) }));
+                  }
+                }}
+                onBlur={() => handleBlur('location')}
                 placeholder={t('fields.locationPlaceholder')}
               />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                {t('fields.format')}
-              </label>
-              <select
+            </FormField>
+            <FormField label={t('fields.format')}>
+              <FormSelect
                 value={formData.preferredFormat}
                 onChange={(e) => setFormData({ ...formData, preferredFormat: e.target.value })}
-                className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
               >
                 <option value="ONLINE_OR_OFFLINE">
                   {t('fields.formats.ONLINE_OR_OFFLINE')}
                 </option>
                 <option value="ONLINE_ONLY">{t('fields.formats.ONLINE_ONLY')}</option>
                 <option value="IN_PERSON_ONLY">{t('fields.formats.IN_PERSON_ONLY')}</option>
-              </select>
-            </div>
+              </FormSelect>
+            </FormField>
           </div>
         </Card>
 
