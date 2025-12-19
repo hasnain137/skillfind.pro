@@ -231,7 +231,6 @@ export async function POST(request: NextRequest) {
       const matchingPros = await prisma.professional.findMany({
         where: {
           status: { in: ['ACTIVE', 'PENDING_REVIEW'] },
-          isAvailable: true,
           services: {
             some: {
               subcategory: {
