@@ -104,6 +104,10 @@ export default async function ClientLayout({
             </Link>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/" className="p-2 text-gray-400 hover:text-primary-600 hover:bg-gray-100 rounded-full transition-colors" title="Go to Homepage">
+              <span className="text-xl">🏠</span>
+            </Link>
+            <div className="h-8 w-px bg-gray-200 mx-2 hidden sm:block"></div>
             <NotificationBell />
             <div className="h-8 w-px bg-gray-200 mx-2 hidden sm:block"></div>
             <ClientUserButton />

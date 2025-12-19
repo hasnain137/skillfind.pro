@@ -13,7 +13,6 @@ import { getProfessionalStatusBanner } from "@/lib/professional-status";
 import { StatusCard } from "@/components/dashboard/StatusCard";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
-import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { calculateProfessionalCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
@@ -181,47 +180,13 @@ export default async function ProDashboardPage() {
     .filter(job => job.completedAt && job.completedAt >= lastMonth && job.completedAt < new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1))
     .reduce((sum, job) => sum + (job.request.budgetMax || job.request.budgetMin || 0), 0);
 
-  const highlights = [
-    {
-      label: t('Highlights.profile'),
-      value: `${profileCompletion}%`,
-      helper: profileCompletion < 100 ? t('Steps.profile') : t('Highlights.allDone')
-    },
-    {
-      label: t('Highlights.wallet'),
-      value: `€${balanceEuros.toFixed(2)}`,
-      helper: balanceEuros < 5 ? t('Highlights.topUp') : t('Highlights.goodBalance')
-    },
-    {
-      label: t('Highlights.pending'),
-      value: `${professional.offers.length}`,
-      helper: professional.offers.length > 0 ? t('Highlights.awaitingResponse') : t('Highlights.sendOffers')
-    },
-  ];
-
-
-
-  const profileViews = 0; // Not tracked in schema yet
-  const acceptanceRate = allOffers.length > 0
-    ? Math.round((allOffers.filter(o => o.status === 'ACCEPTED').length / allOffers.length) * 100)
-    : 0;
-
   const earningsData = {
     totalEarnings,
     thisMonth: thisMonthEarnings,
     lastMonth: lastMonthEarnings,
     pendingPayouts: balanceEuros,
     completedJobs: completedJobs.length,
-    chartData, // Pass the real data
-  };
-
-  const metricsData = {
-    profileViews,
-    offersSent: allOffers.length,
-    acceptanceRate,
-    averageRating: professional.averageRating,
-    totalReviews: professional.totalReviews,
-    responseTime: t('Metrics.responseTimeValue'),
+    chartData,
   };
 
   const statusBannerProps = getProfessionalStatusBanner(professional.status);
@@ -255,26 +220,6 @@ export default async function ProDashboardPage() {
     icon: action.icon
   }));
 
-  const nextSteps = [];
-  if (profileCompletion < 100) {
-    nextSteps.push({ label: t('Steps.profile'), href: '/pro/profile' });
-  }
-  if (professional.services.length === 0) {
-    nextSteps.push({ label: t('Steps.services'), href: '/pro/profile' });
-  }
-  if (matchingRequestsToday > 0) {
-    nextSteps.push({ label: t('Steps.matching', { count: matchingRequestsToday }), href: '/pro/requests' });
-  }
-  if (professional.offers.length > 0) {
-    nextSteps.push({ label: t('Steps.offers', { count: professional.offers.length }), href: '/pro/offers' });
-  }
-  if (professional.jobs.length > 0) {
-    nextSteps.push({ label: t('Steps.jobs', { count: professional.jobs.length }), href: '/pro/jobs' });
-  }
-  if (nextSteps.length === 0) {
-    nextSteps.push({ label: t('Steps.default'), href: '/pro/requests' });
-  }
-
 
 
   return (
@@ -287,13 +232,15 @@ export default async function ProDashboardPage() {
         />
       )}
 
+      {/* Simplified Hero */}
       <DashboardHero
         eyebrow={t('eyebrow')}
         title={t('welcome', { period: t(`periods.${timeOfDay}`), name: firstName })}
         description={t('description')}
         action={{ label: t('Actions.browseCta'), href: "/pro/requests" }}
-        highlights={highlights}
       />
+
+
 
       <ProfileCompletionBanner
         profileCompletion={profileCompletion}
@@ -303,21 +250,8 @@ export default async function ProDashboardPage() {
 
       {/* Main Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        {/* Left Column - Main Content (Span 2) */}
+        {/* Left Column - Matching Requests (Span 2) */}
         <div className="lg:col-span-2 space-y-8">
-
-          {/* Performance Metrics */}
-          <div className="space-y-4">
-            <SectionHeading
-              title={t('metricsTitle')}
-              description={t('metricsDesc')}
-            />
-            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
-              <div className="p-6">
-                <PerformanceMetrics data={metricsData} />
-              </div>
-            </Card>
-          </div>
 
           {/* Matching Requests */}
           <div className="space-y-4">
@@ -340,24 +274,12 @@ export default async function ProDashboardPage() {
             </Card>
           </div>
 
-          {/* Quick Actions */}
-          <div className="space-y-4">
-            <SectionHeading
-              title={t('quickActionsTitle')}
-              description={t('quickActionsDesc')}
-            />
-            <div className="grid gap-4 sm:grid-cols-2">
-              {quickActions.map((action) => (
-                <ActionCard key={action.href} {...action} />
-              ))}
-            </div>
-          </div>
+          {/* Earnings Chart */}
+          <EarningsChart data={earningsData} />
         </div>
 
         {/* Right Column - Sidebar (Span 1) */}
-        <div className="space-y-8">
-          {/* Earnings (Top Priority for Pro) */}
-          <EarningsChart data={earningsData} />
+        <div className="space-y-6">
 
           {/* Status Card */}
           <StatusCard
@@ -366,36 +288,30 @@ export default async function ProDashboardPage() {
             verificationMethod={professional.verificationMethod}
           />
 
-          {/* Next Steps */}
+          {/* Quick Actions */}
           <div className="space-y-4">
-            <SectionHeading
-              title={t('nextStepsTitle')}
-              description={t('nextStepsDesc')}
-            />
-            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
-              <div className="p-6">
-                <ul className="space-y-3">
-                  {nextSteps.map((step, index) => (
-                    <li key={index}>
-                      <Link href={step.href} className="glass-card flex items-start gap-4 p-4 rounded-xl hover:bg-white/90 transition-colors group cursor-pointer block">
-                        <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white shadow-md ring-2 ring-primary-100 group-hover:scale-110 transition-transform">
-                          {index + 1}
-                        </div>
-                        <span className="text-sm font-medium text-slate-700 pt-0.5 leading-snug group-hover:text-primary-700 transition-colors">
-                          {step.label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Card>
+            <div className="px-1">
+              <SectionHeading
+                variant="section"
+                title={t('quickActionsTitle')}
+                description={t('quickActionsDesc')}
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {quickActions.map((action) => (
+                <ActionCard key={action.href} {...action} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
+
+
+
+
       <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />
       <ProDashboardTour />
-    </div>
+    </div >
   );
 }

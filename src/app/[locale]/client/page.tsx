@@ -6,7 +6,6 @@ import { ActionCard } from "@/components/ui/ActionCard";
 import { Card } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ClientStats } from "@/components/dashboard/ClientStats";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
@@ -55,34 +54,10 @@ export default async function ClientDashboardPage() {
   const completedRequests = requests.filter(r => r.status === 'COMPLETED').length;
   const totalOffers = requests.reduce((sum, r) => sum + r.offers.length, 0);
 
-  // Build dynamic highlights based on actual user state
-  const heroHighlights = [
-    {
-      label: t('highlights.nextSteps'),
-      value: pendingOffers > 0 ? t('highlights.reviewOffers') : openRequests > 0 ? t('highlights.waitingForOffers') : t('highlights.createRequest'),
-      helper: pendingOffers > 0
-        ? t('highlights.offersToReview', { count: pendingOffers, s: pendingOffers > 1 ? 's' : '' })
-        : openRequests > 0
-          ? t('highlights.openRequests', { count: openRequests, s: openRequests > 1 ? 's' : '' })
-          : t('highlights.getStarted')
-    },
-    {
-      label: t('highlights.verification'),
-      value: user?.emailAddresses[0]?.verification?.status === 'verified' ? t('highlights.emailVerified') : t('highlights.emailPending'),
-      helper: user?.phoneNumbers?.[0]?.verification?.status === 'verified' ? t('highlights.phoneVerified') : t('highlights.addPhone')
-    },
-    {
-      label: t('highlights.activity'),
-      value: t('highlights.offersCount', { count: totalOffers, s: totalOffers !== 1 ? 's' : '' }),
-      helper: completedRequests > 0 ? t('highlights.completedRequests', { count: completedRequests }) : t('highlights.noJobs')
-    },
-  ];
+  // Build dynamic highlights based on actual user state (Removed as per simplification)
+  // const heroHighlights = ... (Removed)
 
-  const stats = [
-    { label: t('stats.openRequests'), value: openRequests, icon: "📝" },
-    { label: t('stats.totalOffers'), value: totalOffers, icon: "📬" },
-    { label: t('stats.completedRequests'), value: completedRequests, icon: "✅" },
-  ];
+  // const stats = ... (Removed)
 
   // Calculate profile completion
   // Calculate profile completion
@@ -158,16 +133,6 @@ export default async function ClientDashboardPage() {
         title={t('welcome', { name: firstName })}
         description={t('description')}
         action={{ label: t('actions.createCta'), href: "/client/requests/new" }}
-        highlights={heroHighlights}
-      />
-
-      {/* Stats Overview */}
-      <ClientStats
-        data={{
-          openRequests,
-          totalOffers,
-          completedRequests
-        }}
       />
 
       {/* Main Grid Layout */}
@@ -175,19 +140,6 @@ export default async function ClientDashboardPage() {
 
         {/* Left Column (Main Content) */}
         <div className="lg:col-span-2 space-y-8">
-
-          {/* Recent Activity */}
-          <div className="space-y-4">
-            <SectionHeading
-              title={t('sections.recentActivity')}
-              description={t('sections.recentActivityDesc')}
-            />
-            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
-              <div className="p-6">
-                <ActivityFeed activities={activities} />
-              </div>
-            </Card>
-          </div>
 
           {/* Request Timeline / Active Requests */}
           <div className="space-y-4">
@@ -198,6 +150,19 @@ export default async function ClientDashboardPage() {
             <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
               <div className="p-6">
                 <RequestTimeline requests={timelineRequests} />
+              </div>
+            </Card>
+          </div>
+
+          {/* Recent Activity */}
+          <div className="space-y-4">
+            <SectionHeading
+              title={t('sections.recentActivity')}
+              description={t('sections.recentActivityDesc')}
+            />
+            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+              <div className="p-6">
+                <ActivityFeed activities={activities} />
               </div>
             </Card>
           </div>
