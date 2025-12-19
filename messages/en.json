@@ -62,6 +62,7 @@
                 "dashboard": "Dashboard",
                 "browse": "Find Professionals",
                 "requests": "My Requests",
+                "offers": "Offers Received",
                 "jobs": "My Hires",
                 "new": "New Request",
                 "profile": "Profile"
@@ -753,7 +754,12 @@
             "closedTitle": "Request Closed",
             "closedDesc": "This request is no longer accepting offers.",
             "closedMessage": "The client has closed this request or accepted another offer.",
-            "budgetSpecified": "Budget not specified"
+            "budgetSpecified": "Budget not specified",
+            "restrictions": {
+                "notActive": "Your account is not active. Please complete verification or contact support to send offers.",
+                "lowBalance": "Insufficient balance. You need at least €2.00 in your wallet to send offers.",
+                "recharge": "Recharge Wallet"
+            }
         },
         "pricing": {
             "title": "Pricing",
@@ -1247,6 +1253,7 @@
         "professionals": "professionals",
         "more": "more",
         "backToCategories": "Back to Categories",
+        "subcategory": "Subcategory",
         "professionalsAvailable": "professionals available",
         "subcategories": "subcategories",
         "subcategoriesTitle": "Subcategories",
@@ -1254,5 +1261,26 @@
         "topProfessionals": "Top Professionals",
         "noProfessionals": "No professionals in this category yet",
         "reviews": "reviews"
+    },
+    "ClientOffers": {
+        "eyebrow": "Offers",
+        "title": "Offers Received",
+        "description": "Manage and compare all offers received for your active requests in one place.",
+        "stats": {
+            "total": "Total Received",
+            "new": "New Today",
+            "accepted": "Accepted"
+        },
+        "card": {
+            "forRequest": "For: {title}",
+            "viewRequest": "View Request",
+            "viewProfile": "View Profile",
+            "accept": "Accept Offer"
+        },
+        "empty": {
+            "title": "No offers received yet",
+            "desc": "Once you post a request, professionals will send you tailored offers. You'll see them all right here.",
+            "action": "View My Requests"
+        }
     }
 }

@@ -110,6 +110,30 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Check for existing active requests in this subcategory
+    try {
+      const matchCount = await prisma.request.count({
+        where: {
+          subcategoryId: data.subcategoryId,
+          status: 'OPEN',
+        },
+      });
+
+      console.log(`[Service] Found ${matchCount} existing requests for subcategory ${data.subcategoryId}`);
+
+      if (matchCount > 0) {
+        const { notifyExistingMatches } = await import('@/lib/services/notifications');
+        console.log(`[Service] Notifying professional ${professional.userId} about ${matchCount} matches`);
+        await notifyExistingMatches(
+          professional.userId,
+          subcategory.nameEn,
+          matchCount
+        );
+      }
+    } catch (notificationError) {
+      console.error('Failed to send existing match notification:', notificationError);
+    }
+
     // Update profile completion
     const completionPercent = await updateProfileCompletionPercentage(professional.id);
 

@@ -826,6 +826,7 @@ enum NotificationType {
   PROFILE_VERIFIED    // Pro: profile was verified
   LOW_BALANCE         // Pro: wallet balance is low
   WALLET_DEBIT        // Pro: click charge applied
+  MATCHING_REQUEST    // Pro: new request matches their services
   SYSTEM              // General system notification
 }
 

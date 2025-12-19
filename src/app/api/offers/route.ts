@@ -7,6 +7,7 @@ import { successResponse, handleApiError, createdResponse } from '@/lib/api-resp
 import { createOfferSchema, listOffersSchema } from '@/lib/validations/offer';
 import { NotFoundError, BadRequestError, LimitExceededError, ForbiddenError } from '@/lib/errors';
 import { notifyNewOffer } from '@/lib/services/notifications';
+import { getOrCreateWallet, getMinimumWalletBalance } from '@/lib/services/wallet';
 
 
 
@@ -218,16 +219,15 @@ export async function POST(request: NextRequest) {
       throw new ForbiddenError('Your account is not active. Please complete verification or contact support.');
     }
 
-    // Check wallet balance (min €2.00 required to send offers)
-    // const wallet = await prisma.wallet.findUnique({
-    //   where: { professionalId: professional.id },
-    // });
+    // Check wallet balance (min required balance from settings to send offers)
+    const wallet = await getOrCreateWallet(professional.id);
+    const minBalance = await getMinimumWalletBalance();
 
-    // if (!wallet || wallet.balance < 200) {
-    //   throw new ForbiddenError(
-    //     'Insufficient balance. You need at least €2.00 in your wallet to send offers.'
-    //   );
-    // }
+    if (wallet.balance < minBalance) {
+      throw new ForbiddenError(
+        `Insufficient balance. You need at least €${(minBalance / 100).toFixed(2)} in your wallet to send offers.`
+      );
+    }
 
     // Note: Terms acceptance is handled during signup/profile completion
     // Professional profile wouldn't exist if terms weren't accepted

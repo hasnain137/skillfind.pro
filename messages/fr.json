@@ -62,6 +62,7 @@
                 "dashboard": "Tableau de bord",
                 "browse": "Trouver des pros",
                 "requests": "Mes demandes",
+                "offers": "Offres reçues",
                 "jobs": "Historique",
                 "new": "Nouveau projet",
                 "profile": "Profil"
@@ -769,6 +770,11 @@
                 "closedMessage": "Le client a fermé cette demande ou accepté une autre offre.",
                 "budgetSpecified": "Budget non spécifié"
             },
+            "restrictions": {
+                "notActive": "Votre compte n'est pas actif. Veuillez terminer la vérification ou contacter le support pour envoyer des offres.",
+                "lowBalance": "Solde insuffisant. Vous devez avoir au moins 2,00 € dans votre portefeuille pour envoyer des offres.",
+                "recharge": "Recharger le portefeuille"
+            },
             "pricing": {
                 "title": "Tarification",
                 "desc": "Définissez votre prix et conditions",
@@ -1253,6 +1259,27 @@
                 "point1": "Les fonds sont utilisés pour payer les vues de profil (0,10 €/clic).",
                 "point2": "Le rechargement automatique n'est pas activé actuellement.",
                 "point3": "Gardez au moins 2,00 € pour rester visible."
+            }
+        },
+        "ClientOffers": {
+            "eyebrow": "Offres",
+            "title": "Offres reçues",
+            "description": "Gérez et comparez toutes les offres reçues pour vos demandes actives en un seul endroit.",
+            "stats": {
+                "total": "Total reçues",
+                "new": "Nouvelles aujourd'hui",
+                "accepted": "Acceptées"
+            },
+            "card": {
+                "forRequest": "Pour : {title}",
+                "viewRequest": "Voir la demande",
+                "viewProfile": "Voir le profil",
+                "accept": "Accepter l'offre"
+            },
+            "empty": {
+                "title": "Aucune offre reçue pour le moment",
+                "desc": "Une fois que vous aurez publié une demande, les professionnels vous enverront des offres personnalisées ici.",
+                "action": "Voir mes demandes"
             }
         }
     }

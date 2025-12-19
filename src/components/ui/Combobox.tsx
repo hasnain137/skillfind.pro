@@ -35,11 +35,31 @@ export function Combobox({
     hasError = false,
 }: ComboboxProps) {
     const [open, setOpen] = React.useState(false);
+    const [searchQuery, setSearchQuery] = React.useState("");
+
+    // Reset search when opening/closing
+    React.useEffect(() => {
+        if (!open) setSearchQuery("");
+    }, [open]);
 
     // Find selected label for display
     const selectedLabel = React.useMemo(() => {
         return options.find((option) => option.value === value)?.label || '';
     }, [options, value]);
+
+    // Manually filter and limit options for performance
+    const filteredOptions = React.useMemo(() => {
+        const query = searchQuery.toLowerCase().trim();
+        const filtered = query
+            ? options.filter(option =>
+                option.label.toLowerCase().includes(query) ||
+                option.value.toLowerCase().includes(query)
+            )
+            : options;
+
+        // Return only first 200 items to keep DOM performant
+        return filtered.slice(0, 200);
+    }, [options, searchQuery]);
 
     return (
         <Popover.Root open={open} onOpenChange={setOpen}>
@@ -66,10 +86,15 @@ export function Combobox({
                     className="z-50 w-[var(--radix-popover-trigger-width)] min-w-[200px] overflow-hidden rounded-xl border border-[#E5E7EB] bg-white text-[#333333] shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
                     sideOffset={4}
                 >
-                    <Command className="flex h-full w-full flex-col overflow-hidden rounded-md bg-white">
+                    <Command
+                        className="flex h-full w-full flex-col overflow-hidden rounded-md bg-white"
+                        shouldFilter={false} // We handle filtering manually for performance
+                    >
                         <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
                             <Command.Input
                                 placeholder={searchPlaceholder}
+                                value={searchQuery}
+                                onValueChange={setSearchQuery}
                                 className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-[#B0B0B0] disabled:cursor-not-allowed disabled:opacity-50"
                             />
                         </div>
@@ -77,12 +102,12 @@ export function Combobox({
                             <Command.Empty className="py-6 text-center text-sm text-[#7C7373]">
                                 {emptyText}
                             </Command.Empty>
-                            {options.map((option) => (
+                            {filteredOptions.map((option) => (
                                 <Command.Item
                                     key={option.value}
-                                    value={option.label} // Use label for better search matching usually, or value if simple. 
-                                    onSelect={() => {
-                                        onChange(option.value);
+                                    value={option.value} // Use value for selection
+                                    onSelect={(currentValue) => {
+                                        onChange(currentValue);
                                         setOpen(false);
                                     }}
                                     className={cn(

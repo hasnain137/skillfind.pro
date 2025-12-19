@@ -2,7 +2,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getProfessionalByClerkId } from "@/lib/get-professional";
+import { getProfessionalWithRelations } from "@/lib/get-professional";
+import { getMinimumWalletBalance } from "@/lib/services/wallet";
 import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import OfferForm from "./OfferForm";
@@ -22,10 +23,40 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
   }
 
   // Verify professional role
-  const professional = await getProfessionalByClerkId(userId);
+  const professional = await getProfessionalWithRelations(userId, { wallet: true });
 
   if (!professional) {
     redirect('/auth-redirect');
+  }
+
+  // Check professional status and wallet balance
+  const isProfessionalActive = professional.status === 'ACTIVE';
+  const minBalance = await getMinimumWalletBalance();
+  const hasMinBalance = (professional.wallet?.balance || 0) >= minBalance;
+
+  if (!isProfessionalActive || !hasMinBalance) {
+    const tRestrict = await getTranslations('OfferForm.restrictions');
+    return (
+      <div className="space-y-6">
+        <SectionHeading
+          eyebrow={t('eyebrow')}
+          title={!isProfessionalActive ? tRestrict('notActive') : tRestrict('lowBalance')}
+          description={!isProfessionalActive ? "Veuillez contacter le support pour plus d'informations." : "Rechargez votre portefeuille pour continuer à proposer vos services."}
+        />
+        {!hasMinBalance && (
+          <Card padding="lg" level={2} className="text-center py-12">
+            <div className="text-5xl mb-4">💰</div>
+            <h3 className="text-lg font-semibold text-[#333333] mb-4">{tRestrict('lowBalance')}</h3>
+            <Link
+              href="/pro/wallet"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2563EB] px-8 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
+            >
+              {tRestrict('recharge')}
+            </Link>
+          </Card>
+        )}
+      </div>
+    );
   }
 
   // Fetch request details

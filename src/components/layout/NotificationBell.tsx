@@ -108,6 +108,8 @@ export function NotificationBell() {
                 return 'bg-yellow-100 text-yellow-600';
             case 'LOW_BALANCE':
                 return 'bg-orange-100 text-orange-600';
+            case 'MATCHING_REQUEST':
+                return 'bg-purple-100 text-purple-600';
             default:
                 return 'bg-gray-100 text-gray-600';
         }

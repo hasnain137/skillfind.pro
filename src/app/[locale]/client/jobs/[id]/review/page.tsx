@@ -16,7 +16,8 @@ export default function ReviewJobPage() {
   const [jobInfo, setJobInfo] = useState<any>(null);
   const [formData, setFormData] = useState({
     rating: 5,
-    comment: '',
+    content: '',
+    wouldRecommend: true,
   });
 
   // Fetch job info
@@ -26,7 +27,8 @@ export default function ReviewJobPage() {
         const response = await fetch(`/api/jobs/${jobId}`);
         if (response.ok) {
           const data = await response.json();
-          setJobInfo(data.data);
+          // API returns { success: true, data: { job: { ... } } }
+          setJobInfo(data.data.job);
         }
       } catch (err) {
         console.error('Failed to fetch job:', err);
@@ -47,7 +49,8 @@ export default function ReviewJobPage() {
         body: JSON.stringify({
           jobId,
           rating: formData.rating,
-          comment: formData.comment,
+          content: formData.content,
+          wouldRecommend: formData.wouldRecommend,
         }),
       });
 
@@ -64,6 +67,8 @@ export default function ReviewJobPage() {
           errorMessage = data.error.details
             .map((d: any) => d.message)
             .join('. ');
+        } else if (data.error?.message) {
+          errorMessage = data.error.message;
         }
 
         setError(errorMessage);
@@ -149,6 +154,31 @@ export default function ReviewJobPage() {
             </div>
           </div>
 
+          {/* Recommendation Section */}
+          <div>
+            <label className="mb-3 block text-base font-bold text-[#333333] flex items-center gap-2">
+              <span>👍</span> Would you recommend this professional?
+            </label>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, wouldRecommend: true })}
+                className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all flex items-center justify-center gap-2 font-medium ${formData.wouldRecommend ? 'bg-green-50 border-green-500 text-green-700 ring-4 ring-green-500/10' : 'bg-white border-gray-200 text-gray-600 hover:border-green-200'
+                  }`}
+              >
+                <span>👍</span> Yes, I recommend
+              </button>
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, wouldRecommend: false })}
+                className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all flex items-center justify-center gap-2 font-medium ${!formData.wouldRecommend ? 'bg-red-50 border-red-500 text-red-700 ring-4 ring-red-500/10' : 'bg-white border-gray-200 text-gray-600 hover:border-red-200'
+                  }`}
+              >
+                <span>👎</span> No, I don't recommend
+              </button>
+            </div>
+          </div>
+
           {/* Comment Section */}
           <div>
             <label className="mb-3 block text-base font-bold text-[#333333] flex items-center gap-2">
@@ -157,8 +187,8 @@ export default function ReviewJobPage() {
             <textarea
               required
               rows={8}
-              value={formData.comment}
-              onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+              value={formData.content}
+              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               className="w-full rounded-xl border-2 border-[#E5E7EB] px-4 py-3 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-4 focus:ring-[#2563EB]/10 transition-all"
               placeholder="Share your experience working with this professional...&#10;&#10;• What did they do well?&#10;• How was the communication?&#10;• Would you recommend them to others?&#10;• Any specific highlights or areas for improvement?"
             />
@@ -166,7 +196,7 @@ export default function ReviewJobPage() {
               <p className="text-[#7C7373] flex items-center gap-1">
                 <span>💡</span> Your review helps other clients make informed decisions
               </p>
-              <p className="text-[#B0B0B0]">{formData.comment.length} characters</p>
+              <p className="text-[#B0B0B0]">{formData.content.length} characters (min 10)</p>
             </div>
           </div>
         </Card>
@@ -203,7 +233,7 @@ export default function ReviewJobPage() {
             </Button>
             <Button
               type="submit"
-              disabled={loading || !formData.comment.trim()}
+              disabled={loading || formData.content.trim().length < 10}
               className="flex-1 sm:flex-none shadow-md hover:shadow-lg"
             >
               {loading ? '⏳ Submitting...' : '✅ Submit Review'}

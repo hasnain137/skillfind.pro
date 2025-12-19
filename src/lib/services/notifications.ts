@@ -16,6 +16,7 @@ interface CreateNotificationParams {
  * Create a notification for a user
  */
 export async function createNotification(params: CreateNotificationParams) {
+    console.log(`[Notification] Creating ${params.type} for user ${params.userId}: ${params.title}`);
     return prisma.notification.create({
         data: {
             userId: params.userId,
@@ -160,7 +161,7 @@ export async function notifyLowBalance(
 }
 
 /**
- * Notify professional when a click charge is applied
+ * Notify professional when a clicking charge is applied
  */
 export async function notifyClickCharge(
     proUserId: string,
@@ -174,5 +175,42 @@ export async function notifyClickCharge(
         title: `€${(amountCents / 100).toFixed(2)} charged`,
         message: `${clientName} viewed your profile. Balance: €${(remainingBalanceCents / 100).toFixed(2)}`,
         actionUrl: '/pro/wallet',
+    });
+}
+
+/**
+ * Notify professional about a new matching request
+ */
+export async function notifyNewMatchingRequest(
+    proUserId: string,
+    requestTitle: string,
+    requestId: string,
+    subcategoryName: string
+) {
+    return createNotification({
+        userId: proUserId,
+        type: 'MATCHING_REQUEST',
+        title: 'New request for you! 🎯',
+        message: `A new request for "${requestTitle}" matches your service "${subcategoryName}"`,
+        entityType: 'request',
+        entityId: requestId,
+        actionUrl: `/pro/requests/${requestId}/offer`,
+    });
+}
+
+/**
+ * Notify professional about existing matching requests when they add a service
+ */
+export async function notifyExistingMatches(
+    proUserId: string,
+    subcategoryName: string,
+    matchCount: number
+) {
+    return createNotification({
+        userId: proUserId,
+        type: 'MATCHING_REQUEST',
+        title: 'Matching requests found! ✨',
+        message: `We found ${matchCount} active ${matchCount === 1 ? 'request' : 'requests'} for your new service "${subcategoryName}"`,
+        actionUrl: '/pro/requests',
     });
 }

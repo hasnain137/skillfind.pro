@@ -42,6 +42,7 @@ export default async function ClientLayout({
   const NAV_LINKS = [
     { label: t('links.dashboard'), href: "/client", icon: "🏠" },
     { label: t('links.requests'), href: "/client/requests", icon: "📝" },
+    { label: t('links.offers'), href: "/client/offers", icon: "📬" },
     { label: t('links.jobs'), href: "/client/jobs", icon: "💼" },
     { label: t('links.new'), href: "/client/requests/new", icon: "➕" },
     { label: t('links.profile'), href: "/client/profile", icon: "👤" },

@@ -191,6 +191,7 @@ export async function POST(request: NextRequest) {
 
     // Create request
     const newRequest = await prisma.request.create({
+      // ... same data and include as before
       data: {
         clientId: client.id,
         categoryId: data.categoryId,
@@ -223,6 +224,51 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+
+    // Notify matching professionals
+    // Find professionals who offer services in this category (align with dashboard matching)
+    try {
+      const matchingPros = await prisma.professional.findMany({
+        where: {
+          status: { in: ['ACTIVE', 'PENDING_REVIEW'] },
+          isAvailable: true,
+          services: {
+            some: {
+              subcategory: {
+                categoryId: data.categoryId,
+              },
+            },
+          },
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
+        },
+      });
+
+      console.log(`[Matching] Found ${matchingPros.length} professionals matching category ${data.categoryId}`);
+
+      const { notifyNewMatchingRequest } = await import('@/lib/services/notifications');
+
+      // Notify each matching professional
+      await Promise.all(
+        matchingPros.map((pro) => {
+          console.log(`[Matching] Notifying user ${pro.user.email} (${pro.user.id}) about request ${newRequest.id}`);
+          return notifyNewMatchingRequest(
+            pro.user.id,
+            newRequest.title,
+            newRequest.id,
+            newRequest.subcategory.nameEn
+          );
+        })
+      );
+    } catch (notificationError) {
+      console.error('Failed to send matching request notifications:', notificationError);
+    }
 
     return createdResponse(
       {
