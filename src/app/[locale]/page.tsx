@@ -86,7 +86,7 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main>
+      <main id="main-content">
         <Hero />
         <HowItWorks />
         <PopularCategories categories={categories} />

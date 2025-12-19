@@ -19,19 +19,77 @@ const inter = Inter({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://skillfind.pro';
 
 export const metadata: Metadata = {
-  title: "SkillFind",
-  description: "Find trusted professionals for any skill.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "SkillFind.pro - Find Trusted Professionals for Any Skill",
+    template: "%s | SkillFind.pro",
+  },
+  description: "Connect with verified professionals for tutoring, web development, design, coaching and more. Post your request and receive offers from skilled experts near you.",
+  keywords: [
+    "find professionals",
+    "hire experts",
+    "freelance services",
+    "tutoring",
+    "web development",
+    "graphic design",
+    "coaching",
+    "professional services",
+    "local services",
+    "remote work",
+  ],
+  authors: [{ name: "SkillFind.pro" }],
+  creator: "SkillFind.pro",
+  publisher: "SkillFind.pro",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    alternateLocale: 'fr_FR',
+    url: siteUrl,
+    siteName: 'SkillFind.pro',
+    title: 'SkillFind.pro - Find Trusted Professionals for Any Skill',
+    description: 'Connect with verified professionals for tutoring, web development, design, coaching and more.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'SkillFind.pro - Professional Services Marketplace',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SkillFind.pro - Find Trusted Professionals',
+    description: 'Connect with verified professionals for any skill you need.',
+    images: ['/og-image.png'],
+  },
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
+  manifest: "/site.webmanifest",
 };
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  themeColor: '#2563EB',
 };
 
 export default async function RootLayout({
@@ -70,6 +128,13 @@ export default async function RootLayout({
               enableSystem={false}
               disableTransitionOnChange
             >
+              {/* Skip to content link for accessibility */}
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                Skip to main content
+              </a>
               <ProgressBarProvider />
               <ToastProvider />
               {children}
