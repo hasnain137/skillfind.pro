@@ -324,9 +324,9 @@
         "Steps": {
             "profile": "Complétez vos informations de profil",
             "services": "Ajoutez votre première catégorie de service",
-            "matching": "Répondre à {count} demande correspondante | Répondre à {count} demandes correspondantes",
-            "offers": "Suivi de {count} offre en attente | Suivi de {count} offres en attente",
-            "jobs": "Terminer {count} job actif | Terminer {count} jobs actifs",
+            "matching": "{count, plural, =1 {Répondre à # demande correspondante} other {Répondre à # demandes correspondantes}}",
+            "offers": "{count, plural, =1 {Suivi de # offre en attente} other {Suivi de # offres en attente}}",
+            "jobs": "{count, plural, =1 {Terminer # job actif} other {Terminer # jobs actifs}}",
             "default": "Parcourir plus de demandes"
         }
     },
@@ -428,15 +428,15 @@
             "reviewOffers": "Examiner offres",
             "waitingForOffers": "En attente d'offres",
             "createRequest": "Créer demande",
-            "offersToReview": "{count} offre à voir | {count} offres à voir",
-            "openRequests": "{count} demande ouverte | {count} demandes ouvertes",
+            "offersToReview": "{count, plural, =1 {# offre à voir} other {# offres à voir}}",
+            "openRequests": "{count, plural, =1 {# demande ouverte} other {# demandes ouvertes}}",
             "getStarted": "Commencer",
             "emailVerified": "Email vérifié",
             "emailPending": "Email en attente",
             "phoneVerified": "Tél. vérifié ✓",
             "addPhone": "Ajouter téléphone",
-            "offersCount": "{count} offre | {count} offres",
-            "completedRequests": "{count} complétée | {count} complétées",
+            "offersCount": "{count, plural, =1 {# offre} other {# offres}}",
+            "completedRequests": "{count, plural, =1 {# complétée} other {# complétées}}",
             "noJobs": "Aucun emploi"
         },
         "stats": {
@@ -463,7 +463,7 @@
         "activity": {
             "requestCreated": "Nouvelle demande créée",
             "offerReceived": "Offre reçue",
-            "offerReceivedTitle": "{count} offre reçue | {count} offres reçues",
+            "offerReceivedTitle": "{count, plural, =1 {# offre reçue} other {# offres reçues}}",
             "offerInterest": "Des professionnels sont intéressés par '{title}'"
         }
     },
@@ -494,7 +494,7 @@
             },
             "results": {
                 "searching": "Recherche en cours...",
-                "count": "{count} professionnel trouvé | {count} professionnels trouvés",
+                "count": "{count, plural, =0 {Aucun professionnel trouvé} =1 {1 professionnel trouvé} other {# professionnels trouvés}}",
                 "forQuery": " pour \"{query}\"",
                 "previous": "Précédent",
                 "next": "Suivant",

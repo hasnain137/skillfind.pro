@@ -268,9 +268,9 @@
             "emptyDesc": "Your activity will appear here once you start interacting with requests and offers.",
             "justNow": "Just now",
             "minAgo": "{count} min ago",
-            "hourAgo": "{count} hour ago",
+            "hourAgo": "{count, plural, =1 {1 hour ago} other {# hours ago}}",
             "hoursAgo": "{count} hours ago",
-            "dayAgo": "{count} day ago",
+            "dayAgo": "{count, plural, =1 {1 day ago} other {# days ago}}",
             "daysAgo": "{count} days ago"
         },
         "MatchingRequests": {
@@ -387,9 +387,9 @@
         "Steps": {
             "profile": "Complete your profile information",
             "services": "Add your first service category",
-            "matching": "Respond to {count} matching request | Respond to {count} matching requests",
-            "offers": "Follow up on {count} pending offer | Follow up on {count} pending offers",
-            "jobs": "Complete {count} active job | Complete {count} active jobs",
+            "matching": "{count, plural, =1 {Respond to # matching request} other {Respond to # matching requests}}",
+            "offers": "{count, plural, =1 {Follow up on # pending offer} other {Follow up on # pending offers}}",
+            "jobs": "{count, plural, =1 {Complete # active job} other {Complete # active jobs}}",
             "default": "Browse more requests"
         }
     },
@@ -491,14 +491,14 @@
             "reviewOffers": "Review offers",
             "waitingForOffers": "Waiting for offers",
             "createRequest": "Create a request",
-            "offersToReview": "{count} offer to review | {count} offers to review",
-            "openRequests": "{count} open request | {count} open requests",
+            "offersToReview": "{count, plural, =1 {# offer to review} other {# offers to review}}",
+            "openRequests": "{count, plural, =1 {# open request} other {# open requests}}",
             "getStarted": "Get started now",
             "emailVerified": "Email verified",
             "emailPending": "Email pending",
             "phoneVerified": "Phone verified ✓",
             "addPhone": "Add phone for trust",
-            "offersCount": "{count} offer | {count} offers",
+            "offersCount": "{count, plural, =1 {# offer} other {# offers}}",
             "completedRequests": "{count} completed",
             "noJobs": "No jobs yet"
         },
@@ -525,7 +525,7 @@
         },
         "activity": {
             "requestCreated": "Request created",
-            "offerReceivedTitle": "{count} offer received | {count} offers received",
+            "offerReceivedTitle": "{count, plural, =1 {# offer received} other {# offers received}}",
             "offerInterest": "Professionals are interested in: {title}"
         }
     },
@@ -552,7 +552,7 @@
         },
         "results": {
             "searching": "Searching...",
-            "count": "{count} professional found | {count} professionals found",
+            "count": "{count, plural, =0 {No professionals found} =1 {1 professional found} other {# professionals found}}",
             "forQuery": " for \"{query}\"",
             "previous": "Previous",
             "next": "Next",
@@ -642,7 +642,7 @@
         "priceFrom": "From €{price}/hr",
         "contactForPricing": "Contact for pricing",
         "defaultService": "Professional",
-        "reviews": "{count} review | {count} reviews",
+        "reviews": "{count, plural, =1 {# review} other {# reviews}}",
         "remote": "Remote",
         "moreServices": "+{count} more",
         "viewProfile": "View Profile"
