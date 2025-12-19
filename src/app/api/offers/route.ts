@@ -18,13 +18,20 @@ export async function GET(request: NextRequest) {
     // Parse query parameters
     const { searchParams } = new URL(request.url);
     const params = {
-      page: searchParams.get('page'),
-      limit: searchParams.get('limit'),
-      requestId: searchParams.get('requestId'),
-      status: searchParams.get('status'),
+      page: searchParams.get('page') || '1',
+      limit: searchParams.get('limit') || '20',
+      requestId: searchParams.get('requestId') || undefined,
+      status: searchParams.get('status') || undefined,
     };
 
-    const filters = listOffersSchema.parse(params);
+    console.log('[Offers API] Parsing params:', params);
+
+    try {
+      var filters = listOffersSchema.parse(params);
+    } catch (error: any) {
+      console.error('[Offers API] Validation error:', error.errors);
+      throw error;
+    }
 
     // Build where clause based on role
     let whereClause: any = {};
