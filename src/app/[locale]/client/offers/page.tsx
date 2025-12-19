@@ -54,7 +54,7 @@ export default function ClientOffersPage({ params }: { params: Promise<{ locale:
     useEffect(() => {
         const fetchOffers = async () => {
             try {
-                const response = await fetch('/api/offers?limit=50');
+                const response = await fetch('/api/offers?page=1&limit=50');
                 const data = await response.json();
 
                 console.log('Offers API response:', data); // Debug log
@@ -99,7 +99,7 @@ export default function ClientOffersPage({ params }: { params: Promise<{ locale:
             if (data.success) {
                 toast.success('Offer accepted successfully!');
                 // Refresh offers
-                const res = await fetch('/api/offers?limit=50');
+                const res = await fetch('/api/offers?page=1&limit=50');
                 const newData = await res.json();
                 if (newData.success) setOffers(newData.data?.offers || []);
             } else {
