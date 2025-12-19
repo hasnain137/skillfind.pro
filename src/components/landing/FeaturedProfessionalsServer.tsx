@@ -102,7 +102,7 @@ function ProfessionalCard({
   const additionalServices = services.length > 1 ? services.length - 1 : 0;
 
   return (
-    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm border border-[#E5E7EB] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#3B4D9D]/20">
+    <div className="group relative flex min-w-[260px] flex-col gap-4 rounded-3xl border border-white/40 bg-white/70 backdrop-blur-xl p-6 shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:bg-white/80 hover:border-[#3B4D9D]/20">
       {/* Top Badge - Verified */}
       {isVerified && (
         <div className="absolute -top-2 right-4 flex items-center gap-1 rounded-full bg-[#3B4D9D] px-3 py-1 text-[10px] font-bold text-white shadow-sm">

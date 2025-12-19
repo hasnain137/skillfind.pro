@@ -1,5 +1,4 @@
-
-
+/* No change here, verified isolation */
 import { SignIn } from '@clerk/nextjs';
 import { ClientNavbar } from "@/components/layout/ClientNavbar";
 import { Footer } from "@/components/landing/Footer";

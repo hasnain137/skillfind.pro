@@ -36,6 +36,7 @@ export function Avatar({ src, firstName = '', lastName = '', size = 'md', classN
                     src={src}
                     alt={`${firstName} ${lastName}`}
                     fill
+                    sizes={size === 'xl' ? '80px' : size === 'lg' ? '56px' : size === 'md' ? '40px' : '32px'}
                     className="object-cover"
                     onError={() => {
                         // Prevent state update if not mounted

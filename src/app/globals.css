@@ -11,11 +11,14 @@
 @layer theme {
   :root {
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 0 0% 20%;
+    /* #333333 */
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 0 0% 20%;
+    /* #333333 */
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 0 0% 20%;
+    /* #333333 */
     --primary: 229 45% 42%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 4.8% 95.9%;
@@ -94,6 +97,7 @@
   h5,
   h6 {
     letter-spacing: theme('letterSpacing.tight');
+    color: #333333;
   }
 }
 
@@ -285,8 +289,8 @@
     line-height: 1.1;
     letter-spacing: -0.03em;
     /* Tighter tracking */
-    color: #18181B;
-    /* Zinc-900 */
+    color: #333333;
+    /* Zinc-900 -> #333333 */
   }
 
   .text-stat-value-lg {
@@ -309,8 +313,8 @@
     /* Slightly larger */
     font-weight: 600;
     letter-spacing: -0.01em;
-    color: #27272A;
-    /* Zinc-800 */
+    color: #333333;
+    /* Zinc-800 -> #333333 */
   }
 
   .text-helper {

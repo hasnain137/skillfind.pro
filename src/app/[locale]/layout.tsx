@@ -11,6 +11,13 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
 
 
 export const metadata: Metadata = {
@@ -52,6 +59,7 @@ export default async function RootLayout({
           suppressHydrationWarning
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
+            inter.variable,
             "selection:bg-primary-100 selection:text-primary-900"
           )}
         >

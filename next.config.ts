@@ -6,8 +6,25 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  compress: true, // Enable gzip compression
+  poweredByHeader: false, // Security & slight payload saving
+
   // Silence Turbopack complaining about existing webpack config; we still rely on webpack override for Clerk externals.
   turbopack: {},
+
+  experimental: {
+    // Optimize import of heavy libraries
+    optimizePackageImports: [
+      'lucide-react',
+      'date-fns',
+      'framer-motion',
+      'recharts',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-label',
+      '@radix-ui/react-slot',
+    ],
+  },
+
   typescript: {
     // ⚠️ Temporarily allowing build to proceed with next-intl routing type errors
     // This is needed because next-intl's route typing conflicts with Next.js internals
@@ -20,6 +37,8 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
+    // Improve image loading
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',

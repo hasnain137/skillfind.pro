@@ -76,6 +76,7 @@ export function Hero() {
                 src="/hero-collage.png"
                 alt="Diverse professionals working"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                 className="object-cover rounded-2xl shadow-lg border border-[#E5E7EB]"
                 priority
               />
