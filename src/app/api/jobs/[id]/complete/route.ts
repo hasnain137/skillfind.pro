@@ -40,19 +40,16 @@ export async function POST(
     }
 
     // Verify ownership
-    if (role === 'PROFESSIONAL') {
-      // Get professional profile
-      const professional = await prisma.professional.findUnique({
+    if (role === 'CLIENT') {
+      const client = await prisma.client.findUnique({
         where: { userId },
       });
-
-      if (!professional || job.professionalId !== professional.id) {
+      if (!client || job.clientId !== client.id) {
         throw new ForbiddenError('You can only complete your own jobs');
       }
-    } else if (role !== 'ADMIN') {
-      // Clients cannot complete jobs via this API anymore
-      throw new ForbiddenError('Only professionals can complete jobs');
     }
+    // Refactoring the logic completely below
+
 
     // Check status
     if (job.status === 'COMPLETED') {

@@ -17,6 +17,7 @@ export async function POST(
     // Get client profile
     const client = await prisma.client.findUnique({
       where: { userId },
+      include: { user: { select: { firstName: true, lastName: true } } },
     });
 
     if (!client) {
@@ -50,6 +51,7 @@ export async function POST(
       offerId: offer.id,
       clientId: client.id,
       clickType: 'OFFER_VIEW',
+      clientName: `${client.user.firstName} ${client.user.lastName}`.trim() || 'A client',
     });
 
     return successResponse(

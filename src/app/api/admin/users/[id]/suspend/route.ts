@@ -56,7 +56,15 @@ export async function POST(
       },
     });
 
-    // TODO: Send notification to user
+    // Send notification to user
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        user.email,
+        'Account Suspended - SkillFind.pro',
+        `Hello ${user.firstName}, \n\nYour account has been suspended for the following reason:\n\n"${data.reason}"\n\nIf you believe this is a mistake, please contact support.`,
+        '/contact'
+      )
+    ).catch(err => console.error('Failed to send suspension email:', err));
     // TODO: Cancel all pending offers/requests
 
     return successResponse(

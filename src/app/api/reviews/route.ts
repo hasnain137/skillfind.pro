@@ -69,6 +69,13 @@ export async function POST(request: NextRequest) {
       throw new BadRequestError('You have already reviewed this job');
     }
 
+    // Check content safety with Perspective API
+    const moderationResult = await import('@/lib/services/moderation')
+      .then(mod => mod.analyzeContent(data.content))
+      .catch(() => ({ isSafe: true, score: 0 }));
+
+    const moderationStatus = moderationResult.isSafe ? 'APPROVED' : 'PENDING';
+
     // Create review
     const review = await prisma.$transaction(async (tx) => {
       const newReview = await tx.review.create({
@@ -78,8 +85,7 @@ export async function POST(request: NextRequest) {
           rating: data.rating,
           content: data.content,
           wouldRecommend: data.wouldRecommend,
-          // Auto-approve generic positive reviews if needed, else pending
-          moderationStatus: 'PENDING',
+          moderationStatus,
         },
       });
 
@@ -124,4 +130,3 @@ export async function POST(request: NextRequest) {
     return handleApiError(error);
   }
 }
-

@@ -47,7 +47,15 @@ export async function POST(
       },
     });
 
-    // TODO: Send notification to user
+    // Send notification to user
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        user.email,
+        'Account Reactivated - SkillFind.pro',
+        `Hello ${user.firstName}, \n\nYour account has been reactivated by our administration team. You can now access all platform features again.\n\nWelcome back!`,
+        '/login'
+      )
+    ).catch(err => console.error('Failed to send activation email:', err));
 
     return successResponse(
       {

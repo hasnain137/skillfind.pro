@@ -141,7 +141,23 @@ export async function POST(request: NextRequest, context: RouteParams) {
       });
     }
 
-    // TODO: Send email notification to professional
+    // Send email notification to professional
+    const notificationTitle = data.action === 'APPROVE'
+      ? `Document Verified: ${updatedDocument.type}`
+      : `Document Rejected: ${updatedDocument.type}`;
+
+    const notificationMessage = data.action === 'APPROVE'
+      ? `Hello ${user.firstName}, \n\nYour document (${updatedDocument.type}) has been verified and approved.`
+      : `Hello ${user.firstName}, \n\nYour document (${updatedDocument.type}) has been rejected. \n\nReason: ${data.rejectionReason} \n\nPlease upload a valid document.`;
+
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        user.email,
+        notificationTitle,
+        notificationMessage,
+        '/pro/verification'
+      )
+    ).catch(err => console.error('Failed to send verification email:', err));
 
     return successResponse(
       {

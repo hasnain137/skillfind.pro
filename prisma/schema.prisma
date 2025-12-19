@@ -3,10 +3,12 @@
 
 datasource db {
   provider = "postgresql"
+  extensions = [pg_trgm]
 }
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 
@@ -47,6 +49,8 @@ model User {
   
   @@index([clerkId])
   @@index([email])
+  @@index([firstName])
+  @@index([lastName])
   @@map("users")
 }
 
@@ -149,6 +153,9 @@ model Professional {
   @@index([averageRating])
   @@index([city])
   @@index([status, city])
+  @@index([businessName])
+  @@index([title])
+  @@index([bio])
   @@map("professionals")
 }
 
@@ -273,6 +280,7 @@ model ProfessionalService {
   @@unique([professionalId, subcategoryId])
   @@index([professionalId])
   @@index([subcategoryId])
+  @@index([description])
   @@map("professional_services")
 }
 
@@ -896,4 +904,3 @@ enum AdCampaignStatus {
   COMPLETED
   CANCELLED
 }
-

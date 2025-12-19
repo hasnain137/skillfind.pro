@@ -35,6 +35,7 @@ export async function POST(request: NextRequest, context: RouteParams) {
     // Get client profile
     const client = await prisma.client.findUnique({
       where: { userId },
+      include: { user: { select: { firstName: true, lastName: true } } },
     });
 
     if (!client) {
@@ -116,40 +117,27 @@ export async function POST(request: NextRequest, context: RouteParams) {
 
     // Process click charge
     try {
+      const clientName = client.user
+        ? `${client.user.firstName || 'A client'} ${client.user.lastName || ''}`.trim()
+        : 'A client';
+
       await recordClickAndCharge({
         offerId: offerId,
         clientId: client.id,
         clickType: 'PROFILE_VIEW',
+        clientName,
       });
 
-      // Notify professional about the charge
-      // Get updated wallet balance and client name for notification
-      const clientUser = await prisma.user.findUnique({
-        where: { id: client.userId },
-        select: { firstName: true, lastName: true },
-      });
-      const clientName = clientUser
-        ? `${clientUser.firstName || 'A client'} ${clientUser.lastName || ''}`.trim()
-        : 'A client';
-
-      // Get updated wallet balance
+      // Check balance (optional optimization: recordClickAndCharge could return this, but querying is fine)
       const updatedWallet = await prisma.wallet.findUnique({
         where: { professionalId: offer.professionalId },
         select: { balance: true },
       });
       const newBalance = updatedWallet?.balance ?? 0;
 
-      // Send notification to professional
-      await notifyClickCharge(
-        offer.professional.user.clerkId,
-        10, // €0.10 = 10 cents
-        clientName,
-        newBalance
-      );
-
       // If balance is low (below €2), send low balance warning
       if (newBalance < 200) {
-        await notifyLowBalance(offer.professional.user.clerkId, newBalance);
+        await notifyLowBalance(offer.professional.userId, newBalance);
       }
 
       return successResponse(

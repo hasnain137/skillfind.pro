@@ -60,7 +60,19 @@ export async function POST(
       },
     });
 
-    // TODO: Send notification to client
+    // Send notification to client
+    const clientEmail = job.client.user.email;
+    const clientName = job.client.user.firstName;
+    const proName = professional.businessName || professional.title || 'The Professional';
+
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        clientEmail,
+        'Job Started - SkillFind.pro',
+        `Hello ${clientName}, \n\n${proName} has marked your job (ID: ${job.id}) as STARTED. \n\nWork is now in progress.`,
+        `/dashboard/jobs/${job.id}`
+      )
+    ).catch(err => console.error('Failed to send start notification:', err));
 
     return successResponse(
       {

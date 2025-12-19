@@ -27,8 +27,8 @@ export async function POST(
     const job = await prisma.job.findUnique({
       where: { id },
       include: {
-        client: true,
-        professional: true,
+        client: { include: { user: true } },
+        professional: { include: { user: true } },
       },
     });
 
@@ -82,7 +82,25 @@ export async function POST(
 
     // TODO: Create cancellation record for audit (needs JobCancellation model in schema)
     // TODO: Handle refund if requested and appropriate
-    // TODO: Send notifications to both parties
+    // Send email to the OTHER party
+    const targetEmail = cancelledBy === 'CLIENT'
+      ? job.professional.user.email
+      : job.client.user.email;
+    const targetName = cancelledBy === 'CLIENT'
+      ? job.professional.user.firstName
+      : job.client.user.firstName;
+    const actorName = cancelledBy === 'CLIENT'
+      ? `${job.client.user.firstName} ${job.client.user.lastName}`
+      : `${job.professional.user.firstName} ${job.professional.user.lastName}`;
+
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        targetEmail,
+        'Job Cancelled - SkillFind.pro',
+        `Hello ${targetName}, \n\nThe job (ID: ${job.id}) has been cancelled by ${actorName}. \n\nReason: "${data.reason}" \n\nPlease visit the dashboard for more details.`,
+        '/dashboard/jobs'
+      )
+    ).catch(err => console.error('Failed to send cancellation email:', err));
 
     return successResponse(
       {

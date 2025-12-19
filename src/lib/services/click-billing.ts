@@ -15,6 +15,7 @@ export async function recordClickAndCharge(params: {
   offerId: string;
   clientId: string;
   clickType?: 'OFFER_VIEW' | 'PROFILE_VIEW' | 'CONTACT_REVEAL';
+  clientName?: string;
 }) {
   const { offerId, clientId, clickType = 'OFFER_VIEW' } = params;
 
@@ -51,7 +52,7 @@ export async function recordClickAndCharge(params: {
   // Check daily click limit
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
+
   const clicksToday = await prisma.clickEvent.count({
     where: {
       professionalId: offer.professionalId,
@@ -87,7 +88,7 @@ export async function recordClickAndCharge(params: {
   }
 
   // Record click and charge in a transaction
-  return await prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx) => {
     // Create click event
     const clickEvent = await tx.clickEvent.create({
       data: {
@@ -98,15 +99,29 @@ export async function recordClickAndCharge(params: {
     });
 
     // Debit wallet (this already handles transaction safety)
-    await debitWallet({
+    const transaction = await debitWallet({
       professionalId: offer.professionalId,
       amount: CLICK_FEE_CENTS,
       description: `Click fee for ${clickType.toLowerCase().replace('_', ' ')}`,
       referenceId: clickEvent.id,
     });
 
-    return clickEvent;
+    return { clickEvent, transaction };
   });
+
+  // Notify professional about the charge (async)
+  if (params.clientName) {
+    import('./notifications').then(mod =>
+      mod.notifyClickCharge(
+        offer.professional.userId,
+        CLICK_FEE_CENTS,
+        params.clientName!,
+        result.transaction.balanceAfter
+      ).catch(err => console.error('Failed to send click notification:', err))
+    );
+  }
+
+  return result.clickEvent;
 }
 
 /**
@@ -156,7 +171,7 @@ export async function canProcessClick(
   // Check daily limit
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
+
   const clicksToday = await prisma.clickEvent.count({
     where: {
       professionalId,
