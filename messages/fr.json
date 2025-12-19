@@ -4,7 +4,7 @@
         "dashboard": "Tableau de bord",
         "signIn": "Se connecter",
         "signUp": "S'inscrire",
-        "signOut": "Se déconnecter",
+        "signOut": "Se dÃ©connecter",
         "profile": "Profil",
         "admin": "Admin",
         "menu": "Menu",
@@ -12,29 +12,29 @@
         "close": "Fermer"
     },
     "Landing": {
-        "heroTitle": "Trouvez le professionnel idéal pour vos besoins",
-        "heroSubtitle": "Entrez en contact avec des experts les mieux notés en quelques secondes."
+        "heroTitle": "Trouvez le professionnel idÃ©al pour vos besoins",
+        "heroSubtitle": "Entrez en contact avec des experts les mieux notÃ©s en quelques secondes."
     },
     "Auth": {
-        "loginTitle": "Connectez-vous à votre compte",
-        "signupTitle": "Créer un compte",
+        "loginTitle": "Connectez-vous Ã  votre compte",
+        "signupTitle": "CrÃ©er un compte",
         "joinHeader": "Rejoindre SkillFind",
-        "joinSubheader": "Créez votre compte pour commencer",
+        "joinSubheader": "CrÃ©ez votre compte pour commencer",
         "welcomeHeader": "Bon retour",
-        "welcomeSubheader": "Connectez-vous à votre compte SkillFind",
+        "welcomeSubheader": "Connectez-vous Ã  votre compte SkillFind",
         "forgotPassword": {
-            "title": "Réinitialiser mot de passe",
-            "subtitle": "Entrez votre email et nous vous enverrons un lien de réinitialisation",
+            "title": "RÃ©initialiser mot de passe",
+            "subtitle": "Entrez votre email et nous vous enverrons un lien de rÃ©initialisation",
             "emailLabel": "Adresse email",
             "emailPlaceholder": "vous@exemple.com",
             "submit": "Envoyer le lien",
-            "rememberPassword": "Mot de passe retrouvé ?",
+            "rememberPassword": "Mot de passe retrouvÃ© ?",
             "signIn": "Se connecter"
         }
     },
     "Navbar": {
-        "howItWorks": "Comment ça marche",
-        "categories": "Catégories",
+        "howItWorks": "Comment Ã§a marche",
+        "categories": "CatÃ©gories",
         "topProfessionals": "Meilleurs professionnels",
         "forProfessionals": "Pour les professionnels",
         "login": "Connexion",
@@ -57,12 +57,12 @@
         "Client": {
             "eyebrow": "Espace Client",
             "title": "Mes Projets",
-            "description": "Gérez vos demandes et recrutements.",
+            "description": "GÃ©rez vos demandes et recrutements.",
             "links": {
                 "dashboard": "Tableau de bord",
                 "browse": "Trouver des pros",
                 "requests": "Mes demandes",
-                "offers": "Offres reçues",
+                "offers": "Offres reÃ§ues",
                 "jobs": "Historique",
                 "new": "Nouveau projet",
                 "profile": "Profil"
@@ -70,119 +70,119 @@
         }
     },
     "Hero": {
-        "badge": "🚀 La place de marché n°1 pour les services professionnels",
+        "badge": "ðŸš€ La place de marchÃ© nÂ°1 pour les services professionnels",
         "titlePrefix": "Trouvez l'",
         "titleHighlight": "expert",
         "titleSuffix": "parfait.",
-        "subtitle": "Connectez-vous avec des tuteurs, développeurs, agents d'entretien et coachs vérifiés en quelques minutes. Approuvé par plus de 10 000 clients dans le monde.",
-        "verifiedPros": "Pros vérifiés",
+        "subtitle": "Connectez-vous avec des tuteurs, dÃ©veloppeurs, agents d'entretien et coachs vÃ©rifiÃ©s en quelques minutes. ApprouvÃ© par plus de 10 000 clients dans le monde.",
+        "verifiedPros": "Pros vÃ©rifiÃ©s",
         "directContact": "Contact direct",
         "satisfactionGuarantee": "Satisfaction garantie",
         "newProsBadge": "500+ Nouveaux Pros",
         "joinedThisWeek": "inscrits cette semaine"
     },
     "Footer": {
-        "brandSlogan": "Une place de marché de confiance connectant les clients avec des professionnels vérifiés pour le tutorat, la technologie, les services à domicile et plus encore.",
+        "brandSlogan": "Une place de marchÃ© de confiance connectant les clients avec des professionnels vÃ©rifiÃ©s pour le tutorat, la technologie, les services Ã  domicile et plus encore.",
         "forClients": "Pour les clients",
-        "browseCategories": "Parcourir les catégories",
+        "browseCategories": "Parcourir les catÃ©gories",
         "featuredPros": "Professionnels en vedette",
-        "howItWorks": "Comment ça marche",
+        "howItWorks": "Comment Ã§a marche",
         "forProfessionals": "Pour les professionnels",
         "becomePro": "Devenir un professionnel",
-        "pricing": "Tarification & visibilité",
+        "pricing": "Tarification & visibilitÃ©",
         "help": "Aide & support",
         "company": "Entreprise",
-        "about": "À propos",
+        "about": "Ã€ propos",
         "terms": "Conditions",
-        "privacy": "Confidentialité",
-        "rightsReserved": "SkillFind. Tous droits réservés.",
-        "madeWithLove": "Fait avec ❤️ pour la communauté."
+        "privacy": "ConfidentialitÃ©",
+        "rightsReserved": "SkillFind. Tous droits rÃ©servÃ©s.",
+        "madeWithLove": "Fait avec â�¤ï¸� pour la communautÃ©."
     },
     "HowItWorks": {
         "badge": "Simple & Transparent",
         "title": "Comment fonctionne SkillFind.",
-        "subtitle": "Réalisez votre projet en trois étapes simples. Aucun frais caché, aucun tracas.",
-        "step1Title": "Créez une demande",
-        "step1Desc": "Décrivez votre besoin, votre budget et vos préférences. Gratuit et rapide (2 min).",
-        "step2Title": "Recevez des offres personnalisées",
-        "step2Desc": "Des professionnels vérifiés examineront votre demande et enverront des offres sur mesure avec prix et disponibilité.",
+        "subtitle": "RÃ©alisez votre projet en trois Ã©tapes simples. Aucun frais cachÃ©, aucun tracas.",
+        "step1Title": "CrÃ©ez une demande",
+        "step1Desc": "DÃ©crivez votre besoin, votre budget et vos prÃ©fÃ©rences. Gratuit et rapide (2 min).",
+        "step2Title": "Recevez des offres personnalisÃ©es",
+        "step2Desc": "Des professionnels vÃ©rifiÃ©s examineront votre demande et enverront des offres sur mesure avec prix et disponibilitÃ©.",
         "step3Title": "Engagez & laissez un avis",
-        "step3Desc": "Choisissez le meilleur profil, discutez directement et réalisez le travail. Laissez un avis pour aider la communauté."
+        "step3Desc": "Choisissez le meilleur profil, discutez directement et rÃ©alisez le travail. Laissez un avis pour aider la communautÃ©."
     },
     "TrustSection": {
-        "title": "Pourquoi plus de 10 000 clients font confiance à SkillFind",
-        "subtitle": "Nous avons construit une place de marché où la confiance n'est pas une option, c'est la fondation. Des identités vérifiées aux transactions sécurisées, nous protégeons chaque étape de votre parcours.",
+        "title": "Pourquoi plus de 10 000 clients font confiance Ã  SkillFind",
+        "subtitle": "Nous avons construit une place de marchÃ© oÃ¹ la confiance n'est pas une option, c'est la fondation. Des identitÃ©s vÃ©rifiÃ©es aux transactions sÃ©curisÃ©es, nous protÃ©geons chaque Ã©tape de votre parcours.",
         "rating": "Note moyenne de 4.9/5",
-        "ratingSub": "basée sur des avis vérifiés",
-        "vettedTitle": "Professionnels vérifiés",
-        "vettedDesc": "Chaque professionnel fait l'objet d'une vérification d'identité avant de rejoindre la plateforme.",
+        "ratingSub": "basÃ©e sur des avis vÃ©rifiÃ©s",
+        "vettedTitle": "Professionnels vÃ©rifiÃ©s",
+        "vettedDesc": "Chaque professionnel fait l'objet d'une vÃ©rification d'identitÃ© avant de rejoindre la plateforme.",
         "connectTitle": "Connexions directes",
-        "connectDesc": "Connectez-vous directement avec les professionnels. Négociez les termes qui conviennent aux deux parties.",
-        "pricingTitle": "Tarification équitable",
-        "pricingDesc": "Recevez plusieurs offres et choisissez celle qui correspond à votre budget. Pas de frais cachés.",
-        "qualityTitle": "Qualité garantie",
-        "qualityDesc": "Pas satisfait ? Notre équipe de support est prête à aider à résoudre tout problème."
+        "connectDesc": "Connectez-vous directement avec les professionnels. NÃ©gociez les termes qui conviennent aux deux parties.",
+        "pricingTitle": "Tarification Ã©quitable",
+        "pricingDesc": "Recevez plusieurs offres et choisissez celle qui correspond Ã  votre budget. Pas de frais cachÃ©s.",
+        "qualityTitle": "QualitÃ© garantie",
+        "qualityDesc": "Pas satisfait ? Notre Ã©quipe de support est prÃªte Ã  aider Ã  rÃ©soudre tout problÃ¨me."
     },
     "PopularCategories": {
-        "badge": "Les plus demandés",
+        "badge": "Les plus demandÃ©s",
         "title": "Services populaires cette semaine.",
-        "subtitle": "Trouvez de l'aide pour vos besoins quotidiens ou vos projets à long terme.",
+        "subtitle": "Trouvez de l'aide pour vos besoins quotidiens ou vos projets Ã  long terme.",
         "cat1Name": "Tutorat",
-        "cat1Desc": "Maths, langues, prépa examens.",
+        "cat1Desc": "Maths, langues, prÃ©pa examens.",
         "cat2Name": "Logiciel & Tech",
         "cat2Desc": "Sites web, techniciens, support.",
         "cat3Name": "Design",
         "cat3Desc": "Logos, UI/UX, graphisme.",
-        "cat4Name": "Santé & Fitness",
-        "cat4Desc": "Entraînement, nutrition, bien-être.",
-        "cat5Name": "Services à domicile",
-        "cat5Desc": "Ménage, réparations, déménagement.",
+        "cat4Name": "SantÃ© & Fitness",
+        "cat4Desc": "EntraÃ®nement, nutrition, bien-Ãªtre.",
+        "cat5Name": "Services Ã  domicile",
+        "cat5Desc": "MÃ©nage, rÃ©parations, dÃ©mÃ©nagement.",
         "cat6Name": "Affaires",
-        "cat6Desc": "Conseil, coaching, stratégie.",
-        "cat7Name": "Rédaction",
-        "cat7Desc": "Contenu, copywriting, édition.",
+        "cat6Desc": "Conseil, coaching, stratÃ©gie.",
+        "cat7Name": "RÃ©daction",
+        "cat7Desc": "Contenu, copywriting, Ã©dition.",
         "cat8Name": "Musique & Audio",
         "cat8Desc": "Cours, production, mixage."
     },
     "FeaturedProfessionals": {
-        "verified": "Vérifié",
+        "verified": "VÃ©rifiÃ©",
         "contactForPricing": "Contacter pour le prix",
-        "startingFrom": "À partir de",
+        "startingFrom": "Ã€ partir de",
         "viewProfile": "Voir le profil",
         "moreServices": "+{count} autres services",
         "moreService": "+{count} autre service",
         "badge": "Professionnels en vedette",
         "title": "Rencontrez certains des experts que les clients embauchent sur SkillFind.",
-        "subtitle": "Ce ne sont que quelques exemples. Vous verrez encore plus de professionnels correspondants une fois que vous publierez une demande ou effectuerez une recherche par catégorie.",
+        "subtitle": "Ce ne sont que quelques exemples. Vous verrez encore plus de professionnels correspondants une fois que vous publierez une demande ou effectuerez une recherche par catÃ©gorie.",
         "reviews": "avis",
         "online": "Disponible en ligne",
         "emptyTitle": "Aucun professionnel en vedette pour le moment",
-        "emptySubtitle": "Revenez plus tard ou recherchez un service spécifique.",
+        "emptySubtitle": "Revenez plus tard ou recherchez un service spÃ©cifique.",
         "viewAll": "Voir tous les professionnels"
     },
     "DualCTA": {
-        "unifiedTitle": "Prêt à commencer ?",
-        "unifiedSubtitle": "Rejoignez notre communauté aujourd'hui.",
+        "unifiedTitle": "PrÃªt Ã  commencer ?",
+        "unifiedSubtitle": "Rejoignez notre communautÃ© aujourd'hui.",
         "unifiedDesc": "Que vous cherchiez de l'aide ou du travail, SkillFind est l'endroit pour vous.",
         "unifiedButton": "Commencer",
         "learnMore": "En savoir plus"
     },
     "Testimonials": {
-        "badge": "Témoignages Clients",
-        "title": "Approuvé par clients et professionnels.",
-        "subtitle": "Découvrez ce que notre communauté dit de son expérience sur SkillFind.",
-        "review1": "Expérience incroyable ! J'ai trouvé un super tuteur pour mon fils en quelques heures. La plateforme rend la comparaison des professionnels très facile.",
-        "review2": "En tant que professionnel, SkillFind a transformé mon activité. Je reçois des leads de qualité et le système de paiement est transparent et équitable.",
-        "review3": "Super plateforme ! Le processus de vérification m'a donné confiance pour choisir la bonne personne pour mon projet de rénovation.",
-        "hiredFor": "A engagé un pro pour"
+        "badge": "TÃ©moignages Clients",
+        "title": "ApprouvÃ© par clients et professionnels.",
+        "subtitle": "DÃ©couvrez ce que notre communautÃ© dit de son expÃ©rience sur SkillFind.",
+        "review1": "ExpÃ©rience incroyable ! J'ai trouvÃ© un super tuteur pour mon fils en quelques heures. La plateforme rend la comparaison des professionnels trÃ¨s facile.",
+        "review2": "En tant que professionnel, SkillFind a transformÃ© mon activitÃ©. Je reÃ§ois des leads de qualitÃ© et le systÃ¨me de paiement est transparent et Ã©quitable.",
+        "review3": "Super plateforme ! Le processus de vÃ©rification m'a donnÃ© confiance pour choisir la bonne personne pour mon projet de rÃ©novation.",
+        "hiredFor": "A engagÃ© un pro pour"
     },
     "Dashboard": {
         "PerformanceMetrics": {
             "profileViews": "Vues du profil",
-            "offersSent": "Offres envoyées",
+            "offersSent": "Offres envoyÃ©es",
             "acceptanceRate": "Taux d'acceptation",
             "avgRating": "Note moy.",
-            "responseTime": "Temps de réponse",
+            "responseTime": "Temps de rÃ©ponse",
             "reviews": "{count} avis",
             "na": "N/A"
         },
@@ -194,18 +194,18 @@
             "fromLastMonth": "par rapport au mois dernier"
         },
         "ProfileCompletion": {
-            "titleLow": "Complétez votre profil",
+            "titleLow": "ComplÃ©tez votre profil",
             "titleHigh": "Presque fini !",
-            "descPro": "Un profil complet reçoit plus d'offres d'emploi",
-            "descClient": "Aidez les professionnels à mieux comprendre vos besoins",
-            "label": "Complétion du profil",
-            "moreSteps": "+{count} étapes",
-            "completeNow": "Compléter maintenant →"
+            "descPro": "Un profil complet reÃ§oit plus d'offres d'emploi",
+            "descClient": "Aidez les professionnels Ã  mieux comprendre vos besoins",
+            "label": "ComplÃ©tion du profil",
+            "moreSteps": "+{count} Ã©tapes",
+            "completeNow": "ComplÃ©ter maintenant â†’"
         },
         "ActivityFeed": {
-            "emptyTitle": "Aucune activité récente",
-            "emptyDesc": "Votre activité apparaîtra ici une fois que vous commencerez à interagir avec des demandes et des offres.",
-            "justNow": "À l'instant",
+            "emptyTitle": "Aucune activitÃ© rÃ©cente",
+            "emptyDesc": "Votre activitÃ© apparaÃ®tra ici une fois que vous commencerez Ã  interagir avec des demandes et des offres.",
+            "justNow": "Ã€ l'instant",
             "minAgo": "il y a {count} min",
             "hourAgo": "il y a {count} heure",
             "hoursAgo": "il y a {count} heures",
@@ -214,63 +214,63 @@
         },
         "MatchingRequests": {
             "emptyTitle": "Aucune demande correspondante",
-            "emptyDesc": "Complétez votre profil et ajoutez plus de services pour être jumelé avec des clients.",
-            "updateProfile": "Mettre à jour le profil",
-            "budgetNotSpecified": "Budget non spécifié",
-            "fromBudget": "À partir de {amount} €",
+            "emptyDesc": "ComplÃ©tez votre profil et ajoutez plus de services pour Ãªtre jumelÃ© avec des clients.",
+            "updateProfile": "Mettre Ã  jour le profil",
+            "budgetNotSpecified": "Budget non spÃ©cifiÃ©",
+            "fromBudget": "Ã€ partir de {amount} â‚¬",
             "today": "Aujourd'hui",
             "yesterday": "Hier",
             "daysAgo": "il y a {count} jours",
-            "new": "🔥 NOUVEAU",
+            "new": "ðŸ”¥ NOUVEAU",
             "sendOffer": "Envoyer votre offre",
-            "remote": "À distance"
+            "remote": "Ã€ distance"
         }
     },
     "CategoryDirectory": {
-        "badge": "Parcourir toutes les catégories",
+        "badge": "Parcourir toutes les catÃ©gories",
         "title": "Explorez tout sur SkillFind.",
-        "subtitle": "Du tutorat à la technologie, fitness, design et aide à domicile — nous rassemblons tous types de professionnels en un seul endroit.",
+        "subtitle": "Du tutorat Ã  la technologie, fitness, design et aide Ã  domicile â€” nous rassemblons tous types de professionnels en un seul endroit.",
         "Categories": {
-            "tutoring": "Tutorat & Éducation",
+            "tutoring": "Tutorat & Ã‰ducation",
             "tech": "Logiciel & Tech",
-            "design": "Design & Créatif",
-            "business": "Affaires & Carrière",
-            "wellness": "Santé & Bien-être",
+            "design": "Design & CrÃ©atif",
+            "business": "Affaires & CarriÃ¨re",
+            "wellness": "SantÃ© & Bien-Ãªtre",
             "home": "Maison & Quotidien"
         },
         "Items": {
             "math": "Tutorat maths",
             "science": "Tutorat sciences",
             "language": "Tutorat langues",
-            "exam": "Préparation examens",
+            "exam": "PrÃ©paration examens",
             "school": "Soutien scolaire",
             "uni": "Sujets universitaires",
-            "web": "Développement web",
+            "web": "DÃ©veloppement web",
             "bug": "Correction de bugs",
-            "app": "Développement d'app",
+            "app": "DÃ©veloppement d'app",
             "scripts": "Automatisation & scripts",
             "techSupport": "Support technique",
-            "db": "Aide base de données",
+            "db": "Aide base de donnÃ©es",
             "logo": "Design de logo",
             "ui": "Design UI/UX",
-            "presentation": "Design présentation",
-            "social": "Visuels réseaux sociaux",
+            "presentation": "Design prÃ©sentation",
+            "social": "Visuels rÃ©seaux sociaux",
             "photo": "Retouche photo",
             "illustration": "Illustration",
             "cv": "Revue de CV",
             "linkedin": "Aide profil LinkedIn",
-            "career": "Coaching carrière",
+            "career": "Coaching carriÃ¨re",
             "consulting": "Conseil affaires",
             "pitch": "Aide pitch deck",
-            "interview": "Préparation entretien",
+            "interview": "PrÃ©paration entretien",
             "fitness": "Coaching fitness",
             "nutrition": "Conseils nutrition",
             "yoga": "Yoga & pilates",
-            "mental": "Bien-être mental",
+            "mental": "Bien-Ãªtre mental",
             "lifestyle": "Coaching mode de vie",
-            "rehab": "Exercices rééducation",
-            "cleaning": "Services de ménage",
-            "moving": "Aide au déménagement",
+            "rehab": "Exercices rÃ©Ã©ducation",
+            "cleaning": "Services de mÃ©nage",
+            "moving": "Aide au dÃ©mÃ©nagement",
             "handyman": "Bricolage",
             "furniture": "Montage meubles",
             "organization": "Organisation maison",
@@ -280,87 +280,87 @@
     "ProDashboard": {
         "eyebrow": "Tableau de bord professionnel",
         "welcome": "Bon {period}, {name}",
-        "description": "Consultez les demandes correspondantes, envoyez des offres sur mesure et gardez votre profil prêt pour de nouvelles opportunités.",
+        "description": "Consultez les demandes correspondantes, envoyez des offres sur mesure et gardez votre profil prÃªt pour de nouvelles opportunitÃ©s.",
         "metricsTitle": "Indicateurs de performance",
-        "metricsDesc": "Suivez votre succès et votre visibilité sur la plateforme.",
+        "metricsDesc": "Suivez votre succÃ¨s et votre visibilitÃ© sur la plateforme.",
         "requestsTitle": "Demandes correspondantes",
-        "requestsDesc": "Nouvelles opportunités correspondant à vos services.",
+        "requestsDesc": "Nouvelles opportunitÃ©s correspondant Ã  vos services.",
         "viewAll": "Voir tout",
         "quickActionsTitle": "Actions rapides",
-        "quickActionsDesc": "Raccourcis vers les tâches courantes.",
-        "nextStepsTitle": "Prochaines étapes",
-        "nextStepsDesc": "Actions suggérées pour développer votre activité.",
+        "quickActionsDesc": "Raccourcis vers les tÃ¢ches courantes.",
+        "nextStepsTitle": "Prochaines Ã©tapes",
+        "nextStepsDesc": "Actions suggÃ©rÃ©es pour dÃ©velopper votre activitÃ©.",
         "periods": {
             "morning": "matin",
-            "afternoon": "après-midi",
+            "afternoon": "aprÃ¨s-midi",
             "evening": "soir"
         },
         "Actions": {
             "browseTitle": "Parcourir les demandes",
-            "browseDesc": "Voir les nouvelles opportunités correspondant à vos compétences.",
+            "browseDesc": "Voir les nouvelles opportunitÃ©s correspondant Ã  vos compÃ©tences.",
             "browseCta": "Voir les demandes",
-            "offersTitle": "Gérer vos offres",
-            "offersDesc": "Suivre les offres en attente et voir celles acceptées.",
+            "offersTitle": "GÃ©rer vos offres",
+            "offersDesc": "Suivre les offres en attente et voir celles acceptÃ©es.",
             "offersCta": "Voir les offres",
             "jobsTitle": "Emplois actifs",
-            "jobsDesc": "Commencer le travail et marquer comme terminé.",
+            "jobsDesc": "Commencer le travail et marquer comme terminÃ©.",
             "jobsCta": "Voir les emplois",
-            "profileTitle": "Mettre à jour le profil",
-            "profileDesc": "Gardez votre bio, services et portfolio à jour.",
-            "profileCta": "Éditer le profil"
+            "profileTitle": "Mettre Ã  jour le profil",
+            "profileDesc": "Gardez votre bio, services et portfolio Ã  jour.",
+            "profileCta": "Ã‰diter le profil"
         },
         "Highlights": {
             "profile": "Profil complet",
             "wallet": "Solde du portefeuille",
             "pending": "Offres en attente",
-            "allDone": "Tout est prêt !",
-            "topUp": "Recharge recommandée",
+            "allDone": "Tout est prÃªt !",
+            "topUp": "Recharge recommandÃ©e",
             "goodBalance": "Solde suffisant",
-            "awaitingResponse": "En attente de réponse",
+            "awaitingResponse": "En attente de rÃ©ponse",
             "sendOffers": "Envoyer plus d'offres"
         },
         "Metrics": {
             "responseTimeValue": "< 2 heures"
         },
         "Steps": {
-            "profile": "Complétez vos informations de profil",
-            "services": "Ajoutez votre première catégorie de service",
-            "matching": "{count, plural, =1 {Répondre à # demande correspondante} other {Répondre à # demandes correspondantes}}",
+            "profile": "ComplÃ©tez vos informations de profil",
+            "services": "Ajoutez votre premiÃ¨re catÃ©gorie de service",
+            "matching": "{count, plural, =1 {RÃ©pondre Ã  # demande correspondante} other {RÃ©pondre Ã  # demandes correspondantes}}",
             "offers": "{count, plural, =1 {Suivi de # offre en attente} other {Suivi de # offres en attente}}",
             "jobs": "{count, plural, =1 {Terminer # job actif} other {Terminer # jobs actifs}}",
             "default": "Parcourir plus de demandes"
         }
     },
     "ProProfile": {
-        "title": "Gardez votre profil professionnel à jour",
+        "title": "Gardez votre profil professionnel Ã  jour",
         "description": "Les clients veulent comprendre votre expertise et vos services avant d'envoyer une demande.",
-        "error": "Une erreur est survenue. Veuillez réessayer.",
-        "success": "Profil mis à jour avec succès.",
-        "serviceError": "Échec de l'ajout du service. Veuillez réessayer.",
-        "serviceAdded": "Service ajouté avec succès.",
-        "serviceUpdated": "Service mis à jour avec succès.",
-        "deleteError": "Échec de la suppression du service.",
-        "serviceDeleted": "Service supprimé avec succès.",
+        "error": "Une erreur est survenue. Veuillez rÃ©essayer.",
+        "success": "Profil mis Ã  jour avec succÃ¨s.",
+        "serviceError": "Ã‰chec de l'ajout du service. Veuillez rÃ©essayer.",
+        "serviceAdded": "Service ajoutÃ© avec succÃ¨s.",
+        "serviceUpdated": "Service mis Ã  jour avec succÃ¨s.",
+        "deleteError": "Ã‰chec de la suppression du service.",
+        "serviceDeleted": "Service supprimÃ© avec succÃ¨s.",
         "completion": {
-            "title": "Complétion du Profil",
-            "desc": "Les profils complets reçoivent 3x plus d'offres !",
-            "missing": "Complétez ceci pour atteindre 100% :"
+            "title": "ComplÃ©tion du Profil",
+            "desc": "Les profils complets reÃ§oivent 3x plus d'offres !",
+            "missing": "ComplÃ©tez ceci pour atteindre 100% :"
         },
         "tabs": {
             "info": "Informations",
             "services": "Services",
-            "verification": "Vérification"
+            "verification": "VÃ©rification"
         },
         "info": {
             "titleLabel": "Titre Professionnel",
-            "titlePlaceholder": "ex: Professeur de Mathématiques Senior",
-            "yearsLabel": "Années d'Expérience",
+            "titlePlaceholder": "ex: Professeur de MathÃ©matiques Senior",
+            "yearsLabel": "AnnÃ©es d'ExpÃ©rience",
             "bioLabel": "Bio",
             "bioPlaceholder": "Parlez aux clients de votre expertise et parcours...",
             "personal": "Informations Personnelles",
-            "location": "Lieu et Disponibilité",
+            "location": "Lieu et DisponibilitÃ©",
             "isAvailable": "Disponible pour nouveaux jobs",
-            "remoteLabel": "Disponibilité à distance",
+            "remoteLabel": "DisponibilitÃ© Ã  distance",
             "remoteOptions": {
                 "YES_AND_ONSITE": "Distance & Sur site",
                 "ONLY_REMOTE": "Distance seulement",
@@ -369,24 +369,24 @@
         },
         "services": {
             "title": "Mes Services",
-            "empty": "Aucun service ajouté. Ajoutez votre premier service pour recevoir des demandes.",
+            "empty": "Aucun service ajoutÃ©. Ajoutez votre premier service pour recevoir des demandes.",
             "add": "Ajouter Service",
             "edit": "Modifier Service",
             "contact": "Contact",
-            "update": "Mettre à jour",
-            "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce service ?",
+            "update": "Mettre Ã  jour",
+            "confirmDelete": "ÃŠtes-vous sÃ»r de vouloir supprimer ce service ?",
             "delete": "Supprimer",
-            "startsFrom": "À partir de {price} €",
+            "startsFrom": "Ã€ partir de {price} â‚¬",
             "fields": {
                 "city": "Ville",
                 "country": "Pays",
-                "category": "Catégorie",
-                "selectCategory": "Sélectionner une catégorie",
-                "subcategory": "Sous-catégorie",
-                "selectSubcategory": "Sélectionner une sous-catégorie",
-                "price": "Prix de départ (€)",
+                "category": "CatÃ©gorie",
+                "selectCategory": "SÃ©lectionner une catÃ©gorie",
+                "subcategory": "Sous-catÃ©gorie",
+                "selectSubcategory": "SÃ©lectionner une sous-catÃ©gorie",
+                "price": "Prix de dÃ©part (â‚¬)",
                 "description": "Description du service",
-                "descriptionHint": "Décrivez brièvement ce qui est inclus dans ce service.",
+                "descriptionHint": "DÃ©crivez briÃ¨vement ce qui est inclus dans ce service.",
                 "cancel": "Annuler"
             }
         }
@@ -395,7 +395,7 @@
         "Pro": {
             "badge": "Espace Pro",
             "title": "SkillFind Pro",
-            "description": "Gérez votre profil, répondez aux demandes et développez votre activité.",
+            "description": "GÃ©rez votre profil, rÃ©pondez aux demandes et dÃ©veloppez votre activitÃ©.",
             "links": {
                 "dashboard": "Tableau de bord",
                 "requests": "Demandes corresp.",
@@ -408,7 +408,7 @@
         "Client": {
             "badge": "Espace Client",
             "title": "Planifiez vos projets",
-            "description": "Publiez de nouveaux besoins, examinez les offres de pros vérifiés et gardez toutes les conversations au même endroit.",
+            "description": "Publiez de nouveaux besoins, examinez les offres de pros vÃ©rifiÃ©s et gardez toutes les conversations au mÃªme endroit.",
             "links": {
                 "dashboard": "Tableau de bord",
                 "requests": "Demandes",
@@ -421,131 +421,134 @@
     "ClientDashboard": {
         "eyebrow": "Tableau de bord client",
         "welcome": "Bon retour, {name}",
-        "description": "Vous gardez le contrôle : postez vos besoins, comparez les offres et choisissez le meilleur professionnel.",
+        "description": "Vous gardez le contrÃ´le : postez vos besoins, comparez les offres et choisissez le meilleur professionnel.",
         "highlights": {
-            "nextSteps": "Prochaines étapes",
-            "verification": "Vérification",
-            "activity": "Activité",
+            "nextSteps": "Prochaines Ã©tapes",
+            "verification": "VÃ©rification",
+            "activity": "ActivitÃ©",
             "reviewOffers": "Examiner offres",
             "waitingForOffers": "En attente d'offres",
-            "createRequest": "Créer demande",
-            "offersToReview": "{count, plural, =1 {# offre à voir} other {# offres à voir}}",
+            "createRequest": "CrÃ©er demande",
+            "offersToReview": "{count, plural, =1 {# offre Ã  voir} other {# offres Ã  voir}}",
             "openRequests": "{count, plural, =1 {# demande ouverte} other {# demandes ouvertes}}",
             "getStarted": "Commencer",
-            "emailVerified": "Email vérifié",
+            "emailVerified": "Email vÃ©rifiÃ©",
             "emailPending": "Email en attente",
-            "phoneVerified": "Tél. vérifié ✓",
-            "addPhone": "Ajouter téléphone",
+            "phoneVerified": "TÃ©l. vÃ©rifiÃ© âœ“",
+            "addPhone": "Ajouter tÃ©lÃ©phone",
             "offersCount": "{count, plural, =1 {# offre} other {# offres}}",
-            "completedRequests": "{count, plural, =1 {# complétée} other {# complétées}}",
+            "completedRequests": "{count, plural, =1 {# complÃ©tÃ©e} other {# complÃ©tÃ©es}}",
             "noJobs": "Aucun emploi"
         },
         "stats": {
             "openRequests": "Demandes ouvertes",
-            "totalOffers": "Offres reçues",
-            "completedRequests": "Demandes terminées"
+            "totalOffers": "Offres reÃ§ues",
+            "completedRequests": "Demandes terminÃ©es"
         },
         "sections": {
             "quickActions": "Actions rapides",
-            "quickActionsDesc": "Raccourcis vers les tâches courantes.",
-            "recentActivity": "Activité récente",
-            "recentActivityDesc": "Vos dernières mises à jour et notifications.",
+            "quickActionsDesc": "Raccourcis vers les tÃ¢ches courantes.",
+            "recentActivity": "ActivitÃ© rÃ©cente",
+            "recentActivityDesc": "Vos derniÃ¨res mises Ã  jour et notifications.",
             "yourRequests": "Vos demandes",
             "yourRequestsDesc": "Suivez la progression de tous vos services."
         },
         "actions": {
-            "createTitle": "Créer une demande",
-            "createDesc": "Décrivez votre besoin pour recevoir des offres sur mesure.",
+            "createTitle": "CrÃ©er une demande",
+            "createDesc": "DÃ©crivez votre besoin pour recevoir des offres sur mesure.",
             "createCta": "Lancer demande",
             "reviewTitle": "Revoir vos demandes",
-            "reviewDesc": "Vérifiez les statuts, comparez les offres et organisez le travail.",
-            "reviewCta": "Voir demandes"
+            "reviewDesc": "VÃ©rifiez les statuts, comparez les offres et organisez le travail.",
+            "reviewCta": "Voir demandes",
+            "offersTitle": "Offres reçues",
+            "offersDesc": "Voir toutes les offres en cours au même endroit.",
+            "offersCta": "Toutes les offres"
         },
         "activity": {
-            "requestCreated": "Nouvelle demande créée",
-            "offerReceived": "Offre reçue",
-            "offerReceivedTitle": "{count, plural, =1 {# offre reçue} other {# offres reçues}}",
-            "offerInterest": "Des professionnels sont intéressés par '{title}'"
+            "requestCreated": "Nouvelle demande crÃ©Ã©e",
+            "offerReceived": "Offre reÃ§ue",
+            "offerReceivedTitle": "{count, plural, =1 {# offre reÃ§ue} other {# offres reÃ§ues}}",
+            "offerInterest": "Des professionnels sont intÃ©ressÃ©s par '{title}'"
         }
     },
     "Search": {
         "title": "Trouver des professionnels",
-        "subtitle": "Parcourez des profils vérifiés et trouvez l'expert idéal.",
+        "subtitle": "Parcourez des profils vÃ©rifiÃ©s et trouvez l'expert idÃ©al.",
         "filters": {
             "title": "Filtres",
             "searchLabel": "Recherche",
-            "searchPlaceholder": "Mots-clés...",
+            "searchPlaceholder": "Mots-clÃ©s...",
             "locationLabel": "Lieu",
-            "locationPlaceholder": "Ville ou région...",
-            "categoryLabel": "Catégorie",
-            "allCategories": "Toutes catégories",
-            "remoteLabel": "À distance",
+            "locationPlaceholder": "Ville ou rÃ©gion...",
+            "categoryLabel": "CatÃ©gorie",
+            "allCategories": "Toutes catÃ©gories",
+            "remoteLabel": "Ã€ distance",
             "ratingLabel": "Note minumum",
             "anyRating": "Peu importe",
-            "stars": "{count}+ étoiles",
-            "priceLabel": "Tarif horaire max (€)",
+            "stars": "{count}+ Ã©toiles",
+            "priceLabel": "Tarif horaire max (â‚¬)",
             "pricePlaceholder": "ex. 50",
             "placeholder": "Trouver un professionnel...",
             "button": "Rechercher",
             "legal": "Les clients ne paient aucun frais. Les professionnels paient uniquement lorsque vous consultez leur profil.",
             "empty": {
-                "title": "Aucun professionnel trouvé",
-                "desc": "Essayez d'ajuster vos filtres ou parcourez toutes les catégories.",
+                "title": "Aucun professionnel trouvÃ©",
+                "desc": "Essayez d'ajuster vos filtres ou parcourez toutes les catÃ©gories.",
                 "action": "Effacer filtres"
             },
             "results": {
                 "searching": "Recherche en cours...",
-                "count": "{count, plural, =0 {Aucun professionnel trouvé} =1 {1 professionnel trouvé} other {# professionnels trouvés}}",
+                "count": "{count, plural, =0 {Aucun professionnel trouvÃ©} =1 {1 professionnel trouvÃ©} other {# professionnels trouvÃ©s}}",
                 "forQuery": " pour \"{query}\"",
-                "previous": "Précédent",
+                "previous": "PrÃ©cÃ©dent",
                 "next": "Suivant",
                 "pageInfo": "Page {page} sur {total}"
             },
             "filters": {
                 "title": "Filtres",
                 "searchLabel": "Recherche",
-                "searchPlaceholder": "Mots-clés...",
+                "searchPlaceholder": "Mots-clÃ©s...",
                 "locationLabel": "Lieu",
                 "locationPlaceholder": "Ville ou Code postal...",
-                "categoryLabel": "Catégorie",
-                "allCategories": "Toutes les catégories",
-                "remoteLabel": "À distance seulement",
+                "categoryLabel": "CatÃ©gorie",
+                "allCategories": "Toutes les catÃ©gories",
+                "remoteLabel": "Ã€ distance seulement",
                 "ratingLabel": "Note minimum",
                 "anyRating": "Toute note",
-                "stars": "{count} étoiles & plus",
+                "stars": "{count} Ã©toiles & plus",
                 "priceLabel": "Prix max/heure",
                 "pricePlaceholder": "ex: 50",
                 "apply": "Appliquer filtres",
                 "clear": "Effacer tout",
-                "showResults": "Voir les résultats"
+                "showResults": "Voir les rÃ©sultats"
             }
         },
         "ProfessionalCard": {
-            "priceFrom": "Dès {price} €/h",
+            "priceFrom": "DÃ¨s {price} â‚¬/h",
             "contactForPricing": "Contacter pour prix",
             "defaultService": "Service professionnel",
             "reviews": "{count} avis",
-            "remote": "À distance",
+            "remote": "Ã€ distance",
             "moreServices": "+{count} de plus",
             "viewProfile": "Voir le profil"
         },
         "SuggestedSkills": {
-            "badge": "Idées pour commencer",
+            "badge": "IdÃ©es pour commencer",
             "title": "Vous ne savez pas quoi chercher ?",
-            "subtitle": "Voici quelques exemples d'utilisation de SkillFind. Appuyez sur une compétence pour explorer les professionnels de ce domaine.",
+            "subtitle": "Voici quelques exemples d'utilisation de SkillFind. Appuyez sur une compÃ©tence pour explorer les professionnels de ce domaine.",
             "skills": {
-                "mathExam": "Maths et préparation aux examens",
+                "mathExam": "Maths et prÃ©paration aux examens",
                 "languageTutoring": "Cours de langue",
-                "careerCoaching": "CV et coaching de carrière",
+                "careerCoaching": "CV et coaching de carriÃ¨re",
                 "frontendDebug": "Correction de bugs Frontend",
                 "brandDesign": "Logo et design de marque",
                 "fitnessNutrition": "Fitness et nutrition",
-                "mentalWellbeing": "Soutien au bien-être mental",
-                "homeCleaning": "Nettoyage à domicile",
-                "movingHelp": "Aide au déménagement",
+                "mentalWellbeing": "Soutien au bien-Ãªtre mental",
+                "homeCleaning": "Nettoyage Ã  domicile",
+                "movingHelp": "Aide au dÃ©mÃ©nagement",
                 "resumeReview": "Revue de CV et LinkedIn",
-                "websiteTroubleshoot": "Dépannage de site web",
-                "socialMedia": "Support réseaux sociaux"
+                "websiteTroubleshoot": "DÃ©pannage de site web",
+                "socialMedia": "Support rÃ©seaux sociaux"
             }
         },
         "PublicProfile": {
@@ -555,91 +558,91 @@
                 "cta": "Parcourir d'autres pros"
             },
             "hero": {
-                "verified": "Vérifié",
+                "verified": "VÃ©rifiÃ©",
                 "reviews": "{count} avis",
-                "remote": "Disponible à distance",
+                "remote": "Disponible Ã  distance",
                 "memberSince": "Membre depuis {date}",
                 "sendRequest": "Envoyer demande",
                 "jobsDone": "Travaux faits",
-                "yearsExp": "Années d'exp"
+                "yearsExp": "AnnÃ©es d'exp"
             },
             "sections": {
-                "about": "À propos",
-                "services": "Services proposés",
-                "reviews": "Avis récents ({count})",
+                "about": "Ã€ propos",
+                "services": "Services proposÃ©s",
+                "reviews": "Avis rÃ©cents ({count})",
                 "quickStats": "Stat. rapides",
                 "location": "Lieu",
-                "experience": "Expérience"
+                "experience": "ExpÃ©rience"
             },
             "services": {
                 "perProject": "par projet",
-                "startsAt": "À partir de"
+                "startsAt": "Ã€ partir de"
             },
             "reviews": {
                 "wouldRecommend": "Recommanderait",
-                "responseFromPro": "Réponse du pro :"
+                "responseFromPro": "RÃ©ponse du pro :"
             },
             "cta": {
-                "readyToHire": "Prêt à engager {name} ?",
+                "readyToHire": "PrÃªt Ã  engager {name} ?",
                 "signInDesc": "Connectez-vous pour envoyer une demande ou un message.",
                 "getStarted": "Commencer",
-                "signInLink": "Déjà un compte ? Connexion"
+                "signInLink": "DÃ©jÃ  un compte ? Connexion"
             },
             "stats": {
-                "completion": "Complétion profil",
-                "completedJobs": "Travaux terminés",
+                "completion": "ComplÃ©tion profil",
+                "completedJobs": "Travaux terminÃ©s",
                 "avgRating": "Note moyenne",
                 "noRatings": "Pas encore de note",
                 "totalReviews": "Total avis"
             },
             "location": {
-                "remoteAvailable": "Disponible pour télétravail"
+                "remoteAvailable": "Disponible pour tÃ©lÃ©travail"
             },
             "experience": {
                 "years": "{count} ans",
-                "desc": "d'expérience pro"
+                "desc": "d'expÃ©rience pro"
             }
         },
         "LiveStats": {
-            "verifiedPros": "Professionnels Vérifiés",
-            "trustedReviews": "Avis Vérifiés",
+            "verifiedPros": "Professionnels VÃ©rifiÃ©s",
+            "trustedReviews": "Avis VÃ©rifiÃ©s",
             "activeRequests": "Demandes Actives",
-            "jobsCompleted": "Missions Réalisées"
+            "jobsCompleted": "Missions RÃ©alisÃ©es"
         },
         "Components": {
             "AdminDashboard": {
-                "eyebrow": "Aperçu",
-                "title": "État du système",
-                "description": "Métriques clés et surveillance.",
+                "eyebrow": "AperÃ§u",
+                "title": "Ã‰tat du systÃ¨me",
+                "description": "MÃ©triques clÃ©s et surveillance.",
                 "metrics": {
                     "totalUsers": "Utilisateurs totaux",
                     "professionals": "Professionnels",
                     "clients": "Clients",
-                    "pendingVerifications": "Vérifications en attente",
+                    "pendingVerifications": "VÃ©rifications en attente",
                     "totalRevenue": "Revenu total"
                 },
-                "recentActivity": "Activité récente",
-                "activityComingSoon": "Flux d'activité bientôt disponible...",
-                "systemHealth": "Santé système",
-                "allSystemsOperational": "Tous les systèmes opérationnels"
+                "recentActivity": "ActivitÃ© rÃ©cente",
+                "activityComingSoon": "Flux d'activitÃ© bientÃ´t disponible...",
+                "systemHealth": "SantÃ© systÃ¨me",
+                "allSystemsOperational": "Tous les systÃ¨mes opÃ©rationnels"
             },
             "AdminSidebar": {
                 "title": "Panneau Admin",
-                "backToSite": "← Retour au site",
+                "backToSite": "â†� Retour au site",
                 "nav": {
-                    "overview": "Aperçu",
+                    "overview": "AperÃ§u",
                     "professionals": "Professionnels",
                     "clients": "Clients",
-                    "categories": "Catégories",
+                    "categories": "CatÃ©gories",
                     "reviews": "Avis",
                     "transactions": "Transactions",
                     "translations": "Traductions",
-                    "settings": "Paramètres"
+                    "settings": "ParamÃ¨tres"
                 }
             },
             "ClientNavbar": {
-                "howItWorks": "Comment ça marche",
-                "categories": "Catégories",
+                "howItWorks": "Comment Ã§a marche",
+                "categories": "CatÃ©gories",
                 "topProfessionals": "Meilleurs professionnels",
                 "forProfessionals": "Pour les professionnels",
                 "login": "Connexion",
@@ -648,42 +651,42 @@
             "StatusBanner": {
                 "pendingReview": {
                     "title": "Compte en cours d'examen",
-                    "description": "Votre profil est en cours d'examen par notre équipe. Vous pouvez parcourir et mettre à jour votre profil, mais vous ne pouvez pas encore envoyer d'offres."
+                    "description": "Votre profil est en cours d'examen par notre Ã©quipe. Vous pouvez parcourir et mettre Ã  jour votre profil, mais vous ne pouvez pas encore envoyer d'offres."
                 },
                 "suspended": {
                     "title": "Compte suspendu",
-                    "description": "Votre compte a été suspendu. Veuillez contacter le support pour résoudre ce problème."
+                    "description": "Votre compte a Ã©tÃ© suspendu. Veuillez contacter le support pour rÃ©soudre ce problÃ¨me."
                 },
                 "banned": {
                     "title": "Compte banni",
-                    "description": "Votre compte a été désactivé. Veuillez contacter le support pour plus d'informations."
+                    "description": "Votre compte a Ã©tÃ© dÃ©sactivÃ©. Veuillez contacter le support pour plus d'informations."
                 },
                 "incomplete": {
-                    "title": "Complétez votre profil",
-                    "description": "Veuillez compléter les détails de votre profil pour être vérifié et commencer à recevoir des demandes."
+                    "title": "ComplÃ©tez votre profil",
+                    "description": "Veuillez complÃ©ter les dÃ©tails de votre profil pour Ãªtre vÃ©rifiÃ© et commencer Ã  recevoir des demandes."
                 }
             },
             "EmptyState": {
-                "defaultTitle": "Aucun élément",
-                "defaultDescription": "Les éléments apparaîtront ici une fois disponibles."
+                "defaultTitle": "Aucun Ã©lÃ©ment",
+                "defaultDescription": "Les Ã©lÃ©ments apparaÃ®tront ici une fois disponibles."
             }
         },
         "RequestForm": {
             "eyebrow": "Nouvelle demande",
-            "title": "Décrivez votre besoin",
-            "description": "Partagez suffisamment de détails pour que les professionnels puissent répondre avec des offres précises. Vous pourrez modifier la demande plus tard.",
+            "title": "DÃ©crivez votre besoin",
+            "description": "Partagez suffisamment de dÃ©tails pour que les professionnels puissent rÃ©pondre avec des offres prÃ©cises. Vous pourrez modifier la demande plus tard.",
             "tips": {
                 "title": "Conseils pour une bonne demande",
                 "specific": {
-                    "title": "Soyez précis",
-                    "desc": "Détaillez ce qui doit être fait"
+                    "title": "Soyez prÃ©cis",
+                    "desc": "DÃ©taillez ce qui doit Ãªtre fait"
                 },
                 "budget": {
-                    "title": "Définir budget",
-                    "desc": "Aide les pros à envoyer des offres précises"
+                    "title": "DÃ©finir budget",
+                    "desc": "Aide les pros Ã  envoyer des offres prÃ©cises"
                 },
                 "timeline": {
-                    "title": "Ajouter délais",
+                    "title": "Ajouter dÃ©lais",
                     "desc": "Pour quand en avez-vous besoin ?"
                 },
                 "context": {
@@ -693,16 +696,16 @@
             },
             "sections": {
                 "basics": {
-                    "title": "Bases de la tâche",
-                    "desc": "Choisissez la meilleure catégorie et donnez un titre clair."
+                    "title": "Bases de la tÃ¢che",
+                    "desc": "Choisissez la meilleure catÃ©gorie et donnez un titre clair."
                 },
                 "details": {
-                    "title": "Détails",
-                    "desc": "Ajoutez contexte, objectifs, attentes ou tout ce qui aide un pro à comprendre le travail."
+                    "title": "DÃ©tails",
+                    "desc": "Ajoutez contexte, objectifs, attentes ou tout ce qui aide un pro Ã  comprendre le travail."
                 },
                 "location": {
                     "title": "Lieu et format",
-                    "desc": "Dites-nous où vous êtes et si les sessions en ligne fonctionnent."
+                    "desc": "Dites-nous oÃ¹ vous Ãªtes et si les sessions en ligne fonctionnent."
                 },
                 "timing": {
                     "title": "Timing",
@@ -714,101 +717,101 @@
                 }
             },
             "fields": {
-                "category": "Catégorie",
-                "selectCategory": "Sélectionner une catégorie",
-                "subcategory": "Sous-catégorie",
-                "selectSubcategory": "Sélectionner une sous-catégorie",
+                "category": "CatÃ©gorie",
+                "selectCategory": "SÃ©lectionner une catÃ©gorie",
+                "subcategory": "Sous-catÃ©gorie",
+                "selectSubcategory": "SÃ©lectionner une sous-catÃ©gorie",
                 "title": "De quoi avez-vous besoin exactement ?",
-                "titlePlaceholder": "ex: Prof de maths pour algèbre 3ème",
-                "description": "Décrivez votre tâche",
-                "descriptionPlaceholder": "Ajoutez tous les détails qui aideront les professionnels à comprendre vos besoins...",
-                "noContactInfo": "Évitez de partager téléphone/email ici. Vous pourrez échanger après avoir choisi un pro.",
+                "titlePlaceholder": "ex: Prof de maths pour algÃ¨bre 3Ã¨me",
+                "description": "DÃ©crivez votre tÃ¢che",
+                "descriptionPlaceholder": "Ajoutez tous les dÃ©tails qui aideront les professionnels Ã  comprendre vos besoins...",
+                "noContactInfo": "Ã‰vitez de partager tÃ©lÃ©phone/email ici. Vous pourrez Ã©changer aprÃ¨s avoir choisi un pro.",
                 "location": "Lieu (ville)",
                 "locationPlaceholder": "ex: Paris, Lyon, en ligne seulement",
-                "format": "Format préféré",
+                "format": "Format prÃ©fÃ©rÃ©",
                 "formats": {
                     "ONLINE_OR_OFFLINE": "En ligne ou en personne",
                     "ONLINE_ONLY": "En ligne seulement",
                     "IN_PERSON_ONLY": "En personne seulement"
                 },
                 "timings": {
-                    "URGENT": "🔥 Urgent",
+                    "URGENT": "ðŸ”¥ Urgent",
                     "URGENT_DESC": "Sous 24-48 heures",
-                    "SOON": "⚡ Bientôt",
+                    "SOON": "âš¡ BientÃ´t",
                     "SOON_DESC": "Sous une semaine",
-                    "FLEXIBLE": "📅 Flexible",
+                    "FLEXIBLE": "ðŸ“… Flexible",
                     "FLEXIBLE_DESC": "Pas d'urgence",
-                    "SCHEDULED": "🗓️ Date précise",
+                    "SCHEDULED": "ðŸ—“ï¸� Date prÃ©cise",
                     "SCHEDULED_DESC": "J'ai une date limite"
                 },
                 "preferredDate": "Pour quand en avez-vous besoin ?",
-                "budgetMin": "Budget min (€)",
-                "budgetMax": "Budget max (€)",
-                "budgetHint": "Laisser vide pour laisser les pros suggérer un prix."
+                "budgetMin": "Budget min (â‚¬)",
+                "budgetMax": "Budget max (â‚¬)",
+                "budgetHint": "Laisser vide pour laisser les pros suggÃ©rer un prix."
             },
             "actions": {
                 "publish": "Publier la demande",
                 "publishing": "Publication...",
-                "publishedDesc": "Une fois publiée, les professionnels correspondants recevront votre demande."
+                "publishedDesc": "Une fois publiÃ©e, les professionnels correspondants recevront votre demande."
             },
             "success": {
-                "title": "Demande publiée !",
-                "desc": "Les professionnels correspondants vont commencer à vous envoyer des offres."
+                "title": "Demande publiÃ©e !",
+                "desc": "Les professionnels correspondants vont commencer Ã  vous envoyer des offres."
             },
             "error": {
-                "title": "Échec de création",
+                "title": "Ã‰chec de crÃ©ation",
                 "generic": "Une erreur est survenue"
             }
         },
         "OfferForm": {
             "page": {
                 "eyebrow": "Envoyer offre",
-                "title": "Répondre à cette demande",
-                "description": "Partagez votre prix, délais et un message amical. Les clients voient les 10 premières offres qualifiées.",
-                "closedTitle": "Demande fermée",
+                "title": "RÃ©pondre Ã  cette demande",
+                "description": "Partagez votre prix, dÃ©lais et un message amical. Les clients voient les 10 premiÃ¨res offres qualifiÃ©es.",
+                "closedTitle": "Demande fermÃ©e",
                 "closedDesc": "Cette demande n'accepte plus d'offres.",
-                "closedMessage": "Le client a fermé cette demande ou accepté une autre offre.",
-                "budgetSpecified": "Budget non spécifié"
+                "closedMessage": "Le client a fermÃ© cette demande ou acceptÃ© une autre offre.",
+                "budgetSpecified": "Budget non spÃ©cifiÃ©"
             },
             "restrictions": {
-                "notActive": "Votre compte n'est pas actif. Veuillez terminer la vérification ou contacter le support pour envoyer des offres.",
-                "lowBalance": "Solde insuffisant. Vous devez avoir au moins 2,00 € dans votre portefeuille pour envoyer des offres.",
+                "notActive": "Votre compte n'est pas actif. Veuillez terminer la vÃ©rification ou contacter le support pour envoyer des offres.",
+                "lowBalance": "Solde insuffisant. Vous devez avoir au moins 2,00 â‚¬ dans votre portefeuille pour envoyer des offres.",
                 "recharge": "Recharger le portefeuille"
             },
             "pricing": {
                 "title": "Tarification",
-                "desc": "Définissez votre prix et conditions",
-                "proposedPrice": "Prix proposé (€)",
+                "desc": "DÃ©finissez votre prix et conditions",
+                "proposedPrice": "Prix proposÃ© (â‚¬)",
                 "hint": "Le montant que vous recevrez {type}",
                 "hintTotal": "au total",
                 "hintHourly": "par heure",
                 "typeLabel": "Type de tarification",
                 "types": {
-                    "fixed": "💼 Prix Fixe - Paiement unique",
-                    "hourly": "⏱️ Taux Horaire - Par heure de travail"
+                    "fixed": "ðŸ’¼ Prix Fixe - Paiement unique",
+                    "hourly": "â�±ï¸� Taux Horaire - Par heure de travail"
                 }
             },
             "proposal": {
                 "title": "Votre Proposition",
-                "desc": "Dites au client pourquoi vous êtes le bon choix",
+                "desc": "Dites au client pourquoi vous Ãªtes le bon choix",
                 "messageLabel": "Message au client",
-                "messagePlaceholder": "Partagez votre expérience et expliquez comment vous pouvez aider...\n\n• Pourquoi êtes-vous qualifié ?\n• Quelle est votre expérience relative ?\n• Comment allez-vous aborder ce projet ?",
-                "minChars": "{count}/50 caractères minimum",
-                "chars": "{count} caractères"
+                "messagePlaceholder": "Partagez votre expÃ©rience et expliquez comment vous pouvez aider...\n\nâ€¢ Pourquoi Ãªtes-vous qualifiÃ© ?\nâ€¢ Quelle est votre expÃ©rience relative ?\nâ€¢ Comment allez-vous aborder ce projet ?",
+                "minChars": "{count}/50 caractÃ¨res minimum",
+                "chars": "{count} caractÃ¨res"
             },
             "availability": {
-                "title": "Disponibilité",
-                "desc": "Aidez le client à planifier (optionnel)",
-                "earliest": "Première disponibilité",
-                "earliestPlaceholder": "ex: Disponible dès lundi",
-                "duration": "Durée estimée",
+                "title": "DisponibilitÃ©",
+                "desc": "Aidez le client Ã  planifier (optionnel)",
+                "earliest": "PremiÃ¨re disponibilitÃ©",
+                "earliestPlaceholder": "ex: Disponible dÃ¨s lundi",
+                "duration": "DurÃ©e estimÃ©e",
                 "durationPlaceholder": "ex: 2-3 semaines",
                 "startType": {
                     "label": "Quand pouvez-vous commencer ?",
-                    "asap": "🚀 Dès que possible",
-                    "tomorrow": "📅 Demain",
-                    "fewDays": "🕒 Dans quelques jours",
-                    "specific": "🎯 Date précise"
+                    "asap": "ðŸš€ DÃ¨s que possible",
+                    "tomorrow": "ðŸ“… Demain",
+                    "fewDays": "ðŸ•’ Dans quelques jours",
+                    "specific": "ðŸŽ¯ Date prÃ©cise"
                 },
                 "durationUnits": {
                     "hours": "Heures",
@@ -820,83 +823,83 @@
             "tips": {
                 "title": "Conseils pour une bonne offre",
                 "items": {
-                    "specific": "Soyez précis sur votre expérience et compétences",
+                    "specific": "Soyez prÃ©cis sur votre expÃ©rience et compÃ©tences",
                     "needs": "Montrez que vous comprenez les besoins du client",
-                    "approach": "Expliquez votre approche pour résoudre leur problème",
-                    "expectations": "Fixez des attentes réalistes pour les délais"
+                    "approach": "Expliquez votre approche pour rÃ©soudre leur problÃ¨me",
+                    "expectations": "Fixez des attentes rÃ©alistes pour les dÃ©lais"
                 }
             },
             "actions": {
-                "ready": "Prêt à envoyer ?",
+                "ready": "PrÃªt Ã  envoyer ?",
                 "cancel": "Annuler",
-                "sending": "⏳ Envoi...",
-                "send": "✉️ Envoyer l'offre",
+                "sending": "â�³ Envoi...",
+                "send": "âœ‰ï¸� Envoyer l'offre",
                 "legal": "En envoyant une offre, vous acceptez nos conditions d'utilisation."
             },
             "validation": {
                 "invalidPrice": "Veuillez entrer un prix valide",
-                "minPrice": "Le prix doit être d'au moins 1 €",
-                "shortMessage": "Veuillez fournir un message plus détaillé (au moins 50 caractères)"
+                "minPrice": "Le prix doit Ãªtre d'au moins 1 â‚¬",
+                "shortMessage": "Veuillez fournir un message plus dÃ©taillÃ© (au moins 50 caractÃ¨res)"
             },
             "success": {
-                "title": "Offre envoyée avec succès !",
-                "desc": "Le client sera notifié de votre offre."
+                "title": "Offre envoyÃ©e avec succÃ¨s !",
+                "desc": "Le client sera notifiÃ© de votre offre."
             },
             "error": {
-                "title": "Échec de l'envoi",
+                "title": "Ã‰chec de l'envoi",
                 "generic": "Une erreur est survenue."
             }
         },
         "ProOffers": {
             "eyebrow": "Offres",
             "title": "Mes Offres",
-            "description": "Suivez toutes les offres envoyées et leurs résultats.",
+            "description": "Suivez toutes les offres envoyÃ©es et leurs rÃ©sultats.",
             "stats": {
                 "pending": "En attente",
-                "accepted": "Acceptées",
+                "accepted": "AcceptÃ©es",
                 "profileViewed": "Profil vu",
-                "successRate": "Taux de succès"
+                "successRate": "Taux de succÃ¨s"
             },
             "empty": {
-                "title": "Aucune offre envoyée",
-                "desc": "Parcourez les demandes correspondantes et envoyez votre première offre !",
+                "title": "Aucune offre envoyÃ©e",
+                "desc": "Parcourez les demandes correspondantes et envoyez votre premiÃ¨re offre !",
                 "action": "Parcourir les demandes"
             },
             "sections": {
                 "pending": "Offres en attente",
-                "accepted": "Offres acceptées",
+                "accepted": "Offres acceptÃ©es",
                 "rejected": "Non retenu"
             },
             "status": {
                 "pending": "En attente",
-                "accepted": "Accepté ✓",
+                "accepted": "AcceptÃ© âœ“",
                 "rejected": "Non retenu",
-                "withdrawn": "Retiré"
+                "withdrawn": "RetirÃ©"
             },
             "card": {
-                "viewed": "👁️ Vu",
+                "viewed": "ðŸ‘�ï¸� Vu",
                 "messageLabel": "Votre message :",
-                "waiting": "⏳ En attente de réponse",
-                "acceptedCheckJobs": "✓ Accepté - Voir Jobs"
+                "waiting": "â�³ En attente de rÃ©ponse",
+                "acceptedCheckJobs": "âœ“ AcceptÃ© - Voir Jobs"
             },
             "tips": {
                 "title": "Conseils pour gagner plus d'offres",
                 "items": {
                     "respond": {
-                        "title": "Répondez vite",
-                        "desc": "Les clients aiment la rapidité. Soyez parmi les premiers."
+                        "title": "RÃ©pondez vite",
+                        "desc": "Les clients aiment la rapiditÃ©. Soyez parmi les premiers."
                     },
                     "personalize": {
                         "title": "Personnalisez",
-                        "desc": "Montrez que vous comprenez leurs besoins spécifiques."
+                        "desc": "Montrez que vous comprenez leurs besoins spÃ©cifiques."
                     },
                     "price": {
                         "title": "Prix juste",
-                        "desc": "Soyez compétitif tout en reflétant votre expertise."
+                        "desc": "Soyez compÃ©titif tout en reflÃ©tant votre expertise."
                     },
                     "trust": {
                         "title": "Inspirez confiance",
-                        "desc": "Complétez votre profil et récoltez des avis positifs."
+                        "desc": "ComplÃ©tez votre profil et rÃ©coltez des avis positifs."
                     }
                 }
             }
@@ -904,80 +907,80 @@
         "ClientRequests": {
             "title": "Mes demandes",
             "eyebrow": "Demandes",
-            "description": "Suivez tout ce que vous avez posté, vérifiez le nombre d'offres et gardez vos conversations organisées.",
-            "create": "Créer une demande",
-            "createFirst": "Créer votre première demande",
+            "description": "Suivez tout ce que vous avez postÃ©, vÃ©rifiez le nombre d'offres et gardez vos conversations organisÃ©es.",
+            "create": "CrÃ©er une demande",
+            "createFirst": "CrÃ©er votre premiÃ¨re demande",
             "stats": {
                 "open": "Ouvertes",
                 "inProgress": "En cours",
-                "completed": "Terminées",
+                "completed": "TerminÃ©es",
                 "totalOffers": "Total offres"
             },
             "empty": {
                 "title": "Aucune demande pour le moment",
-                "desc": "Commencez par décrire ce dont vous avez besoin. Des professionnels vérifiés vous enverront des offres personnalisées avec des prix."
+                "desc": "Commencez par dÃ©crire ce dont vous avez besoin. Des professionnels vÃ©rifiÃ©s vous enverront des offres personnalisÃ©es avec des prix."
             },
             "status": {
                 "open": "Ouverte",
                 "inProgress": "En cours",
-                "completed": "Terminée",
-                "cancelled": "Annulée",
-                "closed": "Fermée"
+                "completed": "TerminÃ©e",
+                "cancelled": "AnnulÃ©e",
+                "closed": "FermÃ©e"
             },
             "card": {
-                "viewDetails": "Voir les détails",
+                "viewDetails": "Voir les dÃ©tails",
                 "new": "NOUVEAU",
                 "offers": "{count, plural, =1 {1 offre} other {# offres}}",
                 "offers_zero": "0 offres",
                 "offers_one": "1 offre",
                 "offers_other": "{count} offres",
-                "budget": "Jusqu'à {amount}",
-                "posted": "Posté le {date}"
+                "budget": "Jusqu'Ã  {amount}",
+                "posted": "PostÃ© le {date}"
             },
             "detail": {
                 "bread_dashboard": "Tableau de bord",
                 "bread_requests": "Demandes",
-                "posted": "Posté le {date}",
-                "section_details": "Détails de la demande",
+                "posted": "PostÃ© le {date}",
+                "section_details": "DÃ©tails de la demande",
                 "desc_label": "Description",
-                "info_category": "Catégorie",
+                "info_category": "CatÃ©gorie",
                 "info_budget": "Budget",
                 "info_location": "Lieu",
                 "info_type": "Type",
                 "info_urgency": "Urgence",
-                "info_start": "Date de début",
+                "info_start": "Date de dÃ©but",
                 "active_job": "Travail actif",
                 "contact_info": "Informations de contact",
                 "pro_label": "Professionnel",
                 "email_label": "Email",
-                "phone_label": "Téléphone",
-                "view_job": "Voir les détails du travail",
+                "phone_label": "TÃ©lÃ©phone",
+                "view_job": "Voir les dÃ©tails du travail",
                 "current_status": "Statut actuel",
-                "overview": "Aperçu",
-                "offers_received": "Offres reçues",
-                "created_label": "Créé",
-                "updated_label": "Dernière mise à jour",
+                "overview": "AperÃ§u",
+                "offers_received": "Offres reÃ§ues",
+                "created_label": "CrÃ©Ã©",
+                "updated_label": "DerniÃ¨re mise Ã  jour",
                 "offers_section": "Offres des professionnels",
                 "offers_hint": "Examinez chaque offre attentivement et consultez le profil du professionnel pour en savoir plus.",
                 "no_offers": "Aucune offre pour le moment",
-                "no_offers_desc": "Les professionnels correspondant à votre demande seront notifiés. Vous pouvez mettre à jour les détails de votre demande ou partager plus de contexte pour attirer les bons professionnels.",
-                "sent_date": "Envoyé le {date}",
-                "negotiable": "Négociable"
+                "no_offers_desc": "Les professionnels correspondant Ã  votre demande seront notifiÃ©s. Vous pouvez mettre Ã  jour les dÃ©tails de votre demande ou partager plus de contexte pour attirer les bons professionnels.",
+                "sent_date": "EnvoyÃ© le {date}",
+                "negotiable": "NÃ©gociable"
             },
             "actions": {
                 "accept": {
                     "button": "Accepter l'offre",
                     "loading": "Acceptation...",
-                    "confirm": "Accepter cette offre ? Cela créera un travail et rejettera les autres offres.",
-                    "success": "Offre acceptée avec succès !",
-                    "error": "Échec de l'acceptation de l'offre"
+                    "confirm": "Accepter cette offre ? Cela crÃ©era un travail et rejettera les autres offres.",
+                    "success": "Offre acceptÃ©e avec succÃ¨s !",
+                    "error": "Ã‰chec de l'acceptation de l'offre"
                 },
                 "close": {
                     "button": "Fermer la demande",
                     "loading": "Fermeture...",
                     "confirm": "Fermer cette demande ? Vous ne recevrez plus d'offres.",
-                    "success": "Demande fermée",
-                    "error": "Échec de la fermeture de la demande"
+                    "success": "Demande fermÃ©e",
+                    "error": "Ã‰chec de la fermeture de la demande"
                 },
                 "viewProfile": {
                     "button": "Voir le profil",
@@ -986,9 +989,9 @@
             }
         },
         "ProRequests": {
-            "title": "Nouvelles opportunités",
+            "title": "Nouvelles opportunitÃ©s",
             "eyebrow": "Demandes correspondantes",
-            "description": "Ces demandes correspondent à vos services. Répondez rapidement pour augmenter vos chances.",
+            "description": "Ces demandes correspondent Ã  vos services. RÃ©pondez rapidement pour augmenter vos chances.",
             "stats": {
                 "matches": "Total correspondances",
                 "new": "Nouveau aujourd'hui",
@@ -997,13 +1000,13 @@
             },
             "empty": {
                 "title": "Aucune demande correspondante",
-                "desc": "Essayez d'ajouter plus de services à votre profil pour voir plus d'opportunités.",
-                "action": "Mettre à jour les services"
+                "desc": "Essayez d'ajouter plus de services Ã  votre profil pour voir plus d'opportunitÃ©s.",
+                "action": "Mettre Ã  jour les services"
             },
             "card": {
                 "new": "NOUVEAU",
                 "urgent": "URGENT",
-                "posted": "Posté le {date}",
+                "posted": "PostÃ© le {date}",
                 "offers_count": "{count} offres",
                 "client": "Client : {name}",
                 "sendOffer": "Envoyer une offre",
@@ -1013,25 +1016,25 @@
         },
         "ClientProfile": {
             "title": "Mon Profil",
-            "description": "Gérez vos informations personnelles et préférences.",
+            "description": "GÃ©rez vos informations personnelles et prÃ©fÃ©rences.",
             "sections": {
                 "basic": "Informations de base",
                 "personal": "Informations personnelles",
                 "location": "Localisation",
-                "preferences": "Préférences"
+                "preferences": "PrÃ©fÃ©rences"
             },
             "fields": {
-                "firstName": "Prénom",
+                "firstName": "PrÃ©nom",
                 "lastName": "Nom",
                 "email": "Adresse Email",
-                "emailHint": "L'email ne peut pas être modifié",
+                "emailHint": "L'email ne peut pas Ãªtre modifiÃ©",
                 "dob": "Date de naissance",
-                "phone": "Numéro de téléphone",
-                "phoneHint": "Format international : +[code pays][numéro]",
+                "phone": "NumÃ©ro de tÃ©lÃ©phone",
+                "phoneHint": "Format international : +[code pays][numÃ©ro]",
                 "city": "Ville",
-                "region": "Région",
+                "region": "RÃ©gion",
                 "country": "Pays",
-                "language": "Langue préférée",
+                "language": "Langue prÃ©fÃ©rÃ©e",
                 "languageHint": "Langue pour les notifications"
             },
             "actions": {
@@ -1039,106 +1042,106 @@
                 "saving": "Enregistrement...",
                 "cancel": "Annuler"
             },
-            "success": "Profil mis à jour avec succès",
-            "error": "Échec de la mise à jour du profil",
-            "updateError": "Échec de la mise à jour des infos personnelles"
+            "success": "Profil mis Ã  jour avec succÃ¨s",
+            "error": "Ã‰chec de la mise Ã  jour du profil",
+            "updateError": "Ã‰chec de la mise Ã  jour des infos personnelles"
         },
         "Verification": {
             "status": {
                 "active": {
-                    "title": "Profil Vérifié",
+                    "title": "Profil VÃ©rifiÃ©",
                     "badge": "Actif",
-                    "desc": "Votre profil est vérifié et actif. Vous pouvez recevoir des demandes et envoyer des offres."
+                    "desc": "Votre profil est vÃ©rifiÃ© et actif. Vous pouvez recevoir des demandes et envoyer des offres."
                 },
                 "pending": {
-                    "title": "Vérification en attente",
-                    "desc": "Vos documents ont été soumis et sont en cours d'examen. Vous serez notifié une fois la vérification terminée."
+                    "title": "VÃ©rification en attente",
+                    "desc": "Vos documents ont Ã©tÃ© soumis et sont en cours d'examen. Vous serez notifiÃ© une fois la vÃ©rification terminÃ©e."
                 },
                 "rejected": {
                     "title": "Attention requise",
-                    "desc": "Votre demande de vérification a été rejetée. Veuillez vérifier la raison du rejet et télécharger un document valide."
+                    "desc": "Votre demande de vÃ©rification a Ã©tÃ© rejetÃ©e. Veuillez vÃ©rifier la raison du rejet et tÃ©lÃ©charger un document valide."
                 },
                 "notVerified": {
-                    "title": "Profil non vérifié",
-                    "desc": "Veuillez télécharger au moins un document d'identité officiel (CNI, Passeport, Kbis) pour vérifier votre compte. Les profils vérifiés obtiennent 3x plus de jobs."
+                    "title": "Profil non vÃ©rifiÃ©",
+                    "desc": "Veuillez tÃ©lÃ©charger au moins un document d'identitÃ© officiel (CNI, Passeport, Kbis) pour vÃ©rifier votre compte. Les profils vÃ©rifiÃ©s obtiennent 3x plus de jobs."
                 }
             },
             "upload": {
-                "title": "Télécharger Documents de Vérification",
-                "desc": "Veuillez télécharger des documents officiels pour vérifier votre identité et expertise. Une fois approuvé, vous recevrez un badge \"Vérifié\".",
+                "title": "TÃ©lÃ©charger Documents de VÃ©rification",
+                "desc": "Veuillez tÃ©lÃ©charger des documents officiels pour vÃ©rifier votre identitÃ© et expertise. Une fois approuvÃ©, vous recevrez un badge \"VÃ©rifiÃ©\".",
                 "label": "Type de document",
                 "types": {
-                    "IDENTITY_CARD": "Carte d'identité (CNI)",
+                    "IDENTITY_CARD": "Carte d'identitÃ© (CNI)",
                     "PASSPORT": "Passeport",
                     "DRIVERS_LICENSE": "Permis de conduire",
                     "BUSINESS_LICENSE": "Kbis / Licence Pro",
-                    "DIPLOMA": "Diplôme",
+                    "DIPLOMA": "DiplÃ´me",
                     "CERTIFICATION": "Certification Pro",
                     "PORTFOLIO_SAMPLE": "Exemple de Portfolio",
                     "OTHER": "Autre Document"
                 },
                 "button": "Choisir un fichier",
                 "uploading": "Envoi...",
-                "hint": "Formats acceptés : PDF, JPG, PNG (Max 5MB)",
-                "uploadedTitle": "Documents Téléchargés",
-                "empty": "Aucun document téléchargé.",
-                "success": "Document téléchargé avec succès !",
-                "deleted": "Document supprimé",
-                "error": "Échec du téléchargement",
+                "hint": "Formats acceptÃ©s : PDF, JPG, PNG (Max 5MB)",
+                "uploadedTitle": "Documents TÃ©lÃ©chargÃ©s",
+                "empty": "Aucun document tÃ©lÃ©chargÃ©.",
+                "success": "Document tÃ©lÃ©chargÃ© avec succÃ¨s !",
+                "deleted": "Document supprimÃ©",
+                "error": "Ã‰chec du tÃ©lÃ©chargement",
                 "deleteError": "Impossible de supprimer le document",
-                "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce document ?",
+                "confirmDelete": "ÃŠtes-vous sÃ»r de vouloir supprimer ce document ?",
                 "tooLarge": "Fichier trop volumineux. Max 5MB."
             }
         },
         "Reviews": {
-            "title": "Évaluez votre expérience",
-            "modalTitle": "Écrire un avis",
-            "desc": "Comment s'est passée votre expérience avec ce professionnel ?",
+            "title": "Ã‰valuez votre expÃ©rience",
+            "modalTitle": "Ã‰crire un avis",
+            "desc": "Comment s'est passÃ©e votre expÃ©rience avec ce professionnel ?",
             "ratings": {
                 "5": "Excellent !",
-                "4": "Très bien",
+                "4": "TrÃ¨s bien",
                 "3": "Bien",
                 "2": "Correct",
                 "1": "Mauvais"
             },
             "label": "Votre Avis",
-            "placeholder": "Qu'est-ce qui s'est bien passé ? Que peut-on améliorer ?",
+            "placeholder": "Qu'est-ce qui s'est bien passÃ© ? Que peut-on amÃ©liorer ?",
             "recommend": "Je recommande ce professionnel",
             "cancel": "Annuler",
             "submit": "Envoyer l'avis",
             "submitting": "Envoi...",
-            "success": "Avis envoyé avec succès !",
-            "error": "Échec de l'envoi de l'avis",
-            "selectRating": "Veuillez sélectionner une note"
+            "success": "Avis envoyÃ© avec succÃ¨s !",
+            "error": "Ã‰chec de l'envoi de l'avis",
+            "selectRating": "Veuillez sÃ©lectionner une note"
         },
         "ClientJobs": {
             "title": "Mes travaux",
             "eyebrow": "Travaux",
-            "description": "Suivez vos travaux actifs et terminés",
+            "description": "Suivez vos travaux actifs et terminÃ©s",
             "stats": {
                 "active": "Travaux actifs",
-                "completed": "Terminés",
+                "completed": "TerminÃ©s",
                 "total": "Total travaux",
-                "spent": "Total dépensé"
+                "spent": "Total dÃ©pensÃ©"
             },
             "empty": {
                 "title": "Aucun travail pour le moment",
-                "desc": "Acceptez une offre sur vos demandes pour créer un travail et commencer à travailler avec un professionnel.",
+                "desc": "Acceptez une offre sur vos demandes pour crÃ©er un travail et commencer Ã  travailler avec un professionnel.",
                 "button": "Voir les demandes"
             },
             "status": {
                 "pending": "En attente",
                 "inProgress": "En cours",
-                "completed": "Terminé",
-                "cancelled": "Annulé",
-                "disputed": "Contesté"
+                "completed": "TerminÃ©",
+                "cancelled": "AnnulÃ©",
+                "disputed": "ContestÃ©"
             },
             "detail": {
-                "section_details": "Détails du travail",
+                "section_details": "DÃ©tails du travail",
                 "description_label": "Description du projet",
                 "agreed_price": "Prix convenu",
-                "started_label": "Commencé",
-                "completed_label": "Terminé",
+                "started_label": "CommencÃ©",
+                "completed_label": "TerminÃ©",
                 "review_label": "Votre avis",
                 "pro_section": "Professionnel",
                 "view_profile": "Voir le profil complet",
@@ -1147,128 +1150,128 @@
                 "leave_review": "Laisser un avis",
                 "review_submitted": "Avis soumis - Merci !",
                 "view_pro_profile": "Voir le profil du professionnel",
-                "started_date": "Commencé le {date}",
-                "completed_date": "Terminé le {date}",
-                "contact_exchanged": "Contact Échangé"
+                "started_date": "CommencÃ© le {date}",
+                "completed_date": "TerminÃ© le {date}",
+                "contact_exchanged": "Contact Ã‰changÃ©"
             },
             "actions": {
                 "complete": {
-                    "button": "Marquer comme terminé",
+                    "button": "Marquer comme terminÃ©",
                     "loading": "Finalisation...",
-                    "confirm": "Marquer ce travail comme terminé ? Le professionnel sera notifié.",
-                    "success": "Travail terminé",
-                    "error": "Échec de la finalisation du travail"
+                    "confirm": "Marquer ce travail comme terminÃ© ? Le professionnel sera notifiÃ©.",
+                    "success": "Travail terminÃ©",
+                    "error": "Ã‰chec de la finalisation du travail"
                 }
             }
         },
         "ProJobs": {
             "title": "Mes travaux",
             "eyebrow": "Travaux",
-            "description": "Suivez vos travaux, commencez le travail et marquez-les comme terminés une fois finis.",
+            "description": "Suivez vos travaux, commencez le travail et marquez-les comme terminÃ©s une fois finis.",
             "stats": {
-                "ready": "Prêt à commencer",
+                "ready": "PrÃªt Ã  commencer",
                 "inProgress": "En cours",
-                "completed": "Terminés",
-                "earned": "Total gagné"
+                "completed": "TerminÃ©s",
+                "earned": "Total gagnÃ©"
             },
             "active": "Travaux actifs",
             "empty": {
                 "title": "Aucun travail pour le moment",
-                "desc": "Parcourez les demandes correspondantes et envoyez des offres compétitives pour décrocher votre premier travail !",
+                "desc": "Parcourez les demandes correspondantes et envoyez des offres compÃ©titives pour dÃ©crocher votre premier travail !",
                 "button": "Parcourir les demandes"
             },
             "card": {
-                "ready": "Prêt",
-                "viewDetails": "Voir les détails",
-                "reviewed": "Evalué"
+                "ready": "PrÃªt",
+                "viewDetails": "Voir les dÃ©tails",
+                "reviewed": "EvaluÃ©"
             },
             "status": {
-                "accepted": "Accepté - Prêt à commencer",
+                "accepted": "AcceptÃ© - PrÃªt Ã  commencer",
                 "inProgress": "En cours",
-                "completed": "Terminé",
-                "cancelled": "Annulé",
-                "disputed": "Contesté"
+                "completed": "TerminÃ©",
+                "cancelled": "AnnulÃ©",
+                "disputed": "ContestÃ©"
             },
             "detail": {
-                "section_details": "Détails du travail",
+                "section_details": "DÃ©tails du travail",
                 "description_label": "Description du projet",
                 "agreed_price": "Prix convenu",
-                "created_label": "Créé",
-                "started_label": "Commencé",
-                "completed_label": "Terminé",
+                "created_label": "CrÃ©Ã©",
+                "started_label": "CommencÃ©",
+                "completed_label": "TerminÃ©",
                 "client_review": "Avis du client",
-                "respond_review": "Répondre à l'avis",
-                "original_request": "Détails de la demande originale",
-                "budget_range": "Fourchette budgétaire",
+                "respond_review": "RÃ©pondre Ã  l'avis",
+                "original_request": "DÃ©tails de la demande originale",
+                "budget_range": "Fourchette budgÃ©taire",
                 "location_type": "Type de lieu",
                 "urgency": "Urgence",
-                "preferred_start": "Début préféré",
+                "preferred_start": "DÃ©but prÃ©fÃ©rÃ©",
                 "client_section": "Client",
                 "client_label": "Client",
                 "actions_section": "Actions",
-                "start_hint": "Ce travail a été accepté par le client. Commencez à travailler quand vous êtes prêt !",
-                "complete_hint": "Vous travaillez actuellement sur ce travail. Marquez-le comme terminé une fois fini.",
-                "completed_hint": "Travail terminé ! En attente de l'avis du client.",
+                "start_hint": "Ce travail a Ã©tÃ© acceptÃ© par le client. Commencez Ã  travailler quand vous Ãªtes prÃªt !",
+                "complete_hint": "Vous travaillez actuellement sur ce travail. Marquez-le comme terminÃ© une fois fini.",
+                "completed_hint": "Travail terminÃ© ! En attente de l'avis du client.",
                 "job_id": "Travail #{id}",
-                "started_date": "Commencé le {date}",
-                "contact_exchanged": "Contact Échangé"
+                "started_date": "CommencÃ© le {date}",
+                "contact_exchanged": "Contact Ã‰changÃ©"
             },
             "actions": {
                 "start": {
                     "button": "Commencer le travail",
-                    "loading": "Démarrage...",
-                    "confirm": "Êtes-vous prêt à commencer ce travail ?",
-                    "error": "Échec du démarrage du travail"
+                    "loading": "DÃ©marrage...",
+                    "confirm": "ÃŠtes-vous prÃªt Ã  commencer ce travail ?",
+                    "error": "Ã‰chec du dÃ©marrage du travail"
                 },
                 "complete": {
-                    "button": "Marquer comme terminé",
+                    "button": "Marquer comme terminÃ©",
                     "loading": "Finalisation...",
-                    "confirm": "Marquer ce travail comme terminé ? Le client sera notifié et invité à laisser un avis.",
-                    "error": "Échec de la finalisation du travail"
+                    "confirm": "Marquer ce travail comme terminÃ© ? Le client sera notifiÃ© et invitÃ© Ã  laisser un avis.",
+                    "error": "Ã‰chec de la finalisation du travail"
                 }
             }
         },
         "Wallet": {
             "title": "Portefeuille",
             "eyebrow": "Finances",
-            "description": "Gérez votre solde et consultez votre historique de transactions.",
+            "description": "GÃ©rez votre solde et consultez votre historique de transactions.",
             "balance": {
                 "available": "Solde disponible",
                 "low": "Solde faible",
-                "active": "Portefeuille actif & prêt",
+                "active": "Portefeuille actif & prÃªt",
                 "addFunds": "Ajouter des fonds"
             },
             "transactions": {
                 "title": "Historique des transactions",
                 "export": "Exporter CSV",
                 "empty": "Aucune transaction pour le moment",
-                "emptyDesc": "L'activité apparaîtra ici.",
-                "completed": "TERMINÉ",
-                "recent": "Transactions récentes"
+                "emptyDesc": "L'activitÃ© apparaÃ®tra ici.",
+                "completed": "TERMINÃ‰",
+                "recent": "Transactions rÃ©centes"
             },
             "stats": {
-                "today": "Activité du jour",
+                "today": "ActivitÃ© du jour",
                 "clicks": "Clics sur le profil",
-                "spent": "Total dépensé",
-                "lastTxns": "20 dernières txns",
-                "cpl": "Coût par prospect",
+                "spent": "Total dÃ©pensÃ©",
+                "lastTxns": "20 derniÃ¨res txns",
+                "cpl": "CoÃ»t par prospect",
                 "flatRate": "Tarif unique"
             },
             "about": {
-                "title": "À propos de votre portefeuille",
-                "point1": "Les fonds sont utilisés pour payer les vues de profil (0,10 €/clic).",
-                "point2": "Le rechargement automatique n'est pas activé actuellement.",
-                "point3": "Gardez au moins 2,00 € pour rester visible."
+                "title": "Ã€ propos de votre portefeuille",
+                "point1": "Les fonds sont utilisÃ©s pour payer les vues de profil (0,10 â‚¬/clic).",
+                "point2": "Le rechargement automatique n'est pas activÃ© actuellement.",
+                "point3": "Gardez au moins 2,00 â‚¬ pour rester visible."
             }
         },
         "ClientOffers": {
             "eyebrow": "Offres",
-            "title": "Offres reçues",
-            "description": "Gérez et comparez toutes les offres reçues pour vos demandes actives en un seul endroit.",
+            "title": "Offres reÃ§ues",
+            "description": "GÃ©rez et comparez toutes les offres reÃ§ues pour vos demandes actives en un seul endroit.",
             "stats": {
-                "total": "Total reçues",
+                "total": "Total reÃ§ues",
                 "new": "Nouvelles aujourd'hui",
-                "accepted": "Acceptées"
+                "accepted": "AcceptÃ©es"
             },
             "card": {
                 "forRequest": "Pour : {title}",
@@ -1277,10 +1280,23 @@
                 "accept": "Accepter l'offre"
             },
             "empty": {
-                "title": "Aucune offre reçue pour le moment",
-                "desc": "Une fois que vous aurez publié une demande, les professionnels vous enverront des offres personnalisées ici.",
+                "title": "Aucune offre reÃ§ue pour le moment",
+                "desc": "Une fois que vous aurez publiÃ© une demande, les professionnels vous enverront des offres personnalisÃ©es ici.",
                 "action": "Voir mes demandes"
             }
         }
+    },
+    "Notifications": {
+        "eyebrow": "Notifications",
+        "title": "Restez informé",
+        "description": "Suivez vos demandes, offres et mises à jour de mission.",
+        "markAllAsRead": "Tout marquer comme lu",
+        "empty": {
+            "title": "Aucune notification",
+            "desc": "Nous vous informerons lorsqu'un professionnel répondra à votre demande ou en cas de mise à jour."
+        },
+        "today": "Aujourd'hui",
+        "yesterday": "Hier",
+        "earlier": "Plus tôt"
     }
 }

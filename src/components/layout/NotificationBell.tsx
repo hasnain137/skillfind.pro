@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Bell, Check, CheckCheck, ExternalLink } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 
 interface Notification {
@@ -17,6 +17,8 @@ interface Notification {
 
 export function NotificationBell() {
     const router = useRouter();
+    const params = useParams();
+    const locale = params?.locale || 'en';
     const [isOpen, setIsOpen] = useState(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [unreadCount, setUnreadCount] = useState(0);
@@ -194,7 +196,7 @@ export function NotificationBell() {
                         <div className="border-t border-[#E5E7EB] px-4 py-2">
                             <button
                                 onClick={() => {
-                                    // Could navigate to a full notifications page
+                                    router.push(`/${locale}/notifications`);
                                     setIsOpen(false);
                                 }}
                                 className="w-full text-center text-xs text-blue-600 hover:text-blue-700 py-1"

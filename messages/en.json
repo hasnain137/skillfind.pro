@@ -522,7 +522,10 @@
             "createCta": "Start request",
             "reviewTitle": "Review your requests",
             "reviewDesc": "Check statuses, compare offers and keep work organised.",
-            "reviewCta": "View requests"
+            "reviewCta": "View requests",
+            "offersTitle": "Offers Received",
+            "offersDesc": "See all current offers from pros in one place.",
+            "offersCta": "View All Offers"
         },
         "activity": {
             "requestCreated": "Request created",
@@ -1282,5 +1285,18 @@
             "desc": "Once you post a request, professionals will send you tailored offers. You'll see them all right here.",
             "action": "View My Requests"
         }
+    },
+    "Notifications": {
+        "eyebrow": "Notifications",
+        "title": "Stay updated",
+        "description": "Track your requests, offers, and job updates.",
+        "markAllAsRead": "Mark all as read",
+        "empty": {
+            "title": "No notifications yet",
+            "desc": "We'll notify you when someone responds to your request or when there's an update on your job."
+        },
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "earlier": "Earlier"
     }
 }
