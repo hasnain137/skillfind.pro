@@ -8,17 +8,24 @@ import { completeSignupSchema } from '@/lib/validations/user';
 import { requireAge18Plus } from '@/lib/auth';
 import { ConflictError, UnauthorizedError } from '@/lib/errors';
 
+// Debug logger - only logs in development
+const debug = (...args: any[]) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(...args);
+  }
+};
+
 export async function POST(request: NextRequest) {
   try {
     // Get Clerk auth first
     const { userId } = await auth();
 
     if (!userId) {
-      console.log('❌ No userId from auth() - user not signed in');
+      debug('❌ No userId from auth() - user not signed in');
       throw new UnauthorizedError('You must be signed in to complete signup');
     }
 
-    console.log('✅ User authenticated via Clerk:', userId);
+    debug('✅ User authenticated via Clerk:', userId);
 
     // Get full Clerk user data
     const client = await clerkClient();
@@ -28,13 +35,13 @@ export async function POST(request: NextRequest) {
       throw new UnauthorizedError('User not found in Clerk');
     }
 
-    console.log(`📝 Processing complete-signup for Clerk user: ${clerkUser.id}`);
+    debug(`📝 Processing complete-signup for Clerk user: ${clerkUser.id}`);
 
     // Parse and validate request body ONCE at the beginning
     const body = await request.json();
     const data = completeSignupSchema.parse(body);
 
-    console.log(`📋 Request data - Role: ${data.role}, City: ${data.city || 'N/A'}, Country: ${data.country || 'N/A'}`);
+    debug(`📋 Request data - Role: ${data.role}, City: ${data.city || 'N/A'}, Country: ${data.country || 'N/A'}`);
 
     // Check if user already exists in database
     const existingUser = await prisma.user.findUnique({
@@ -46,11 +53,11 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingUser) {
-      console.log(`✅ User exists in database: ${existingUser.id}, Role: ${existingUser.role}`);
+      debug(`✅ User exists in database: ${existingUser.id}, Role: ${existingUser.role}`);
 
       // Update user table with DOB and phone if provided
       if (data.dateOfBirth || data.phoneNumber) {
-        console.log('📝 Updating user personal information...');
+        debug('📝 Updating user personal information...');
 
         const updateData: any = {};
 
@@ -59,7 +66,7 @@ export async function POST(request: NextRequest) {
             requireAge18Plus(data.dateOfBirth);
             updateData.dateOfBirth = data.dateOfBirth;
             updateData.isOver18 = true;
-            console.log('✅ Age validation passed');
+            debug('✅ Age validation passed');
           } catch (ageError) {
             console.error('❌ Age validation failed:', ageError);
             throw ageError;
@@ -75,7 +82,7 @@ export async function POST(request: NextRequest) {
           data: updateData,
         });
 
-        console.log('✅ User personal information updated');
+        debug('✅ User personal information updated');
       }
 
       // User already exists - check if they have the required profile
@@ -84,7 +91,7 @@ export async function POST(request: NextRequest) {
 
       // If professional but no professional profile, create it
       if (isProfessional && !existingUser.professionalProfile) {
-        console.log('🔨 Creating missing professional profile...');
+        debug('🔨 Creating missing professional profile...');
 
         const professional = await prisma.professional.create({
           data: {
@@ -104,10 +111,10 @@ export async function POST(request: NextRequest) {
           },
         });
 
-        console.log('✅ Professional profile and wallet created');
+        debug('✅ Professional profile and wallet created');
       } else if (isProfessional && existingUser.professionalProfile && data.city) {
         // Update existing professional profile with city/country if provided
-        console.log('📝 Updating existing professional profile location...');
+        debug('📝 Updating existing professional profile location...');
         await prisma.professional.update({
           where: { id: existingUser.professionalProfile.id },
           data: {
@@ -115,12 +122,12 @@ export async function POST(request: NextRequest) {
             country: data.country || 'FR',
           },
         });
-        console.log('✅ Professional profile location updated');
+        debug('✅ Professional profile location updated');
       }
 
       // If client but no client profile, create it
       if (isClient && !existingUser.clientProfile) {
-        console.log('🔨 Creating missing client profile...');
+        debug('🔨 Creating missing client profile...');
 
         await prisma.client.create({
           data: {
@@ -130,10 +137,10 @@ export async function POST(request: NextRequest) {
           },
         });
 
-        console.log('✅ Client profile created');
+        debug('✅ Client profile created');
       } else if (isClient && existingUser.clientProfile && data.city) {
         // Update existing client profile with city/country if provided
-        console.log('📝 Updating existing client profile location...');
+        debug('📝 Updating existing client profile location...');
         await prisma.client.update({
           where: { id: existingUser.clientProfile.id },
           data: {
@@ -141,7 +148,7 @@ export async function POST(request: NextRequest) {
             country: data.country || 'FR',
           },
         });
-        console.log('✅ Client profile location updated');
+        debug('✅ Client profile location updated');
       }
 
       // Ensure Clerk metadata is in sync
@@ -151,7 +158,7 @@ export async function POST(request: NextRequest) {
             role: existingUser.role,
           },
         });
-        console.log('✅ Clerk metadata synced');
+        debug('✅ Clerk metadata synced');
       } catch (metadataError) {
         console.error('⚠️ Warning: Could not sync Clerk metadata:', metadataError);
         // Don't fail the request if metadata sync fails
@@ -172,13 +179,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('🆕 Creating new user in database...');
+    debug('🆕 Creating new user in database...');
 
     // Validate age requirement (18+) only if dateOfBirth is provided
     if (data.dateOfBirth) {
       try {
         requireAge18Plus(data.dateOfBirth);
-        console.log('✅ Age validation passed');
+        debug('✅ Age validation passed');
       } catch (ageError) {
         console.error('❌ Age validation failed:', ageError);
         throw ageError;
@@ -201,11 +208,11 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log(`✅ User created in database: ${user.id}`);
+    debug(`✅ User created in database: ${user.id}`);
 
     // If professional, create professional profile
     if (data.role === 'PROFESSIONAL') {
-      console.log('🔨 Creating professional profile...');
+      debug('🔨 Creating professional profile...');
 
       const professional = await prisma.professional.create({
         data: {
@@ -225,12 +232,12 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      console.log('✅ Professional profile and wallet created');
+      debug('✅ Professional profile and wallet created');
     }
 
     // If client, create client profile
     if (data.role === 'CLIENT') {
-      console.log('🔨 Creating client profile...');
+      debug('🔨 Creating client profile...');
 
       await prisma.client.create({
         data: {
@@ -240,7 +247,7 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      console.log('✅ Client profile created');
+      debug('✅ Client profile created');
     }
 
     // Update Clerk user metadata with role
@@ -250,13 +257,13 @@ export async function POST(request: NextRequest) {
           role: data.role,
         },
       });
-      console.log('✅ Clerk metadata updated with role');
+      debug('✅ Clerk metadata updated with role');
     } catch (metadataError) {
       console.error('⚠️ Warning: Could not update Clerk metadata:', metadataError);
       // Don't fail the request if metadata update fails - user is already in DB
     }
 
-    console.log('🎉 Account creation complete!');
+    debug('🎉 Account creation complete!');
 
     return createdResponse(
       {

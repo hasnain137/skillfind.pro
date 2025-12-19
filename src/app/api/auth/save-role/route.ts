@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      console.log(`✅ Role ${data.role} saved for user ${userId}`);
+
 
       return successResponse(
         {
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       throw new Error(`Failed to update user metadata: ${clerkError.message || 'Unknown error'}`);
     }
   } catch (error: any) {
-    console.error('Error in save-role endpoint:', error);
+
 
     if (error instanceof z.ZodError) {
       throw new ValidationError('Invalid role. Must be either CLIENT or PROFESSIONAL.', error.errors);

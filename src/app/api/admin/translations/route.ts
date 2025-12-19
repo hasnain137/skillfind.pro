@@ -35,11 +35,11 @@ function loadMessages(locale: string) {
 
 export async function GET(req: NextRequest) {
     try {
-        console.log("Admin Translations API: Fetching translations...");
+
 
         // 1. Fetch all DB translations
         const dbTranslations = await prisma.translation.findMany();
-        console.log(`Admin Translations API: Found ${dbTranslations.length} translations in DB`);
+
 
         // 2. Load file-based defaults
         const fileTranslations: any[] = [];
@@ -77,7 +77,7 @@ export async function GET(req: NextRequest) {
             }
         });
 
-        console.log(`Admin Translations API: Returning ${combinedTranslations.length} total items`);
+
         return NextResponse.json({ translations: combinedTranslations });
     } catch (error) {
         console.error("Admin Translations API Error:", error);

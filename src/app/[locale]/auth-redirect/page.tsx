@@ -8,6 +8,13 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { useLocale } from 'next-intl';
 
+// Debug logger - only logs in development
+const debug = (...args: any[]) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(...args);
+  }
+};
+
 type OnboardingStep = 'loading' | 'select-role' | 'complete-profile' | 'redirecting';
 
 /**
@@ -42,7 +49,7 @@ export default function AuthRedirectPage() {
 
       // If loaded but no user, they're not authenticated - redirect to login
       if (!user) {
-        console.log('No authenticated user found, redirecting to login');
+        debug('No authenticated user found, redirecting to login');
         window.location.href = `/${locale}/login`;
         return;
       }
@@ -71,7 +78,7 @@ export default function AuthRedirectPage() {
             const data = await response.json();
             const profileData = data.data || data;
 
-            console.log('Profile check result:', profileData);
+            debug('Profile check result:', profileData);
 
             if (profileData.exists && profileData.hasProfile) {
               // Profile complete, redirect to dashboard
@@ -82,8 +89,8 @@ export default function AuthRedirectPage() {
               return;
             } else {
               // User needs to complete profile - show profile form
-              console.log('User needs to complete profile');
-              console.log('Missing fields:', profileData.missingFields);
+              debug('User needs to complete profile');
+              debug('Missing fields:', profileData.missingFields);
               setSelectedRole(role as 'CLIENT' | 'PROFESSIONAL');
 
               // Pre-fill form with existing data if available
@@ -127,7 +134,7 @@ export default function AuthRedirectPage() {
       role === 'PROFESSIONAL' ? `/${locale}/pro` :
         role === 'ADMIN' ? `/${locale}/admin` : `/${locale}`;
 
-    console.log(`🔄 Preparing to redirect to ${dashboardUrl}...`);
+    debug(`🔄 Preparing to redirect to ${dashboardUrl}...`);
     setStep('redirecting');
     setRedirectMessage('Syncing your account...');
 
@@ -139,7 +146,7 @@ export default function AuthRedirectPage() {
       attempts++;
 
       try {
-        console.log(`🔍 Attempt ${attempts}/${maxAttempts}: Checking if backend profile is ready...`);
+        debug(`🔍 Attempt ${attempts}/${maxAttempts}: Checking if backend profile is ready...`);
         setRedirectMessage(`Syncing your account... (${attempts}/${maxAttempts})`);
 
         // Check the backend API to see if profile is complete
@@ -152,20 +159,20 @@ export default function AuthRedirectPage() {
           const data = await response.json();
           const profileData = data.data || data;
 
-          console.log(`📋 Backend says: exists=${profileData.exists}, hasProfile=${profileData.hasProfile}, role=${profileData.role}`);
+          debug(`📋 Backend says: exists=${profileData.exists}, hasProfile=${profileData.hasProfile}, role=${profileData.role}`);
 
           // Profile must exist in DB and have matching role.
           // If allowIncomplete is true, we don't require hasProfile (full completeness) to be true
           if (profileData.exists && profileData.role === role && (profileData.hasProfile || allowIncomplete)) {
-            console.log(`✅ Backend confirms profile is ready!`);
+            debug(`✅ Backend confirms profile is ready!`);
 
             // Also check client session has the role
             await user?.reload();
             const clientRole = user?.publicMetadata?.role;
-            console.log(`🔍 Client session role: ${clientRole}`);
+            debug(`🔍 Client session role: ${clientRole}`);
 
             if (clientRole === role) {
-              console.log(`🎉 BOTH backend AND client session are synced! Redirecting...`);
+              debug(`🎉 BOTH backend AND client session are synced! Redirecting...`);
               setRedirectMessage('Perfect! Taking you to your dashboard...');
 
               // Force a full page reload to ensure middleware sees the updated session
@@ -174,13 +181,13 @@ export default function AuthRedirectPage() {
               }, 1500);
               return;
             } else {
-              console.log(`⏳ Backend ready but client session not synced yet (client: ${clientRole}, expected: ${role})`);
+              debug(`⏳ Backend ready but client session not synced yet (client: ${clientRole}, expected: ${role})`);
             }
           } else {
-            console.log(`⏳ Backend not ready yet`);
+            debug(`⏳ Backend not ready yet`);
           }
         } else {
-          console.log(`⏳ Profile check returned ${response.status}`);
+          debug(`⏳ Profile check returned ${response.status}`);
         }
 
         // Retry if not maxed out
@@ -201,7 +208,7 @@ export default function AuthRedirectPage() {
         if (attempts < maxAttempts) {
           setTimeout(checkProfileAndRedirect, 1500);
         } else {
-          console.log('❌ Max attempts reached with errors. Trying redirect...');
+          debug('❌ Max attempts reached with errors. Trying redirect...');
           window.location.href = dashboardUrl;
         }
       }
@@ -217,7 +224,7 @@ export default function AuthRedirectPage() {
     setError('');
 
     try {
-      console.log(`👤 User selected role: ${role}`);
+      debug(`👤 User selected role: ${role}`);
 
       // Save role to Clerk metadata
       const response = await fetch('/api/auth/save-role', {
@@ -233,12 +240,12 @@ export default function AuthRedirectPage() {
       }
 
       const result = await response.json();
-      console.log('✅ Role saved:', result);
+      debug('✅ Role saved:', result);
 
       // Update user object to refresh session data
       if (user) {
         await user.reload();
-        console.log('🔄 User session refreshed');
+        debug('🔄 User session refreshed');
       }
 
       // Move to profile completion step
@@ -258,7 +265,7 @@ export default function AuthRedirectPage() {
     setError('');
 
     try {
-      console.log('⏭️ Skipping profile completion, creating base account...');
+      debug('⏭️ Skipping profile completion, creating base account...');
 
       if (selectedRole) {
         // Create the account in DB with minimal info (just the role)
@@ -278,7 +285,7 @@ export default function AuthRedirectPage() {
           throw new Error(data.message || 'Failed to create account');
         }
 
-        console.log('✅ Base account created. Redirecting...');
+        debug('✅ Base account created. Redirecting...');
 
         // Use the robust redirect handler that waits for DB consistency
         // PASS TRUE to allow incomplete profile (since we just skipped)
@@ -300,7 +307,7 @@ export default function AuthRedirectPage() {
     setError('');
     setPhoneError('');
 
-    console.log('📝 Submitting profile completion form...');
+    debug('📝 Submitting profile completion form...');
 
     // Validate phone number if provided
     if (formData.phoneNumber && !validatePhoneNumber(formData.phoneNumber)) {
@@ -319,7 +326,7 @@ export default function AuthRedirectPage() {
         country: formData.country || 'FR',
       };
 
-      console.log('📤 Sending payload:', { ...payload, dateOfBirth: payload.dateOfBirth ? '[PROVIDED]' : '[EMPTY]' });
+      debug('📤 Sending payload:', { ...payload, dateOfBirth: payload.dateOfBirth ? '[PROVIDED]' : '[EMPTY]' });
 
       const response = await fetch('/api/auth/complete-signup', {
         method: 'POST',
@@ -334,7 +341,7 @@ export default function AuthRedirectPage() {
       }
 
       const result = await response.json();
-      console.log('✅ Profile completed successfully:', result);
+      debug('✅ Profile completed successfully:', result);
 
       // Redirect to dashboard
       if (selectedRole) {
