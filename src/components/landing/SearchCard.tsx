@@ -90,7 +90,7 @@ export function SearchCard({ className = "" }: { className?: string }) {
   };
 
   return (
-    <div className={`w-full rounded-2xl bg-white p-4 shadow-md border border-[#E5E7EB] ${className} relative z-50`}>
+    <div className={`w-full rounded-3xl border border-white/40 bg-white/70 backdrop-blur-xl p-4 shadow-lg transition-all hover:shadow-xl hover:bg-white/80 ${className} relative z-50`}>
       <form onSubmit={handleSearch} className="flex gap-3">
         {/* Big Search Input */}
         <div className="relative flex-1">
@@ -103,14 +103,14 @@ export function SearchCard({ className = "" }: { className?: string }) {
             onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // Delay to allow click
             placeholder={t('placeholder')}
-            className="w-full h-12 rounded-xl border border-[#E5E7EB] bg-white pl-12 pr-4 text-base text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#3B4D9D] focus:outline-none focus:ring-2 focus:ring-[#3B4D9D]/20 transition-all"
+            className="w-full h-12 rounded-xl border border-white/40 bg-white/50 pl-12 pr-4 text-base text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#3B4D9D] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3B4D9D]/20 transition-all backdrop-blur-sm"
           />
 
           {/* Suggestions Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
             <div
               ref={suggestionsRef}
-              className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-[#E5E7EB] overflow-hidden z-50 max-h-[300px] overflow-y-auto"
+              className="absolute top-full left-0 right-0 mt-2 bg-white/80 backdrop-blur-xl rounded-xl shadow-xl border border-white/40 overflow-hidden z-50 max-h-[300px] overflow-y-auto"
             >
               {suggestions.map((item, idx) => (
                 <button
