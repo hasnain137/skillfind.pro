@@ -93,11 +93,11 @@ export function PerformanceMetrics({ data }: PerformanceMetricsProps) {
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">
+            <p className="text-xs font-medium uppercase tracking-wider text-gray-400 mb-1">
               {metric.label}
             </p>
             <div className="flex items-baseline gap-2">
-              <p className="text-3xl font-bold text-[#333333] tabular-nums tracking-tight">
+              <p className="text-3xl font-semibold text-[#333333] tabular-nums tracking-tight">
                 {metric.value}
               </p>
               {metric.badge && (

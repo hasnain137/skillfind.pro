@@ -49,7 +49,7 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
 
   return (
     <div className="space-y-4">
-      {requests.map((request) => {
+      {requests.map((request, index) => {
         const daysAgo = Math.floor((Date.now() - new Date(request.createdAt).getTime()) / (1000 * 60 * 60 * 24));
         const timeDisplay = daysAgo === 0 ? t('today') : daysAgo === 1 ? t('yesterday') : t('daysAgo', { count: daysAgo });
         const budgetDisplay = formatBudget(request.budgetMin, request.budgetMax);
@@ -65,7 +65,10 @@ export function MatchingRequests({ requests }: MatchingRequestsProps) {
                 </div>
               )}
 
-              <div className="mb-3 pr-20">
+              <div className="mb-3 pr-20 flex items-center gap-3">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">
+                  {index + 1}
+                </div>
                 <h3 className="font-bold text-lg text-[#333333] group-hover:text-blue-600 transition-colors line-clamp-1">
                   {request.title}
                 </h3>
