@@ -31,6 +31,7 @@ export function NotificationBell() {
             const res = await fetch('/api/notifications?limit=10');
             if (res.ok) {
                 const data = await res.json();
+                console.log('NotificationBell API response:', data); // Debug log
                 setNotifications(data.data?.notifications || []);
                 setUnreadCount(data.data?.unreadCount || 0);
             }
