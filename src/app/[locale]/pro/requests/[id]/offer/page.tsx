@@ -8,6 +8,8 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import OfferForm from "./OfferForm";
 import { getTranslations } from 'next-intl/server';
+import { Link } from "@/i18n/routing";
+import { Professional, Wallet } from "@prisma/client";
 
 type OfferPageProps = {
   params: Promise<{ id: string }>;
@@ -23,7 +25,7 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
   }
 
   // Verify professional role
-  const professional = await getProfessionalWithRelations(userId, { wallet: true });
+  const professional = await getProfessionalWithRelations(userId, { wallet: true }) as (Professional & { wallet: Wallet | null }) | null;
 
   if (!professional) {
     redirect('/auth-redirect');
