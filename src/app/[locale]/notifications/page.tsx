@@ -53,13 +53,13 @@ export default function NotificationsPage({ params }: { params: Promise<{ locale
 
             if (data.success) {
                 if (offset === 0) {
-                    setNotifications(data.notifications);
+                    setNotifications(data.data?.notifications || []);
                 } else {
-                    setNotifications(prev => [...prev, ...data.notifications]);
+                    setNotifications(prev => [...prev, ...(data.data?.notifications || [])]);
                 }
                 setStats({
-                    total: data.totalCount,
-                    unread: data.unreadCount
+                    total: data.data?.totalCount || 0,
+                    unread: data.data?.unreadCount || 0
                 });
             }
         } catch (error) {
