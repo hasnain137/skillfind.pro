@@ -251,12 +251,18 @@ export async function POST(request: NextRequest) {
 
       console.log(`[Matching] Found ${matchingPros.length} professionals matching category ${data.categoryId}`);
 
+      if (matchingPros.length === 0) {
+        console.log('[Matching] ⚠️  No matching professionals found - no notifications sent');
+      } else {
+        console.log('[Matching] 🔔 Starting notification creation...');
+      }
+
       const { notifyNewMatchingRequest } = await import('@/lib/services/notifications');
 
       // Notify each matching professional
       await Promise.all(
         matchingPros.map((pro) => {
-          console.log(`[Matching] Notifying user ${pro.user.email} (${pro.user.id}) about request ${newRequest.id}`);
+          console.log(`[Matching] 📧 Notifying ${pro.user.email} (DB User ID: ${pro.user.id}) about request ${newRequest.id}`);
           return notifyNewMatchingRequest(
             pro.user.id,
             newRequest.title,
@@ -265,8 +271,10 @@ export async function POST(request: NextRequest) {
           );
         })
       );
+
+      console.log(`[Matching] ✅ Successfully created ${matchingPros.length} notification(s)`);
     } catch (notificationError) {
-      console.error('Failed to send matching request notifications:', notificationError);
+      console.error('[Matching] ❌ ERROR creating notifications:', notificationError);
     }
 
     return createdResponse(
