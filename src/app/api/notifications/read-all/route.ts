@@ -8,10 +8,23 @@ export async function POST() {
     try {
         const { userId } = await requireAuth();
 
+        // Convert Clerk ID to database user ID
+        const dbUser = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { id: true }
+        });
+
+        if (!dbUser) {
+            return successResponse({
+                markedCount: 0,
+                message: 'User not found'
+            });
+        }
+
         // Mark all unread notifications as read
         const result = await prisma.notification.updateMany({
             where: {
-                userId,
+                userId: dbUser.id,
                 isRead: false,
             },
             data: {

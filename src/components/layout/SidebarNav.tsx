@@ -28,9 +28,26 @@ export function SidebarNav({ links, variant = 'light' }: SidebarNavProps) {
                 // Normalize pathname to remove locale for checking active state
                 // e.g. /en/pro/jobs -> /pro/jobs
                 const normalizedPathname = pathname.replace(/^\/[a-z]{2}/, '') || '/';
-                const isActive =
-                    link.href === normalizedPathname ||
-                    (link.href !== '/client' && link.href !== '/pro' && normalizedPathname.startsWith(link.href));
+
+                // Check for exact match first
+                const isExactMatch = link.href === normalizedPathname;
+
+                // For prefix matching, ensure we're matching a complete path segment
+                // This prevents /client/requests from matching /client/requests/new
+                const isPrefixMatch =
+                    link.href !== '/client' &&
+                    link.href !== '/pro' &&
+                    normalizedPathname.startsWith(link.href) &&
+                    (normalizedPathname.length === link.href.length || normalizedPathname[link.href.length] === '/');
+
+                // Check if there's a more specific link that matches (to avoid both parent and child being active)
+                const hasMoreSpecificMatch = links.some(otherLink =>
+                    otherLink.href !== link.href &&
+                    otherLink.href.startsWith(link.href) &&
+                    (normalizedPathname === otherLink.href || normalizedPathname.startsWith(otherLink.href))
+                );
+
+                const isActive = isExactMatch || (isPrefixMatch && !hasMoreSpecificMatch);
 
                 return (
                     <Link

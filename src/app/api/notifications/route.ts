@@ -14,9 +14,24 @@ export async function GET(request: NextRequest) {
         const offset = parseInt(searchParams.get('offset') || '0');
         const unreadOnly = searchParams.get('unreadOnly') === 'true';
 
-        // Get notifications for this user
+        // Convert Clerk ID to database user ID
+        const dbUser = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { id: true }
+        });
+
+        if (!dbUser) {
+            return successResponse({
+                notifications: [],
+                totalCount: 0,
+                unreadCount: 0,
+                hasMore: false
+            });
+        }
+
+        // Get notifications for this user (using database user ID)
         const where = {
-            userId,
+            userId: dbUser.id,
             ...(unreadOnly ? { isRead: false } : {}),
         };
 
@@ -27,8 +42,8 @@ export async function GET(request: NextRequest) {
                 take: limit,
                 skip: offset,
             }),
-            prisma.notification.count({ where: { userId } }),
-            prisma.notification.count({ where: { userId, isRead: false } }),
+            prisma.notification.count({ where: { userId: dbUser.id } }),
+            prisma.notification.count({ where: { userId: dbUser.id, isRead: false } }),
         ]);
 
         return successResponse({
