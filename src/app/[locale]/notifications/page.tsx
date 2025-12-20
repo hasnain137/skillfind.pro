@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, use } from 'react';
+import { useUser } from '@clerk/nextjs';
+import { Link } from '@/i18n/routing';
 import {
     Bell,
     CheckCircle2,
@@ -12,7 +14,8 @@ import {
     AlertCircle,
     Check,
     MoreHorizontal,
-    Trash2
+    Trash2,
+    ArrowLeft
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { fr, enUS } from 'date-fns/locale';
@@ -36,12 +39,17 @@ interface Notification {
 export default function NotificationsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = use(params);
     const t = useTranslations('Notifications');
+    const { user } = useUser();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
     const [markingAll, setMarkingAll] = useState(false);
+    const [deletingAll, setDeletingAll] = useState(false);
     const [stats, setStats] = useState({ total: 0, unread: 0 });
     const [page, setPage] = useState(0);
     const LIMIT = 20;
+
+    const dashboardLink = user?.publicMetadata?.role === 'PROFESSIONAL' ? '/pro' :
+        user?.publicMetadata?.role === 'ADMIN' ? '/admin' : '/client';
 
     const dateLocale = locale === 'fr' ? fr : enUS;
 
@@ -109,6 +117,28 @@ export default function NotificationsPage({ params }: { params: Promise<{ locale
         }
     };
 
+    const deleteAll = async () => {
+        if (!confirm(t('deleteAllConfirm') || 'Are you sure you want to delete all notifications?')) return;
+
+        try {
+            setDeletingAll(true);
+            const response = await fetch('/api/notifications', {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                setNotifications([]);
+                setStats({ total: 0, unread: 0 });
+                toast.success('All notifications deleted');
+            }
+        } catch (error) {
+            console.error('Error deleting all notifications:', error);
+            toast.error('Failed to delete notifications');
+        } finally {
+            setDeletingAll(false);
+        }
+    };
+
     const getIcon = (type: string) => {
         switch (type) {
             case 'OFFER_RECEIVED':
@@ -156,6 +186,14 @@ export default function NotificationsPage({ params }: { params: Promise<{ locale
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <Link
+                href={dashboardLink}
+                className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#3B4D9D] transition-colors mb-6 group"
+            >
+                <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                {t('backToDashboard')}
+            </Link>
+
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <SectionHeading
                     eyebrow={t('eyebrow')}
@@ -173,6 +211,19 @@ export default function NotificationsPage({ params }: { params: Promise<{ locale
                     >
                         <Check className="w-4 h-4" />
                         {t('markAllAsRead')}
+                    </Button>
+                )}
+
+                {notifications.length > 0 && (
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={deleteAll}
+                        disabled={deletingAll}
+                        className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                    >
+                        <Trash2 className="w-4 h-4" />
+                        {t('deleteAll')}
                     </Button>
                 )}
             </div>

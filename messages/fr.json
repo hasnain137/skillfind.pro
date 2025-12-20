@@ -1290,7 +1290,9 @@
         "eyebrow": "Notifications",
         "title": "Restez informé",
         "description": "Suivez vos demandes, offres et mises à jour de mission.",
+        "backToDashboard": "Retour au tableau de bord",
         "markAllAsRead": "Tout marquer comme lu",
+        "deleteAll": "Tout supprimer",
         "empty": {
             "title": "Aucune notification",
             "desc": "Nous vous informerons lorsqu'un professionnel répondra à votre demande ou en cas de mise à jour."

@@ -56,3 +56,27 @@ export async function GET(request: NextRequest) {
         return handleApiError(error);
     }
 }
+
+// DELETE /api/notifications - Delete all notifications for user
+export async function DELETE(request: NextRequest) {
+    try {
+        const { userId } = await requireAuth();
+
+        const dbUser = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { id: true }
+        });
+
+        if (!dbUser) {
+            return successResponse({ deleted: 0 });
+        }
+
+        const { count } = await prisma.notification.deleteMany({
+            where: { userId: dbUser.id }
+        });
+
+        return successResponse({ deleted: count });
+    } catch (error) {
+        return handleApiError(error);
+    }
+}

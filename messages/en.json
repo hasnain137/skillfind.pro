@@ -1290,7 +1290,9 @@
         "eyebrow": "Notifications",
         "title": "Stay updated",
         "description": "Track your requests, offers, and job updates.",
+        "backToDashboard": "Back to Dashboard",
         "markAllAsRead": "Mark all as read",
+        "deleteAll": "Delete all",
         "empty": {
             "title": "No notifications yet",
             "desc": "We'll notify you when someone responds to your request or when there's an update on your job."

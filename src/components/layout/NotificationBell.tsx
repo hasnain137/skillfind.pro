@@ -193,19 +193,17 @@ export function NotificationBell() {
                     </div>
 
                     {/* Footer */}
-                    {notifications.length > 0 && (
-                        <div className="border-t border-[#E5E7EB] px-4 py-2">
-                            <button
-                                onClick={() => {
-                                    router.push(`/${locale}/notifications`);
-                                    setIsOpen(false);
-                                }}
-                                className="w-full text-center text-xs text-blue-600 hover:text-blue-700 py-1"
-                            >
-                                View all notifications
-                            </button>
-                        </div>
-                    )}
+                    <div className="border-t border-[#E5E7EB] px-4 py-2">
+                        <button
+                            onClick={() => {
+                                router.push(`/${locale}/notifications`);
+                                setIsOpen(false);
+                            }}
+                            className="w-full text-center text-xs text-blue-600 hover:text-blue-700 py-1"
+                        >
+                            View all notifications
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
