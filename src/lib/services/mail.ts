@@ -1,79 +1,101 @@
-import 'server-only';
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 
-// Initialize SendGrid
-if (process.env.SENDGRID_API_KEY) {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'; // Default Resend test sender
+
+// Check if API key is present
+const IS_MOCK = !RESEND_API_KEY || RESEND_API_KEY.startsWith('re_mock');
+
+if (!IS_MOCK) {
+  // We initialize in the function to avoid errors if key is missing during build
 }
 
-const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'notifications@skillfind.pro';
-const IS_MOCK = !process.env.SENDGRID_API_KEY;
-
-type EmailParams = {
-    to: string;
-    subject: string;
-    text?: string;
-    html?: string;
-};
+interface EmailParams {
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
+}
 
 /**
- * Send an email using SendGrid or Log to Console
+ * Send an email using Resend
  */
 export async function sendEmail({ to, subject, text, html }: EmailParams): Promise<boolean> {
-    if (IS_MOCK) {
-        console.log(`
-      📧 [MOCK EMAIL] 
+  // Read env vars at runtime to avoid initialization issues
+  const apiKey = process.env.RESEND_API_KEY || '';
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+
+  // Check if we should mock
+  // We mock if no key is present OR if the key explicitly starts with 're_mock' (used for testing)
+  const isMock = !apiKey || apiKey.startsWith('re_mock');
+
+  // 1. Mock Mode (Development / No API Key)
+  if (isMock) {
+    console.log(`
+      📧 [MOCK EMAIL - Resend] 
       ----------------------------------------
       To: ${to}
-      From: ${FROM_EMAIL}
+      From: ${fromEmail}
       Subject: ${subject}
       
       [CONTENT]:
       ${text || html?.replace(/<[^>]*>/g, '')}
       ----------------------------------------
+      [DEBUG] Key status: ${apiKey ? 'Present' : 'Missing'} (${apiKey.substring(0, 5)}...)
     `);
-        return true;
+    return true;
+  }
+
+  // 2. Real Mode (Resend)
+  try {
+    const resend = new Resend(apiKey);
+
+    const { data, error } = await resend.emails.send({
+      from: fromEmail,
+      to: [to],
+      subject: subject,
+      html: html || text, // Resend requires html or text. HTML is preferred usually.
+      text: text, // Fallback
+    });
+
+    if (error) {
+      console.error('Resend Error:', error);
+      return false;
     }
 
-    try {
-        await sgMail.send({
-            to,
-            from: FROM_EMAIL,
-            subject,
-            text: text || '',
-            html: html || text || '',
-        });
-        return true;
-    } catch (error) {
-        console.error('SendGrid Error:', error);
-        return false;
-    }
+    console.log(`✅ Email sent to ${to} (ID: ${data?.id})`);
+    return true;
+  } catch (error) {
+    console.error('Failed to send email via Resend:', error);
+    return false;
+  }
 }
 
+
 /**
- * Send Welcome Email
+ * Send a welcome email to a new user
  */
 export async function sendWelcomeEmail(to: string, name: string) {
-    const subject = 'Welcome to SkillFind.pro!';
-    const html = `
+  const subject = 'Welcome to SkillFind.pro!';
+  const html = `
     <div style="font-family: Arial, sans-serif; color: #333;">
       <h1>Welcome, ${name}!</h1>
-      <p>We are thrilled to have you on board SkillFind.pro.</p>
+        <p>We are thrilled to have you on board SkillFind.pro.</p>
       <p>Find the best professionals or grow your business with us.</p>
       <br />
       <a href="https://skillfind.pro" style="background: #3B4D9D; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a>
     </div>
   `;
-    const text = `Welcome, ${name}! We are thrilled to have you on board SkillFind.pro.`;
+  const text = `Welcome, ${name}! We are thrilled to have you on board SkillFind.pro.`;
 
-    return sendEmail({ to, subject, html, text });
+  return sendEmail({ to, subject, html, text });
 }
 
 /**
- * Send Generic Notification Email
+ * Send a generic notification email
  */
 export async function sendNotificationEmail(to: string, title: string, message: string, actionUrl?: string) {
-    const html = `
+  const html = `
     <div style="font-family: Arial, sans-serif; color: #333;">
       <h2>${title}</h2>
       <p>${message}</p>
@@ -87,5 +109,5 @@ export async function sendNotificationEmail(to: string, title: string, message: 
     </div>
   `;
 
-    return sendEmail({ to, subject: title, html, text: message });
+  return sendEmail({ to, subject: title, html, text: message });
 }

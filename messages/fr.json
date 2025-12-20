@@ -187,7 +187,7 @@
             "na": "N/A"
         },
         "EarningsChart": {
-            "totalEarnings": "Gains totaux",
+            "totalEarnings": "Gains totaux estimés",
             "viewHistory": "Voir l'historique",
             "thisMonth": "Ce mois-ci",
             "pending": "En attente",
@@ -451,7 +451,9 @@
             "recentActivity": "ActivitÃ© rÃ©cente",
             "recentActivityDesc": "Vos derniÃ¨res mises Ã  jour et notifications.",
             "yourRequests": "Vos demandes",
-            "yourRequestsDesc": "Suivez la progression de tous vos services."
+            "yourRequestsDesc": "Suivez la progression de tous vos services.",
+            "recentOffers": "Offres Récentes",
+            "recentOffersDesc": "Les derniers professionnels intéressés par vos demandes."
         },
         "actions": {
             "createTitle": "CrÃ©er une demande",
@@ -1172,7 +1174,7 @@
                 "ready": "PrÃªt Ã  commencer",
                 "inProgress": "En cours",
                 "completed": "TerminÃ©s",
-                "earned": "Total gagnÃ©"
+                "earned": "Total gagné estimé"
             },
             "active": "Travaux actifs",
             "empty": {

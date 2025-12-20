@@ -26,6 +26,9 @@ export async function POST(
     // Get review
     const review = await prisma.review.findUnique({
       where: { id },
+      include: {
+        client: { include: { user: true } },
+      },
     });
 
     if (!review) {
@@ -46,6 +49,16 @@ export async function POST(
         moderatedAt: new Date(),
       },
     });
+
+    // Send notification to client
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        review.client.user.email,
+        'Review Rejected - SkillFind.pro',
+        `Hello ${review.client.user.firstName}, \n\nYour review has been rejected by our moderation team. \n\nReason: "${data.reason}"`,
+        '/dashboard/reviews'
+      )
+    ).catch(err => console.error('Failed to send rejection email:', err));
 
     // TODO: Send notification to client
 

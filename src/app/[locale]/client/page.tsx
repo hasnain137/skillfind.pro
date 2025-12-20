@@ -14,6 +14,8 @@ import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ClientDashboardTour } from "@/components/onboarding/ClientDashboardTour";
 import { getTranslations } from 'next-intl/server';
 import { PlusCircle, FileText, Briefcase } from 'lucide-react';
+import Link from 'next/link';
+import { Badge } from "@/components/ui/Badge";
 
 export default async function ClientDashboardPage() {
   // Get authenticated user
@@ -53,6 +55,12 @@ export default async function ClientDashboardPage() {
   );
   const completedRequests = requests.filter(r => r.status === 'COMPLETED').length;
   const totalOffers = requests.reduce((sum, r) => sum + r.offers.length, 0);
+
+  // Extract recent offers
+  const recentOffers = requests
+    .flatMap(r => r.offers.map(o => ({ ...o, requestTitle: r.title, requestId: r.id, requestCategory: r.requestCategory })))
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 3);
 
   // Build dynamic highlights based on actual user state (Removed as per simplification)
   // const heroHighlights = ... (Removed)
@@ -160,6 +168,58 @@ export default async function ClientDashboardPage() {
               </div>
             </Card>
           </div>
+
+          {/* Recent Offers */}
+          {recentOffers.length > 0 && (
+            <div className="space-y-4">
+              <SectionHeading
+                title={t('sections.recentOffers')}
+                description={t('sections.recentOffersDesc')}
+              />
+              <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+                <div className="divide-y divide-gray-100">
+                  {recentOffers.map((offer) => (
+                    <div key={offer.id} className="p-4 hover:bg-gray-50 transition-colors">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <Badge variant={offer.status === 'PENDING' ? 'primary' : offer.status === 'ACCEPTED' ? 'success' : 'gray'}>
+                            {offer.status}
+                          </Badge>
+                          <span className="text-xs text-gray-500">
+                            {new Date(offer.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <p className="font-bold text-blue-600">
+                          {offer.proposedPrice ? `€${offer.proposedPrice}` : 'Negotiable'}
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between items-end">
+                        <div>
+                          <p className="font-medium text-gray-900 mb-1">
+                            For: {offer.requestTitle}
+                          </p>
+                          <p className="text-sm text-gray-500 line-clamp-1">
+                            {offer.message}
+                          </p>
+                        </div>
+                        <Link href={`/client/offers`}>
+                          <span className="text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                            View Offer →
+                          </span>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="p-3 bg-gray-50 text-center border-t border-gray-100">
+                    <Link href="/client/offers" className="text-xs font-semibold text-gray-600 hover:text-blue-600 transition-colors">
+                      View All Offers
+                    </Link>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
 
           {/* Recent Activity */}
           <div className="space-y-4">

@@ -32,6 +32,7 @@ export async function POST(
       where: { id: reviewId },
       include: {
         job: true,
+        client: { include: { user: true } },
         professionalResponse: true,
       },
     });
@@ -63,7 +64,15 @@ export async function POST(
       },
     });
 
-    // TODO: Send notification to client
+    // Send notification to client
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        review.client.user.email,
+        'Professional Responded to Your Review',
+        `Hello ${review.client.user.firstName}, \n\nProfessional has responded to your review: \n\n"${data.response}" \n\nYou can view it on their profile or in your completed reviews.`,
+        `/pro/${review.job.professionalId}`
+      )
+    ).catch(err => console.error('Failed to send response email:', err));
 
     return successResponse(
       {

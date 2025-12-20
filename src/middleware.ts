@@ -50,7 +50,11 @@ export default clerkMiddleware(async (auth, req) => {
 
   // Force redirection to onboarding if user has no role
   // This restores the strict logic from 472db05 preventing "stuck" users
-  if (userId && !userRole && !req.nextUrl.pathname.includes('/auth-redirect')) {
+  // But we must allow API calls related to onboarding/role-selection to pass through
+  if (userId && !userRole &&
+    !req.nextUrl.pathname.includes('/auth-redirect') &&
+    !req.nextUrl.pathname.startsWith('/api/auth/save-role') &&
+    !req.nextUrl.pathname.startsWith('/api/auth/check-profile')) {
     const onboardingUrl = new URL('/auth-redirect', req.url);
     return NextResponse.redirect(onboardingUrl);
   }

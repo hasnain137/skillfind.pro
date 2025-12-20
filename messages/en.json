@@ -249,7 +249,7 @@
             "na": "N/A"
         },
         "EarningsChart": {
-            "totalEarnings": "Total Earnings",
+            "totalEarnings": "Total Estimated Earnings",
             "viewHistory": "View history",
             "thisMonth": "This Month",
             "pending": "Pending",
@@ -514,7 +514,9 @@
             "recentActivity": "Recent activity",
             "recentActivityDesc": "Your latest updates and notifications.",
             "yourRequests": "Your requests",
-            "yourRequestsDesc": "Track the progress of all your service requests."
+            "yourRequestsDesc": "Track the progress of all your service requests.",
+            "recentOffers": "Recent Offers",
+            "recentOffersDesc": "The latest professionals interested in your requests."
         },
         "actions": {
             "createTitle": "Create a new request",
@@ -1158,7 +1160,7 @@
             "ready": "Ready to Start",
             "inProgress": "In Progress",
             "completed": "Completed",
-            "earned": "Total Earned"
+            "earned": "Total Estimated Earned"
         },
         "active": "Active Jobs",
         "empty": {

@@ -6,7 +6,7 @@ import { requireProfessional } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { updateProfessionalProfileSchema } from '@/lib/validations/user';
 import { updateProfileCompletionPercentage, canProfessionalBeActive } from '@/lib/services/profile-completion';
-import { NotFoundError } from '@/lib/errors';
+import { NotFoundError, BadRequestError } from '@/lib/errors';
 
 export async function GET() {
   try {
@@ -83,6 +83,17 @@ export async function PUT(request: NextRequest) {
 
     if (!existingProfessional) {
       throw new NotFoundError('Professional profile');
+    }
+
+    // Check bio content if updated
+    if (data.bio) {
+      const moderationResult = await import('@/lib/services/moderation')
+        .then(mod => mod.analyzeContent(data.bio!))
+        .catch(() => ({ isSafe: true, score: 0 }));
+
+      if (!moderationResult.isSafe) {
+        throw new BadRequestError('Bio contains inappropriate content and cannot be saved.');
+      }
     }
 
     // Update professional profile

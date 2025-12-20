@@ -263,6 +263,11 @@ export async function POST(request: NextRequest) {
       // Don't fail the request if metadata update fails - user is already in DB
     }
 
+    // Send welcome email
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendWelcomeEmail(user.email, user.firstName || 'User')
+    ).catch(err => console.error('Failed to send welcome email:', err));
+
     debug('🎉 Account creation complete!');
 
     return createdResponse(

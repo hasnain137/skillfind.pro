@@ -18,7 +18,11 @@ export async function POST(
     const review = await prisma.review.findUnique({
       where: { id },
       include: {
-        job: true,
+        job: {
+          include: {
+            professional: { include: { user: true } },
+          },
+        },
       },
     });
 
@@ -43,7 +47,15 @@ export async function POST(
     // Update professional's rating
     await updateProfessionalRating(review.job.professionalId);
 
-    // TODO: Send notification to professional
+    // Send notification to professional
+    await import('@/lib/services/mail').then(mod =>
+      mod.sendNotificationEmail(
+        review.job.professional.user.email,
+        'Review Approved - SkillFind.pro',
+        `Hello ${review.job.professional.user.firstName}, \n\nA new review for your job has been approved and is now public on your profile.`,
+        `/pro/reviews`
+      )
+    ).catch(err => console.error('Failed to send review approval email:', err));
 
     return successResponse(
       {

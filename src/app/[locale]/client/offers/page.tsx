@@ -1,288 +1,190 @@
-'use client';
 
-import { useTranslations } from 'next-intl';
-import { useEffect, useState, use } from 'react';
-import {
-    Briefcase,
-    Clock,
-    ExternalLink,
-    User,
-    CheckCircle2,
-    Calendar,
-    Euro,
-    ArrowRight
-} from 'lucide-react';
-import Link from 'next/link';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { SectionHeading } from '@/components/ui/SectionHeading';
-import { formatDistanceToNow } from 'date-fns';
-import { fr, enUS } from 'date-fns/locale';
-import { toast } from 'sonner';
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { prisma } from '@/lib/prisma';
+import Link from "next/link";
+import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import ViewOfferProfileButton from '../requests/[id]/ViewOfferProfileButton';
+import AcceptOfferButton from '../requests/[id]/AcceptOfferButton';
 
-interface Offer {
-    id: string;
-    proposedPrice: number;
-    message: string;
-    status: string;
-    createdAt: string;
-    professional: {
-        id: string;
-        user: {
-            firstName: string;
-            lastName: string;
-            avatar: string;
-        };
-        title: string;
-    };
-    request: {
-        id: string;
-        title: string;
-    };
-}
+export default async function ClientOffersPage() {
+    const { userId } = await auth();
+    const t = await getTranslations('ClientOffers');
 
-export default function ClientOffersPage({ params }: { params: Promise<{ locale: string }> }) {
-    const { locale } = use(params);
-    const t = useTranslations('ClientOffers');
-    const [offers, setOffers] = useState<Offer[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [stats, setStats] = useState({ total: 0, today: 0, accepted: 0 });
+    if (!userId) {
+        redirect('/login');
+    }
 
-    const dateLocale = locale === 'fr' ? fr : enUS;
-
-    useEffect(() => {
-        const fetchOffers = async () => {
-            try {
-                const response = await fetch('/api/offers?page=1&limit=50');
-                const data = await response.json();
-
-                console.log('Offers API response:', data); // Debug log
-
-                if (data.success) {
-                    const fetchedOffers = data.data?.offers || [];
-                    setOffers(fetchedOffers);
-
-                    // Calculate stats
-                    const total = fetchedOffers.length;
-                    const accepted = fetchedOffers.filter((o: Offer) => o.status === 'ACCEPTED').length;
-                    const today = fetchedOffers.filter((o: Offer) => {
-                        const date = new Date(o.createdAt);
-                        const now = new Date();
-                        return date.toDateString() === now.toDateString();
-                    }).length;
-
-                    setStats({ total, today, accepted });
+    // Fetch all offers for this client's requests
+    const offers = await prisma.offer.findMany({
+        where: {
+            request: {
+                client: {
+                    user: {
+                        clerkId: userId
+                    }
                 }
-            } catch (error) {
-                console.error('Error fetching offers:', error);
-                toast.error('Failed to load offers');
-            } finally {
-                setLoading(false);
             }
-        };
-
-        fetchOffers();
-    }, []);
-
-    const handleAccept = async (offerId: string) => {
-        if (!confirm('Are you sure you want to accept this offer? This will create a job and close other offers for this request.')) {
-            return;
-        }
-
-        try {
-            const response = await fetch(`/api/offers/${offerId}/accept`, {
-                method: 'POST'
-            });
-            const data = await response.json();
-
-            if (data.success) {
-                toast.success('Offer accepted successfully!');
-                // Refresh offers
-                const res = await fetch('/api/offers?page=1&limit=50');
-                const newData = await res.json();
-                if (newData.success) setOffers(newData.data?.offers || []);
-            } else {
-                toast.error(data.error || 'Failed to accept offer');
+        },
+        include: {
+            request: {
+                select: {
+                    id: true,
+                    title: true,
+                    status: true
+                }
+            },
+            professional: {
+                include: {
+                    user: true,
+                }
             }
-        } catch (error) {
-            console.error('Error accepting offer:', error);
-            toast.error('Failed to accept offer');
+        },
+        orderBy: {
+            createdAt: 'desc'
         }
-    };
+    });
+
+    // Calculate stats
+    const totalOffers = offers.length;
+    const newToday = offers.filter(o => {
+        const today = new Date();
+        const offerDate = new Date(o.createdAt);
+        return offerDate.getDate() === today.getDate() &&
+            offerDate.getMonth() === today.getMonth() &&
+            offerDate.getFullYear() === today.getFullYear();
+    }).length;
+    const acceptedOffers = offers.filter(o => o.status === 'ACCEPTED').length;
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="space-y-6">
             <SectionHeading
                 eyebrow={t('eyebrow')}
                 title={t('title')}
                 description={t('description')}
             />
 
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <Card className="p-6 bg-blue-50/50">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                            <Briefcase className="w-6 h-6 text-blue-600" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-gray-500">{t('stats.total')}</p>
-                            <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-                        </div>
-                    </div>
-                </Card>
-                <Card className="p-6 bg-emerald-50/50">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                            <Clock className="w-6 h-6 text-emerald-600" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-gray-500">{t('stats.new')}</p>
-                            <p className="text-2xl font-bold text-gray-900">{stats.today}</p>
-                        </div>
-                    </div>
-                </Card>
-                <Card className="p-6 bg-purple-50/50">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                            <CheckCircle2 className="w-6 h-6 text-purple-600" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-gray-500">{t('stats.accepted')}</p>
-                            <p className="text-2xl font-bold text-gray-900">{stats.accepted}</p>
-                        </div>
-                    </div>
-                </Card>
-            </div>
-
-            {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="h-64 bg-gray-100 animate-pulse rounded-2xl" />
-                    ))}
+            {/* Stats Overview */}
+            {offers.length > 0 && (
+                <div className="grid gap-4 sm:grid-cols-3">
+                    <Card padding="lg" className="text-center bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+                        <p className="text-3xl font-bold text-blue-700 mb-1">{totalOffers}</p>
+                        <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide">{t('stats.total')}</p>
+                    </Card>
+                    <Card padding="lg" className="text-center bg-white border-gray-200">
+                        <p className="text-3xl font-bold text-[#333333] mb-1">{newToday}</p>
+                        <p className="text-xs font-semibold text-[#7C7373] uppercase tracking-wide">{t('stats.new')}</p>
+                    </Card>
+                    <Card padding="lg" className="text-center bg-white border-gray-200">
+                        <p className="text-3xl font-bold text-green-600 mb-1">{acceptedOffers}</p>
+                        <p className="text-xs font-semibold text-[#7C7373] uppercase tracking-wide">{t('stats.accepted')}</p>
+                    </Card>
                 </div>
-            ) : offers.length === 0 ? (
-                <Card className="p-12 text-center flex flex-col items-center justify-center bg-gray-50/50 border-dashed">
-                    <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                        <Briefcase className="w-10 h-10 text-gray-400" />
+            )}
+
+            {/* Offers List */}
+            {offers.length === 0 ? (
+                <Card className="text-center py-16 px-4 bg-gray-50 border-dashed" padding="lg">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-3xl">
+                        📭
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('empty.title')}</h3>
-                    <p className="text-gray-500 max-w-md mb-8">{t('empty.desc')}</p>
-                    <Link href={`/${locale}/client/requests`}>
-                        <Button className="flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-[#333333] mb-2">{t('empty.title')}</h3>
+                    <p className="text-sm text-[#7C7373] max-w-md mx-auto mb-6">
+                        {t('empty.desc')}
+                    </p>
+                    <Link href="/client/requests">
+                        <span className="inline-flex items-center justify-center rounded-xl bg-[#2563EB] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8]">
                             {t('empty.action')}
-                            <ArrowRight className="w-4 h-4" />
-                        </Button>
+                        </span>
                     </Link>
                 </Card>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {offers.map(offer => (
-                        <OfferCard
-                            key={offer.id}
-                            offer={offer}
-                            locale={locale}
-                            onAccept={handleAccept}
-                            dateLocale={dateLocale}
-                            t={t}
-                        />
+                <div className="grid gap-4">
+                    {offers.map((offer) => (
+                        <Card key={offer.id} padding="lg" className="hover:shadow-md transition-shadow">
+                            <div className="flex flex-col md:flex-row gap-6">
+
+                                {/* Professional Info */}
+                                <div className="flex items-start gap-4 md:w-1/3">
+                                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4FD8] text-white font-bold text-sm shadow-md">
+                                        {offer.professional.user.firstName?.[0]}{offer.professional.user.lastName?.[0]}
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-[#333333]">
+                                            {offer.professional.user.firstName} {offer.professional.user.lastName}
+                                        </p>
+                                        <div className="flex items-center gap-2 mt-1">
+                                            {offer.professional.averageRating > 0 && (
+                                                <div className="flex items-center gap-1 text-xs text-[#7C7373]">
+                                                    <span>⭐</span>
+                                                    <span>{offer.professional.averageRating.toFixed(1)}</span>
+                                                </div>
+                                            )}
+                                            {offer.professional.city && (
+                                                <span className="text-xs text-[#7C7373]">• 📍 {offer.professional.city}</span>
+                                            )}
+                                        </div>
+                                        <div className="mt-3">
+                                            <Link href={`/client/requests/${offer.request.id}`}>
+                                                <Badge variant="gray" className="hover:bg-gray-200 transition-colors cursor-pointer">
+                                                    📄 {t('card.forRequest', { title: offer.request.title })}
+                                                </Badge>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Offer Details */}
+                                <div className="flex-1 border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <p className="text-lg font-bold text-[#2563EB]">
+                                                {offer.proposedPrice ? `€${offer.proposedPrice}` : 'Negotiable'}
+                                            </p>
+                                            {offer.estimatedDuration && (
+                                                <p className="text-xs text-[#7C7373] mt-1">
+                                                    ⏱️ {offer.estimatedDuration}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <Badge variant={offer.status === 'PENDING' ? 'primary' : offer.status === 'ACCEPTED' ? 'success' : 'gray'}>
+                                            {offer.status}
+                                        </Badge>
+                                    </div>
+
+                                    <p className="text-sm text-[#4B5563] line-clamp-2 mb-4 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                        {offer.message}
+                                    </p>
+
+                                    <div className="flex flex-wrap gap-2 justify-end">
+                                        <ViewOfferProfileButton
+                                            offerId={offer.id}
+                                            professionalId={offer.professional.id}
+                                            className="text-xs border border-gray-200"
+                                        />
+                                        {offer.status === 'PENDING' && offer.request.status === 'OPEN' && (
+                                            <AcceptOfferButton
+                                                offerId={offer.id}
+                                                requestId={offer.request.id}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-[#9CA3AF]">
+                                <span>Received {new Date(offer.createdAt).toLocaleDateString()}</span>
+                                <Link href={`/client/requests/${offer.request.id}`} className="text-blue-600 hover:underline">
+                                    View Full Request →
+                                </Link>
+                            </div>
+                        </Card>
                     ))}
                 </div>
             )}
         </div>
-    );
-}
-
-function OfferCard({ offer, locale, onAccept, dateLocale, t }: {
-    offer: Offer,
-    locale: string,
-    onAccept: (id: string) => void,
-    dateLocale: any,
-    t: any
-}) {
-    const proName = `${offer.professional.user.firstName} ${offer.professional.user.lastName}`.trim();
-
-    return (
-        <Card className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
-            <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                        {offer.professional.user.avatar ? (
-                            <img
-                                src={offer.professional.user.avatar}
-                                alt={proName}
-                                className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-50"
-                            />
-                        ) : (
-                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                <User className="w-6 h-6 text-blue-600" />
-                            </div>
-                        )}
-                        <div>
-                            <h4 className="font-bold text-gray-900">{proName}</h4>
-                            <p className="text-sm text-gray-500">{offer.professional.title}</p>
-                        </div>
-                    </div>
-                    <div className="text-right">
-                        <div className="text-2xl font-bold text-blue-600">€{offer.proposedPrice}</div>
-                        <Badge variant={offer.status === 'ACCEPTED' ? 'success' : offer.status === 'PENDING' ? 'warning' : 'secondary'}>
-                            {offer.status}
-                        </Badge>
-                    </div>
-                </div>
-
-                <div className="mb-6">
-                    <p className="text-xs text-blue-600 font-semibold mb-1 uppercase tracking-wider">{t('card.forRequest', { title: '' })}</p>
-                    <Link href={`/${locale}/client/requests/${offer.request.id}`} className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                        {offer.request.title}
-                    </Link>
-                </div>
-
-                <div className="bg-gray-50 rounded-xl p-4 mb-6">
-                    <p className="text-sm text-gray-700 italic line-clamp-3">
-                        "{offer.message}"
-                    </p>
-                </div>
-
-                <div className="flex items-center gap-4 text-xs text-gray-500 mb-6">
-                    <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {formatDistanceToNow(new Date(offer.createdAt), { addSuffix: true, locale: dateLocale })}
-                    </span>
-                    <span className="flex items-center gap-1">
-                        <Euro className="w-3.5 h-3.5" />
-                        Fixed Price
-                    </span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                    <Link href={`/${locale}/client/requests/${offer.request.id}`} className="flex-1">
-                        <Button variant="outline" size="sm" className="w-full">
-                            {t('card.viewRequest')}
-                        </Button>
-                    </Link>
-                    {offer.status === 'PENDING' && (
-                        <Button
-                            className="flex-1 bg-blue-600 hover:bg-blue-700"
-                            size="sm"
-                            onClick={() => onAccept(offer.id)}
-                        >
-                            {t('card.accept')}
-                        </Button>
-                    )}
-                </div>
-            </div>
-
-            <div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
-                <Link
-                    href={`/${locale}/pro/profile/${offer.professional.id}`}
-                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
-                >
-                    {t('card.viewProfile')}
-                    <ExternalLink className="w-3 h-3" />
-                </Link>
-            </div>
-        </Card>
     );
 }
