@@ -329,12 +329,14 @@ export async function POST(request: NextRequest) {
 
     // Notify client about new offer (don't block response on this)
     const proName = `${professional.user.firstName} ${professional.user.lastName}`.trim() || 'A professional';
+    const clientUserId = serviceRequest.client.user.id;
+    console.log(`[Offer] 🔔 Notifying client (DB User ID: ${clientUserId}) about new offer from ${proName}`);
     notifyNewOffer(
-      serviceRequest.client.user.id,
+      clientUserId,
       proName,
       serviceRequest.title,
       serviceRequest.id
-    ).catch(err => console.error('Failed to send notification:', err));
+    ).catch(err => console.error('[Offer] ❌ Failed to send notification:', err));
 
     return createdResponse(
       {
