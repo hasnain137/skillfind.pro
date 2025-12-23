@@ -4,6 +4,7 @@
 import { Container } from "@/components/ui/Container";
 import { useUser } from "@clerk/nextjs";
 import { UserMenu } from "./UserMenu";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
@@ -26,14 +27,7 @@ export function ClientNavbar() {
           </Link>
 
           {/* Language/region dropdown */}
-          <select
-            className="hidden rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-medium text-[#7C7373] shadow-sm hover:border-[#D1D5DB] md:block"
-            defaultValue="en"
-          >
-            <option value="en">EN</option>
-            <option value="de">DE</option>
-            <option value="fr">FR</option>
-          </select>
+          <LanguageSwitcher className="hidden md:block" />
         </div>
 
         {/* Middle: navigation (desktop only) */}
