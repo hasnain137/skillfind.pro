@@ -152,12 +152,8 @@ export async function POST(request: NextRequest) {
   try {
     const { clerkId } = await requireClient();
 
-
-
     // Use helper function to get client by Clerk ID
     const client = await getClientByClerkId(clerkId);
-
-
 
     if (!client) {
       throw new NotFoundError('Client profile - Please complete your profile at /auth-redirect');

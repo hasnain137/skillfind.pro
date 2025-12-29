@@ -135,6 +135,7 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
       <OfferForm
         requestId={request.id}
         requestTitle={request.title}
+        clientName={request.client.user.firstName || 'Client'}
         requestDetails={{
           budgetMin: request.budgetMin,
           budgetMax: request.budgetMax,

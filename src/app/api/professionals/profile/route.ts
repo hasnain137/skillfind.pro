@@ -87,12 +87,11 @@ export async function PUT(request: NextRequest) {
 
     // Check bio content if updated
     if (data.bio) {
-      const moderationResult = await import('@/lib/services/moderation')
-        .then(mod => mod.analyzeContent(data.bio!))
-        .catch(() => ({ isSafe: true, score: 0 }));
-
-      if (!moderationResult.isSafe) {
-        throw new BadRequestError('Bio contains inappropriate content and cannot be saved.');
+      // Use our new single-source moderation service
+      const { moderateContent } = await import('@/lib/moderation');
+      const moderation = await moderateContent(data.bio);
+      if (!moderation.safe) {
+        throw new BadRequestError(`Bio contains unsafe content: ${moderation.categories.join(', ')}`);
       }
     }
 

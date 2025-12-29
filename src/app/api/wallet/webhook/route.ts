@@ -95,48 +95,40 @@ export async function POST(request: NextRequest) {
         });
 
         if (existingPro) {
-          if (existingPro.isVerified) {
-            console.log(`Professional ${professionalId} is already verified. Skipping Stripe identity update.`);
-          } else {
-            // Prevent activation if banned or suspended
-            const newStatus = (existingPro.status === 'BANNED' || existingPro.status === 'SUSPENDED')
-              ? existingPro.status
-              : 'ACTIVE';
+          // Store the Stripe Identity verification ID
+          await prisma.professional.update({
+            where: { id: professionalId },
+            data: {
+              stripeIdentityVerificationId: session.id,
+              verificationMethod: 'STRIPE_IDENTITY',
+            }
+          });
 
-            // ATOMIC UPDATE: Only update if isVerified is still false
-            await prisma.$transaction(async (tx) => {
-              const result = await tx.professional.updateMany({
-                where: {
-                  id: professionalId,
-                  isVerified: false // Critical: Only update if not yet verified
-                },
-                data: {
-                  isVerified: true,
-                  verificationMethod: 'STRIPE_IDENTITY',
-                  stripeIdentityVerificationId: session.id,
-                  verifiedAt: new Date(),
-                  status: newStatus
-                }
-              });
+          // Create a record in VerificationDocument for visibility
+          await prisma.verificationDocument.create({
+            data: {
+              professionalId: professionalId,
+              type: 'OTHER',
+              fileName: 'Stripe Identity Verification',
+              fileUrl: session.url || 'https://dashboard.stripe.com',
+              status: 'APPROVED',
+              reviewedBy: 'STRIPE_AUTOMATION',
+              reviewedAt: new Date(),
+              adminNotes: `Verified via Stripe Identity Session: ${session.id}`
+            }
+          });
 
-              if (result.count > 0) {
-                // Create a record in VerificationDocument for visibility
-                await tx.verificationDocument.create({
-                  data: {
-                    professionalId: professionalId,
-                    type: 'OTHER',
-                    fileName: 'Stripe Verification Report',
-                    fileUrl: session.url || '',
-                    status: 'APPROVED',
-                    reviewedBy: 'STRIPE_AUTOMATION',
-                    reviewedAt: new Date(),
-                    adminNotes: `Verified via Stripe Identity Session: ${session.id}`
-                  }
-                });
-                console.log(`Successfully verified professional ${professionalId} via Stripe Identity`);
-              } else {
-                console.log(`Professional ${professionalId} was verified by another process (Admin/Other) just now. Skipping Stripe update.`);
-              }
+          // Use centralized logic to compute isVerified status
+          const { updateProfessionalVerificationStatus } = await import('@/lib/services/verification');
+          const result = await updateProfessionalVerificationStatus(professionalId);
+
+          console.log(`Stripe Identity processed for ${professionalId}: hasIdentity=${result.hasIdentity}, hasQualifications=${result.hasQualifications}, isVerified=${result.isVerified}`);
+
+          // Update status to ACTIVE if not banned/suspended and now verified
+          if (result.isVerified && existingPro.status !== 'BANNED' && existingPro.status !== 'SUSPENDED') {
+            await prisma.professional.update({
+              where: { id: professionalId },
+              data: { status: 'ACTIVE' }
             });
           }
         } else {

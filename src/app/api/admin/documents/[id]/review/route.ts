@@ -32,23 +32,10 @@ export async function POST(
             include: { professional: true },
         });
 
-        // If approved, check if we should verify the professional
+        // If approved, recompute verification status using centralized logic
         if (status === 'APPROVED') {
-            // Check if this was the last pending document or if it's a critical one
-            // For MVP, if they have at least one approved identity doc, we verify them
-            const identityDocs = ['IDENTITY_CARD', 'PASSPORT', 'DRIVERS_LICENSE'];
-
-            if (identityDocs.includes(document.type)) {
-                await prisma.professional.update({
-                    where: { id: document.professionalId },
-                    data: {
-                        isVerified: true,
-                        verifiedAt: new Date(),
-                        verifiedBy: userId,
-                        status: 'ACTIVE', // Auto-activate on verification
-                    },
-                });
-            }
+            const { updateProfessionalVerificationStatus } = await import('@/lib/services/verification');
+            await updateProfessionalVerificationStatus(document.professionalId);
         }
 
         return successResponse({ document }, 'Document reviewed successfully');

@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { requireProfessional } from '@/lib/auth';
 import { successResponse, handleApiError, createdResponse, errorResponse } from '@/lib/api-response';
 import { NotFoundError, BadRequestError } from '@/lib/errors';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -74,8 +74,9 @@ export async function POST(request: NextRequest) {
         const uploadDir = join(process.cwd(), 'public', 'uploads', 'documents');
         const filePath = join(uploadDir, uniqueFilename);
 
-        // Create directory if it doesn't exist
+        // Create directory if it doesn't exist and write file
         try {
+            await mkdir(uploadDir, { recursive: true });
             await writeFile(filePath, buffer);
         } catch (error) {
             console.error('File write error:', error);

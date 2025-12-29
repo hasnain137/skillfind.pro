@@ -27,6 +27,20 @@ export async function POST(request: NextRequest) {
       throw new NotFoundError('Professional profile');
     }
 
+    // VERIFICATION GATE: Pros must be fully verified to add funds
+    if (!professional.isVerified) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: {
+            code: 'VERIFICATION_REQUIRED',
+            message: 'You must complete identity and document verification before adding funds to your wallet.'
+          }
+        }),
+        { status: 403, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Parse and validate request body
     const body = await request.json();
     const data = createDepositSchema.parse(body);

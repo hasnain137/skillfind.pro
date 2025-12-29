@@ -113,6 +113,8 @@ export default async function AdminProfessionalDetailPage({
                         professionalId={professional.id}
                         currentStatus={professional.status}
                         isVerified={professional.isVerified}
+                        qualificationVerified={professional.qualificationVerified}
+                        hasIdentity={!!professional.stripeIdentityVerificationId || professional.documents.some((d: any) => ['IDENTITY_CARD', 'PASSPORT', 'DRIVERS_LICENSE'].includes(d.type) && d.status === 'APPROVED')}
                         documents={professional.documents.map((d: any) => ({
                             id: d.id,
                             type: d.type,

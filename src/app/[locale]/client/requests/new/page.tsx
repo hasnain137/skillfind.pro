@@ -11,6 +11,7 @@ import { CollapsibleTips } from "@/components/ui/CollapsibleTips";
 import { FormField, FormInput, FormTextarea, FormSelect } from "@/components/ui/FormField";
 import { LocationSelector } from "@/components/ui/LocationSelector";
 import { useTranslations } from 'next-intl';
+import { Sparkles } from 'lucide-react';
 
 export default function NewClientRequestPage() {
   const t = useTranslations('RequestForm');
@@ -25,6 +26,13 @@ export default function NewClientRequestPage() {
     subcategories: Array<{ id: string; nameEn: string }>;
   }>>([]);
 
+  const [suggestion, setSuggestion] = useState<{
+    categoryId: string;
+    subcategoryId: string;
+    categoryName: string;
+    subcategoryName: string;
+  } | null>(null);
+
   const [formData, setFormData] = useState({
     categoryId: '',
     subcategoryId: '',
@@ -38,6 +46,37 @@ export default function NewClientRequestPage() {
     budgetMin: '',
     budgetMax: '',
   });
+
+  // AI Suggestion Debounce
+  useEffect(() => {
+    const text = formData.description;
+
+    // Only suggest if we have text and NO category selected yet
+    if (!text || text.length < 15 || formData.categoryId) {
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch('/api/categories/suggest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.suggested) {
+            setSuggestion(data.suggested);
+          }
+        }
+      } catch (e) {
+        // Ignore errors (graceful degradation)
+        console.error(e);
+      }
+    }, 1500); // 1.5s debounce
+
+    return () => clearTimeout(timer);
+  }, [formData.description, formData.categoryId]);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -232,6 +271,51 @@ export default function NewClientRequestPage() {
             title={t('sections.basics.title')}
             description={t('sections.basics.desc')}
           />
+
+          {/* AI Suggestion Block */}
+          {suggestion && (
+            <div className="animate-in fade-in slide-in-from-top-2 mb-4 rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
+              <div className="bg-white p-2 rounded-full shadow-sm text-blue-600 mt-1">
+                <Sparkles size={18} />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-blue-900 mb-1">
+                  Recommendation
+                </h4>
+                <p className="text-sm text-blue-800 mb-3">
+                  Based on your description, we think you're looking for: <br />
+                  <span className="font-medium">
+                    {suggestion.categoryName} {' > '} {suggestion.subcategoryName}
+                  </span>
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({
+                        ...prev,
+                        categoryId: suggestion.categoryId,
+                        subcategoryId: suggestion.subcategoryId
+                      }));
+                      setSuggestion(null); // Dismiss after applying
+                      toast.success("Category applied!");
+                    }}
+                    className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-blue-700 transition"
+                  >
+                    Apply Suggestion
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSuggestion(null)}
+                    className="text-xs bg-white text-blue-600 border border-blue-200 px-3 py-1.5 rounded-md font-medium hover:bg-gray-50 transition"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="grid gap-3 md:grid-cols-2">
             <FormField
               label={t('fields.category')}

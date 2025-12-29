@@ -9,6 +9,8 @@ interface AdminProfessionalActionsProps {
     professionalId: string;
     currentStatus: string;
     isVerified: boolean;
+    qualificationVerified: boolean;
+    hasIdentity: boolean;
     documents: {
         id: string;
         type: string;
@@ -23,6 +25,8 @@ export default function AdminProfessionalActions({
     professionalId,
     currentStatus,
     isVerified,
+    qualificationVerified,
+    hasIdentity,
     documents,
 }: AdminProfessionalActionsProps) {
     const router = useRouter();
@@ -64,6 +68,48 @@ export default function AdminProfessionalActions({
             router.refresh();
         } catch (error) {
             alert('Error updating verification status');
+            console.error(error);
+        } finally {
+            setLoading(null);
+        }
+    }
+
+    async function handleDocumentVerificationChange(verified: boolean) {
+        if (!confirm(`Are you sure you want to ${verified ? 'approve' : 'revoke'} document verification?`)) return;
+
+        setLoading('qualifications');
+        try {
+            const res = await fetch(`/api/admin/verify-qualification`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ professionalId, approved: verified }),
+            });
+
+            if (!res.ok) throw new Error('Failed to update document verification');
+            router.refresh();
+        } catch (error) {
+            alert('Error updating document verification');
+            console.error(error);
+        } finally {
+            setLoading(null);
+        }
+    }
+
+    async function handleIdentityVerificationChange(verified: boolean) {
+        if (!confirm(`Are you sure you want to ${verified ? 'verify' : 'revoke'} identity verification?`)) return;
+
+        setLoading('identity');
+        try {
+            const res = await fetch(`/api/admin/professionals/${professionalId}/identity`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ verified }),
+            });
+
+            if (!res.ok) throw new Error('Failed to update identity verification');
+            router.refresh();
+        } catch (error) {
+            alert('Error updating identity verification');
             console.error(error);
         } finally {
             setLoading(null);
@@ -138,18 +184,88 @@ export default function AdminProfessionalActions({
                 )}
             </div>
 
-            {/* Verification Actions */}
-            <div className="flex flex-wrap gap-4 pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-4">
-                    <span className="text-sm font-medium text-[#333333]">Manual Verification:</span>
-                    <Button
-                        variant={isVerified ? "destructive" : "default"}
-                        onClick={() => handleVerificationChange(!isVerified)}
-                        disabled={!!loading}
-                        className={`py-1 px-3 text-xs h-8 min-h-0 ${!isVerified ? 'bg-green-600 hover:bg-green-700 text-white' : ''}`}
-                    >
-                        {loading === 'verify' ? 'Updating...' : (isVerified ? 'Unverify User' : 'Verify User')}
-                    </Button>
+            {/* Verification Actions - 4 Buttons */}
+            <div className="pt-4 border-t border-gray-100 space-y-4">
+                <h3 className="text-lg font-bold text-[#333333]">Verification Controls</h3>
+
+                {/* Document Verification Row */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                        <p className="font-medium text-[#333333]">Document Verification</p>
+                        <p className="text-xs text-[#7C7373]">
+                            Status: {qualificationVerified ?
+                                <span className="text-green-600 font-medium">Verified</span> :
+                                <span className="text-amber-600 font-medium">Not Verified</span>}
+                        </p>
+                    </div>
+                    <div className="flex gap-2">
+                        {!qualificationVerified ? (
+                            <Button
+                                variant="default"
+                                className="bg-green-600 hover:bg-green-700 text-white text-xs"
+                                onClick={() => handleDocumentVerificationChange(true)}
+                                disabled={!!loading}
+                            >
+                                {loading === 'qualifications' ? 'Updating...' : 'Verify Documents'}
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="destructive"
+                                className="text-xs"
+                                onClick={() => handleDocumentVerificationChange(false)}
+                                disabled={!!loading}
+                            >
+                                {loading === 'qualifications' ? 'Updating...' : 'Unverify Documents'}
+                            </Button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Identity Verification Row */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                        <p className="font-medium text-[#333333]">Identity Verification</p>
+                        <p className="text-xs text-[#7C7373]">
+                            Status: {hasIdentity ?
+                                <span className="text-green-600 font-medium">Verified</span> :
+                                <span className="text-amber-600 font-medium">Not Verified</span>}
+                        </p>
+                    </div>
+                    <div className="flex gap-2">
+                        {!hasIdentity ? (
+                            <Button
+                                variant="default"
+                                className="bg-green-600 hover:bg-green-700 text-white text-xs"
+                                onClick={() => handleIdentityVerificationChange(true)}
+                                disabled={!!loading}
+                            >
+                                {loading === 'identity' ? 'Updating...' : 'Verify Identity'}
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="destructive"
+                                className="text-xs"
+                                onClick={() => handleIdentityVerificationChange(false)}
+                                disabled={!!loading}
+                            >
+                                {loading === 'identity' ? 'Updating...' : 'Unverify Identity'}
+                            </Button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Combined Status Display */}
+                <div className="p-4 border rounded-lg bg-white">
+                    <p className="text-sm text-[#7C7373]">
+                        <strong>Overall Profile Status:</strong>{' '}
+                        {isVerified ? (
+                            <span className="text-green-600 font-medium">✓ Fully Verified</span>
+                        ) : (
+                            <span className="text-amber-600 font-medium">
+                                ⚠ Not Verified ({!qualificationVerified && 'Documents pending'}{!qualificationVerified && !hasIdentity && ', '}{!hasIdentity && 'Identity pending'})
+                            </span>
+                        )}
+                    </p>
                 </div>
             </div>
 

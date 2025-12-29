@@ -7,19 +7,29 @@ import { BadRequestError, NotFoundError, ForbiddenError } from '@/lib/errors';
 import { notifyNewReview } from '@/lib/services/notifications';
 
 // Schema for review submission
+// Schema for review submission
 const createReviewSchema = z.object({
   jobId: z.string(),
   rating: z.number().min(1).max(5),
   content: z.string().min(10, 'Review must be at least 10 characters'),
   wouldRecommend: z.boolean().default(true),
+  categories: z.array(z.string()).optional(),
 });
 
-export async function POST(request: NextRequest) {
+import { moderateContent } from '@/lib/moderation';
+
+export async function POST(req: NextRequest) {
   try {
     const { userId } = await requireClient();
 
-    const body = await request.json();
+    const body = await req.json();
     const data = createReviewSchema.parse(body);
+
+    // Content Moderation
+    const moderation = await moderateContent(data.content);
+    if (!moderation.safe) {
+      throw new BadRequestError(`Review contains unsafe content: ${moderation.categories.join(', ')}`);
+    }
 
     // Get client profile
     const client = await prisma.client.findUnique({
@@ -69,13 +79,6 @@ export async function POST(request: NextRequest) {
       throw new BadRequestError('You have already reviewed this job');
     }
 
-    // Check content safety with Perspective API
-    const moderationResult = await import('@/lib/services/moderation')
-      .then(mod => mod.analyzeContent(data.content))
-      .catch(() => ({ isSafe: true, score: 0 }));
-
-    const moderationStatus = moderationResult.isSafe ? 'APPROVED' : 'PENDING';
-
     // Create review
     const review = await prisma.$transaction(async (tx) => {
       const newReview = await tx.review.create({
@@ -85,7 +88,7 @@ export async function POST(request: NextRequest) {
           rating: data.rating,
           content: data.content,
           wouldRecommend: data.wouldRecommend,
-          moderationStatus,
+          moderationStatus: 'APPROVED', // We blocked unsafe content above, so this is safe
         },
       });
 

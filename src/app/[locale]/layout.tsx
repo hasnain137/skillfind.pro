@@ -11,6 +11,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { Toaster } from 'sonner';
+import SupportChatWidget from '@/components/SupportChatWidget';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({
@@ -140,6 +142,7 @@ export default async function RootLayout({
               {children}
             </ThemeProvider>
           </NextIntlClientProvider>
+          <SupportChatWidget />
         </body>
       </html>
     </ClerkProvider>

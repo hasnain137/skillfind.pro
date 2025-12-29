@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Update qualification status
+        // Update qualification status
         if (data.approved) {
             await prisma.professional.update({
                 where: { id: data.professionalId },
@@ -59,18 +60,22 @@ export async function POST(request: NextRequest) {
                 },
             });
 
-            // TODO: Send notification to professional
-            // await notifyProfessional(professional.userId, 'Qualifications approved! You can now verify your identity.');
-
             console.log(`[Admin] Approved qualifications for professional ${data.professionalId} by admin ${userId}`);
         } else {
-            // Rejection case: Keep qualificationVerified as false
-            // Optionally: Add rejection reason to documents or create a notification
-            console.log(`[Admin] Rejected qualifications for professional ${data.professionalId} by admin ${userId}. Notes: ${data.notes}`);
+            // Unverify/Reject case
+            await prisma.professional.update({
+                where: { id: data.professionalId },
+                data: {
+                    qualificationVerified: false,
+                },
+            });
 
-            // TODO: Send rejection notification with notes
-            // await notifyProfessional(professional.userId, `Qualifications rejected: ${data.notes}`);
+            console.log(`[Admin] Unverified/Rejected qualifications for professional ${data.professionalId} by admin ${userId}. Notes: ${data.notes}`);
         }
+
+        // Recompute verification status using centralized logic (handles both upgrade and downgrade)
+        const { updateProfessionalVerificationStatus } = await import('@/lib/services/verification');
+        await updateProfessionalVerificationStatus(data.professionalId);
 
         return successResponse({
             professionalId: data.professionalId,

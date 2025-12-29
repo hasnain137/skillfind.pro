@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 type OfferFormProps = {
     requestId: string;
     requestTitle: string;
+    clientName: string;
     requestDetails: {
         budgetMin: number | null;
         budgetMax: number | null;
@@ -21,7 +22,7 @@ type OfferFormProps = {
     };
 };
 
-export default function OfferForm({ requestId, requestTitle, requestDetails }: OfferFormProps) {
+export default function OfferForm({ requestId, requestTitle, clientName, requestDetails }: OfferFormProps) {
     const t = useTranslations('OfferForm');
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -157,9 +158,30 @@ export default function OfferForm({ requestId, requestTitle, requestDetails }: O
                         </div>
 
                         <div>
-                            <label className="mb-2 block text-sm font-medium text-[#333333]">
-                                {t('proposal.messageLabel')} *
-                            </label>
+                            <div className="flex justify-between items-center mb-2">
+                                <label className="block text-sm font-medium text-[#333333]">
+                                    {t('proposal.messageLabel')} *
+                                </label>
+                                <select
+                                    onChange={(e) => {
+                                        if (!e.target.value) return;
+                                        const template = t(`proposal.templates.${e.target.value}.text` as any)
+                                            .replace('{name}', clientName)
+                                            .replace('{category}', requestDetails.categoryName)
+                                            .replace('{availability}', formData.startType === 'specific' ? formData.startDate || 'soon' : t(`availability.startType.${formData.startType}` as any));
+
+                                        setFormData(prev => ({ ...prev, message: template }));
+                                        setTouched(prev => ({ ...prev, message: true }));
+                                        e.target.value = ''; // Reset select
+                                    }}
+                                    className="text-xs border-none bg-blue-50 text-blue-600 font-medium rounded-lg px-2 py-1 cursor-pointer hover:bg-blue-100 focus:outline-none"
+                                >
+                                    <option value="">{t('proposal.templates.label')}</option>
+                                    <option value="quick">{t('proposal.templates.quick.label')}</option>
+                                    <option value="detailed">{t('proposal.templates.detailed.label')}</option>
+                                    <option value="questions">{t('proposal.templates.questions.label')}</option>
+                                </select>
+                            </div>
                             <textarea
                                 required
                                 rows={8}

@@ -118,6 +118,11 @@ export async function POST(request: NextRequest) {
         where: { id: professional.id },
         data: { qualificationVerified: false },
       });
+
+      // Recompute verification status (will downgrade isVerified if it was true)
+      const { updateProfessionalVerificationStatus } = await import('@/lib/services/verification');
+      await updateProfessionalVerificationStatus(professional.id);
+
       console.log(`[Qualification] Professional ${professional.id} now requires qualification verification for ${subcategory.nameEn}`);
     }
 

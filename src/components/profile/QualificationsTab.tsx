@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Upload, FileText, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Label } from '@/components/ui/Label';
+import { cn } from '@/lib/cn';
 
 interface QualificationsTabProps {
     professionalId: string;
@@ -12,6 +14,7 @@ interface QualificationsTabProps {
         type: string;
         fileName: string;
         fileUrl: string;
+        fileSize?: number | null;
         status: 'PENDING' | 'APPROVED' | 'REJECTED';
         uploadedAt: Date;
         rejectionReason?: string;
@@ -20,8 +23,12 @@ interface QualificationsTabProps {
 
 export function QualificationsTab({ professionalId, documents }: QualificationsTabProps) {
     const t = useTranslations('ProProfile.Qualifications');
+    const tTypes = useTranslations('Verification.upload');
     const [uploading, setUploading] = useState(false);
     const [uploadError, setUploadError] = useState<string | null>(null);
+    const [documentType, setDocumentType] = useState('DIPLOMA');
+
+    const documentTypes = ['DIPLOMA', 'CERTIFICATION', 'PORTFOLIO_SAMPLE', 'BUSINESS_LICENSE', 'OTHER'];
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -47,7 +54,7 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
             // Create FormData
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('type', 'DIPLOMA'); // or CERTIFICATION, based on user selection
+            formData.append('type', documentType);
 
             // Upload to API
             const response = await fetch('/api/professionals/documents', {
@@ -102,6 +109,19 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
         }
     };
 
+    // Format file size for display
+    const formatFileSize = (bytes?: number | null): string => {
+        if (!bytes) return '';
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    // Format document type for display
+    const formatDocType = (type: string): string => {
+        return type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    };
+
     return (
         <div className="space-y-6">
             {/* Info Card */}
@@ -123,6 +143,46 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
                             <li>• {t('docTypes.resume')}</li>
                             <li>• {t('docTypes.portfolio')}</li>
                         </ul>
+                    </div>
+
+                    {/* File requirements & approval info */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="flex items-center gap-2">
+                                <span className="text-lg">📁</span>
+                                <div>
+                                    <p className="text-sm font-medium text-gray-900">Maximum file size: 10MB</p>
+                                    <p className="text-xs text-gray-600">Accepts PDF, JPEG, PNG files</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span className="text-lg">⏱️</span>
+                                <div>
+                                    <p className="text-sm font-medium text-gray-900">Approval time: 24-48 hours</p>
+                                    <p className="text-xs text-gray-600">Our team reviews all documents manually</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Document Type Selector */}
+                    <div className="space-y-2">
+                        <Label>{tTypes('label')}</Label>
+                        <div className="relative">
+                            <select
+                                value={documentType}
+                                onChange={(e) => setDocumentType(e.target.value)}
+                                className={cn(
+                                    "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                                )}
+                            >
+                                {documentTypes.map((type) => (
+                                    <option key={type} value={type}>
+                                        {tTypes(`types.${type}`)}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
 
                     {/* Upload Button */}
@@ -166,8 +226,12 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
                                         <div className="flex items-center gap-3">
                                             <FileText className="h-5 w-5" />
                                             <div>
-                                                <p className="font-medium">{doc.fileName}</p>
+                                                <p className="font-medium">{formatDocType(doc.type)}</p>
                                                 <p className="text-xs opacity-75">
+                                                    {doc.fileName}
+                                                    {doc.fileSize && ` • ${formatFileSize(doc.fileSize)}`}
+                                                </p>
+                                                <p className="text-xs opacity-60">
                                                     {new Date(doc.uploadedAt).toLocaleDateString()}
                                                 </p>
                                             </div>
