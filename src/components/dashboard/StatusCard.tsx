@@ -59,7 +59,7 @@ export function StatusCard({ status, isVerified, verificationMethod }: StatusCar
                             Verified
                         </span>
                     ) : (
-                        <Link href="/pro/profile" className="flex items-center bg-[#3B4D9D] text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-[#2a3a7a] transition-all shadow-md hover:shadow-lg gap-1">
+                        <Link href="/pro/profile?activeTab=verification" className="flex items-center bg-[#3B4D9D] text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-[#2a3a7a] transition-all shadow-md hover:shadow-lg gap-1">
                             Verify Now <ChevronRight className="w-3 h-3" />
                         </Link>
                     )}
