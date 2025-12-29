@@ -132,8 +132,8 @@ export function DashboardAlerts({
                         <div
                             key={alert.id}
                             className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-xl border p-4 ${alert.type === 'critical'
-                                    ? 'bg-red-50 border-red-200'
-                                    : 'bg-amber-50 border-amber-200'
+                                ? 'bg-red-50 border-red-200'
+                                : 'bg-amber-50 border-amber-200'
                                 }`}
                         >
                             <div className="flex items-start gap-4 flex-1">
@@ -154,7 +154,7 @@ export function DashboardAlerts({
                             </div>
                             <Button
                                 onClick={alert.action.onClick}
-                                variant={alert.type === 'critical' ? 'primary' : 'secondary'}
+                                variant={alert.type === 'critical' ? 'default' : 'secondary'}
                                 size="sm"
                                 className="whitespace-nowrap"
                             >

@@ -128,19 +128,27 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
 
                     {/* Upload Button */}
                     <div>
+                        <input
+                            id="document-upload"
+                            type="file"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            onChange={handleFileUpload}
+                            disabled={uploading}
+                            className="hidden"
+                        />
                         <label htmlFor="document-upload" className="cursor-pointer">
-                            <div className="flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-                                <Upload className="h-5 w-5" />
-                                <span>{uploading ? t('uploading') : t('uploadButton')}</span>
-                            </div>
-                            <input
-                                id="document-upload"
-                                type="file"
-                                accept=".pdf,.jpg,.jpeg,.png"
-                                onChange={handleFileUpload}
+                            <Button
+                                type="button"
+                                variant="primary"
+                                className="w-full flex items-center justify-center gap-2"
                                 disabled={uploading}
-                                className="hidden"
-                            />
+                                asChild
+                            >
+                                <span>
+                                    <Upload className="h-5 w-5" />
+                                    {uploading ? t('uploading') : t('uploadButton')}
+                                </span>
+                            </Button>
                         </label>
                         {uploadError && (
                             <p className="text-sm text-red-600 mt-2">{uploadError}</p>
