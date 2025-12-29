@@ -148,7 +148,7 @@ export default async function ProDashboardPage() {
   });
 
   const hour = new Date().getHours();
-  const timeOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+  const timeOfDay = hour < 6 ? 'night' : hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : hour < 22 ? 'evening' : 'night';
 
   const thisMonth = new Date();
   const lastMonth = new Date();

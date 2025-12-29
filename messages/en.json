@@ -356,7 +356,8 @@
         "periods": {
             "morning": "morning",
             "afternoon": "afternoon",
-            "evening": "evening"
+            "evening": "evening",
+            "night": "night"
         },
         "Actions": {
             "browseTitle": "Browse matching requests",
@@ -1331,52 +1332,6 @@
         },
         "common": {
             "cancel": "Cancel"
-        }
-    },
-    "ProDashboard": {
-        "eyebrow": "Professional Dashboard",
-        "welcome": "Welcome back, {name}",
-        "description": "Here is an overview of your activity.",
-        "period": {
-            "morning": "Good morning",
-            "afternoon": "Good afternoon",
-            "evening": "Good evening"
-        },
-        "requestsTitle": "Matching Requests",
-        "requestsDesc": "New leads matching your skills",
-        "quickActionsTitle": "Quick Actions",
-        "quickActionsDesc": "Manage your work",
-        "viewAll": "View all",
-        "Alerts": {
-            "qualificationRequired": {
-                "title": "Qualification Verification Required",
-                "description": "Please upload your professional diplomas and certificates. An admin will review them before you can verify your identity.",
-                "action": "Upload Documents"
-            },
-            "verificationRequired": {
-                "title": "Identity Verification Required",
-                "description": "You must verify your identity before you can send offers to clients.",
-                "action": "Verify Now"
-            },
-            "lowBalance": {
-                "title": "Low Wallet Balance",
-                "description": "Your balance is low ({amount}). You need at least €2.00 to send offers.",
-                "action": "Top Up Wallet"
-            }
-        },
-        "Actions": {
-            "browseTitle": "Browse Requests",
-            "browseDesc": "Find new work",
-            "browseCta": "Find Work",
-            "offersTitle": "My Offers",
-            "offersDesc": "Track status",
-            "offersCta": "View Offers",
-            "jobsTitle": "Active Jobs",
-            "jobsDesc": "Work in progress",
-            "jobsCta": "View Jobs",
-            "profileTitle": "Profile",
-            "profileDesc": "Edit profile",
-            "profileCta": "Edit Profile"
         }
     }
 }

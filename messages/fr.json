@@ -356,7 +356,8 @@
         "periods": {
             "morning": "matin",
             "afternoon": "après-midi",
-            "evening": "soir"
+            "evening": "soir",
+            "night": "nuit"
         },
         "Actions": {
             "browseTitle": "Parcourir les demandes",
@@ -1319,52 +1320,6 @@
         },
         "common": {
             "cancel": "Annuler"
-        }
-    },
-    "ProDashboard": {
-        "eyebrow": "Tableau de Bord Professionnel",
-        "welcome": "Bon retour, {name}",
-        "description": "Voici un aperçu de votre activité.",
-        "period": {
-            "morning": "Bonjour",
-            "afternoon": "Bon après-midi",
-            "evening": "Bonsoir"
-        },
-        "requestsTitle": "Demandes Correspondantes",
-        "requestsDesc": "Nouveaux prospects correspondant à vos compétences",
-        "quickActionsTitle": "Actions Rapides",
-        "quickActionsDesc": "Gérez votre activité",
-        "viewAll": "Voir tout",
-        "Alerts": {
-            "qualificationRequired": {
-                "title": "Vérification des qualifications requise",
-                "description": "Veuillez télécharger vos diplômes et certificats professionnels. Un administrateur les examinera avant que vous puissiez vérifier votre identité.",
-                "action": "Télécharger les documents"
-            },
-            "verificationRequired": {
-                "title": "Vérification d'identité requise",
-                "description": "Vous devez vérifier votre identité avant de pouvoir envoyer des offres aux clients.",
-                "action": "Vérifier maintenant"
-            },
-            "lowBalance": {
-                "title": "Solde du portefeuille bas",
-                "description": "Votre solde est faible ({amount}). Vous avez besoin d'au moins 2,00 € pour envoyer des offres.",
-                "action": "Recharger"
-            }
-        },
-        "Actions": {
-            "browseTitle": "Parcourir Demandes",
-            "browseDesc": "Trouver du travail",
-            "browseCta": "Trouver Travail",
-            "offersTitle": "Mes Offres",
-            "offersDesc": "Suivre statut",
-            "offersCta": "Voir Offres",
-            "jobsTitle": "Jobs Actifs",
-            "jobsDesc": "Travail en cours",
-            "jobsCta": "Voir Jobs",
-            "profileTitle": "Profil",
-            "profileDesc": "Modifier profil",
-            "profileCta": "Modifier Profil"
         }
     }
 }
