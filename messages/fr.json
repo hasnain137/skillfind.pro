@@ -373,6 +373,23 @@
             "profileDesc": "Gardez votre bio, services et portfolio à jour.",
             "profileCta": "Éditer le profil"
         },
+        "Alerts": {
+            "qualificationRequired": {
+                "title": "Vérification des qualifications requise",
+                "description": "Veuillez télécharger vos diplômes et certificats professionnels. Un administrateur les examinera avant que vous puissiez vérifier votre identité.",
+                "action": "Télécharger les documents"
+            },
+            "verificationRequired": {
+                "title": "Vérification d'identité requise",
+                "description": "Vous devez vérifier votre identité avant de pouvoir envoyer des offres aux clients.",
+                "action": "Vérifier maintenant"
+            },
+            "lowBalance": {
+                "title": "Solde du portefeuille bas",
+                "description": "Votre solde est faible ({amount}). Vous avez besoin d'au moins 2,00 € pour envoyer des offres.",
+                "action": "Recharger"
+            }
+        },
         "Highlights": {
             "profile": "Profil complet",
             "wallet": "Solde du portefeuille",

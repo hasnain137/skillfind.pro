@@ -369,9 +369,26 @@
             "jobsTitle": "Active jobs",
             "jobsDesc": "Start work and mark jobs complete when finished.",
             "jobsCta": "View jobs",
-            "profileTitle": "Update profile",
-            "profileDesc": "Keep your bio, services, and portfolio up to date.",
-            "profileCta": "Edit profile"
+            "profileTitle": "Profile",
+            "profileDesc": "Edit profile",
+            "profileCta": "Edit Profile"
+        },
+        "Alerts": {
+            "qualificationRequired": {
+                "title": "Qualification Verification Required",
+                "description": "Please upload your professional diplomas and certificates. An admin will review them before you can verify your identity.",
+                "action": "Upload Documents"
+            },
+            "verificationRequired": {
+                "title": "Identity Verification Required",
+                "description": "You must verify your identity before you can send offers to clients.",
+                "action": "Verify Now"
+            },
+            "lowBalance": {
+                "title": "Low Wallet Balance",
+                "description": "Your balance is low ({amount}). You need at least €2.00 to send offers.",
+                "action": "Top Up Wallet"
+            }
         },
         "Highlights": {
             "profile": "Profile Complete",
