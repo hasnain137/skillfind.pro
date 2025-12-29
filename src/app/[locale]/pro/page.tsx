@@ -8,7 +8,6 @@ import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatusBanner } from "@/components/ui/StatusBanner";
 import { getProfessionalStatusBanner } from "@/lib/professional-status";
-import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { DashboardAlerts } from "@/components/dashboard/DashboardAlerts";
 import { KeyStats } from "@/components/dashboard/KeyStats";
@@ -221,34 +220,27 @@ export default async function ProDashboardPage() {
 
 
 
-      {/* Main Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        {/* Left Column - Matching Requests (Span 2) */}
-        <div className="lg:col-span-2 space-y-8">
-
-          {/* Matching Requests */}
-          <div className="space-y-4">
-            <SectionHeading
-              title={t('requestsTitle')}
-              description={t('requestsDesc')}
-              actions={
-                <Link
-                  href="/pro/requests"
-                  className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors tracking-wide uppercase"
-                >
-                  {t('viewAll')} →
-                </Link>
-              }
-            />
-            <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
-              <div className="p-6">
-                <MatchingRequests requests={matchingRequests as any} />
-              </div>
-            </Card>
-          </div>
-
-          {/* Earnings Chart */}
-          <EarningsChart data={earningsData} />
+      {/* Main Grid Layout - 2 columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        {/* Left Column - Matching Requests */}
+        <div className="space-y-4">
+          <SectionHeading
+            title={t('requestsTitle')}
+            description={t('requestsDesc')}
+            actions={
+              <Link
+                href="/pro/requests"
+                className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors tracking-wide uppercase"
+              >
+                {t('viewAll')} →
+              </Link>
+            }
+          />
+          <Card className="glass-card shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300" padding="none">
+            <div className="p-6">
+              <MatchingRequests requests={matchingRequests as any} />
+            </div>
+          </Card>
         </div>
 
         {/* Right Column - Key Stats */}
@@ -258,6 +250,9 @@ export default async function ProDashboardPage() {
             pendingOffers={professional.offers.length}
             walletBalance={professional.wallet?.balance || 0}
             avgRating={avgRating}
+            completedJobs={completedJobs.length}
+            newRequestsToday={matchingRequestsToday}
+            totalReviews={allReviews.length}
           />
         </div>
       </div>

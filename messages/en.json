@@ -417,7 +417,10 @@
             "activeJobs": "Active Jobs",
             "pendingOffers": "Pending Offers",
             "walletBalance": "Wallet Balance",
-            "avgRating": "Average Rating"
+            "avgRating": "Rating",
+            "completedJobs": "Completed",
+            "newRequestsToday": "New Today",
+            "reviews": "reviews"
         },
         "Highlights": {
             "profile": "Profile Complete",

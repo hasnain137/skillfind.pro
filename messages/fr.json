@@ -416,8 +416,11 @@
             "title": "Vos Statistiques",
             "activeJobs": "Travaux Actifs",
             "pendingOffers": "Offres en Attente",
-            "walletBalance": "Solde du Portefeuille",
-            "avgRating": "Note Moyenne"
+            "walletBalance": "Solde",
+            "avgRating": "Note",
+            "completedJobs": "Terminés",
+            "newRequestsToday": "Nouveau Aujourd'hui",
+            "reviews": "avis"
         },
         "Highlights": {
             "profile": "Profil complet",
