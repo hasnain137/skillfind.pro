@@ -39,8 +39,8 @@ The direct connection (port 5432) might be disabled. To enable it:
 
 ```powershell
 cd skillfind
-$env:DATABASE_URL = "postgresql://postgres:%5B6L7ZDqQJgev%25vwS%5D@db.jppugzqceagjnbqlzaxr.supabase.co:5432/postgres"
-$env:DIRECT_URL = "postgresql://postgres:%5B6L7ZDqQJgev%25vwS%5D@db.jppugzqceagjnbqlzaxr.supabase.co:5432/postgres"
+$env:DATABASE_URL = "postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+$env:DIRECT_URL = "postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 node node_modules/prisma/build/index.js db push
 ```
 
@@ -48,8 +48,8 @@ node node_modules/prisma/build/index.js db push
 
 ```powershell
 cd skillfind
-$env:DATABASE_URL = "postgresql://postgres.hqfikrlokrohjtgskcrz:imDkRL%21dV5%2F96dt@aws-1-ap-southeast-2.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
-$env:DIRECT_URL = "postgresql://postgres.hqfikrlokrohjtgskcrz:imDkRL%21dV5%2F96dt@aws-1-ap-southeast-2.pooler.supabase.com:6543/postgres"
+$env:DATABASE_URL = "postgresql://USER:PASSWORD@HOST:PORT/DATABASE?pgbouncer=true&connection_limit=1"
+$env:DIRECT_URL = "postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 node node_modules/prisma/build/index.js migrate dev --name init
 ```
 

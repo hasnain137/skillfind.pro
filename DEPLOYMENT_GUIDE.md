@@ -59,13 +59,13 @@ git push origin main
    Click "Environment Variables" and add:
 
    ```
-   DATABASE_URL=postgresql://postgres.jppugzqceagjnbqlzaxr:kF9VwQxuNmtGSrF1@aws-1-eu-west-3.pooler.supabase.com:5432/postgres
+   DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
    
-   DIRECT_URL=postgresql://postgres:kF9VwQxuNmtGSrF1@db.jppugzqceagjnbqlzaxr.supabase.co:5432/postgres
+   DIRECT_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
    
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_cGlja2VkLXNoaW5lci0zNS5jbGVyay5hY2NvdW50cy5kZXYk
    
-   CLERK_SECRET_KEY=sk_test_5S4hwAB7CNuFpLmC2X1aGRnzvVXFv4txe6vpoynu8E
+   CLERK_SECRET_KEY=sk_test_...
    
    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/login
    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/signup
