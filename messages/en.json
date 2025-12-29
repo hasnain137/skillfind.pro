@@ -376,21 +376,48 @@
         "Alerts": {
             "requirementsTitle": "Requirements to Send Offers",
             "requirementsDescription": "Complete these steps to start sending offers to clients and winning jobs.",
+            "stepsComplete": "steps complete",
+            "readyToSendOffers": "You're Ready to Send Offers!",
+            "readyDescription": "All requirements complete. Start browsing job requests and winning clients.",
+            "browseRequests": "Browse Requests",
+            "steps": {
+                "servicesComplete": "Your services are set up and visible to clients.",
+                "qualificationsComplete": "Your qualifications have been verified.",
+                "qualificationsPending": "We're reviewing your documents. This usually takes 24-48 hours.",
+                "qualificationsRejected": "Some documents need attention. Please review and re-upload.",
+                "verificationComplete": "Your identity has been verified.",
+                "walletComplete": "Balance: {amount}. Ready to send offers.",
+                "lockedStep": "Complete previous steps first.",
+                "underReview": "Under Review",
+                "reuploadAction": "Re-upload Documents"
+            },
+            "servicesRequired": {
+                "title": "Add Your Services",
+                "description": "Add at least one service to your profile to start receiving relevant job requests.",
+                "action": "Add Services"
+            },
             "qualificationRequired": {
-                "title": "Qualification Verification Required",
-                "description": "Please upload your professional diplomas and certificates. An admin will review them before you can verify your identity.",
+                "title": "Upload Qualifications",
+                "description": "Upload your professional diplomas and certificates for verification.",
                 "action": "Upload Documents"
             },
             "verificationRequired": {
-                "title": "Identity Verification Required",
-                "description": "You must verify your identity before you can send offers to clients.",
+                "title": "Verify Your Identity",
+                "description": "Complete identity verification to unlock offer sending.",
                 "action": "Verify Now"
             },
             "lowBalance": {
-                "title": "Low Wallet Balance",
-                "description": "Your balance is low ({amount}). You need at least €2.00 to send offers.",
-                "action": "Top Up Wallet"
+                "title": "Fund Your Wallet",
+                "description": "Your balance is {amount}. You need at least €2.00 to send offers.",
+                "action": "Add Funds"
             }
+        },
+        "KeyStats": {
+            "title": "Your Stats",
+            "activeJobs": "Active Jobs",
+            "pendingOffers": "Pending Offers",
+            "walletBalance": "Wallet Balance",
+            "avgRating": "Average Rating"
         },
         "Highlights": {
             "profile": "Profile Complete",

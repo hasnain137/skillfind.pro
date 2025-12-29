@@ -2,25 +2,19 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getOrCreateWallet } from "@/lib/services/wallet";
 import { Link } from '@/i18n/routing';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { DashboardHero } from "@/components/ui/DashboardHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ActionCard } from "@/components/ui/ActionCard";
 import { StatusBanner } from "@/components/ui/StatusBanner";
 import { getProfessionalStatusBanner } from "@/lib/professional-status";
-import { StatusCard } from "@/components/dashboard/StatusCard";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
-import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { DashboardAlerts } from "@/components/dashboard/DashboardAlerts";
-import { calculateProfessionalCompletion } from "@/lib/profile-completion";
+import { KeyStats } from "@/components/dashboard/KeyStats";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
-import { FadeIn } from "@/components/ui/motion/FadeIn";
 import { getTranslations } from 'next-intl/server';
-import { Search, Send, Briefcase, User } from 'lucide-react';
 
 export default async function ProDashboardPage() {
   const { userId } = await auth();
@@ -50,6 +44,7 @@ export default async function ProDashboardPage() {
       user: true,
       profile: true,
       wallet: true,
+      documents: true,
       services: {
         include: {
           subcategory: {
@@ -82,7 +77,6 @@ export default async function ProDashboardPage() {
   }
 
   const balanceEuros = (professional.wallet?.balance || 0) / 100;
-  const { percentage: profileCompletion, missingSteps } = calculateProfessionalCompletion(professional);
 
   // Check if professional has any services (all require qualification documents)
   const hasServices = professional.services.length > 0;
@@ -195,35 +189,6 @@ export default async function ProDashboardPage() {
 
   const statusBannerProps = getProfessionalStatusBanner(professional.status);
 
-  const quickActions = [
-    {
-      key: 'browse',
-      href: '/pro/requests',
-      icon: <Search className="w-5 h-5" />
-    },
-    {
-      key: 'offers',
-      href: '/pro/offers',
-      icon: <Send className="w-5 h-5" />
-    },
-    {
-      key: 'jobs',
-      href: '/pro/jobs',
-      icon: <Briefcase className="w-5 h-5" />
-    },
-    {
-      key: 'profile',
-      href: '/pro/profile',
-      icon: <User className="w-5 h-5" />
-    }
-  ].map(action => ({
-    title: t(`Actions.${action.key}Title`),
-    description: t(`Actions.${action.key}Desc`),
-    href: action.href,
-    cta: t(`Actions.${action.key}Cta`),
-    icon: action.icon
-  }));
-
 
 
   return (
@@ -251,13 +216,10 @@ export default async function ProDashboardPage() {
         qualificationVerified={professional.qualificationVerified}
         hasServices={hasServices}
         balance={professional.wallet?.balance || 0}
+        documents={professional.documents || []}
       />
 
-      <ProfileCompletionBanner
-        profileCompletion={profileCompletion}
-        userRole="PROFESSIONAL"
-        missingSteps={missingSteps}
-      />
+
 
       {/* Main Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -289,31 +251,14 @@ export default async function ProDashboardPage() {
           <EarningsChart data={earningsData} />
         </div>
 
-        {/* Right Column - Sidebar (Span 1) */}
-        <div className="space-y-6">
-
-          {/* Status Card */}
-          <StatusCard
-            status={professional.status}
-            isVerified={professional.isVerified}
-            verificationMethod={professional.verificationMethod}
+        {/* Right Column - Key Stats */}
+        <div>
+          <KeyStats
+            activeJobs={activeJobs}
+            pendingOffers={professional.offers.length}
+            walletBalance={professional.wallet?.balance || 0}
+            avgRating={avgRating}
           />
-
-          {/* Quick Actions */}
-          <div className="space-y-4">
-            <div className="px-1">
-              <SectionHeading
-                variant="section"
-                title={t('quickActionsTitle')}
-                description={t('quickActionsDesc')}
-              />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              {quickActions.map((action) => (
-                <ActionCard key={action.href} {...action} />
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 

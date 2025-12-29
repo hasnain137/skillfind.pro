@@ -375,22 +375,49 @@
         },
         "Alerts": {
             "requirementsTitle": "Exigences pour Envoyer des Offres",
-            "requirementsDescription": "Complétez ces étapes pour commencer à envoyer des offres aux clients et remporter des emplois.",
+            "requirementsDescription": "Complétez ces étapes pour commencer à envoyer des offres aux clients.",
+            "stepsComplete": "étapes complétées",
+            "readyToSendOffers": "Vous êtes prêt à envoyer des offres !",
+            "readyDescription": "Toutes les exigences sont remplies. Parcourez les demandes et gagnez des clients.",
+            "browseRequests": "Parcourir les demandes",
+            "steps": {
+                "servicesComplete": "Vos services sont configurés et visibles par les clients.",
+                "qualificationsComplete": "Vos qualifications ont été vérifiées.",
+                "qualificationsPending": "Nous examinons vos documents. Cela prend généralement 24-48 heures.",
+                "qualificationsRejected": "Certains documents nécessitent votre attention. Veuillez les re-télécharger.",
+                "verificationComplete": "Votre identité a été vérifiée.",
+                "walletComplete": "Solde: {amount}. Prêt à envoyer des offres.",
+                "lockedStep": "Complétez d'abord les étapes précédentes.",
+                "underReview": "En cours d'examen",
+                "reuploadAction": "Re-télécharger les documents"
+            },
+            "servicesRequired": {
+                "title": "Ajoutez vos Services",
+                "description": "Ajoutez au moins un service à votre profil pour recevoir des demandes.",
+                "action": "Ajouter des Services"
+            },
             "qualificationRequired": {
-                "title": "Vérification des qualifications requise",
-                "description": "Veuillez télécharger vos diplômes et certificats professionnels. Un administrateur les examinera avant que vous puissiez vérifier votre identité.",
+                "title": "Télécharger les Qualifications",
+                "description": "Téléchargez vos diplômes et certificats professionnels pour vérification.",
                 "action": "Télécharger les documents"
             },
             "verificationRequired": {
-                "title": "Vérification d'identité requise",
-                "description": "Vous devez vérifier votre identité avant de pouvoir envoyer des offres aux clients.",
+                "title": "Vérifier votre Identité",
+                "description": "Complétez la vérification d'identité pour envoyer des offres.",
                 "action": "Vérifier maintenant"
             },
             "lowBalance": {
-                "title": "Solde du portefeuille bas",
-                "description": "Votre solde est faible ({amount}). Vous avez besoin d'au moins 2,00 € pour envoyer des offres.",
-                "action": "Recharger"
+                "title": "Alimenter votre Portefeuille",
+                "description": "Votre solde est de {amount}. Vous avez besoin d'au moins 2,00 € pour envoyer des offres.",
+                "action": "Ajouter des fonds"
             }
+        },
+        "KeyStats": {
+            "title": "Vos Statistiques",
+            "activeJobs": "Travaux Actifs",
+            "pendingOffers": "Offres en Attente",
+            "walletBalance": "Solde du Portefeuille",
+            "avgRating": "Note Moyenne"
         },
         "Highlights": {
             "profile": "Profil complet",

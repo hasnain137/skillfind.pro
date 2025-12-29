@@ -136,19 +136,15 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
                             disabled={uploading}
                             className="hidden"
                         />
-                        <label htmlFor="document-upload" className="cursor-pointer">
-                            <Button
-                                type="button"
-                                variant="primary"
-                                className="w-full flex items-center justify-center gap-2"
-                                disabled={uploading}
-                                asChild
-                            >
-                                <span>
-                                    <Upload className="h-5 w-5" />
-                                    {uploading ? t('uploading') : t('uploadButton')}
-                                </span>
-                            </Button>
+                        <label
+                            htmlFor="document-upload"
+                            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors cursor-pointer ${uploading
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-[#2563EB] hover:bg-[#1D4FD8] text-white'
+                                }`}
+                        >
+                            <Upload className="h-5 w-5" />
+                            <span>{uploading ? t('uploading') : t('uploadButton')}</span>
                         </label>
                         {uploadError && (
                             <p className="text-sm text-red-600 mt-2">{uploadError}</p>
