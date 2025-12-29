@@ -9,6 +9,7 @@ import { FormField, FormInput, FormTextarea, FormSelect } from '@/components/ui/
 
 import { VerificationStatus } from '@/components/professional/verification/VerificationStatus';
 import { StripeVerification } from '@/components/professional/verification/StripeVerification';
+import { QualificationsTab } from '@/components/profile/QualificationsTab';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { LocationSelector } from '@/components/ui/LocationSelector';
@@ -59,15 +60,18 @@ type Profile = {
 type ProfileFormProps = {
     initialProfile: Profile;
     categories: Category[];
+    documents: any[];
 };
 
-export default function ProfileForm({ initialProfile, categories }: ProfileFormProps) {
+export default function ProfileForm({ initialProfile, categories, documents }: ProfileFormProps) {
     const t = useTranslations('ProProfile');
     const router = useRouter();
     const searchParams = useSearchParams();
-    const initialTab = searchParams.get('activeTab') === 'verification' ? 'verification' : 'info';
+    const initialTab = searchParams.get('activeTab') === 'verification' ? 'verification'
+        : searchParams.get('activeTab') === 'qualifications' ? 'qualifications'
+            : 'info';
 
-    const [activeTab, setActiveTab] = useState<'info' | 'services' | 'verification'>(initialTab);
+    const [activeTab, setActiveTab] = useState<'info' | 'services' | 'qualifications' | 'verification'>(initialTab);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -315,7 +319,16 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         : 'border-transparent text-[#7C7373] hover:text-[#333333]'
                         }`}
                 >
-                    {t('tabs.services')} ({initialProfile.services.length})
+                    {t('tabs.services')}
+                </button>
+                <button
+                    onClick={() => setActiveTab('qualifications')}
+                    className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'qualifications'
+                        ? 'border-[#2563EB] text-[#2563EB]'
+                        : 'border-transparent text-[#7C7373] hover:text-[#333333]'
+                        }`}
+                >
+                    {t('tabs.qualifications')}
                 </button>
                 <button
                     onClick={() => setActiveTab('verification')}
@@ -586,6 +599,13 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                         )}
                     </div>
                 </div>
+            )}
+
+            {activeTab === 'qualifications' && (
+                <QualificationsTab
+                    professionalId={initialProfile.id}
+                    documents={documents}
+                />
             )}
 
             {activeTab === 'verification' && (

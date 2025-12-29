@@ -428,8 +428,9 @@
             "missing": "Complete these to reach 100%:"
         },
         "tabs": {
-            "info": "Information",
+            "info": "Basic Info",
             "services": "Services",
+            "qualifications": "Qualifications",
             "verification": "Verification",
             "identity": {
                 "title": "Identity Verification",

@@ -33,6 +33,12 @@ export default async function ProProfilePage() {
     },
   });
 
+  // Fetch qualification documents
+  const documents = await prisma.verificationDocument.findMany({
+    where: { professionalId: professional.id },
+    orderBy: { uploadedAt: 'desc' },
+  });
+
   // Calculate profile completion
   const completionData = calculateProfessionalCompletion(professional);
   const profileCompletion = completionData.percentage;
@@ -88,6 +94,7 @@ export default async function ProProfilePage() {
       <ProfileForm
         initialProfile={professional as any}
         categories={categories}
+        documents={documents}
       />
     </div>
   );
