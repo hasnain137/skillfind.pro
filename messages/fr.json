@@ -433,6 +433,26 @@
             "qualifications": "Qualifications",
             "verification": "Vérification"
         },
+        "Qualifications": {
+            "title": "Qualifications Professionnelles",
+            "description": "Téléchargez vos documents professionnels (diplômes, certificats, CV, etc.) pour examen administratif. Ceci est requis avant de pouvoir vérifier votre identité.",
+            "acceptedDocuments": "Documents Acceptés",
+            "docTypes": {
+                "diploma": "Diplômes Professionnels",
+                "certificate": "Certifications et Licences",
+                "degree": "Diplômes Académiques",
+                "resume": "CV Professionnel",
+                "portfolio": "Portfolio ou Échantillons de Travail"
+            },
+            "uploadButton": "Télécharger un Document",
+            "uploading": "Téléchargement...",
+            "uploadedDocuments": "Documents Téléchargés",
+            "status": {
+                "pending": "En Attente d'Examen",
+                "approved": "Approuvé",
+                "rejected": "Rejeté"
+            }
+        },
         "info": {
             "titleLabel": "Titre Professionnel",
             "titlePlaceholder": "ex: Professeur de Mathématiques Senior",

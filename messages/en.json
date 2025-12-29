@@ -445,6 +445,26 @@
                 "secureNote": "Your data is securely processed by Stripe."
             }
         },
+        "Qualifications": {
+            "title": "Professional Qualifications",
+            "description": "Upload your professional documents (diplomas, certificates, degrees, resume, etc.) for admin review. This is required before you can verify your identity.",
+            "acceptedDocuments": "Accepted Documents",
+            "docTypes": {
+                "diploma": "Professional Diplomas",
+                "certificate": "Certifications & Licenses",
+                "degree": "Academic Degrees",
+                "resume": "Professional Resume/CV",
+                "portfolio": "Portfolio or Work Samples"
+            },
+            "uploadButton": "Upload Document",
+            "uploading": "Uploading...",
+            "uploadedDocuments": "Uploaded Documents",
+            "status": {
+                "pending": "Pending Review",
+                "approved": "Approved",
+                "rejected": "Rejected"
+            }
+        },
         "info": {
             "titleLabel": "Professional Title",
             "titlePlaceholder": "e.g. Senior Mathematics Tutor",
@@ -1171,20 +1191,68 @@
             "view_pro_profile": "View Professional Profile",
             "started_date": "Started {date}",
             "completed_date": "Completed {date}",
-            "contact_exchanged": "Contact Exchanged"
-        },
-        "actions": {
+            "contact_exchanged": "Contact Exchanged",
             "complete": {
                 "button": "Mark as Complete",
                 "loading": "Completing...",
-                "confirm": "Mark this job as complete? The professional will be notified.",
                 "success": "Job completed",
+                "confirm": "Mark this job as complete? The professional will be notified.",
                 "error": "Failed to complete job"
             }
         }
     },
     "ProJobs": {
         "title": "My Jobs",
+        "eyebrow": "Jobs",
+        "description": "Track your hired jobs, start work, and mark them complete when finished.",
+        "stats": {
+            "ready": "Ready to Start",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "earned": "Total Estimated Earned"
+        },
+        "active": "Active Jobs",
+        "empty": {
+            "title": "No jobs yet",
+            "desc": "Browse matching requests and send competitive offers to win your first job!",
+            "button": "Browse Requests"
+        },
+        "card": {
+            "ready": "Ready",
+            "viewDetails": "View details",
+            "reviewed": "Reviewed"
+        },
+        "status": {
+            "accepted": "Accepted - Ready to start",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "disputed": "Disputed"
+        },
+        "detail": {
+            "section_details": "Job Details",
+            "description_label": "Project Description",
+            "agreed_price": "Agreed Price",
+            "created_label": "Created",
+            "started_label": "Started",
+            "completed_label": "Completed",
+            "client_review": "Client Review",
+            "respond_review": "Respond to Review",
+            "original_request": "Original Request Details",
+            "budget_range": "Budget Range",
+            "location_type": "Location Type",
+            "urgency": "Urgency",
+            "preferred_start": "Preferred Start",
+            "client_section": "Client",
+            "client_label": "Client",
+            "actions_section": "Actions",
+            "start_hint": "This job has been accepted by the client. Start working when you're ready!",
+            "complete_hint": "You're currently working on this job. Mark it as complete when finished.",
+            "completed_hint": "Job completed! Waiting for client to leave a review.",
+            "job_id": "Job #{id}",
+            "started_date": "Started {date}",
+            "contact_exchanged": "Contact Exchanged"
+        },
         "eyebrow": "Jobs",
         "description": "Track your hired jobs, start work, and mark them complete when finished.",
         "stats": {
