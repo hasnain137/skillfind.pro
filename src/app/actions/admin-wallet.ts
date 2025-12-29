@@ -2,6 +2,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { recordTransaction } from '@/lib/services/wallet';
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 
@@ -29,45 +30,24 @@ export async function addManualCredit(professionalId: string, amount: number, no
             return { success: false, error: 'Wallet not found for this professional.' };
         }
 
-        // 2. Transact
-        // Convert to cents if amount is float? The UI passes a float. 
+        // 2. Transact using the shared service
         // Logic: The DB usually stores integers (cents).
-        // Let's assume input is in EUR (e.g. 10.50), DB is cents.
         const amountInCents = Math.round(amount * 100);
 
-        const transaction = await prisma.$transaction(async (tx) => {
-            // Create Transaction Record
-            const newTx = await tx.transaction.create({
-                data: {
-                    walletId: wallet.id,
-                    type: 'ADMIN_ADJUSTMENT',
-                    amount: amountInCents,
-                    balanceBefore: wallet.balance,
-                    balanceAfter: wallet.balance + amountInCents,
-                    description: `Manual Adjustment: ${note}`,
-                    adminId: userId,
-                    adminNote: note
-                }
-            });
-
-            // Update Wallet
-            await tx.wallet.update({
-                where: { id: wallet.id },
-                data: {
-                    balance: { increment: amountInCents },
-                    totalDeposits: { increment: amountInCents > 0 ? amountInCents : 0 }
-                    // If negative adjustment, maybe track separately? 
-                    // For now, simple increment.
-                }
-            });
-
-            return newTx;
+        // Use recordTransaction to support both positive (credit) and negative (debit) adjustments
+        const tx = await recordTransaction({
+            walletId: wallet.id,
+            amount: amountInCents,
+            type: 'ADMIN_ADJUSTMENT',
+            description: `Manual Adjustment: ${note}`,
+            adminId: userId,
+            adminNote: note
         });
 
         revalidatePath('/admin/professionals');
         revalidatePath(`/admin/professionals/${professionalId}`);
 
-        return { success: true, transactionId: transaction.id };
+        return { success: true, transactionId: tx.id };
 
     } catch (error) {
         console.error('Failed to add manual credit:', error);

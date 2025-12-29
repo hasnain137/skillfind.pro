@@ -1,5 +1,6 @@
 // POST /api/wallet/deposit - Create deposit payment intent
 import { NextRequest } from 'next/server';
+import { stripe } from '@/lib/stripe';
 import { requireProfessional } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { getOrCreateWallet } from '@/lib/services/wallet';
@@ -46,25 +47,35 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // STUB: In production, create Stripe Payment Intent here
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: data.amount,
-    //   currency: 'eur',
-    //   customer: professional.stripeCustomerId,
-    //   metadata: {
-    //     transactionId: transaction.id,
-    //     professionalId: professional.id,
-    //     userId: userId,
-    //   },
-    // });
+    // Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'eur',
+          unit_amount: data.amount, // in cents
+          product_data: {
+            name: 'Wallet Top-up',
+            description: `Add €${(data.amount / 100).toFixed(2)} to your SkillFind wallet`,
+          },
+        },
+        quantity: 1,
+      }],
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pro/wallet?success=true`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pro/wallet?canceled=true&transactionId=${transaction.id}`,
+      metadata: {
+        professionalId: professional.id,
+        transactionId: transaction.id,
+      },
+      customer_email: professional.user.email,
+    });
 
-    // For now, create a mock payment URL
-    const mockPaymentUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/payment/mock?amount=${data.amount}&txId=${transaction.id}`;
-
-    // In production, this would be the Stripe hosted checkout URL
-    const paymentUrl = process.env.STRIPE_SECRET_KEY 
-      ? `https://checkout.stripe.com/pay/cs_test_...` // Real Stripe URL
-      : mockPaymentUrl; // Mock for development
+    // Update transaction with session ID as reference (optional but good for tracking)
+    await prisma.transaction.update({
+      where: { id: transaction.id },
+      data: { referenceId: session.id }
+    });
 
     return successResponse({
       deposit: {
@@ -76,18 +87,15 @@ export async function POST(request: NextRequest) {
         },
         paymentMethod: data.paymentMethod,
         status: 'pending',
-        paymentUrl,
-        expiresAt: new Date(Date.now() + 30 * 60 * 1000), // 30 minutes
+        paymentUrl: session.url,
+        expiresAt: new Date(session.expires_at * 1000),
       },
       instructions: {
-        message: process.env.STRIPE_SECRET_KEY
-          ? 'Complete payment using the provided URL'
-          : 'DEVELOPMENT MODE: Payment integration not configured. Use mock URL for testing.',
+        message: 'Complete payment using the provided URL',
         nextSteps: [
           'Click the payment URL to complete the deposit',
-          'Payment will be processed securely',
+          'Payment will be processed securely by Stripe',
           'Your wallet will be credited immediately upon successful payment',
-          'You will receive an email confirmation',
         ],
       },
     });

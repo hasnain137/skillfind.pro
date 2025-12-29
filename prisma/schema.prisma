@@ -133,6 +133,7 @@ model Professional {
   
   // Stripe integration
   stripeCustomerId  String?
+  stripeIdentityVerificationId String?
   
   // Billing controls
   dailyClickLimit   Int      @default(10)
@@ -163,6 +164,7 @@ model Professional {
 enum VerificationMethod {
   MANUAL
   IDENFY
+  STRIPE_IDENTITY
 }
 
 enum RemoteAvailability {

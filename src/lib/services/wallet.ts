@@ -52,7 +52,11 @@ export async function recordTransaction(params: {
 
   // Use transaction to ensure atomicity
   return await prisma.$transaction(async (tx) => {
-    // Lock the wallet row for update
+    // 1. Pessimistic Lock: Lock the wallet row to prevent race conditions
+    // This requires the table name to match the DB exactly (mapped to "wallets")
+    await tx.$executeRaw`SELECT 1 FROM "wallets" WHERE id = ${walletId} FOR UPDATE`;
+
+    // 2. Refresh wallet data (now locked)
     const wallet = await tx.wallet.findUnique({
       where: { id: walletId },
     });
@@ -64,14 +68,15 @@ export async function recordTransaction(params: {
     const balanceBefore = wallet.balance;
     const balanceAfter = balanceBefore + amount;
 
-    // Prevent negative balance
+    // 3. Prevent negative balance
+    // Note: This check is now safe because we hold a lock on the row
     if (balanceAfter < 0) {
       throw new InsufficientBalanceError(
         `Insufficient balance. Current: €${(wallet.balance / 100).toFixed(2)}, Required: €${(Math.abs(amount) / 100).toFixed(2)}`
       );
     }
 
-    // Create transaction record
+    // 4. Create transaction record
     const transaction = await tx.transaction.create({
       data: {
         walletId,
@@ -86,7 +91,7 @@ export async function recordTransaction(params: {
       },
     });
 
-    // Update wallet balance
+    // 5. Update wallet balance
     await tx.wallet.update({
       where: { id: walletId },
       data: { balance: balanceAfter },

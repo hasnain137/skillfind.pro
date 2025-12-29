@@ -10,28 +10,37 @@ interface VerificationStatusProps {
     status: ProfessionalStatus;
 }
 
-export function VerificationStatus({ status }: VerificationStatusProps) {
+interface VerificationStatusProps {
+    status: ProfessionalStatus;
+    isVerified: boolean;
+}
+
+export function VerificationStatus({ status, isVerified }: VerificationStatusProps) {
     const t = useTranslations('Verification.status');
 
     if (status === 'ACTIVE') {
-        return (
-            <Card className="bg-green-50 border-green-200" padding="lg">
-                <div className="flex items-start gap-4">
-                    <div className="bg-green-100 p-2 rounded-full text-green-600">
-                        <CheckCircle2 className="h-6 w-6" />
-                    </div>
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <h3 className="text-lg font-bold text-green-900">{t('active.title')}</h3>
-                            <Badge className="bg-green-200 text-green-800 hover:bg-green-300">{t('active.badge')}</Badge>
+        // Only show the "Verified and Active" card if they are ACTUALLY verified
+        if (isVerified) {
+            return (
+                <Card className="bg-green-50 border-green-200" padding="lg">
+                    <div className="flex items-start gap-4">
+                        <div className="bg-green-100 p-2 rounded-full text-green-600">
+                            <CheckCircle2 className="h-6 w-6" />
                         </div>
-                        <p className="text-green-700 mt-1">
-                            {t('active.desc')}
-                        </p>
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h3 className="text-lg font-bold text-green-900">{t('active.title')}</h3>
+                                <Badge className="bg-green-200 text-green-800 hover:bg-green-300">{t('active.badge')}</Badge>
+                            </div>
+                            <p className="text-green-700 mt-1">
+                                {t('active.desc')}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </Card>
-        );
+                </Card>
+            );
+        }
+        // If Active but NOT Verified, fall through to the "Not Verified" state below
     }
 
     if (status === 'PENDING_REVIEW') {

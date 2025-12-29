@@ -9,6 +9,8 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { AddFundsModal } from "@/components/wallet/AddFundsModal";
+import { WalletCancellationHandler } from "@/components/wallet/WalletCancellationHandler";
 
 export default async function WalletPage() {
     const { userId } = await auth();
@@ -27,6 +29,8 @@ export default async function WalletPage() {
     // Get wallet and stats directly (mirroring API logic)
     const wallet = await getOrCreateWallet(professional.id);
 
+    // ... (rest of data fetching)
+
     const [clicksToday, recentTransactions] = await Promise.all([
         prisma.clickEvent.count({
             where: {
@@ -39,7 +43,7 @@ export default async function WalletPage() {
         prisma.transaction.findMany({
             where: { walletId: wallet.id },
             orderBy: { createdAt: 'desc' },
-            take: 20, // Increased to show more history
+            take: 20,
         }),
     ]);
 
@@ -53,6 +57,7 @@ export default async function WalletPage() {
 
     return (
         <div className="space-y-8 max-w-5xl mx-auto pb-10">
+            <WalletCancellationHandler />
             <SectionHeading
                 eyebrow={t('eyebrow')}
                 title={t('title')}
@@ -96,12 +101,14 @@ export default async function WalletPage() {
                                         <span>{t('balance.active')}</span>
                                     </div>
                                 </div>
-                                <Button
-                                    className="bg-white text-slate-950 hover:bg-blue-50 shadow-lg shadow-white/5 font-semibold px-6"
-                                    size="lg"
-                                >
-                                    + {t('balance.addFunds')}
-                                </Button>
+                                <AddFundsModal>
+                                    <Button
+                                        className="bg-white text-slate-950 hover:bg-blue-50 shadow-lg shadow-white/5 font-semibold px-6"
+                                        size="lg"
+                                    >
+                                        + {t('balance.addFunds')}
+                                    </Button>
+                                </AddFundsModal>
                             </div>
                         </div>
                     </div>

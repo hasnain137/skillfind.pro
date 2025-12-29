@@ -17,6 +17,7 @@ const isPublicRoute = createRouteMatcher([
   '/:locale/generated/(.*)',
   '/api/webhooks(.*)',
   '/api/test(.*)',
+  '/api/wallet/webhook',
   '/api/auth/complete-signup',
 ]);
 

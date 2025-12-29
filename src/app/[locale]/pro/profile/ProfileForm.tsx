@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { FormField, FormInput, FormTextarea, FormSelect } from '@/components/ui/FormField';
-import { DocumentUpload } from '@/components/professional/verification/DocumentUpload';
+
 import { VerificationStatus } from '@/components/professional/verification/VerificationStatus';
+import { StripeVerification } from '@/components/professional/verification/StripeVerification';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { LocationSelector } from '@/components/ui/LocationSelector';
 
 type Category = {
@@ -62,7 +64,10 @@ type ProfileFormProps = {
 export default function ProfileForm({ initialProfile, categories }: ProfileFormProps) {
     const t = useTranslations('ProProfile');
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState<'info' | 'services' | 'verification'>('info');
+    const searchParams = useSearchParams();
+    const initialTab = searchParams.get('activeTab') === 'verification' ? 'verification' : 'info';
+
+    const [activeTab, setActiveTab] = useState<'info' | 'services' | 'verification'>(initialTab);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -587,12 +592,16 @@ export default function ProfileForm({ initialProfile, categories }: ProfileFormP
                 <div className="space-y-6">
                     <VerificationStatus
                         status={initialProfile.status || 'PENDING_REVIEW'}
+                        isVerified={initialProfile.isVerified}
                     />
 
-                    <DocumentUpload
-                        onUploadSuccess={handleUploadSuccess}
-                        existingDocuments={initialProfile.documents || []}
+                    {/* Stripe Identity Verification Section */}
+                    <StripeVerification
+                        isVerified={initialProfile.isVerified}
+                        verificationMethod={initialProfile.verificationMethod}
                     />
+
+
                 </div>
             )}
         </div>

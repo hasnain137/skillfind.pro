@@ -1219,39 +1219,6 @@
             }
         }
     },
-    "Wallet": {
-        "title": "Portefeuille",
-        "eyebrow": "Finances",
-        "description": "Gérez votre solde et consultez l'historique de vos transactions.",
-        "balance": {
-            "available": "Solde Disponible",
-            "low": "Solde Faible",
-            "active": "Portefeuille Actif & Prêt",
-            "addFunds": "Ajouter des fonds"
-        },
-        "transactions": {
-            "title": "Historique des transactions",
-            "export": "Exporter CSV",
-            "empty": "Aucune transaction pour le moment",
-            "emptyDesc": "L'activité apparaîtra ici.",
-            "completed": "TERMINÉ",
-            "recent": "Transactions Récentes"
-        },
-        "stats": {
-            "today": "Activité du jour",
-            "clicks": "Clics Profil",
-            "spent": "Total Dépensé",
-            "lastTxns": "20 dernières txns",
-            "cpl": "Coût Par Lead",
-            "flatRate": "Taux Fixe"
-        },
-        "about": {
-            "title": "À propos de votre portefeuille",
-            "point1": "Les fonds sont utilisés pour payer les vues de profil (0,10 €/clic).",
-            "point2": "Le rechargement automatique n'est pas activé pour le moment.",
-            "point3": "Gardez au moins 2,00 € pour rester visible."
-        }
-    },
     "Categories": {
         "title": "Parcourir les catégories",
         "subtitle": "Trouvez le bon professionnel en explorant nos catégories de services",
@@ -1302,5 +1269,97 @@
         "today": "Aujourd'hui",
         "yesterday": "Hier",
         "earlier": "Plus tôt"
+    },
+    "Wallet": {
+        "eyebrow": "Portefeuille & Paiements",
+        "title": "Gérer vos fonds",
+        "description": "Ajoutez des fonds à votre portefeuille pour payer les contacts et les fonctionnalités premium.",
+        "balance": {
+            "available": "Solde disponible",
+            "low": "Solde bas",
+            "active": "Actif",
+            "addFunds": "Ajouter des fonds"
+        },
+        "stats": {
+            "today": "Aujourd'hui",
+            "clicks": "Clics",
+            "spent": "Dépensé",
+            "lastTxns": "20 dernières trans.",
+            "cpl": "CPL moyen",
+            "flatRate": "Tarif unique"
+        },
+        "transactions": {
+            "title": "Historique des transactions",
+            "export": "Exporter",
+            "empty": "Aucune transaction pour le moment",
+            "emptyDesc": "Votre historique de dépôts et de dépenses apparaîtra ici.",
+            "recent": "Transactions récentes",
+            "completed": "Terminé"
+        },
+        "about": {
+            "title": "À propos de la facturation",
+            "point1": "Les fonds n'expirent jamais",
+            "point2": "Paiements sécurisés via Stripe",
+            "point3": "Téléchargez les factures depuis les Paramètres"
+        },
+        "addFunds": {
+            "title": "Ajouter des fonds",
+            "description": "Sélectionnez un montant à créditer sur votre compte professionnel.",
+            "customAmount": "Montant personnalisé",
+            "minAmount": "Le montant minimum est de {amount}",
+            "confirm": "Payer {amount} €"
+        },
+        "messages": {
+            "depositSuccess": "Dépôt réussi ! Votre solde a été mis à jour.",
+            "depositCanceled": "Dépôt annulé."
+        },
+        "errors": {
+            "minAmount": "Le montant minimum est de {amount}",
+            "depositFailed": "Échec de l'initialisation du dépôt. Veuillez réessayer."
+        },
+        "common": {
+            "cancel": "Annuler"
+        }
+    },
+    "ProDashboard": {
+        "eyebrow": "Tableau de Bord Professionnel",
+        "welcome": "Bon retour, {name}",
+        "description": "Voici un aperçu de votre activité.",
+        "period": {
+            "morning": "Bonjour",
+            "afternoon": "Bon après-midi",
+            "evening": "Bonsoir"
+        },
+        "requestsTitle": "Demandes Correspondantes",
+        "requestsDesc": "Nouveaux prospects correspondant à vos compétences",
+        "quickActionsTitle": "Actions Rapides",
+        "quickActionsDesc": "Gérez votre activité",
+        "viewAll": "Voir tout",
+        "Alerts": {
+            "verificationRequired": {
+                "title": "Vérification d'identité requise",
+                "description": "Vous devez vérifier votre identité avant de pouvoir envoyer des offres aux clients.",
+                "action": "Vérifier maintenant"
+            },
+            "lowBalance": {
+                "title": "Solde du portefeuille bas",
+                "description": "Votre solde est faible ({amount}). Vous avez besoin d'au moins 2,00 € pour envoyer des offres.",
+                "action": "Recharger"
+            }
+        },
+        "Actions": {
+            "browseTitle": "Parcourir Demandes",
+            "browseDesc": "Trouver du travail",
+            "browseCta": "Trouver Travail",
+            "offersTitle": "Mes Offres",
+            "offersDesc": "Suivre statut",
+            "offersCta": "Voir Offres",
+            "jobsTitle": "Jobs Actifs",
+            "jobsDesc": "Travail en cours",
+            "jobsCta": "Voir Jobs",
+            "profileTitle": "Profil",
+            "profileDesc": "Modifier profil",
+            "profileCta": "Modifier Profil"
+        }
     }
 }

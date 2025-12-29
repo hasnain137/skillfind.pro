@@ -226,6 +226,13 @@ export async function POST(request: NextRequest) {
       throw new ForbiddenError('Your account is not active. Please complete verification or contact support.');
     }
 
+    // STRICT VERIFICATION CHECK: Professional must be verified to send offers
+    if (!professional.isVerified) {
+      throw new ForbiddenError(
+        'Identity verification required. Please verify your identity with Stripe to send offers.'
+      );
+    }
+
     // Check wallet balance (min required balance from settings to send offers)
     const wallet = await getOrCreateWallet(professional.id);
     const minBalance = await getMinimumWalletBalance();

@@ -412,7 +412,19 @@
         "tabs": {
             "info": "Information",
             "services": "Services",
-            "verification": "Verification"
+            "verification": "Verification",
+            "identity": {
+                "title": "Identity Verification",
+                "description": "Verify your identity effectively and securely with Stripe.",
+                "status": "Verification Status",
+                "verified": "Identity Verified",
+                "notVerified": "Not Verified",
+                "button": "Verify with Stripe",
+                "pending": "Verification Pending",
+                "success": "Verification Successful",
+                "failed": "Verification Failed",
+                "secureNote": "Your data is securely processed by Stripe."
+            }
         },
         "info": {
             "titleLabel": "Professional Title",
@@ -1219,39 +1231,6 @@
             }
         }
     },
-    "Wallet": {
-        "title": "Wallet",
-        "eyebrow": "Financials",
-        "description": "Manage your balance and view your transaction history.",
-        "balance": {
-            "available": "Available Balance",
-            "low": "Low Balance",
-            "active": "Wallet Active & Ready",
-            "addFunds": "Add Funds"
-        },
-        "transactions": {
-            "title": "Transaction History",
-            "export": "Export CSV",
-            "empty": "No transactions yet",
-            "emptyDesc": "Activity will show up here.",
-            "completed": "COMPLETED",
-            "recent": "Recent Transactions"
-        },
-        "stats": {
-            "today": "Today's Activity",
-            "clicks": "Profile Clicks",
-            "spent": "Total Spent",
-            "lastTxns": "Last 20 txns",
-            "cpl": "Cost Per Lead",
-            "flatRate": "Flat Rate"
-        },
-        "about": {
-            "title": "About Your Wallet",
-            "point1": "Funds are used to pay for profile views (€0.10/click).",
-            "point2": "Auto-reload is not currently enabled.",
-            "point3": "Keep at least €2.00 to stay visible."
-        }
-    },
     "Categories": {
         "title": "Browse Categories",
         "subtitle": "Find the right professional by exploring our service categories",
@@ -1302,5 +1281,97 @@
         "today": "Today",
         "yesterday": "Yesterday",
         "earlier": "Earlier"
+    },
+    "Wallet": {
+        "eyebrow": "Wallet & Payments",
+        "title": "Manage your funds",
+        "description": "Add funds to your wallet to pay for leads and premium features.",
+        "balance": {
+            "available": "Available Balance",
+            "low": "Low Balance",
+            "active": "Active",
+            "addFunds": "Add Funds"
+        },
+        "stats": {
+            "today": "Today",
+            "clicks": "Clicks",
+            "spent": "Spent",
+            "lastTxns": "Last 20 txns",
+            "cpl": "Avg. CPL",
+            "flatRate": "Flat rate"
+        },
+        "transactions": {
+            "title": "Transaction History",
+            "export": "Export",
+            "empty": "No transactions yet",
+            "emptyDesc": "Your deposit and spending history will appear here.",
+            "recent": "Recent Transactions",
+            "completed": "Completed"
+        },
+        "about": {
+            "title": "About Billing",
+            "point1": "Funds never expire",
+            "point2": "Secure payments via Stripe",
+            "point3": "Download invoices from Settings"
+        },
+        "addFunds": {
+            "title": "Add Funds to Wallet",
+            "description": "Select an amount to credit to your professional account.",
+            "customAmount": "Custom Amount",
+            "minAmount": "Minimum amount is {amount}",
+            "confirm": "Pay €{amount}"
+        },
+        "messages": {
+            "depositSuccess": "Deposit successful! Your balance has been updated.",
+            "depositCanceled": "Deposit canceled."
+        },
+        "errors": {
+            "minAmount": "Minimum amount is {amount}",
+            "depositFailed": "Failed to initialize deposit. Please try again."
+        },
+        "common": {
+            "cancel": "Cancel"
+        }
+    },
+    "ProDashboard": {
+        "eyebrow": "Professional Dashboard",
+        "welcome": "Welcome back, {name}",
+        "description": "Here is an overview of your activity.",
+        "period": {
+            "morning": "Good morning",
+            "afternoon": "Good afternoon",
+            "evening": "Good evening"
+        },
+        "requestsTitle": "Matching Requests",
+        "requestsDesc": "New leads matching your skills",
+        "quickActionsTitle": "Quick Actions",
+        "quickActionsDesc": "Manage your work",
+        "viewAll": "View all",
+        "Alerts": {
+            "verificationRequired": {
+                "title": "Identity Verification Required",
+                "description": "You must verify your identity before you can send offers to clients.",
+                "action": "Verify Now"
+            },
+            "lowBalance": {
+                "title": "Low Wallet Balance",
+                "description": "Your balance is low ({amount}). You need at least €2.00 to send offers.",
+                "action": "Top Up Wallet"
+            }
+        },
+        "Actions": {
+            "browseTitle": "Browse Requests",
+            "browseDesc": "Find new work",
+            "browseCta": "Find Work",
+            "offersTitle": "My Offers",
+            "offersDesc": "Track status",
+            "offersCta": "View Offers",
+            "jobsTitle": "Active Jobs",
+            "jobsDesc": "Work in progress",
+            "jobsCta": "View Jobs",
+            "profileTitle": "Profile",
+            "profileDesc": "Edit profile",
+            "profileCta": "Edit Profile"
+        }
     }
 }

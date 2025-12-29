@@ -14,7 +14,7 @@ interface StatusCardProps {
 
 export function StatusCard({ status, isVerified, verificationMethod }: StatusCardProps) {
     const isSuspended = status === 'SUSPENDED' || status === 'BANNED';
-    const canSendOffers = status === 'ACTIVE';
+    const canSendOffers = status === 'ACTIVE' && isVerified;
 
     const getStatusColor = () => {
         switch (status) {

@@ -14,6 +14,7 @@ import { StatusCard } from "@/components/dashboard/StatusCard";
 import { EarningsChart } from "@/components/dashboard/EarningsChart";
 import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
+import { DashboardAlerts } from "@/components/dashboard/DashboardAlerts";
 import { calculateProfessionalCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
@@ -241,6 +242,11 @@ export default async function ProDashboardPage() {
       />
 
 
+
+      <DashboardAlerts
+        isVerified={professional.isVerified}
+        balance={professional.wallet?.balance || 0}
+      />
 
       <ProfileCompletionBanner
         profileCompletion={profileCompletion}
