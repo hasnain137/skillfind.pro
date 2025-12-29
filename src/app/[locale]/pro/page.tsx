@@ -84,10 +84,8 @@ export default async function ProDashboardPage() {
   const balanceEuros = (professional.wallet?.balance || 0) / 100;
   const { percentage: profileCompletion, missingSteps } = calculateProfessionalCompletion(professional);
 
-  // Check if professional has any services requiring qualification
-  const hasRegulatedServices = professional.services.some(
-    (service: any) => service.subcategory.requiresQualification
-  );
+  // Check if professional has any services (all require qualification documents)
+  const hasServices = professional.services.length > 0;
 
   // Get matching requests count (today)
   const serviceCategoryIds = professional.services.map((s: any) => s.subcategory.category.id);
@@ -251,7 +249,7 @@ export default async function ProDashboardPage() {
       <DashboardAlerts
         isVerified={professional.isVerified}
         qualificationVerified={professional.qualificationVerified}
-        hasRegulatedServices={hasRegulatedServices}
+        hasServices={hasServices}
         balance={professional.wallet?.balance || 0}
       />
 

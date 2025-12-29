@@ -61,7 +61,6 @@ async function main() {
       nameEn: 'Plumbing',
       nameFr: 'Plomberie',
       sortOrder: 1,
-      requiresQualification: true,
     },
   });
 
@@ -74,7 +73,6 @@ async function main() {
       nameEn: 'Electrical Work',
       nameFr: 'Travaux électriques',
       sortOrder: 2,
-      requiresQualification: true,
     },
   });
 
@@ -291,7 +289,6 @@ async function main() {
       nameEn: 'Nutrition Consulting',
       nameFr: 'Conseil en nutrition',
       sortOrder: 3,
-      requiresQualification: true,
     },
   });
 

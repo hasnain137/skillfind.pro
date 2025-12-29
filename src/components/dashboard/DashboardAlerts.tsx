@@ -8,7 +8,7 @@ import { AlertCircle, Wallet, ShieldAlert } from 'lucide-react';
 interface DashboardAlertsProps {
     isVerified: boolean;
     qualificationVerified: boolean;
-    hasRegulatedServices: boolean;
+    hasServices: boolean;
     balance: number;
     currency?: string;
 }
@@ -16,7 +16,7 @@ interface DashboardAlertsProps {
 export function DashboardAlerts({
     isVerified,
     qualificationVerified,
-    hasRegulatedServices,
+    hasServices,
     balance,
     currency = 'EUR'
 }: DashboardAlertsProps) {
@@ -26,8 +26,8 @@ export function DashboardAlerts({
     const alerts = [];
 
     // SEQUENTIAL VERIFICATION LOGIC
-    // State 1: Qualification Required (for regulated services only)
-    if (hasRegulatedServices && !qualificationVerified) {
+    // State 1: Qualification Required (for all professionals with services)
+    if (hasServices && !qualificationVerified) {
         alerts.push({
             id: 'qualification',
             type: 'critical',

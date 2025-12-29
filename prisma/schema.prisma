@@ -325,7 +325,6 @@ model Subcategory {
   description     String?       @db.Text
   sortOrder       Int           @default(0)
   isActive        Boolean       @default(true)
-  requiresQualification Boolean @default(false)
   
   requests        Request[]
   professionalServices ProfessionalService[]

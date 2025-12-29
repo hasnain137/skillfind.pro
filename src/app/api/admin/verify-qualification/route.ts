@@ -41,16 +41,12 @@ export async function POST(request: NextRequest) {
             throw new NotFoundError('Professional');
         }
 
-        // Edge case: Check if professional actually has any services requiring qualification
-        const requiresQualification = professional.services.some(
-            (service) => service.subcategory.requiresQualification
-        );
-
-        if (!requiresQualification) {
+        // Edge case: Check if professional actually has any services
+        if (professional.services.length === 0) {
             return errorResponse(
                 400,
-                'NO_QUALIFICATION_REQUIRED',
-                'This professional does not have any services requiring qualification verification.'
+                'NO_SERVICES',
+                'This professional has not added any services yet.'
             );
         }
 
