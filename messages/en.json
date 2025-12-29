@@ -374,6 +374,8 @@
             "profileCta": "Edit Profile"
         },
         "Alerts": {
+            "requirementsTitle": "Requirements to Send Offers",
+            "requirementsDescription": "Complete these steps to start sending offers to clients and winning jobs.",
             "qualificationRequired": {
                 "title": "Qualification Verification Required",
                 "description": "Please upload your professional diplomas and certificates. An admin will review them before you can verify your identity.",

@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
-import { AlertCircle, Wallet, ShieldAlert } from 'lucide-react';
+import { AlertCircle, Wallet, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
 interface DashboardAlertsProps {
     isVerified: boolean;
@@ -26,7 +26,7 @@ export function DashboardAlerts({
     const alerts = [];
 
     // SEQUENTIAL VERIFICATION LOGIC
-    // State 1: Qualification Required (for all professionals with services)
+    // Step 1: Qualification Required (for all professionals with services)
     if (hasServices && !qualificationVerified) {
         alerts.push({
             id: 'qualification',
@@ -37,11 +37,12 @@ export function DashboardAlerts({
             action: {
                 label: t('qualificationRequired.action'),
                 onClick: () => router.push('/pro/profile?activeTab=qualifications')
-            }
+            },
+            completed: false
         });
     }
 
-    // State 2: Identity Verification Required (only show if qualifications are OK or not needed)
+    // Step 2: Identity Verification Required (only show if qualifications are OK or not needed)
     if (qualificationVerified && !isVerified) {
         alerts.push({
             id: 'verification',
@@ -52,14 +53,13 @@ export function DashboardAlerts({
             action: {
                 label: t('verificationRequired.action'),
                 onClick: () => router.push('/pro/profile?activeTab=verification')
-            }
+            },
+            completed: false
         });
     }
 
-    // Warning: Low Balance
-    // Minimum requirement is typically ~2 EUR for a few leads, warning at < 5 EUR is good practice
-    // Or match the exact logic: "can send offers" check usually requires just enough for one lead (~2 EUR)
-    if (balance < 200) { // Assuming balance is in cents, so 200 = 2.00 EUR
+    // Step 3: Minimum Balance Warning
+    if (balance < 200) { // 200 cents = €2.00
         alerts.push({
             id: 'balance',
             type: 'warning',
@@ -71,49 +71,45 @@ export function DashboardAlerts({
             action: {
                 label: t('lowBalance.action'),
                 onClick: () => router.push('/pro/wallet')
-            }
+            },
+            completed: false
         });
     }
 
-    if (alerts.length === 0) return null;
+    // Show completed checkmarks for completed steps
+    const completedSteps = [];
+    if (hasServices && qualificationVerified) {
+        completedSteps.push({
+            id: 'qualification-complete',
+            title: t('qualificationRequired.title'),
+            completed: true
+        });
+    }
+    if (isVerified) {
+        completedSteps.push({
+            id: 'verification-complete',
+            title: t('verificationRequired.title'),
+            completed: true
+        });
+    }
+    if (balance >= 200) {
+        completedSteps.push({
+            id: 'balance-complete',
+            title: t('lowBalance.title'),
+            completed: true
+        });
+    }
+
+    // Don't show section if everything is complete
+    if (alerts.length === 0 && completedSteps.length === 0) return null;
 
     return (
-        <div className="space-y-4">
-            {alerts.map((alert) => (
-                <div
-                    key={alert.id}
-                    className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-xl border p-4 ${alert.type === 'critical'
-                        ? 'bg-red-50 border-red-200'
-                        : 'bg-amber-50 border-amber-200'
-                        }`}
-                >
-                    <div className="flex items-start gap-4">
-                        <div className={`mt-1 sm:mt-0 rounded-full p-2 ${alert.type === 'critical' ? 'bg-red-100' : 'bg-amber-100'
-                            }`}>
-                            {alert.icon}
-                        </div>
-                        <div>
-                            <h3 className={`font-semibold ${alert.type === 'critical' ? 'text-red-900' : 'text-amber-900'
-                                }`}>
-                                {alert.title}
-                            </h3>
-                            <p className={`text-sm ${alert.type === 'critical' ? 'text-red-700' : 'text-amber-700'
-                                }`}>
-                                {alert.description}
-                            </p>
-                        </div>
-                    </div>
-
-                    <Button
-                        onClick={alert.action.onClick}
-                        variant={alert.type === 'critical' ? 'destructive' : 'outline'}
-                        className={`w-full sm:w-auto shrink-0 ${alert.type === 'warning' ? 'border-amber-300 text-amber-800 hover:bg-amber-100' : ''
-                            }`}
                     >
-                        {alert.action.label}
-                    </Button>
-                </div>
-            ))}
-        </div>
+        { alert.action.label }
+                    </Button >
+                </div >
+            ))
+}
+        </div >
     );
 }

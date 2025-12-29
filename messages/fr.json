@@ -374,6 +374,8 @@
             "profileCta": "Éditer le profil"
         },
         "Alerts": {
+            "requirementsTitle": "Exigences pour Envoyer des Offres",
+            "requirementsDescription": "Complétez ces étapes pour commencer à envoyer des offres aux clients et remporter des emplois.",
             "qualificationRequired": {
                 "title": "Vérification des qualifications requise",
                 "description": "Veuillez télécharger vos diplômes et certificats professionnels. Un administrateur les examinera avant que vous puissiez vérifier votre identité.",
