@@ -7,12 +7,16 @@ import { AlertCircle, Wallet, ShieldAlert } from 'lucide-react';
 
 interface DashboardAlertsProps {
     isVerified: boolean;
+    qualificationVerified: boolean;
+    hasRegulatedServices: boolean;
     balance: number;
     currency?: string;
 }
 
 export function DashboardAlerts({
     isVerified,
+    qualificationVerified,
+    hasRegulatedServices,
     balance,
     currency = 'EUR'
 }: DashboardAlertsProps) {
@@ -21,8 +25,24 @@ export function DashboardAlerts({
 
     const alerts = [];
 
-    // Critical: Not Verified
-    if (!isVerified) {
+    // SEQUENTIAL VERIFICATION LOGIC
+    // State 1: Qualification Required (for regulated services only)
+    if (hasRegulatedServices && !qualificationVerified) {
+        alerts.push({
+            id: 'qualification',
+            type: 'critical',
+            icon: <AlertCircle className="h-5 w-5 text-red-600" />,
+            title: t('qualificationRequired.title'),
+            description: t('qualificationRequired.description'),
+            action: {
+                label: t('qualificationRequired.action'),
+                onClick: () => router.push('/pro/profile?activeTab=qualifications')
+            }
+        });
+    }
+
+    // State 2: Identity Verification Required (only show if qualifications are OK or not needed)
+    if (qualificationVerified && !isVerified) {
         alerts.push({
             id: 'verification',
             type: 'critical',
@@ -63,8 +83,8 @@ export function DashboardAlerts({
                 <div
                     key={alert.id}
                     className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-xl border p-4 ${alert.type === 'critical'
-                            ? 'bg-red-50 border-red-200'
-                            : 'bg-amber-50 border-amber-200'
+                        ? 'bg-red-50 border-red-200'
+                        : 'bg-amber-50 border-amber-200'
                         }`}
                 >
                     <div className="flex items-start gap-4">

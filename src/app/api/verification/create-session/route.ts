@@ -26,6 +26,15 @@ export async function POST(req: NextRequest) {
             return errorResponse(403, 'FORBIDDEN', 'Account is not eligible for verification.');
         }
 
+        // QUALIFICATION GATING: Block if qualifications not yet verified
+        if (!professional.qualificationVerified) {
+            return errorResponse(
+                403,
+                'QUALIFICATION_REQUIRED',
+                'Please wait for your professional qualifications to be approved before verifying your identity. Upload your diplomas/certificates in the Profile section.'
+            );
+        }
+
         // 2. Create Stripe Verification Session
         const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 

@@ -110,6 +110,17 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // QUALIFICATION VERIFICATION LOGIC
+    // If this subcategory requires qualification, set qualificationVerified to false
+    // This will block identity verification until admin approves
+    if (subcategory.requiresQualification && professional.qualificationVerified) {
+      await prisma.professional.update({
+        where: { id: professional.id },
+        data: { qualificationVerified: false },
+      });
+      console.log(`[Qualification] Professional ${professional.id} now requires qualification verification for ${subcategory.nameEn}`);
+    }
+
     // Check for existing active requests in this subcategory
     try {
       const matchCount = await prisma.request.count({

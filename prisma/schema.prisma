@@ -102,6 +102,7 @@ model Professional {
   
   // Verification status
   isVerified        Boolean  @default(false)
+  qualificationVerified Boolean @default(true) // Defaults to true for unregulated, set to false if service requires it
   verificationMethod VerificationMethod @default(MANUAL)
   verifiedAt        DateTime?
   verifiedBy        String?
@@ -324,6 +325,7 @@ model Subcategory {
   description     String?       @db.Text
   sortOrder       Int           @default(0)
   isActive        Boolean       @default(true)
+  requiresQualification Boolean @default(false)
   
   requests        Request[]
   professionalServices ProfessionalService[]

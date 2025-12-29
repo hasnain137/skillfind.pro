@@ -1336,6 +1336,11 @@
         "quickActionsDesc": "Gérez votre activité",
         "viewAll": "Voir tout",
         "Alerts": {
+            "qualificationRequired": {
+                "title": "Vérification des qualifications requise",
+                "description": "Veuillez télécharger vos diplômes et certificats professionnels. Un administrateur les examinera avant que vous puissiez vérifier votre identité.",
+                "action": "Télécharger les documents"
+            },
             "verificationRequired": {
                 "title": "Vérification d'identité requise",
                 "description": "Vous devez vérifier votre identité avant de pouvoir envoyer des offres aux clients.",

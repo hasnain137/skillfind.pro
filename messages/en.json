@@ -1348,6 +1348,11 @@
         "quickActionsDesc": "Manage your work",
         "viewAll": "View all",
         "Alerts": {
+            "qualificationRequired": {
+                "title": "Qualification Verification Required",
+                "description": "Please upload your professional diplomas and certificates. An admin will review them before you can verify your identity.",
+                "action": "Upload Documents"
+            },
             "verificationRequired": {
                 "title": "Identity Verification Required",
                 "description": "You must verify your identity before you can send offers to clients.",
