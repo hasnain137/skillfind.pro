@@ -1,14 +1,6 @@
+
 import { Resend } from 'resend';
-
-const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'; // Default Resend test sender
-
-// Check if API key is present
-const IS_MOCK = !RESEND_API_KEY || RESEND_API_KEY.startsWith('re_mock');
-
-if (!IS_MOCK) {
-  // We initialize in the function to avoid errors if key is missing during build
-}
+import { getConfig } from '@/lib/config';
 
 interface EmailParams {
   to: string;
@@ -21,8 +13,8 @@ interface EmailParams {
  * Send an email using Resend
  */
 export async function sendEmail({ to, subject, text, html }: EmailParams): Promise<boolean> {
-  // Read env vars at runtime to avoid initialization issues
-  const apiKey = process.env.RESEND_API_KEY || '';
+  // Read env vars at runtime (or from DB via getConfig)
+  const apiKey = await getConfig('RESEND_API_KEY');
   const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
 
   // Check if we should mock
@@ -41,7 +33,7 @@ export async function sendEmail({ to, subject, text, html }: EmailParams): Promi
       [CONTENT]:
       ${text || html?.replace(/<[^>]*>/g, '')}
       ----------------------------------------
-      [DEBUG] Key status: ${apiKey ? 'Present' : 'Missing'} (${apiKey.substring(0, 5)}...)
+      [DEBUG] Key status: ${apiKey ? 'Present' : 'Missing'}
     `);
     return true;
   }

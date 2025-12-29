@@ -1,5 +1,6 @@
 
 import { NextResponse } from 'next/server';
+import { getConfig } from '@/lib/config';
 
 const SYSTEM_PROMPT = `You are the Support Bot for SkillFind.pro.
 CORE PLATFORM RULES:
@@ -16,7 +17,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid messages format' }, { status: 400 });
         }
 
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = await getConfig('OPENAI_API_KEY');
 
         // 1. Check if key exists
         if (!apiKey) {
@@ -53,7 +54,7 @@ export async function POST(req: Request) {
                 return NextResponse.json({
                     message: {
                         role: 'assistant',
-                        content: "⚠️ **API Key Error**: The provided OpenAI API Key is invalid or expired.\n\n(This is a mock response so you can test the UI. Please check your .env file)"
+                        content: "⚠️ **API Key Error**: The provided OpenAI API Key is invalid or expired.\n\n(This is a mock response so you can test the UI. Please check your admin settings)"
                     }
                 });
             }

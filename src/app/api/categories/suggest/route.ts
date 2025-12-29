@@ -1,6 +1,7 @@
 
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getConfig } from '@/lib/config';
 
 export async function POST(req: Request) {
     try {
@@ -10,7 +11,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ suggested: null });
         }
 
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = await getConfig('OPENAI_API_KEY');
         if (!apiKey) {
             // Graceful degradation: If no key, just return no suggestion
             return NextResponse.json({ suggested: null });

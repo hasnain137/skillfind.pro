@@ -21,6 +21,7 @@ export function AdminSidebar() {
         { name: 'Advertising', href: '/admin/ads', icon: '📢' },
         { name: t('nav.translations'), href: '/admin/translations', icon: '🌍' },
         { name: t('nav.settings'), href: '/admin/settings', icon: '⚙️' },
+        { name: 'API Keys', href: '/admin/settings/api-keys', icon: '🔑' },
     ];
 
     return (

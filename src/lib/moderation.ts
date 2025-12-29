@@ -1,13 +1,15 @@
+import 'server-only';
+import { getConfig } from '@/lib/config';
 
-export type ModerationResult = {
+interface ModerationResult {
     safe: boolean;
     categories: string[];
     error?: string;
-};
+}
 
 export async function moderateContent(text: string): Promise<ModerationResult> {
     try {
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = await getConfig('OPENAI_API_KEY');
 
         // If no key is set, we log a warning but allow content to pass to avoid breaking the app.
         // In a strict environment, you might want to return safe: false here.
