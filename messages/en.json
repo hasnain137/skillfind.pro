@@ -286,7 +286,9 @@
             "new": "🔥 NEW",
             "sendOffer": "Send your offer",
             "remote": "Remote",
-            "viewAll": "View all"
+            "viewAll": "View all",
+            "offerSent": "Offer Sent",
+            "viewOffer": "View Offer"
         }
     },
     "CategoryDirectory": {
@@ -410,6 +412,12 @@
                 "title": "Fund Your Wallet",
                 "description": "Your balance is {amount}. You need at least €2.00 to send offers.",
                 "action": "Add Funds"
+            },
+            "time": {
+                "services": "~2 min",
+                "qualifications": "~5 min + review",
+                "verification": "~3 min",
+                "wallet": "~1 min"
             }
         },
         "KeyStats": {
@@ -495,7 +503,8 @@
                 "pending": "Pending Review",
                 "approved": "Approved",
                 "rejected": "Rejected"
-            }
+            },
+            "rejectionReason": "Rejection reason"
         },
         "info": {
             "titleLabel": "Professional Title",
@@ -1442,7 +1451,83 @@
         },
         "messages": {
             "depositSuccess": "Deposit successful! Your balance has been updated.",
-            "depositCanceled": "Deposit canceled."
+            "depositCanceled": "Deposit canceled.""OfferForm": {
+                "title": "Send Offer",
+                "validation": {
+                    "invalidPrice": "Please enter a valid price",
+                    "minPrice": "Price must be at least €1.00",
+                    "shortMessage": "Message is too short (min 50 chars)"
+                },
+                "pricing": {
+                    "title": "Pricing",
+                    "desc": "Set your price for this service.",
+                    "proposedPrice": "Proposed Price",
+                    "typeLabel": "Pricing Type",
+                    "hint": "Clients see this as {type}",
+                    "hintTotal": "a total project cost",
+                    "hintHourly": "an estimated hourly rate",
+                    "types": {
+                        "fixed": "Fixed Price",
+                        "hourly": "Hourly Rate"
+                    }
+                },
+                "proposal": {
+                    "title": "Your Proposal",
+                    "desc": "Explain why you're the best fit for this job.",
+                    "messageLabel": "Cover Message",
+                    "messagePlaceholder": "Hello, I saw your request and I'd love to help...",
+                    "minChars": "{count}/50 characters",
+                    "chars": "{count} chars"
+                },
+                "availability": {
+                    "title": "Availability",
+                    "desc": "When can you start?",
+                    "startType": {
+                        "label": "When can you start?",
+                        "asap": "ASAP",
+                        "tomorrow": "Tomorrow",
+                        "fewDays": "In a few days",
+                        "specific": "Specific Date"
+                    },
+                    "duration": "Estimated Duration",
+                    "durationUnits": {
+                        "hours": "Hours",
+                        "days": "Days",
+                        "weeks": "Weeks",
+                        "months": "Months"
+                    }
+                },
+                "tips": {
+                    "title": "Tips for winning offers",
+                    "items": {
+                        "specific": "Be specific about your experience",
+                        "needs": "Address the client's needs directly",
+                        "approach": "Explain your approach or process",
+                        "expectations": "Set clear expectations"
+                    }
+                },
+                "actions": {
+                    "ready": "Ready to send?",
+                    "cancel": "Cancel",
+                    "sending": "Sending...",
+                    "send": "Send Offer",
+                    "legal": "By sending this offer, you agree to our terms of service."
+                },
+                "summary": {
+                    "title": "Request Summary",
+                    "budget": "Client Budget",
+                    "location": "Location",
+                    "posted": "Posted {date}"
+                },
+                "success": {
+                    "title": "Offer Sent!",
+                    "desc": "The client has been notified."
+                },
+                "error": {
+                    "title": "Error",
+                    "generic": "Something went wrong. Please try again."
+                }
+            }
         },
         "errors": {
             "minAmount": "Minimum amount is {amount}",

@@ -36,6 +36,7 @@ interface Step {
     title: string;
     description: string;
     status: StepStatus;
+    timeEstimate?: string;
     action?: {
         label: string;
         href: string;
@@ -56,7 +57,6 @@ export function DashboardAlerts({
     // Determine document status
     const hasPendingDocs = documents.some(d => d.status === 'PENDING');
     const hasRejectedDocs = documents.some(d => d.status === 'REJECTED');
-    const hasUploadedDocs = documents.length > 0;
 
     // Calculate minimum balance requirement
     const minBalance = 200; // €2.00 in cents
@@ -74,6 +74,7 @@ export function DashboardAlerts({
             ? t('steps.servicesComplete')
             : t('servicesRequired.description'),
         status: servicesStatus,
+        timeEstimate: t('time.services'),
         action: !hasServices ? {
             label: t('servicesRequired.action'),
             href: '/pro/profile?activeTab=services'
@@ -106,6 +107,7 @@ export function DashboardAlerts({
         title: t('qualificationRequired.title'),
         description: qualificationDesc,
         status: qualificationStatus,
+        timeEstimate: t('time.qualifications'),
         action: (qualificationStatus === 'current') ? {
             label: hasRejectedDocs ? t('steps.reuploadAction') : t('qualificationRequired.action'),
             href: '/pro/profile?activeTab=qualifications'
@@ -132,6 +134,7 @@ export function DashboardAlerts({
         title: t('verificationRequired.title'),
         description: verificationDesc,
         status: verificationStatus,
+        timeEstimate: t('time.verification'),
         action: (verificationStatus === 'current') ? {
             label: t('verificationRequired.action'),
             href: '/pro/profile?activeTab=verification'
@@ -162,6 +165,7 @@ export function DashboardAlerts({
         title: t('lowBalance.title'),
         description: walletDesc,
         status: walletStatus,
+        timeEstimate: t('time.wallet'),
         action: (walletStatus === 'current') ? {
             label: t('lowBalance.action'),
             href: '/pro/wallet'
@@ -224,23 +228,23 @@ export function DashboardAlerts({
                 {steps.map((step, index) => (
                     <div
                         key={step.id}
-                        className={`flex items-start gap-4 p-4 rounded-xl border transition-all ${step.status === 'complete'
-                                ? 'bg-green-50 border-green-200'
-                                : step.status === 'pending'
-                                    ? 'bg-amber-50 border-amber-200'
-                                    : step.status === 'current'
-                                        ? 'bg-white border-blue-300 shadow-sm'
-                                        : 'bg-gray-50 border-gray-200 opacity-60'
+                        className={`group flex items-start gap-4 p-4 rounded-xl border transition-all ${step.status === 'complete'
+                            ? 'bg-green-50 border-green-200'
+                            : step.status === 'pending'
+                                ? 'bg-amber-50 border-amber-200'
+                                : step.status === 'current'
+                                    ? 'bg-white border-blue-300 shadow-sm'
+                                    : 'bg-gray-50 border-gray-200 opacity-60'
                             }`}
                     >
                         {/* Step Icon */}
                         <div className={`flex-shrink-0 p-2 rounded-full ${step.status === 'complete'
-                                ? 'bg-green-100'
-                                : step.status === 'pending'
-                                    ? 'bg-amber-100'
-                                    : step.status === 'current'
-                                        ? 'bg-blue-100'
-                                        : 'bg-gray-100'
+                            ? 'bg-green-100'
+                            : step.status === 'pending'
+                                ? 'bg-amber-100'
+                                : step.status === 'current'
+                                    ? 'bg-blue-100'
+                                    : 'bg-gray-100'
                             }`}>
                             {step.status === 'complete' ? (
                                 <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -260,15 +264,20 @@ export function DashboardAlerts({
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                                 <h4 className={`font-semibold ${step.status === 'complete' ? 'text-green-800' :
-                                        step.status === 'pending' ? 'text-amber-800' :
-                                            step.status === 'locked' ? 'text-gray-500' :
-                                                'text-[#333333]'
+                                    step.status === 'pending' ? 'text-amber-800' :
+                                        step.status === 'locked' ? 'text-gray-500' :
+                                            'text-[#333333]'
                                     }`}>
                                     {step.title}
                                 </h4>
                                 {step.status === 'pending' && (
                                     <span className="text-xs font-medium text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
                                         {t('steps.underReview')}
+                                    </span>
+                                )}
+                                {step.status !== 'complete' && step.status !== 'locked' && step.timeEstimate && (
+                                    <span className="text-xs font-medium text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <Clock className="w-3 h-3" /> {step.timeEstimate}
                                     </span>
                                 )}
                             </div>

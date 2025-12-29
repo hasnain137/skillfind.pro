@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 const reviewDocumentSchema = z.object({
     status: z.enum(['APPROVED', 'REJECTED']),
+    rejectionReason: z.string().optional(),
 });
 
 export async function POST(
@@ -17,7 +18,7 @@ export async function POST(
         const { userId } = await requireAdmin(); // Ensure admin
 
         const body = await request.json();
-        const { status } = reviewDocumentSchema.parse(body);
+        const { status, rejectionReason } = reviewDocumentSchema.parse(body);
 
         // Update document status
         const document = await prisma.verificationDocument.update({
@@ -26,6 +27,7 @@ export async function POST(
                 status,
                 reviewedBy: userId,
                 reviewedAt: new Date(),
+                rejectionReason: status === 'REJECTED' ? rejectionReason : null,
             },
             include: { professional: true },
         });

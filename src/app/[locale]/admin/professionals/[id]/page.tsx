@@ -118,7 +118,8 @@ export default async function AdminProfessionalDetailPage({
                             type: d.type,
                             status: d.status,
                             fileUrl: d.fileUrl,
-                            fileName: d.fileName
+                            fileName: d.fileName,
+                            rejectionReason: d.rejectionReason
                         }))}
                     />
                 </div>

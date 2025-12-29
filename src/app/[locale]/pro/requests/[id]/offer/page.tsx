@@ -132,7 +132,19 @@ export default async function ProOfferPage({ params }: OfferPageProps) {
         </div>
       </Card>
 
-      <OfferForm requestId={request.id} requestTitle={request.title} />
+      <OfferForm
+        requestId={request.id}
+        requestTitle={request.title}
+        requestDetails={{
+          budgetMin: request.budgetMin,
+          budgetMax: request.budgetMax,
+          description: request.description,
+          city: request.city,
+          locationType: request.locationType,
+          createdAt: request.createdAt,
+          categoryName: request.category.nameEn
+        }}
+      />
     </div>
   );
 }

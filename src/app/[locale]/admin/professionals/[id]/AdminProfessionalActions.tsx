@@ -15,6 +15,7 @@ interface AdminProfessionalActionsProps {
         status: string;
         fileUrl: string;
         fileName: string;
+        rejectionReason?: string | null;
     }[];
 }
 
@@ -70,14 +71,26 @@ export default function AdminProfessionalActions({
     }
 
     async function handleDocumentAction(documentId: string, action: 'APPROVED' | 'REJECTED') {
-        if (!confirm(`Are you sure you want to ${action} this document?`)) return;
+        let rejectionReason = undefined;
+
+        if (action === 'REJECTED') {
+            const reason = prompt('Please enter the reason for rejection:');
+            if (reason === null) return; // Cancelled
+            if (!reason.trim()) {
+                alert('Rejection reason is required.');
+                return;
+            }
+            rejectionReason = reason;
+        } else {
+            if (!confirm(`Are you sure you want to approve this document?`)) return;
+        }
 
         setLoading(documentId);
         try {
             const res = await fetch(`/api/admin/documents/${documentId}/review`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: action }),
+                body: JSON.stringify({ status: action, rejectionReason }),
             });
 
             if (!res.ok) throw new Error('Failed to review document');
@@ -173,6 +186,11 @@ export default function AdminProfessionalActions({
                                         {doc.status}
                                     </Badge>
                                 </div>
+                                {doc.status === 'REJECTED' && doc.rejectionReason && (
+                                    <div className="mb-3 p-2 bg-red-50 text-red-700 text-xs rounded border border-red-100">
+                                        <strong>Reason:</strong> {doc.rejectionReason}
+                                    </div>
+                                )}
 
                                 {doc.status === 'PENDING' && (
                                     <div className="flex gap-2">

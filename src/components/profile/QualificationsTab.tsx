@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Upload, FileText, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 interface QualificationsTabProps {
@@ -139,8 +138,8 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
                         <label
                             htmlFor="document-upload"
                             className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors cursor-pointer ${uploading
-                                    ? 'bg-gray-400 cursor-not-allowed'
-                                    : 'bg-[#2563EB] hover:bg-[#1D4FD8] text-white'
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-[#2563EB] hover:bg-[#1D4FD8] text-white'
                                 }`}
                         >
                             <Upload className="h-5 w-5" />
@@ -162,29 +161,37 @@ export function QualificationsTab({ professionalId, documents }: QualificationsT
                     <CardContent>
                         <div className="space-y-3">
                             {documents.map((doc) => (
-                                <div
-                                    key={doc.id}
-                                    className={`flex items-center justify-between p-4 rounded-lg border ${getStatusColor(doc.status)}`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <FileText className="h-5 w-5" />
-                                        <div>
-                                            <p className="font-medium">{doc.fileName}</p>
-                                            <p className="text-xs opacity-75">
-                                                {new Date(doc.uploadedAt).toLocaleDateString()}
-                                            </p>
+                                <div key={doc.id} className={`border rounded-lg ${getStatusColor(doc.status)}`}>
+                                    <div className="flex items-center justify-between p-4">
+                                        <div className="flex items-center gap-3">
+                                            <FileText className="h-5 w-5" />
+                                            <div>
+                                                <p className="font-medium">{doc.fileName}</p>
+                                                <p className="text-xs opacity-75">
+                                                    {new Date(doc.uploadedAt).toLocaleDateString()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            {getStatusIcon(doc.status)}
+                                            <span className="text-sm font-medium">{getStatusText(doc.status)}</span>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        {getStatusIcon(doc.status)}
-                                        <span className="text-sm font-medium">{getStatusText(doc.status)}</span>
-                                    </div>
+                                    {doc.status === 'REJECTED' && doc.rejectionReason && (
+                                        <div className="px-4 pb-4 pt-0">
+                                            <div className="text-xs bg-red-100 text-red-700 p-2 rounded">
+                                                <span className="font-semibold">{t('rejectionReason')}: </span>
+                                                {doc.rejectionReason}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
                     </CardContent>
                 </Card>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

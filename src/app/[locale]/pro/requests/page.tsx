@@ -50,6 +50,14 @@ export default async function ProRequestsPage() {
           },
         },
       },
+      offers: {
+        where: {
+          professionalId: professional.id,
+        },
+        select: {
+          id: true,
+        },
+      },
       _count: {
         select: { offers: true },
       },
@@ -147,19 +155,29 @@ export default async function ProRequestsPage() {
             const isUrgent = request.urgency === 'URGENT';
             const hasMultipleOffers = request._count.offers >= 3;
 
+            const hasSentOffer = request.offers && request.offers.length > 0;
+
             return (
               <Card
                 key={request.id}
-                className="group relative overflow-hidden hover:border-[#2563EB] hover:shadow-md transition-all duration-200 cursor-pointer"
+                className={`group relative overflow-hidden transition-all duration-200 cursor-pointer ${hasSentOffer
+                  ? 'border-green-200 bg-green-50/30'
+                  : 'hover:border-[#2563EB] hover:shadow-md'
+                  }`}
                 padding="lg"
               >
                 {/* Badges */}
-                {isNew && (
+                {hasSentOffer && (
+                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md z-10">
+                    ✓ {t('card.offerSent')}
+                  </div>
+                )}
+                {isNew && !hasSentOffer && (
                   <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
                     🔥 {t('card.new')}
                   </div>
                 )}
-                {isUrgent && !isNew && (
+                {isUrgent && !isNew && !hasSentOffer && (
                   <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
                     ⚡ {t('card.urgent')}
                   </div>
@@ -213,18 +231,6 @@ export default async function ProRequestsPage() {
                         <span>💻</span> Remote
                       </span>
                     )}
-
-                    {request.preferredStartDate && (
-                      <span className="flex items-center gap-1 text-[#7C7373]">
-                        <span>📅</span> Start: {new Date(request.preferredStartDate).toLocaleDateString()}
-                      </span>
-                    )}
-
-                    {request.urgency && (
-                      <span className="flex items-center gap-1 rounded-lg bg-[#FEF3C7] px-2.5 py-1 font-semibold text-[#92400E]">
-                        <span>⏱️</span> {request.urgency}
-                      </span>
-                    )}
                   </div>
 
                   {/* Client Info */}
@@ -237,7 +243,14 @@ export default async function ProRequestsPage() {
                         {t('card.client', { name: request.client.user.firstName || 'Client' })}
                       </span>
                     </div>
-                    {professional.status === 'ACTIVE' ? (
+                    {hasSentOffer ? (
+                      <Link
+                        href="/pro/offers"
+                        className="inline-flex items-center justify-center gap-1 rounded-full bg-green-50 border border-green-200 px-4 py-2 text-xs font-semibold text-green-700 transition hover:bg-green-100"
+                      >
+                        {t('card.viewOffer')} →
+                      </Link>
+                    ) : (professional.status === 'ACTIVE' ? (
                       <Link
                         href={`/pro/requests/${request.id}/offer`}
                         className="inline-flex items-center justify-center gap-1 rounded-full bg-[#2563EB] px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
@@ -251,7 +264,7 @@ export default async function ProRequestsPage() {
                       >
                         {professional.status === 'PENDING_REVIEW' ? t('card.pending') : t('card.inactive')}
                       </button>
-                    )}
+                    ))}
                   </div>
                 </div>
               </Card>
