@@ -99,6 +99,17 @@ export async function POST(request: NextRequest) {
       throw new ConflictError('You already have a service for this subcategory');
     }
 
+
+
+    // Check service limit (Max 5 services)
+    const serviceCount = await prisma.professionalService.count({
+      where: { professionalId: professional.id },
+    });
+
+    if (serviceCount >= 5) {
+      throw new ConflictError('You have reached the limit of 5 services. Please remove one to add another.');
+    }
+
     // Create service
     const service = await prisma.professionalService.create({
       data: {

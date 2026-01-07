@@ -35,10 +35,14 @@
     "Navbar": {
         "howItWorks": "How it works",
         "categories": "Categories",
-        "topProfessionals": "Top professionals",
-        "forProfessionals": "For professionals",
-        "login": "Log in",
-        "signup": "Sign up"
+        "topProfessionals": "Top Pros",
+        "forProfessionals": "For Professionals",
+        "home": "Home",
+        "reviews": "Reviews",
+        "whyUs": "Why SkillFind?",
+        "login": "Login",
+        "signup": "Sign Up",
+        "search": "Search services"
     },
     "Sidebar": {
         "more": "More",
@@ -345,6 +349,7 @@
     "ProDashboard": {
         "eyebrow": "Professional dashboard",
         "welcome": "Good {period}, {name}",
+        "welcomeSimple": "Hi, {name}",
         "description": "See matching requests, send tailored offers, and keep your profile ready for new opportunities.",
         "metricsTitle": "Performance metrics",
         "metricsDesc": "Track your success and visibility on the platform.",
@@ -576,6 +581,7 @@
     "ClientDashboard": {
         "eyebrow": "Client dashboard",
         "welcome": "Welcome back, {name}",
+        "welcomeSimple": "Hi, {name}",
         "description": "You're in control of every service request, from posting details to choosing the best professional.",
         "highlights": {
             "nextSteps": "Next steps",
@@ -1056,7 +1062,7 @@
             },
             "notVerified": {
                 "title": "Profile Not Verified",
-                "desc": "Please upload at least one official identity document (ID Card, Passport, or Business License) to verify your account. Verified profiles get 3x more jobs."
+                "desc": "Please upload at least one official identity document (ID Card, Passport, or Business License) to verify your account."
             }
         },
         "upload": {
@@ -1314,13 +1320,30 @@
         },
         "messages": {
             "depositSuccess": "Deposit successful! Your balance has been updated.",
-            "depositCanceled": "Deposit canceled."
+            "depositCanceled": "Deposit canceled.",
+            "verifyingDeposit": "Verifying transaction...",
+            "depositVerificationFailed": "Could not verify deposit. Please contact support if you were charged."
         },
         "common": {
             "cancel": "Cancel"
         }
     },
     "OfferForm": {
+        "page": {
+            "eyebrow": "Send an Offer",
+            "title": "Submit your proposal",
+            "description": "Review the request details and send your best offer to the client.",
+            "closedTitle": "Request Closed",
+            "closedDesc": "This request is no longer accepting offers.",
+            "closedMessage": "The client has already hired someone or cancelled the request.",
+            "budgetSpecified": "Budget not specified"
+        },
+        "restrictions": {
+            "eyebrow": "Action Required",
+            "notActive": "Account Not Active",
+            "lowBalance": "Low Balance",
+            "recharge": "Add Funds"
+        },
         "title": "Send Offer",
         "validation": {
             "invalidPrice": "Please enter a valid price",

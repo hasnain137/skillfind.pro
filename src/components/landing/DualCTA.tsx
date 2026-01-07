@@ -10,7 +10,7 @@ export function DualCTA() {
   const t = useTranslations('DualCTA');
 
   return (
-    <section className="py-20 md:py-24 bg-white">
+    <section id="for-professionals" className="py-20 md:py-24 bg-white">
       <Container>
         <div className="relative overflow-hidden rounded-3xl bg-[#3B4D9D] px-6 py-16 shadow-2xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
           <svg

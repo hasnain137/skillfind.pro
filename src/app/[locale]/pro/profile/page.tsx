@@ -17,7 +17,7 @@ export default async function ProProfilePage() {
   if (!userId) redirect('/login');
 
   const professional: any = await getProfessionalWithRelations(userId, {
-    user: { select: { dateOfBirth: true, phoneNumber: true } },
+    user: { select: { firstName: true, lastName: true, email: true, dateOfBirth: true, phoneNumber: true } },
     profile: true,
     services: { include: { subcategory: { include: { category: true } } } },
   });
@@ -58,9 +58,7 @@ export default async function ProProfilePage() {
             <h3 className="text-base font-bold text-[#333333] flex items-center gap-2">
               <span>📊</span> {t('completion.title')}
             </h3>
-            <p className="text-xs text-[#7C7373] mt-1">
-              {t('completion.desc')}
-            </p>
+
           </div>
           <div className="text-right">
             <p className="text-3xl font-bold text-[#2563EB]">{profileCompletion}%</p>

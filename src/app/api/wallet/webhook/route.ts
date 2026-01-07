@@ -44,40 +44,14 @@ export async function POST(request: NextRequest) {
       const amount = session.amount_total;
       const transactionId = session.metadata?.transactionId; // The pending transaction ID
 
-      if (professionalId && amount && transactionId) {
-        console.log(`Processing deposit for professional ${professionalId}: €${amount / 100}`);
-
-        // Idempotency: Check if we already processed this Stripe PaymentIntent
-        const existingTx = await prisma.transaction.findFirst({
-          where: { referenceId: session.payment_intent as string }
-        });
-
-        if (existingTx) {
-          console.log(`Transaction already processed for payment intent ${session.payment_intent}`);
-          return successResponse({ received: true, status: 'already_processed' });
-        }
-
-        // Cleanup: If we have a pending transaction, we should use its ID for the new completed transaction 
-        // or delete it to avoid duplicates in history.
-        // Since recordTransaction creates a NEW one, let's try to delete the pending one first 
-        // to keep the history clean (User saw "Pending", now sees "Completed" - effectively unrelated but cleaner than keeping Pending forever)
-
-        try {
-          await prisma.transaction.delete({
-            where: { id: transactionId } // This is the 'pending' one
-          });
-        } catch (e) {
-          // It might not exist or already deleted, ignore
-          console.log('Pending transaction not found or already deleted');
-        }
-
-        await creditWallet({
-          professionalId: professionalId,
-          amount: amount, // Stripe uses cents, match our system
-          type: 'DEPOSIT',
-          description: `Stripe deposit ${session.payment_intent}`,
-          referenceId: session.payment_intent as string,
-        });
+      if (transactionId) {
+        console.log(`Processing deposit for transaction ${transactionId}`);
+        // Use shared logic
+        await completeDeposit(transactionId);
+      } else {
+        // Fallback for cases without transactionId metadata (e.g. older sessions?)
+        // Or strictly logging error
+        console.warn('Webhook received without transactionId in metadata');
       }
     }
 

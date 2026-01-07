@@ -72,7 +72,7 @@ export function PopularCategories({ categories }: PopularCategoriesProps) {
     : [];
 
   return (
-    <section className="py-16 md:py-20 bg-[#FAFAFA] border-b border-[#E5E7EB]">
+    <section id="categories" className="py-16 md:py-20 bg-[#FAFAFA] border-b border-[#E5E7EB]">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-12">
           <FadeIn>

@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { UserMenu } from "./UserMenu";
 import { MobileNav } from "./MobileNav";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { NavbarLinks } from "./NavbarLinks";
 import { auth } from "@clerk/nextjs/server";
 import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
@@ -31,20 +32,16 @@ export async function Navbar() {
         </div>
 
         {/* Middle: navigation (desktop only) */}
-        <nav className="hidden items-center gap-6 text-sm font-medium text-[#7C7373] md:flex">
-          <Link href="/#how-it-works" className="hover:text-[#333333]">
-            {t('howItWorks')}
-          </Link>
-          <Link href="/#categories" className="hover:text-[#333333]">
-            {t('categories')}
-          </Link>
-          <Link href="/#top-professionals" className="hover:text-[#333333]">
-            {t('topProfessionals')}
-          </Link>
-          <Link href="/#for-professionals" className="hover:text-[#333333]">
-            {t('forProfessionals')}
-          </Link>
-        </nav>
+        <NavbarLinks
+          links={[
+            { href: '/#hero', label: t('home') },
+            { href: '/#how-it-works', label: t('howItWorks') },
+            { href: '/#categories', label: t('categories') },
+            { href: '/#top-professionals', label: t('topProfessionals') },
+            { href: '/#reviews', label: t('reviews') },
+            { href: '/#trust', label: t('whyUs') },
+          ]}
+        />
 
         {/* Right: auth section */}
         <div className="flex items-center gap-2">

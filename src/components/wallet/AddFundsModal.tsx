@@ -32,14 +32,42 @@ export function AddFundsModal({ children }: { children: React.ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        if (searchParams.get('success') === 'true') {
-            toast.success(t('messages.depositSuccess'));
-            // Remove the query param
+        const checkTransaction = async (txId: string) => {
+            const toastId = toast.loading(t('messages.verifyingDeposit'));
+            try {
+                const res = await fetch('/api/wallet/verify-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ transactionId: txId })
+                });
+
+                if (res.ok) {
+                    toast.success(t('messages.depositSuccess'), { id: toastId });
+                    router.refresh();
+                } else {
+                    // It might be pending or failed
+                    toast.error(t('errors.depositVerificationFailed'), { id: toastId });
+                }
+            } catch (error) {
+                console.error("Verification error", error);
+                toast.error(t('errors.depositVerificationFailed'), { id: toastId });
+            }
+            // cleanup params
             router.replace('/pro/wallet');
-        }
-        if (searchParams.get('canceled') === 'true') {
+        };
+
+        const txId = searchParams.get('transactionId');
+        const success = searchParams.get('success');
+        const canceled = searchParams.get('canceled');
+
+        if (success === 'true' && txId) {
+            checkTransaction(txId);
+        } else if (success === 'true') {
+            // Fallback for old sessions or missing ID
+            toast.success(t('messages.depositSuccess'));
+            router.replace('/pro/wallet');
+        } else if (canceled === 'true') {
             toast.info(t('messages.depositCanceled'));
-            // Remove the query param
             router.replace('/pro/wallet');
         }
     }, [searchParams, router, t]);

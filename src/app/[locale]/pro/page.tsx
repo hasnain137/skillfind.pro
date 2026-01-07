@@ -12,7 +12,6 @@ import { MatchingRequests } from "@/components/dashboard/MatchingRequests";
 import { DashboardAlerts } from "@/components/dashboard/DashboardAlerts";
 import { KeyStats } from "@/components/dashboard/KeyStats";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
-import { ProDashboardTour } from "@/components/onboarding/ProDashboardTour";
 import { getTranslations } from 'next-intl/server';
 
 export default async function ProDashboardPage() {
@@ -81,14 +80,14 @@ export default async function ProDashboardPage() {
   const hasServices = professional.services.length > 0;
 
   // Get matching requests count (today)
-  const serviceCategoryIds = professional.services.map((s: any) => s.subcategory.category.id);
-  const uniqueCategoryIds = [...new Set(serviceCategoryIds)];
+  const serviceSubcategoryIds = professional.services.map((s: any) => s.subcategoryId);
+  const uniqueSubcategoryIds = [...new Set(serviceSubcategoryIds)];
 
   const matchingRequestsToday = await prisma.request.count({
     where: {
       status: 'OPEN',
-      categoryId: {
-        in: uniqueCategoryIds as string[],
+      subcategoryId: {
+        in: uniqueSubcategoryIds as string[],
       },
       createdAt: {
         gte: new Date(new Date().setHours(0, 0, 0, 0)),
@@ -117,8 +116,8 @@ export default async function ProDashboardPage() {
   const matchingRequests = await prisma.request.findMany({
     where: {
       status: 'OPEN',
-      categoryId: {
-        in: uniqueCategoryIds as string[],
+      subcategoryId: {
+        in: uniqueSubcategoryIds as string[],
       },
     },
     orderBy: { createdAt: 'desc' },
@@ -203,7 +202,7 @@ export default async function ProDashboardPage() {
       {/* Simplified Hero */}
       <DashboardHero
         eyebrow={t('eyebrow')}
-        title={t('welcome', { period: t(`periods.${timeOfDay}`), name: firstName })}
+        title={t('welcomeSimple', { name: firstName })}
         description={t('description')}
         action={{ label: t('Actions.browseCta'), href: "/pro/requests" }}
       />
@@ -262,7 +261,6 @@ export default async function ProDashboardPage() {
 
 
       <WelcomeModal userRole="PROFESSIONAL" firstName={firstName} />
-      <ProDashboardTour />
     </div >
   );
 }

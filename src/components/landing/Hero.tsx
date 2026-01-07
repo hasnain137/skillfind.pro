@@ -12,7 +12,7 @@ export function Hero() {
   const t = useTranslations('Hero');
 
   return (
-    <section className="relative overflow-hidden border-b border-[#E5E7EB] bg-white pt-8 pb-12 md:pt-16 md:pb-20 lg:pt-24 lg:pb-28">
+    <section id="hero" className="relative overflow-hidden border-b border-[#E5E7EB] bg-white pt-8 pb-12 md:pt-16 md:pb-20 lg:pt-24 lg:pb-28">
       {/* Background Mesh Gradients */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-100/40 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2" />

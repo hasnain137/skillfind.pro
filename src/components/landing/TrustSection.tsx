@@ -48,7 +48,7 @@ export function TrustSection() {
   ];
 
   return (
-    <section className="bg-[#FAFAFA] py-24 md:py-32">
+    <section id="trust" className="bg-[#FAFAFA] py-24 md:py-32">
       <Container>
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24 items-start">
           <motion.div

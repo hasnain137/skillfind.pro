@@ -438,9 +438,9 @@ export default function NewClientRequestPage() {
               <LocationSelector
                 countryCode={formData.country}
                 cityName={formData.location}
-                onCountryChange={(code) => setFormData({ ...formData, country: code })}
+                onCountryChange={(code) => setFormData(prev => ({ ...prev, country: code }))}
                 onCityChange={(city) => {
-                  setFormData({ ...formData, location: city });
+                  setFormData(prev => ({ ...prev, location: city }));
                   if (touched.location) {
                     setFieldErrors(prev => ({ ...prev, location: validateField('location', city) }));
                   }

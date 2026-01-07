@@ -53,8 +53,18 @@ function CategoryColumn({ category }: { category: Category }) {
 export function CategoryDirectory({ categories = [] }: CategoryDirectoryProps) {
   const t = useTranslations('CategoryDirectory');
 
-  // Show all provided categories
-  const activeCategories = categories;
+  // Show all provided categories, sorted by:
+  // 1. Has subcategories (first) vs No subcategories (last)
+  // 2. Alphabetical by nameEn
+  const activeCategories = [...categories].sort((a, b) => {
+    const aHasSubs = a.subcategories && a.subcategories.length > 0;
+    const bHasSubs = b.subcategories && b.subcategories.length > 0;
+
+    if (aHasSubs && !bHasSubs) return -1;
+    if (!aHasSubs && bHasSubs) return 1;
+
+    return a.nameEn.localeCompare(b.nameEn);
+  });
 
   return (
     <section id="categories" className="py-20 md:py-24 bg-white border-b border-[#E5E7EB]">

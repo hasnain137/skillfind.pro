@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
         },
         quantity: 1,
       }],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pro/wallet?success=true`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pro/wallet?success=true&transactionId=${transaction.id}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pro/wallet?canceled=true&transactionId=${transaction.id}`,
       metadata: {
         professionalId: professional.id,

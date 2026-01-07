@@ -11,7 +11,6 @@ import { RequestTimeline } from "@/components/dashboard/RequestTimeline";
 import { ProfileCompletionBanner } from "@/components/dashboard/ProfileCompletionBanner";
 import { calculateClientCompletion } from "@/lib/profile-completion";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
-import { ClientDashboardTour } from "@/components/onboarding/ClientDashboardTour";
 import { getTranslations } from 'next-intl/server';
 import { PlusCircle, FileText, Briefcase } from 'lucide-react';
 import Link from 'next/link';
@@ -145,7 +144,7 @@ export default async function ClientDashboardPage() {
       {/* Hero Section */}
       <DashboardHero
         eyebrow={t('eyebrow')}
-        title={t('welcome', { name: firstName })}
+        title={t('welcomeSimple', { name: firstName })}
         description={t('description')}
         action={{ label: t('actions.createCta'), href: "/client/requests/new" }}
       />
@@ -261,7 +260,6 @@ export default async function ClientDashboardPage() {
       </div>
 
       <WelcomeModal userRole="CLIENT" firstName={firstName} />
-      <ClientDashboardTour />
     </div>
   );
 }

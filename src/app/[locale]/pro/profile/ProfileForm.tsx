@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { LocationSelector } from '@/components/ui/LocationSelector';
 
+
 type Category = {
     id: string;
     nameEn: string;
@@ -52,6 +53,9 @@ type Profile = {
     verificationMethod: string;
     documents?: any[];
     user?: {
+        firstName: string;
+        lastName: string;
+        email: string;
         dateOfBirth: Date | string | null;
         phoneNumber: string | null;
     };
@@ -299,6 +303,8 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
         setSuccess('Document uploaded successfully');
     };
 
+
+
     return (
         <div className="space-y-6">
             {/* Tabs */}
@@ -351,48 +357,45 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
 
             {activeTab === 'info' && (
                 <form onSubmit={handleProfileUpdate}>
-                    <Card padding="lg" className="space-y-4">
-                        <div className="grid gap-4 md:grid-cols-2">
-                            <FormField label={t('info.titleLabel')} required error={titleError}>
-                                <FormInput
-                                    type="text"
-                                    value={profileData.title}
-                                    hasError={!!titleError}
-                                    onChange={e => setProfileData({ ...profileData, title: e.target.value })}
-                                    onBlur={() => handleBlur('title', profileData.title)}
-                                    placeholder={t('info.titlePlaceholder')}
-                                />
-                            </FormField>
-                            <FormField label={t('info.yearsLabel')}>
-                                <FormInput
-                                    type="number"
-                                    value={profileData.yearsOfExperience}
-                                    onChange={e => setProfileData({ ...profileData, yearsOfExperience: parseInt(e.target.value) || 0 })}
-                                />
-                            </FormField>
-                        </div>
-
-                        <FormField label={t('info.bioLabel')} required error={bioError}>
-                            <FormTextarea
-                                rows={4}
-                                value={profileData.bio}
-                                hasError={!!bioError}
-                                onChange={e => setProfileData({ ...profileData, bio: e.target.value })}
-                                onBlur={() => handleBlur('bio', profileData.bio)}
-                                placeholder={t('info.bioPlaceholder')}
-                            />
-                        </FormField>
-
-                        {/* Personal Information Section */}
-                        <div className="border-t border-[#E5E7EB] pt-6 mt-6">
+                    <Card padding="lg" className="space-y-6">
+                        {/* 1. Identity & Personal Info (Top Section) */}
+                        <div>
                             <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                                 <span>👤</span> {t('info.personal')}
                             </h4>
-
                             <div className="grid gap-4 md:grid-cols-2">
+                                {/* Read-only Identity Fields */}
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">First Name</label>
+                                    <input
+                                        type="text"
+                                        value={initialProfile.user?.firstName || ''}
+                                        disabled
+                                        className="w-full rounded-xl border border-[#E5E7EB] bg-gray-50 px-3 py-2 text-sm text-gray-500 cursor-not-allowed"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Last Name</label>
+                                    <input
+                                        type="text"
+                                        value={initialProfile.user?.lastName || ''}
+                                        disabled
+                                        className="w-full rounded-xl border border-[#E5E7EB] bg-gray-50 px-3 py-2 text-sm text-gray-500 cursor-not-allowed"
+                                    />
+                                </div>
+                                <div className="md:col-span-2">
+                                    <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">Email Address</label>
+                                    <input
+                                        type="email"
+                                        value={initialProfile.user?.email || ''}
+                                        disabled
+                                        className="w-full rounded-xl border border-[#E5E7EB] bg-gray-50 px-3 py-2 text-sm text-gray-500 cursor-not-allowed"
+                                    />
+                                </div>
+
+                                {/* Editable Personal Fields */}
                                 <div>
                                     <label htmlFor="dob" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                                        {/* Using static fallback until translation keys are fully synced if needed */}
                                         Date of Birth
                                     </label>
                                     <input
@@ -422,8 +425,51 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                             </div>
                         </div>
 
-                        {/* Location & Availability Section */}
-                        <div className="border-t border-[#E5E7EB] pt-6 mt-6">
+                        {/* 2. Professional Details (Bio, etc.) */}
+                        <div className="border-t border-[#E5E7EB] pt-6">
+                            <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
+                                <span>💼</span> Professional Details
+                            </h4>
+                            <div className="space-y-4">
+                                <div className="grid gap-4 md:grid-cols-2">
+                                    <FormField label={t('info.titleLabel')} required error={titleError}>
+                                        <FormInput
+                                            value={profileData.title}
+                                            onChange={e => setProfileData({ ...profileData, title: e.target.value })}
+                                            placeholder={t('info.titlePlaceholder')}
+                                            hasError={!!titleError}
+                                            onBlur={() => handleBlur('title', profileData.title)}
+                                        />
+                                    </FormField>
+                                    <FormField label={t('info.yearsLabel')}>
+                                        <FormSelect
+                                            value={profileData.yearsOfExperience?.toString() || ''}
+                                            onChange={e => setProfileData({ ...profileData, yearsOfExperience: parseInt(e.target.value) || 0 })}
+                                        >
+                                            <option value="0">Less than 1 year</option>
+                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(year => (
+                                                <option key={year} value={year}>{year} {year === 1 ? 'year' : 'years'}</option>
+                                            ))}
+                                            <option value="10">10+ years</option>
+                                        </FormSelect>
+                                    </FormField>
+                                </div>
+
+                                <FormField label={t('info.bioLabel')} required error={bioError}>
+                                    <FormTextarea
+                                        rows={4}
+                                        value={profileData.bio}
+                                        hasError={!!bioError}
+                                        onChange={e => setProfileData({ ...profileData, bio: e.target.value })}
+                                        onBlur={() => handleBlur('bio', profileData.bio)}
+                                        placeholder={t('info.bioPlaceholder')}
+                                    />
+                                </FormField>
+                            </div>
+                        </div>
+
+                        {/* 3. Location & Availability */}
+                        <div className="border-t border-[#E5E7EB] pt-6">
                             <h4 className="text-sm font-bold text-[#333333] mb-4 flex items-center gap-2">
                                 <span>📍</span> {t('info.location')}
                             </h4>
@@ -466,7 +512,6 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                                 </div>
                             </div>
                         </div>
-
                         <div className="pt-2">
                             <Button type="submit" disabled={loading}>
                                 {loading ? 'Saving...' : 'Save Changes'}
@@ -478,13 +523,30 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
 
             {activeTab === 'services' && (
                 <div className="space-y-4">
-                    {!isAddingService ? (
-                        <Button onClick={() => {
-                            setEditingServiceId(null);
-                            setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
-                            setIsAddingService(true);
-                        }}>{t('services.add')}</Button>
+                    <p className="text-sm text-gray-500 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        ℹ️ You can add up to 5 services to your profile.
+                    </p>
+                    {initialProfile.services.length < 5 ? (
+                        !isAddingService ? (
+                            <Button onClick={() => {
+                                setEditingServiceId(null);
+                                setNewService({ categoryId: '', subcategoryId: '', priceFrom: '', description: '' });
+                                setIsAddingService(true);
+                            }}>{t('services.add')}</Button>
+                        ) : (
+                            <Card padding="lg" className="space-y-4 border-[#2563EB]">
+                                <h3 className="font-semibold text-[#333333]">
+                                    {editingServiceId ? t('services.edit') : t('services.add')}
+                                </h3>
+                                {/* ... existing form ... */}
+                            </Card>
+                        )
                     ) : (
+                        <div className="bg-yellow-50 text-yellow-800 p-4 rounded-lg text-sm">
+                            You can only add up to 5 services.
+                        </div>
+                    )}
+                    {isAddingService && (
                         <Card padding="lg" className="space-y-4 border-[#2563EB]">
                             <h3 className="font-semibold text-[#333333]">
                                 {editingServiceId ? t('services.edit') : t('services.add')}

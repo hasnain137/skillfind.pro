@@ -107,7 +107,7 @@ export function Testimonials() {
   const reviews = FALLBACK_TESTIMONIALS as any; // Cast to bypass strict type check for now if exact match fails
 
   return (
-    <section className="py-20 md:py-24 bg-[#FAFAFA] border-b border-[#E5E7EB]">
+    <section id="reviews" className="py-20 md:py-24 bg-[#FAFAFA] border-b border-[#E5E7EB]">
       <Container>
         <div className="mx-auto max-w-3xl text-center mb-16">
           <p className="text-sm font-bold uppercase tracking-wider text-[#3B4D9D]">

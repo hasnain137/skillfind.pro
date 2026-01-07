@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -62,13 +62,53 @@ export default function OfferForm({ requestId, requestTitle, clientName, request
 
     // ... handleSubmit ...
     async function handleSubmit(e: React.FormEvent) {
-        // ... implementation ...
         e.preventDefault();
         setLoading(true);
-        // ...
-        // (Assume existing implementation for brevity in replacement if keeping unchanged, but I must provide full replacement chunk if I target a range)
-        // Wait, I should not replace the whole function if I can avoid it.
-        // I will target the props definition and the start of the component.
+        setError('');
+
+        try {
+            // preparing the payload
+            const payload = {
+                requestId,
+                proposedPrice: parseFloat(formData.proposedPrice),
+                message: formData.message,
+                estimatedDuration: `${formData.durationValue} ${formData.durationUnit}`,
+                availableTimeSlots: formData.startType === 'specific'
+                    ? `Starting from ${formData.startDate}`
+                    : t(`availability.startType.${formData.startType}` as any)
+            };
+
+            const response = await fetch('/api/offers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || t('error.generic'));
+            }
+
+            toast.success(t('success.title'), {
+                description: t('success.desc')
+            });
+
+            // Redirect to dashboard or offers list
+            router.push('/pro');
+            router.refresh();
+
+        } catch (err: any) {
+            console.error('Error submitting offer:', err);
+            setError(err.message || t('error.generic'));
+            toast.error(t('error.title'), {
+                description: err.message || t('error.generic')
+            });
+        } finally {
+            setLoading(false);
+        }
     }
 
     // Actually, I'll split this. First update props.

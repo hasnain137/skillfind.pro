@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/Button';
 import { FormField, FormInput, FormSelect } from '@/components/ui/FormField';
 import { useTranslations } from 'next-intl';
 import { LocationSelector } from '@/components/ui/LocationSelector';
+import { State } from 'country-state-city';
+import { Combobox } from '@/components/ui/Combobox';
 
 type ClientProfile = {
     id: string;
@@ -204,14 +206,22 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                         />
                     </div>
                     <div>
-                        <label className="mb-1.5 block text-xs font-medium text-[#7C7373]">{t('fields.region')}</label>
-                        <input
-                            type="text"
-                            placeholder="Île-de-France"
-                            value={clientData.region || ''}
-                            onChange={e => setClientData({ ...clientData, region: e.target.value })}
-                            className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm"
-                        />
+                        <FormField label={t('fields.region')}>
+                            <Combobox
+                                value={clientData.region || ''}
+                                onChange={(value) => setClientData({ ...clientData, region: value })}
+                                options={
+                                    clientData.country
+                                        ? State.getStatesOfCountry(clientData.country).map(s => ({ value: s.name, label: s.name }))
+                                        : []
+                                }
+                                placeholder="Select Region/State"
+                                searchPlaceholder="Search region..."
+                                disabled={!clientData.country}
+                                allowCustomValue={true}
+                                emptyText={clientData.country ? "No regions found." : "Select a country first"}
+                            />
+                        </FormField>
                     </div>
                 </div>
             </div>
@@ -258,6 +268,6 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     {loading ? t('actions.saving') : t('actions.save')}
                 </Button>
             </div>
-        </form>
+        </form >
     );
 }

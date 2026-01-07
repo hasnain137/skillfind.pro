@@ -22,20 +22,20 @@ export default async function ProRequestsPage() {
 
   if (!professional) redirect('/auth-redirect');
 
-  // 2. Get Category IDs from Professional's Services
-  const serviceCategoryIds = professional.services.map(
-    (s: any) => s.subcategory.category.id
+  // 2. Get Subcategory IDs from Professional's Services
+  const serviceSubcategoryIds = professional.services.map(
+    (s: any) => s.subcategoryId
   );
 
   // Remove duplicates
-  const uniqueCategoryIds = [...new Set(serviceCategoryIds)] as string[];
+  const uniqueSubcategoryIds = [...new Set(serviceSubcategoryIds)] as string[];
 
   // 3. Fetch Matching Open Requests
   const requests = await prisma.request.findMany({
     where: {
       status: 'OPEN',
-      categoryId: {
-        in: uniqueCategoryIds,
+      subcategoryId: {
+        in: uniqueSubcategoryIds,
       },
       // Optional: Filter by location if professional has location preferences
     },

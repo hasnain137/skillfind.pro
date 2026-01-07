@@ -2,6 +2,7 @@
 import 'server-only';
 import { prisma } from '../prisma';
 import { TransactionType } from '@prisma/client';
+import { stripe } from '@/lib/stripe';
 import { InsufficientBalanceError } from '../errors';
 
 /**
@@ -184,4 +185,76 @@ export async function getWalletWithTransactions(
     wallet,
     transactions,
   };
+}
+
+/**
+ * Complete a pending deposit transaction
+ * Verifies with Stripe and updates wallet
+ */
+export async function completeDeposit(pendingTransactionId: string) {
+  // 1. Find the pending transaction
+  const pendingTx = await prisma.transaction.findUnique({
+    where: { id: pendingTransactionId },
+    include: { wallet: true }
+  });
+
+  if (!pendingTx) {
+    // It might have been already processed and deleted
+    return { status: 'not_found' };
+  }
+
+  if (pendingTx.type !== 'DEPOSIT') {
+    throw new Error('Transaction is not a deposit');
+  }
+
+  // 2. Verify with Stripe
+  // The pending transaction stores the session ID in referenceId
+  const sessionId = pendingTx.referenceId;
+  if (!sessionId || !sessionId.startsWith('cs_')) {
+    throw new Error('Invalid Stripe session ID');
+  }
+
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+  if (session.payment_status !== 'paid') {
+    return { status: 'pending', paymentStatus: session.payment_status };
+  }
+
+  const paymentIntentId = session.payment_intent as string;
+
+  // 3. Idempotency Check
+  // Check if a completed transaction with the PAYMENT INTENT ID already exists
+  const existingCompletedTx = await prisma.transaction.findFirst({
+    where: {
+      referenceId: paymentIntentId,
+      type: 'DEPOSIT'
+    }
+  });
+
+  if (existingCompletedTx) {
+    // Already processed. Just clean up the pending one if it still exists.
+    try {
+      if (pendingTx) {
+        await prisma.transaction.delete({ where: { id: pendingTransactionId } });
+      }
+    } catch (e) {
+      // Ignore if already deleted
+    }
+    return { status: 'completed', transaction: existingCompletedTx };
+  }
+
+  // 4. Process Success
+  // Delete pending first
+  await prisma.transaction.delete({ where: { id: pendingTransactionId } });
+
+  // Create credit
+  const newTx = await creditWallet({
+    professionalId: pendingTx.wallet.professionalId,
+    amount: session.amount_total || 0,
+    type: 'DEPOSIT',
+    description: `Stripe deposit ${paymentIntentId}`,
+    referenceId: paymentIntentId,
+  });
+
+  return { status: 'completed', transaction: newTx };
 }

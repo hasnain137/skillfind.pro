@@ -35,10 +35,14 @@
     "Navbar": {
         "howItWorks": "Comment ça marche",
         "categories": "Catégories",
-        "topProfessionals": "Meilleurs professionnels",
-        "forProfessionals": "Pour les professionnels",
+        "topProfessionals": "Top Pros",
+        "forProfessionals": "Pour les Pros",
+        "home": "Accueil",
+        "reviews": "Avis",
+        "whyUs": "Pourquoi SkillFind?",
         "login": "Connexion",
-        "signup": "S'inscrire"
+        "signup": "S'inscrire",
+        "search": "Rechercher des services"
     },
     "Sidebar": {
         "more": "Plus",
@@ -343,6 +347,7 @@
     "ProDashboard": {
         "eyebrow": "Tableau de bord professionnel",
         "welcome": "Bon {period}, {name}",
+        "welcomeSimple": "Bonjour {name}",
         "description": "Consultez les demandes correspondantes, envoyez des offres sur mesure et gardez votre profil prêt pour de nouvelles opportunités.",
         "metricsTitle": "Indicateurs de performance",
         "metricsDesc": "Suivez votre succès et votre visibilité sur la plateforme.",
@@ -555,6 +560,7 @@
     "ClientDashboard": {
         "eyebrow": "Tableau de bord client",
         "welcome": "Bon retour, {name}",
+        "welcomeSimple": "Bonjour {name}",
         "description": "Vous gardez le contrôle : postez vos besoins, comparez les offres et choisissez le meilleur professionnel.",
         "highlights": {
             "nextSteps": "Prochaines étapes",
@@ -1122,7 +1128,7 @@
             },
             "notVerified": {
                 "title": "Profil Non Vérifié",
-                "desc": "Veuillez télécharger au moins un document d'identité officiel (Carte d'identité, Passeport ou Licence commerciale) pour vérifier votre compte. Les profils vérifiés obtiennent 3x plus de d'emplois."
+                "desc": "Veuillez télécharger au moins un document d'identité officiel (Carte d'identité, Passeport ou Licence commerciale) pour vérifier votre compte."
             }
         },
         "upload": {

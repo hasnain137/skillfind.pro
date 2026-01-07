@@ -21,6 +21,7 @@ interface ComboboxProps {
     className?: string;
     disabled?: boolean;
     hasError?: boolean;
+    allowCustomValue?: boolean;
 }
 
 export function Combobox({
@@ -33,6 +34,7 @@ export function Combobox({
     className,
     disabled = false,
     hasError = false,
+    allowCustomValue = false,
 }: ComboboxProps) {
     const [open, setOpen] = React.useState(false);
     const [searchQuery, setSearchQuery] = React.useState("");
@@ -44,7 +46,7 @@ export function Combobox({
 
     // Find selected label for display
     const selectedLabel = React.useMemo(() => {
-        return options.find((option) => option.value === value)?.label || '';
+        return options.find((option) => option.value === value)?.label || value || '';
     }, [options, value]);
 
     // Manually filter and limit options for performance
@@ -57,8 +59,8 @@ export function Combobox({
             )
             : options;
 
-        // Return only first 200 items to keep DOM performant
-        return filtered.slice(0, 200);
+        // Return first 3000 items to ensure most cities are visible while keeping DOM somewhat performant
+        return filtered.slice(0, 3000);
     }, [options, searchQuery]);
 
     return (
@@ -99,15 +101,27 @@ export function Combobox({
                             />
                         </div>
                         <Command.List className="max-h-[300px] overflow-y-auto overflow-x-hidden py-1">
-                            <Command.Empty className="py-6 text-center text-sm text-[#7C7373]">
-                                {emptyText}
+                            <Command.Empty className="py-2 text-center text-sm text-[#7C7373]">
+                                {allowCustomValue && searchQuery ? (
+                                    <button
+                                        className="w-full px-4 py-2 text-left text-blue-600 hover:bg-blue-50"
+                                        onClick={() => {
+                                            onChange(searchQuery);
+                                            setOpen(false);
+                                        }}
+                                    >
+                                        Use "{searchQuery}"
+                                    </button>
+                                ) : (
+                                    emptyText
+                                )}
                             </Command.Empty>
                             {filteredOptions.map((option) => (
                                 <Command.Item
                                     key={option.value}
                                     value={option.value} // Use value for selection
-                                    onSelect={(currentValue) => {
-                                        onChange(currentValue);
+                                    onSelect={() => {
+                                        onChange(option.value);
                                         setOpen(false);
                                     }}
                                     className={cn(

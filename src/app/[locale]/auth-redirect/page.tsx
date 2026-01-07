@@ -7,6 +7,7 @@ import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { useLocale } from 'next-intl';
+import { LocationSelector } from "@/components/ui/LocationSelector";
 
 // Debug logger - only logs in development
 const debug = (...args: any[]) => {
@@ -532,45 +533,15 @@ export default function AuthRedirectPage() {
                     )}
                   </div>
 
-                  {/* City */}
+                  {/* Location Selector */}
                   <div>
-                    <label htmlFor="city" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                      City
-                    </label>
-                    <input
-                      id="city"
-                      type="text"
-                      placeholder="Paris"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
+                    <LocationSelector
+                      countryCode={formData.country}
+                      cityName={formData.city}
+                      onCountryChange={(code) => setFormData(prev => ({ ...prev, country: code }))}
+                      onCityChange={(city) => setFormData(prev => ({ ...prev, city: city }))}
+                      required
                     />
-                  </div>
-
-                  {/* Country */}
-                  <div>
-                    <label htmlFor="country" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                      Country
-                    </label>
-                    <select
-                      id="country"
-                      value={formData.country}
-                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                      className="w-full rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2.5 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-                    >
-                      <option value="FR">France</option>
-                      <option value="BE">Belgium</option>
-                      <option value="CH">Switzerland</option>
-                      <option value="LU">Luxembourg</option>
-                      <option value="MC">Monaco</option>
-                      <option value="DE">Germany</option>
-                      <option value="IT">Italy</option>
-                      <option value="ES">Spain</option>
-                      <option value="GB">United Kingdom</option>
-                      <option value="US">United States</option>
-                      <option value="CA">Canada</option>
-                      <option value="AU">Australia</option>
-                    </select>
                   </div>
 
                   {/* Action Buttons */}
