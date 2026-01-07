@@ -22,6 +22,10 @@ export function WalletCancellationHandler() {
                     toast.info('Deposit canceled', {
                         description: 'No funds were deducted from your account.'
                     });
+                } else {
+                    toast.error('Cancellation failed', {
+                        description: result.error || 'Could not cancel transaction'
+                    });
                 }
 
                 // Clean URL

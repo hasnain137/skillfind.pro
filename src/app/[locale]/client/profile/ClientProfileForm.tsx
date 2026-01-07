@@ -21,6 +21,7 @@ type ClientProfile = {
         firstName: string | null;
         lastName: string | null;
         email: string | null;
+        termsAccepted?: boolean;
     };
 };
 
@@ -53,6 +54,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
         region: initialClient.region || '',
         country: initialClient.country || 'FR',
         preferredLanguage: initialClient.preferredLanguage || 'en',
+        termsAccepted: initialClient.user?.termsAccepted || false,
     });
 
     async function handleProfileUpdate(e: React.FormEvent) {
@@ -62,6 +64,12 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
         setSuccess('');
 
         try {
+            if (!clientData.termsAccepted) {
+                setError('You must accept the Terms and Conditions to proceed.');
+                setLoading(false);
+                return;
+            }
+
             // Update client profile (location & preferences)
             const clientResponse = await fetch('/api/client/profile', {
                 method: 'PATCH',
@@ -251,6 +259,22 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                             {t('fields.languageHint')}
                         </p>
                     </div>
+                </div>
+            </div>
+            {/* Legal Consent Section */}
+            <div className="border-t border-[#E5E7EB] pt-6">
+                <div className="flex items-start gap-3 rounded-xl bg-blue-50/50 p-4 border border-blue-100">
+                    <input
+                        id="terms"
+                        type="checkbox"
+                        checked={clientData.termsAccepted}
+                        onChange={e => setClientData({ ...clientData, termsAccepted: e.target.checked })}
+                        className="mt-1 h-4 w-4 rounded border-gray-300 text-[#3B4D9D] focus:ring-[#3B4D9D]"
+                        required
+                    />
+                    <label htmlFor="terms" className="text-sm text-[#7C7373]">
+                        I have read and agree to the <a href="/legal" target="_blank" className="text-[#3B4D9D] hover:underline font-medium">Terms of Service</a> and <a href="/legal" target="_blank" className="text-[#3B4D9D] hover:underline font-medium">Privacy Policy</a>. I understand that SkillFind.pro is an information platform and does not provide services directly.
+                    </label>
                 </div>
             </div>
 

@@ -58,6 +58,7 @@ type Profile = {
         email: string;
         dateOfBirth: Date | string | null;
         phoneNumber: string | null;
+        termsAccepted?: boolean;
     };
 };
 
@@ -81,32 +82,7 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
     const [success, setSuccess] = useState('');
     const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-    // Cascading dropdown state for Title
-    const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
-    const [availableSubcategories, setAvailableSubcategories] = useState<Category['subcategories']>([]);
 
-    // Initialize category selection based on current title
-    useState(() => {
-        if (initialProfile.title && categories) {
-            for (const cat of categories) {
-                const match = cat.subcategories.find(sub => sub.nameEn === initialProfile.title);
-                if (match) {
-                    setSelectedCategoryId(cat.id);
-                    setAvailableSubcategories(cat.subcategories);
-                    break;
-                }
-            }
-        }
-    });
-
-    // Update subcategories when category changes
-    const handleCategoryChange = (categoryId: string) => {
-        setSelectedCategoryId(categoryId);
-        const category = categories.find(c => c.id === categoryId);
-        setAvailableSubcategories(category ? category.subcategories : []);
-        // Reset title when category changes
-        setProfileData(prev => ({ ...prev, title: '' }));
-    };
 
     // Field validation
     const getFieldError = (name: string, value: string): string => {
@@ -140,6 +116,7 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
         country: initialProfile.country || 'FR',
         isAvailable: initialProfile.isAvailable,
         remoteAvailability: initialProfile.remoteAvailability || 'YES_AND_ONSITE',
+        termsAccepted: initialProfile.user?.termsAccepted || false,
     });
 
     // Get errors based on touched state
@@ -173,6 +150,12 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
         setSuccess('');
 
         try {
+            if (!profileData.termsAccepted) {
+                setError('You must accept the Terms and Conditions to proceed.');
+                setLoading(false);
+                return;
+            }
+
             // Update professional profile
             const profileResponse = await fetch('/api/professionals/profile', {
                 method: 'PUT',
@@ -459,35 +442,15 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                             </h4>
                             <div className="space-y-4">
                                 <div className="grid gap-4 md:grid-cols-2">
-                                    {/* Cascading Title Selection */}
-                                    <div className="space-y-4">
-                                        <div className="grid gap-4 md:grid-cols-2">
-                                            <FormField label="Field of Work">
-                                                <FormSelect
-                                                    value={selectedCategoryId}
-                                                    onChange={e => handleCategoryChange(e.target.value)}
-                                                    placeholder="Select Category"
-                                                >
-                                                    {categories.map(cat => (
-                                                        <option key={cat.id} value={cat.id}>{cat.nameEn}</option>
-                                                    ))}
-                                                </FormSelect>
-                                            </FormField>
-
-                                            <FormField label={t('info.titleLabel')} required error={titleError}>
-                                                <FormSelect
-                                                    value={profileData.title || ''}
-                                                    onChange={e => setProfileData({ ...profileData, title: e.target.value })}
-                                                    placeholder="Select Profession"
-                                                    disabled={!selectedCategoryId}
-                                                >
-                                                    {availableSubcategories.map(sub => (
-                                                        <option key={sub.id} value={sub.nameEn}>{sub.nameEn}</option>
-                                                    ))}
-                                                </FormSelect>
-                                            </FormField>
-                                        </div>
-                                    </div>
+                                    <FormField label={t('info.titleLabel')} required error={titleError}>
+                                        <FormInput
+                                            value={profileData.title}
+                                            onChange={e => setProfileData({ ...profileData, title: e.target.value })}
+                                            placeholder={t('info.titlePlaceholder')}
+                                            hasError={!!titleError}
+                                            onBlur={() => handleBlur('title', profileData.title)}
+                                        />
+                                    </FormField>
                                     <FormField label={t('info.yearsLabel')}>
                                         <FormSelect
                                             value={profileData.yearsOfExperience?.toString() || ''}
@@ -560,6 +523,22 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                             </div>
                         </div>
                         <div className="pt-2">
+                            {/* Legal Consent Section */}
+                            <div className="mb-6 border-t border-[#E5E7EB] pt-6">
+                                <div className="flex items-start gap-3 rounded-xl bg-blue-50/50 p-4 border border-blue-100">
+                                    <input
+                                        id="terms"
+                                        type="checkbox"
+                                        checked={profileData.termsAccepted}
+                                        onChange={e => setProfileData({ ...profileData, termsAccepted: e.target.checked })}
+                                        className="mt-1 h-4 w-4 rounded border-gray-300 text-[#2563EB] focus:ring-[#2563EB]"
+                                        required
+                                    />
+                                    <label htmlFor="terms" className="text-sm text-[#7C7373]">
+                                        I have read and agree to the <a href="/legal" target="_blank" className="text-[#2563EB] hover:underline font-medium">Terms of Service</a> and <a href="/legal" target="_blank" className="text-[#2563EB] hover:underline font-medium">Privacy Policy</a>. I understand that SkillFind.pro is an information platform and does not provide services directly.
+                                    </label>
+                                </div>
+                            </div>
                             <Button type="submit" disabled={loading}>
                                 {loading ? 'Saving...' : 'Save Changes'}
                             </Button>

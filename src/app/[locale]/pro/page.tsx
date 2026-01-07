@@ -14,6 +14,8 @@ import { KeyStats } from "@/components/dashboard/KeyStats";
 import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
 import { getTranslations } from 'next-intl/server';
 
+import { buildMatchingRequestsWhereClause } from "@/lib/services/request-matching";
+
 export default async function ProDashboardPage() {
   const { userId } = await auth();
   const t = await getTranslations('ProDashboard');
@@ -81,14 +83,19 @@ export default async function ProDashboardPage() {
 
   // Get matching requests count (today)
   const serviceSubcategoryIds = professional.services.map((s: any) => s.subcategoryId);
-  const uniqueSubcategoryIds = [...new Set(serviceSubcategoryIds)];
+  const uniqueSubcategoryIds = [...new Set(serviceSubcategoryIds)] as string[];
+
+  // Build centralized matching where clause (includes location logic)
+  const matchingWhereClause = buildMatchingRequestsWhereClause({
+    city: professional.city,
+    country: professional.country,
+    remoteAvailability: professional.remoteAvailability || 'YES_AND_ONSITE',
+    subcategoryIds: uniqueSubcategoryIds,
+  });
 
   const matchingRequestsToday = await prisma.request.count({
     where: {
-      status: 'OPEN',
-      subcategoryId: {
-        in: uniqueSubcategoryIds as string[],
-      },
+      ...matchingWhereClause,
       createdAt: {
         gte: new Date(new Date().setHours(0, 0, 0, 0)),
       },
@@ -114,12 +121,7 @@ export default async function ProDashboardPage() {
   });
 
   const matchingRequests = await prisma.request.findMany({
-    where: {
-      status: 'OPEN',
-      subcategoryId: {
-        in: uniqueSubcategoryIds as string[],
-      },
-    },
+    where: matchingWhereClause,
     orderBy: { createdAt: 'desc' },
     take: 5,
     include: {

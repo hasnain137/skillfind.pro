@@ -54,7 +54,8 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
 
             if (!uploadRes.ok) {
                 const error = await uploadRes.json();
-                throw new Error(error.error || t('error'));
+                const errorMessage = error.error?.message || error.error || error.message || t('error');
+                throw new Error(errorMessage);
             }
 
             const { url: fileUrl } = await uploadRes.json();
@@ -72,7 +73,9 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
             });
 
             if (!metadataRes.ok) {
-                throw new Error(t('error'));
+                const errorData = await metadataRes.json();
+                const errorMessage = errorData.error?.message || errorData.error || errorData.message || t('error');
+                throw new Error(errorMessage);
             }
 
             toast.success(t('success'));
@@ -97,13 +100,17 @@ export function DocumentUpload({ onUploadSuccess, existingDocuments }: DocumentU
                 method: 'DELETE',
             });
 
-            if (!res.ok) throw new Error(t('deleteError'));
+            if (!res.ok) {
+                const errorData = await res.json();
+                const errorMessage = errorData.error?.message || errorData.error || errorData.message || t('deleteError');
+                throw new Error(errorMessage);
+            }
 
             toast.success(t('deleted'));
             onUploadSuccess();
         } catch (error) {
             console.error(error);
-            toast.error(t('deleteError'));
+            toast.error(error instanceof Error ? error.message : t('deleteError'));
         }
     };
 

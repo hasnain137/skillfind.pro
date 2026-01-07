@@ -91,19 +91,7 @@ export default async function ClientLayout({
       {/* Main Content Area */}
       <main className="lg:pl-72 min-h-screen flex flex-col">
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-200 px-8 py-4 flex items-center justify-between gap-4">
-          <div className="flex-1 max-w-xl">
-            <Link
-              href="/search"
-              className="w-full flex items-center gap-3 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-sm transition-all group"
-            >
-              <span className="text-gray-400 group-hover:text-primary transition-colors">🔍</span>
-              <span>Find a professional...</span>
-              <kbd className="hidden md:inline-flex h-5 items-center gap-1 rounded border border-gray-200 bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-500 ml-auto">
-                ⌘ K
-              </kbd>
-            </Link>
-          </div>
+        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-200 px-8 py-4 flex items-center justify-end gap-4">
           <div className="flex items-center gap-4">
             <Link href="/" className="p-2 text-gray-400 hover:text-primary-600 hover:bg-gray-100 rounded-full transition-colors" title="Go to Homepage">
               <span className="text-xl">🏠</span>

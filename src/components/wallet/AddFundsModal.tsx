@@ -108,7 +108,9 @@ export function AddFundsModal({ children }: { children: React.ReactNode }) {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to create deposit session');
+                // Prioritize specific error message from server
+                const errorMessage = data.error?.message || data.message || t('errors.depositFailed');
+                throw new Error(errorMessage);
             }
 
             // Redirect to Stripe Checkout
@@ -120,7 +122,9 @@ export function AddFundsModal({ children }: { children: React.ReactNode }) {
 
         } catch (error) {
             console.error('Deposit error:', error);
-            toast.error(t('errors.depositFailed'));
+            // Display specific error message
+            const message = error instanceof Error ? error.message : t('errors.depositFailed');
+            toast.error(message);
             setIsLoading(false);
         }
     };

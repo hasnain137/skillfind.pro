@@ -1441,5 +1441,33 @@
     },
     "common": {
         "cancel": "Cancel"
+    },
+    "ProRequests": {
+        "eyebrow": "Browse Requests",
+        "title": "New Opportunities",
+        "description": "Find new clients looking for your skills.",
+        "stats": {
+            "matches": "Exact Matches",
+            "new": "New Today",
+            "urgent": "Urgent",
+            "services": "Your Services"
+        },
+        "empty": {
+            "title": "No matching requests found",
+            "desc": "Try updating your services or checking back later.",
+            "action": "Update Services"
+        },
+        "card": {
+            "posted": "Posted {date}",
+            "offers_count": "{count, plural, =0 {No offers} =1 {1 offer} other {# offers}}",
+            "client": "Client: {name}",
+            "viewOffer": "View Offer",
+            "sendOffer": "Send Offer",
+            "offerSent": "Offer Sent",
+            "new": "NEW",
+            "urgent": "URGENT",
+            "pending": "Pending",
+            "inactive": "Inactive"
+        }
     }
 }

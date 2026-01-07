@@ -45,7 +45,8 @@ export default function ReviewForm({ jobId, onSuccess, onCancel }: ReviewFormPro
             const data = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.message || t('error'));
+                const errorMessage = data.error?.message || data.error || data.message || t('error');
+                throw new Error(errorMessage);
             }
 
             toast.success(t('success'));

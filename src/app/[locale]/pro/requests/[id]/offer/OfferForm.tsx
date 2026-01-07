@@ -89,7 +89,9 @@ export default function OfferForm({ requestId, requestTitle, clientName, request
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || t('error.generic'));
+                // Parse standardized API error structure
+                const errorMessage = data.error?.message || data.error || data.message || t('error.generic');
+                throw new Error(errorMessage);
             }
 
             toast.success(t('success.title'), {

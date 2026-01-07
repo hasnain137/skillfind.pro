@@ -110,24 +110,30 @@ export async function PATCH(request: NextRequest) {
 
     // Parse request body
     const body = await request.json();
-    
+
     // Build update data object only with provided fields
     const updateData: any = {};
-    
+
     if (body.firstName !== undefined) {
       updateData.firstName = body.firstName || null;
     }
-    
+
     if (body.lastName !== undefined) {
       updateData.lastName = body.lastName || null;
     }
-    
+
     if (body.dateOfBirth !== undefined) {
       updateData.dateOfBirth = body.dateOfBirth ? new Date(body.dateOfBirth) : null;
     }
-    
+
     if (body.phoneNumber !== undefined) {
       updateData.phoneNumber = body.phoneNumber || null;
+    }
+
+    // Legal Consent
+    if (body.termsAccepted === true) {
+      updateData.termsAccepted = true;
+      updateData.termsAcceptedAt = new Date();
     }
 
     // Update user with only the provided fields

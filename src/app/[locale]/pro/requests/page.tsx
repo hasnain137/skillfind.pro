@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { StatusBanner, getProfessionalStatusBanner } from "@/components/ui/StatusBanner";
+import { buildMatchingRequestsWhereClause } from "@/lib/services/request-matching";
 
 export default async function ProRequestsPage() {
   const { userId } = await auth();
@@ -31,14 +32,15 @@ export default async function ProRequestsPage() {
   const uniqueSubcategoryIds = [...new Set(serviceSubcategoryIds)] as string[];
 
   // 3. Fetch Matching Open Requests
+  const matchingWhereClause = buildMatchingRequestsWhereClause({
+    city: professional.city,
+    country: professional.country,
+    remoteAvailability: professional.remoteAvailability || 'YES_AND_ONSITE',
+    subcategoryIds: uniqueSubcategoryIds,
+  });
+
   const requests = await prisma.request.findMany({
-    where: {
-      status: 'OPEN',
-      subcategoryId: {
-        in: uniqueSubcategoryIds,
-      },
-      // Optional: Filter by location if professional has location preferences
-    },
+    where: matchingWhereClause,
     include: {
       category: true,
       client: {

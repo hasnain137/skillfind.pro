@@ -37,6 +37,10 @@ model User {
   isActive          Boolean  @default(true)
   isBanned          Boolean  @default(false)
   banReason         String?
+
+  // Legal Consent
+  termsAccepted     Boolean  @default(false)
+  termsAcceptedAt   DateTime?
   
   // Timestamps
   createdAt         DateTime @default(now())
@@ -323,7 +327,6 @@ model Subcategory {
   nameEn          String
   nameFr          String?
   description     String?       @db.Text
-  professionalLabel String?     // e.g. "Plumber" for "Plumbing"
   sortOrder       Int           @default(0)
   isActive        Boolean       @default(true)
   

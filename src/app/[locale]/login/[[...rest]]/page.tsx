@@ -1,6 +1,6 @@
 /* No change here, verified isolation */
 import { SignIn } from '@clerk/nextjs';
-import { ClientNavbar } from "@/components/layout/ClientNavbar";
+import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { Container } from "@/components/ui/Container";
 import { useLocale, useTranslations } from 'next-intl';
@@ -10,7 +10,7 @@ export default function LoginPage() {
   const t = useTranslations('Auth');
   return (
     <div className="flex min-h-screen flex-col">
-      <ClientNavbar />
+      <Navbar />
       <main className="flex-1 bg-surface-50 py-12 md:py-16">
         <Container>
           <div className="mx-auto max-w-md">
