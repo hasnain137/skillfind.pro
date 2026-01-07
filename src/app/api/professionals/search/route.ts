@@ -12,6 +12,7 @@ const searchProfessionalsSchema = z.object({
   limit: z.string().nullable().transform(val => val ? parseInt(val) : 20).pipe(z.number().int().min(1).max(100)).catch(20),
   category: z.string().optional(),
   subcategory: z.string().optional(),
+  country: z.string().optional(),
   location: z.string().optional(),
   remote: z.string().optional().transform(val => val === 'true'),
   minRating: z.string().optional().transform(val => val ? parseFloat(val) : undefined).pipe(z.number().min(0).max(5).optional()),
@@ -29,6 +30,7 @@ export async function GET(request: NextRequest) {
       limit: searchParams.get('limit'),
       category: searchParams.get('category'),
       subcategory: searchParams.get('subcategory'),
+      country: searchParams.get('country'),
       location: searchParams.get('location'),
       remote: searchParams.get('remote'),
       minRating: searchParams.get('minRating'),
@@ -43,6 +45,7 @@ export async function GET(request: NextRequest) {
       limit: params.limit ? parseInt(params.limit) || 20 : 20,
       category: params.category || undefined,
       subcategory: params.subcategory || undefined,
+      country: params.country || undefined,
       location: params.location || undefined,
       remote: params.remote === 'true',
       minRating: params.minRating ? parseFloat(params.minRating) : undefined,
@@ -142,6 +145,11 @@ export async function GET(request: NextRequest) {
     // Rating
     if (filters.minRating) {
       whereClause.averageRating = { gte: filters.minRating };
+    }
+
+    // Country
+    if (filters.country) {
+      whereClause.country = filters.country;
     }
 
     // Location

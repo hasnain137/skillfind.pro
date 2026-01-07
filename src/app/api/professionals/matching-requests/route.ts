@@ -84,14 +84,46 @@ export async function GET(request: NextRequest) {
     // Location matching
     // Filter based on professional's remote availability
     if (professional.remoteAvailability === 'NO_REMOTE') {
-      // Professional only works on-site - filter for same city
+      // Professional only works on-site - filter for same city AND country
       whereClause.city = professional.city;
+      whereClause.country = professional.country;
       whereClause.locationType = 'ON_SITE';
+    } else if (professional.remoteAvailability === 'ONLY_REMOTE') {
+      // Professional only works remotely
+      whereClause.locationType = 'REMOTE';
+    } else {
+      // YES_AND_ONSITE - Can see remote OR local on-site
+      whereClause.OR = [
+        { locationType: 'REMOTE' },
+        {
+          locationType: 'ON_SITE',
+          city: professional.city,
+          country: professional.country,
+        },
+      ];
     }
 
-    // Filter for remote-only requests if specified
+    // Additional manual filter for remote-only requests if specified
     if (filters.remoteOnly) {
-      whereClause.locationType = 'REMOTE';
+      if (whereClause.OR) {
+        // Refine the OR clause to only keep the remote part
+        whereClause.OR = undefined;
+        whereClause.locationType = 'REMOTE';
+      } else if (whereClause.locationType === 'ON_SITE') {
+        // Conflict: Pro is onsite-only but filtered for remote
+        return successResponse(
+          { requests: [] },
+          undefined,
+          {
+            page: filters.page,
+            limit: filters.limit,
+            total: 0,
+            totalPages: 0,
+          }
+        );
+      } else {
+        whereClause.locationType = 'REMOTE';
+      }
     }
 
     // Exclude requests where professional already sent an offer

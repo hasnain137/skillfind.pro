@@ -1,6 +1,7 @@
 // src/app/search/SearchFilters.tsx
 'use client';
 
+import { LocationSelector } from '@/components/ui/LocationSelector';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
 import { Card } from '@/components/ui/Card';
@@ -13,31 +14,16 @@ interface Category {
   slug: string;
 }
 
-// Popular cities in France for quick selection
-const POPULAR_CITIES = [
-  { value: '', label: 'Any Location' },
-  { value: 'Paris', label: 'Paris' },
-  { value: 'Lyon', label: 'Lyon' },
-  { value: 'Marseille', label: 'Marseille' },
-  { value: 'Toulouse', label: 'Toulouse' },
-  { value: 'Nice', label: 'Nice' },
-  { value: 'Nantes', label: 'Nantes' },
-  { value: 'Strasbourg', label: 'Strasbourg' },
-  { value: 'Bordeaux', label: 'Bordeaux' },
-  { value: 'Lille', label: 'Lille' },
-  { value: 'Remote', label: 'Remote Only' },
-];
-
 export function SearchFilters({ onApply }: { onApply?: () => void }) {
   const t = useTranslations('Search');
   const router = useRouter();
   const searchParams = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
-  const [showCustomLocation, setShowCustomLocation] = useState(false);
 
   // Get current filter values
   const [filters, setFilters] = useState({
     search: searchParams.get('search') || '',
+    country: searchParams.get('country') || '',
     location: searchParams.get('location') || '',
     category: searchParams.get('category') || '',
     minRating: searchParams.get('minRating') || '',
@@ -66,11 +52,7 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
       .catch(console.error);
   }, []);
 
-  // Check if location is custom (not in popular cities)
-  useEffect(() => {
-    const isCustom = !!filters.location && !POPULAR_CITIES.find(c => c.value === filters.location);
-    setShowCustomLocation(isCustom);
-  }, [filters.location]);
+
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -88,6 +70,7 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
   const clearFilters = () => {
     setFilters({
       search: '',
+      country: '',
       location: '',
       category: '',
       minRating: '',
@@ -123,40 +106,18 @@ export function SearchFilters({ onApply }: { onApply?: () => void }) {
         />
       </div>
 
-      {/* Location - City Dropdown + Custom */}
+      {/* Location */}
       <div className="mb-4">
-        <label className="block text-xs font-medium text-[#7C7373] mb-1.5">
+        <label className="block text-xs font-medium text-[#7C7373] mb-1.5 ">
           {t('filters.locationLabel')}
         </label>
-        <select
-          value={showCustomLocation ? '__custom__' : filters.location}
-          onChange={(e) => {
-            if (e.target.value === '__custom__') {
-              setShowCustomLocation(true);
-              handleFilterChange('location', '');
-            } else {
-              setShowCustomLocation(false);
-              handleFilterChange('location', e.target.value);
-            }
-          }}
-          className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-        >
-          {POPULAR_CITIES.map((city) => (
-            <option key={city.value || 'any'} value={city.value}>
-              {city.label}
-            </option>
-          ))}
-          <option value="__custom__">Other City...</option>
-        </select>
-        {showCustomLocation && (
-          <input
-            type="text"
-            value={filters.location}
-            onChange={(e) => handleFilterChange('location', e.target.value)}
-            placeholder="Enter city name"
-            className="w-full mt-2 rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm text-[#333333] placeholder:text-[#B0B0B0] focus:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/15"
-          />
-        )}
+        <LocationSelector
+          countryCode={filters.country}
+          cityName={filters.location}
+          onCountryChange={(code) => handleFilterChange('country', code)}
+          onCityChange={(city) => handleFilterChange('location', city)}
+          required={false}
+        />
       </div>
 
       {/* Category */}

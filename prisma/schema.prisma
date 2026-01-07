@@ -323,6 +323,7 @@ model Subcategory {
   nameEn          String
   nameFr          String?
   description     String?       @db.Text
+  professionalLabel String?     // e.g. "Plumber" for "Plumbing"
   sortOrder       Int           @default(0)
   isActive        Boolean       @default(true)
   

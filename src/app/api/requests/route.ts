@@ -224,17 +224,33 @@ export async function POST(request: NextRequest) {
     // Notify matching professionals
     // Find professionals who offer services in this category (align with dashboard matching)
     try {
-      const matchingPros = await prisma.professional.findMany({
-        where: {
-          status: { in: ['ACTIVE', 'PENDING_REVIEW'] },
-          services: {
-            some: {
-              subcategory: {
-                categoryId: data.categoryId,
-              },
-            },
+      // Build where clause for professionals
+      const proWhereClause: any = {
+        status: { in: ['ACTIVE', 'PENDING_REVIEW'] },
+        services: {
+          some: {
+            subcategoryId: data.subcategoryId, // Strict subcategory match
           },
         },
+      };
+
+      // Add location filtering
+      if (data.locationType === 'ON_SITE') {
+        // For on-site requests, pro must be in same city/country AND not remote-only
+        proWhereClause.city = data.city;
+        proWhereClause.country = data.country;
+        proWhereClause.remoteAvailability = {
+          not: 'ONLY_REMOTE',
+        };
+      } else {
+        // For remote requests, pro must be willing to work remotely
+        proWhereClause.remoteAvailability = {
+          in: ['ONLY_REMOTE', 'YES_AND_ONSITE'],
+        };
+      }
+
+      const matchingPros = await prisma.professional.findMany({
+        where: proWhereClause,
         include: {
           user: {
             select: {

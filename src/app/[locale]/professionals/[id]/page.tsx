@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { auth } from '@clerk/nextjs/server';
 
+import { BackButton } from '@/components/ui/BackButton';
+
 type ProProfilePageProps = {
     params: Promise<{ id: string }>;
 };
@@ -114,6 +116,7 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
             {/* Hero Section */}
             <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-12">
                 <div className="max-w-6xl mx-auto px-4">
+                    <BackButton className="mb-6" />
                     <div className="flex flex-col md:flex-row gap-6 items-start">
                         {/* Avatar */}
                         <div className="flex-shrink-0">
@@ -348,48 +351,7 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
                         </Card>
 
                         {/* Call to Action */}
-                        {!currentUserClient && (
-                            <Card padding="lg" className="bg-gradient-to-br from-green-50 to-white border-green-200 text-center">
-                                <div className="text-4xl mb-3">🎯</div>
-                                <h3 className="text-base font-bold text-[#333333] mb-2">
-                                    Ready to hire {professional.user.firstName}?
-                                </h3>
-                                <p className="text-sm text-[#7C7373] mb-4">
-                                    Sign in to send a request or message this professional
-                                </p>
-                                <Link href="/signup">
-                                    <Button className="w-full mb-2">Get Started</Button>
-                                </Link>
-                                <Link href="/login">
-                                    <Button variant="ghost" className="w-full text-xs">
-                                        Already have an account? Sign in
-                                    </Button>
-                                </Link>
-                            </Card>
-                        )}
 
-                        {/* Location */}
-                        {professional.city && (
-                            <Card padding="lg">
-                                <h3 className="text-base font-bold text-[#333333] mb-3 flex items-center gap-2">
-                                    <span>📍</span> Location
-                                </h3>
-                                <p className="text-sm text-[#4B5563]">
-                                    {professional.city}
-                                    {professional.region && `, ${professional.region}`}
-                                    <br />
-                                    {professional.country}
-                                </p>
-                                {professional.remoteAvailability && (
-                                    <div className="mt-3 pt-3 border-t border-[#E5E7EB]">
-                                        <div className="flex items-center gap-2 text-sm text-green-600">
-                                            <span>✓</span>
-                                            <span>Available for remote work</span>
-                                        </div>
-                                    </div>
-                                )}
-                            </Card>
-                        )}
 
                         {/* Experience */}
                         {professional.yearsOfExperience && (

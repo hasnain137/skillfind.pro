@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 interface Professional {
   id: string;
   userId: string;
+  title: string | null;
   bio: string | null;
   hourlyRateMin: number | null;
   hourlyRateMax: number | null;
@@ -56,6 +57,7 @@ export function SearchResults() {
 
   // Get filter values from URL
   const query = searchParams.get('search') || '';
+  const country = searchParams.get('country') || '';
   const location = searchParams.get('location') || '';
   const category = searchParams.get('category') || '';
   const minRating = searchParams.get('minRating') || '';
@@ -76,6 +78,7 @@ export function SearchResults() {
       });
 
       if (query) params.set('search', query);
+      if (country) params.set('country', country);
       if (location) params.set('location', location);
       if (category) params.set('category', category);
       if (minRating) params.set('minRating', minRating);

@@ -81,6 +81,33 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
     const [success, setSuccess] = useState('');
     const [touched, setTouched] = useState<Record<string, boolean>>({});
 
+    // Cascading dropdown state for Title
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
+    const [availableSubcategories, setAvailableSubcategories] = useState<Category['subcategories']>([]);
+
+    // Initialize category selection based on current title
+    useState(() => {
+        if (initialProfile.title && categories) {
+            for (const cat of categories) {
+                const match = cat.subcategories.find(sub => sub.nameEn === initialProfile.title);
+                if (match) {
+                    setSelectedCategoryId(cat.id);
+                    setAvailableSubcategories(cat.subcategories);
+                    break;
+                }
+            }
+        }
+    });
+
+    // Update subcategories when category changes
+    const handleCategoryChange = (categoryId: string) => {
+        setSelectedCategoryId(categoryId);
+        const category = categories.find(c => c.id === categoryId);
+        setAvailableSubcategories(category ? category.subcategories : []);
+        // Reset title when category changes
+        setProfileData(prev => ({ ...prev, title: '' }));
+    };
+
     // Field validation
     const getFieldError = (name: string, value: string): string => {
         switch (name) {
@@ -432,15 +459,35 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                             </h4>
                             <div className="space-y-4">
                                 <div className="grid gap-4 md:grid-cols-2">
-                                    <FormField label={t('info.titleLabel')} required error={titleError}>
-                                        <FormInput
-                                            value={profileData.title}
-                                            onChange={e => setProfileData({ ...profileData, title: e.target.value })}
-                                            placeholder={t('info.titlePlaceholder')}
-                                            hasError={!!titleError}
-                                            onBlur={() => handleBlur('title', profileData.title)}
-                                        />
-                                    </FormField>
+                                    {/* Cascading Title Selection */}
+                                    <div className="space-y-4">
+                                        <div className="grid gap-4 md:grid-cols-2">
+                                            <FormField label="Field of Work">
+                                                <FormSelect
+                                                    value={selectedCategoryId}
+                                                    onChange={e => handleCategoryChange(e.target.value)}
+                                                    placeholder="Select Category"
+                                                >
+                                                    {categories.map(cat => (
+                                                        <option key={cat.id} value={cat.id}>{cat.nameEn}</option>
+                                                    ))}
+                                                </FormSelect>
+                                            </FormField>
+
+                                            <FormField label={t('info.titleLabel')} required error={titleError}>
+                                                <FormSelect
+                                                    value={profileData.title || ''}
+                                                    onChange={e => setProfileData({ ...profileData, title: e.target.value })}
+                                                    placeholder="Select Profession"
+                                                    disabled={!selectedCategoryId}
+                                                >
+                                                    {availableSubcategories.map(sub => (
+                                                        <option key={sub.id} value={sub.nameEn}>{sub.nameEn}</option>
+                                                    ))}
+                                                </FormSelect>
+                                            </FormField>
+                                        </div>
+                                    </div>
                                     <FormField label={t('info.yearsLabel')}>
                                         <FormSelect
                                             value={profileData.yearsOfExperience?.toString() || ''}

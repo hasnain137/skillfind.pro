@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 interface Professional {
   id: string;
   userId: string;
+  title: string | null;
   bio: string | null;
   hourlyRateMin: number | null;
   hourlyRateMax: number | null;
@@ -31,7 +32,7 @@ interface Professional {
 
 export function ProfessionalCard({ professional }: { professional: Professional }) {
   const t = useTranslations('ProfessionalCard');
-  const { user, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services } = professional;
+  const { user, title, bio, hourlyRateMin, hourlyRateMax, location, isRemote, rating, reviewCount, services } = professional;
 
   const priceDisplay = hourlyRateMin && hourlyRateMax
     ? `€${hourlyRateMin}-${hourlyRateMax}/hr`
@@ -40,6 +41,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
       : t('contactForPricing');
 
   const primaryService = services[0]?.title || t('defaultService');
+  const displayTitle = title || primaryService;
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ring-1 ring-gray-900/5">
@@ -55,7 +57,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
           <h3 className="text-sm font-semibold text-[#333333] truncate">
             {user.firstName} {user.lastName}
           </h3>
-          <p className="text-xs text-[#7C7373] truncate">{primaryService}</p>
+          <p className="text-xs text-[#7C7373] truncate">{displayTitle}</p>
         </div>
       </div>
 
