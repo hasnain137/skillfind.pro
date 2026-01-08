@@ -109,29 +109,23 @@ export default async function ProRequestsPage() {
 
       {/* Stats Overview */}
       {requests.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-3">
           <Card level={1} className="text-center bg-gradient-to-br from-blue-50 to-white border-blue-200" padding="md">
-            <CardContent className="p-3">
-              <p className="text-xl font-bold text-blue-600">{requests.length}</p>
-              <p className="text-[10px] text-blue-700 font-medium uppercase tracking-wide">{t('stats.matches')}</p>
+            <CardContent className="p-4">
+              <p className="text-2xl font-bold text-blue-600">{requests.length}</p>
+              <p className="text-xs text-blue-700 font-medium uppercase tracking-wide">{t('stats.matches')}</p>
             </CardContent>
           </Card>
           <Card level={1} className="text-center bg-gradient-to-br from-red-50 to-white border-red-200" padding="md">
-            <CardContent className="p-3">
-              <p className="text-xl font-bold text-red-600">{newRequests.length}</p>
-              <p className="text-[10px] text-red-700 font-medium uppercase tracking-wide">{t('stats.new')}</p>
+            <CardContent className="p-4">
+              <p className="text-2xl font-bold text-red-600">{newRequests.length}</p>
+              <p className="text-xs text-red-700 font-medium uppercase tracking-wide">{t('stats.new')}</p>
             </CardContent>
           </Card>
           <Card level={1} className="text-center bg-gradient-to-br from-orange-50 to-white border-orange-200" padding="md">
-            <CardContent className="p-3">
-              <p className="text-xl font-bold text-orange-600">{urgentRequests.length}</p>
-              <p className="text-[10px] text-orange-700 font-medium uppercase tracking-wide">{t('stats.urgent')}</p>
-            </CardContent>
-          </Card>
-          <Card level={1} className="text-center bg-gradient-to-br from-green-50 to-white border-green-200" padding="md">
-            <CardContent className="p-3">
-              <p className="text-xl font-bold text-green-600">{professional.services.length}</p>
-              <p className="text-[10px] text-green-700 font-medium uppercase tracking-wide">{t('stats.services')}</p>
+            <CardContent className="p-4">
+              <p className="text-2xl font-bold text-orange-600">{urgentRequests.length}</p>
+              <p className="text-xs text-orange-700 font-medium uppercase tracking-wide">{t('stats.urgent')}</p>
             </CardContent>
           </Card>
         </div>
@@ -170,18 +164,21 @@ export default async function ProRequestsPage() {
               >
                 {/* Badges */}
                 {hasSentOffer && (
-                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md z-10">
-                    ✓ {t('card.offerSent')}
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-lg shadow-green-500/25 ring-1 ring-white/20">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    {t('card.offerSent')}
                   </div>
                 )}
                 {isNew && !hasSentOffer && (
-                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                    🔥 {t('card.new')}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-gradient-to-r from-rose-500 to-red-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-lg shadow-red-500/25 ring-1 ring-white/20">
+                    <span className="animate-pulse">🔥</span> {t('card.new')}
                   </div>
                 )}
                 {isUrgent && !isNew && !hasSentOffer && (
-                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md">
-                    ⚡ {t('card.urgent')}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-lg shadow-amber-500/25 ring-1 ring-white/20">
+                    <span className="animate-pulse">⚡</span> {t('card.urgent')}
                   </div>
                 )}
 
@@ -248,7 +245,7 @@ export default async function ProRequestsPage() {
                     {hasSentOffer ? (
                       <Link
                         href="/pro/offers"
-                        className="inline-flex items-center justify-center gap-1 rounded-full bg-green-50 border border-green-200 px-4 py-2 text-xs font-semibold text-green-700 transition hover:bg-green-100"
+                        className="inline-flex items-center justify-center gap-1 rounded-full bg-green-100 border border-green-300 px-4 py-2 text-xs font-bold text-green-700 transition hover:bg-green-200"
                       >
                         {t('card.viewOffer')} →
                       </Link>

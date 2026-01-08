@@ -18,60 +18,46 @@ export type ProfessionalWithRelations = Professional & {
 export function calculateProfessionalCompletion(professional: ProfessionalWithRelations) {
   const steps: ProfileStep[] = [
     {
-      id: 'email',
-      label: 'Verify Email',
-      isComplete: professional.user.emailVerified,
-      weight: 10,
-      actionUrl: '/settings/account'
+      id: 'title',
+      label: 'Add Professional Title',
+      isComplete: Boolean(professional.title && professional.title.length > 0),
+      weight: 15,
+      actionUrl: '/pro/profile'
     },
     {
-      id: 'phone',
-      label: 'Verify Phone Number',
-      isComplete: Boolean(professional.user.phoneNumber && professional.user.phoneVerified),
-      weight: 10,
-      actionUrl: '/settings/account'
-    },
-    {
-      id: 'avatar',
-      label: 'Upload Profile Photo',
-      isComplete: Boolean(professional.user.avatar),
-      weight: 10,
+      id: 'bio',
+      label: 'Add Bio',
+      isComplete: Boolean(professional.bio && professional.bio.length > 30),
+      weight: 15,
       actionUrl: '/pro/profile'
     },
     {
       id: 'location',
       label: 'Set Location',
       isComplete: Boolean(professional.city && professional.country),
-      weight: 10,
-      actionUrl: '/pro/profile'
-    },
-    {
-      id: 'bio',
-      label: 'Add Bio',
-      isComplete: Boolean(professional.bio && professional.bio.length > 50),
-      weight: 10,
+      weight: 15,
       actionUrl: '/pro/profile'
     },
     {
       id: 'services',
-      label: 'Add Services',
+      label: 'Add at least one Service',
       isComplete: professional.services.length > 0,
-      weight: 20,
-      actionUrl: '/pro/profile'
+      weight: 25,
+      actionUrl: '/pro/profile?activeTab=services'
     },
     {
-      id: 'pricing',
-      label: 'Set Hourly Rate',
-      isComplete: Boolean(professional.profile?.hourlyRateMin),
-      weight: 10,
-      actionUrl: '/pro/profile'
+      id: 'qualifications',
+      label: 'Upload Qualifications',
+      isComplete: professional.qualificationVerified,
+      weight: 15,
+      actionUrl: '/pro/profile?activeTab=qualifications'
     },
     {
       id: 'verification',
-      label: 'Identity Verification',
+      label: 'Complete Identity Verification',
       isComplete: professional.isVerified,
-      weight: 20,
-      actionUrl: '/pro/verification'
+      weight: 15,
+      actionUrl: '/pro/profile?activeTab=verification'
     }
   ];
 
@@ -89,38 +75,31 @@ export function calculateProfessionalCompletion(professional: ProfessionalWithRe
 export function calculateClientCompletion(user: User, client: Client | null) {
   const steps: ProfileStep[] = [
     {
-      id: 'email',
-      label: 'Verify Email',
-      isComplete: user.emailVerified,
-      weight: 20,
-      actionUrl: '/settings/account'
-    },
-    {
-      id: 'phone',
-      label: 'Verify Phone Number',
-      isComplete: Boolean(user.phoneNumber && user.phoneVerified),
-      weight: 20,
-      actionUrl: '/settings/account'
-    },
-    {
       id: 'name',
       label: 'Complete Name',
       isComplete: Boolean(user.firstName && user.lastName),
-      weight: 20,
+      weight: 25,
+      actionUrl: '/client/profile'
+    },
+    {
+      id: 'location',
+      label: 'Set Location',
+      isComplete: Boolean(client?.city || client?.region),
+      weight: 25,
       actionUrl: '/client/profile'
     },
     {
       id: 'dob',
       label: 'Date of Birth',
       isComplete: Boolean(user.dateOfBirth),
-      weight: 20,
+      weight: 25,
       actionUrl: '/client/profile'
     },
     {
-      id: 'location',
-      label: 'Set City',
-      isComplete: Boolean(client?.city),
-      weight: 20,
+      id: 'preferences',
+      label: 'Set Language Preference',
+      isComplete: Boolean(client?.preferredLanguage),
+      weight: 25,
       actionUrl: '/client/profile'
     }
   ];

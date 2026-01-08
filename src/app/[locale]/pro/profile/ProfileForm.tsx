@@ -174,7 +174,10 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
             const userResponse = await fetch('/api/user/profile', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(personalData),
+                body: JSON.stringify({
+                    ...personalData,
+                    termsAccepted: profileData.termsAccepted
+                }),
             });
 
             if (!userResponse.ok) {

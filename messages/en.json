@@ -51,9 +51,9 @@
             "title": "Account Management",
             "links": {
                 "dashboard": "Dashboard",
-                "matchingRequests": "Requests",
+                "matchingRequests": "Job Matches",
                 "myOffers": "My Offers",
-                "myJobs": "Active Jobs",
+                "myJobs": "My Jobs",
                 "myProfile": "Profile",
                 "wallet": "Wallet"
             }
@@ -631,6 +631,28 @@
             "requestCreated": "Request created",
             "offerReceivedTitle": "{count, plural, =1 {# offer received} other {# offers received}}",
             "offerInterest": "Professionals are interested in: {title}"
+        }
+    },
+    "ClientJobs": {
+        "eyebrow": "My Hires",
+        "title": "Your Active & Completed Jobs",
+        "description": "Track professional engagements from start to finish.",
+        "stats": {
+            "active": "Active Jobs",
+            "completed": "Completed",
+            "total": "Total Jobs",
+            "spent": "Total Spent"
+        },
+        "empty": {
+            "title": "No jobs yet",
+            "desc": "Once you accept an offer from a professional, your active jobs will appear here.",
+            "button": "View Requests"
+        },
+        "actions": {
+            "viewDetails": "View Details",
+            "leaveReview": "Leave Review",
+            "complete": "Mark Complete",
+            "cancel": "Cancel Job"
         }
     },
     "Search": {

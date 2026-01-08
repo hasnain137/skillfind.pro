@@ -84,14 +84,6 @@ export default async function ClientRequestsPage() {
         eyebrow={t('eyebrow')}
         title={t('title')}
         description={t('description')}
-        actions={
-          <Link
-            href="/client/requests/new"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#1D4FD8] hover:shadow-lg"
-          >
-            <span>+</span> {t('create')}
-          </Link>
-        }
       />
 
       {/* Stats Overview */}

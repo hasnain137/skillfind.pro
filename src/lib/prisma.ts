@@ -9,11 +9,14 @@ const globalForPrisma = globalThis as unknown as {
 
 // Optimized connection pool for Vercel serverless
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL?.split('?')[0],
   max: process.env.NODE_ENV === 'production' ? 1 : 5, // Reduce dev connections to avoid exhaustion
   idleTimeoutMillis: 0, // Don't close connections
   connectionTimeoutMillis: 30000, // Increase timeout to 30s
   allowExitOnIdle: true, // Allow process to exit when idle
+  ssl: process.env.DATABASE_URL?.includes('amazonaws.com')
+    ? { rejectUnauthorized: false }
+    : undefined,
 });
 
 // Log connection errors

@@ -200,12 +200,6 @@ function OfferCard({ offer, t }: { offer: any, t: any }) {
               </span>
               <span className="flex items-center gap-1 text-[#7C7373]">📂 {offer.request.category.nameEn}</span>
             </div>
-            {isPending && <span className="text-xs text-[#7C7373] italic">{t('card.waiting')}</span>}
-            {isAccepted && (
-              <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
-                {t('card.acceptedCheckJobs')}
-              </span>
-            )}
           </div>
         </div>
       </CardContent>

@@ -179,6 +179,23 @@ export async function notifyClickCharge(
 }
 
 /**
+ * Notify professional about wallet credit (deposit)
+ */
+export async function notifyWalletCredit(
+    proUserId: string,
+    amountCents: number,
+    currentBalance: number
+) {
+    return createNotification({
+        userId: proUserId,
+        type: 'WALLET_CREDIT',
+        title: 'Wallet topped up! 💰',
+        message: `€${(amountCents / 100).toFixed(2)} added to your wallet. Current balance: €${(currentBalance / 100).toFixed(2)}`,
+        actionUrl: '/pro/wallet',
+    });
+}
+
+/**
  * Notify professional about a new matching request
  */
 export async function notifyNewMatchingRequest(
