@@ -146,7 +146,6 @@ export default async function ClientDashboardPage() {
         eyebrow={t('eyebrow')}
         title={t('welcomeSimple', { name: firstName })}
         description={t('description')}
-        action={{ label: t('actions.createCta'), href: "/client/requests/new" }}
       />
 
       {/* Main Grid Layout */}
@@ -244,18 +243,7 @@ export default async function ClientDashboardPage() {
             missingSteps={missingSteps}
           />
 
-          {/* Quick Actions */}
-          <div className="space-y-4">
-            <SectionHeading
-              title={t('sections.quickActions')}
-              description={t('sections.quickActionsDesc')}
-            />
-            <div className="grid gap-3">
-              {QUICK_ACTIONS.map((action) => (
-                <ActionCard key={action.href} {...action} />
-              ))}
-            </div>
-          </div>
+
         </div>
       </div>
 

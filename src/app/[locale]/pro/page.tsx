@@ -206,7 +206,6 @@ export default async function ProDashboardPage() {
         eyebrow={t('eyebrow')}
         title={t('welcomeSimple', { name: firstName })}
         description={t('description')}
-        action={{ label: t('Actions.browseCta'), href: "/pro/requests" }}
       />
 
 

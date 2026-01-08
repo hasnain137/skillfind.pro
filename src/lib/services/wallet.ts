@@ -256,5 +256,23 @@ export async function completeDeposit(pendingTransactionId: string) {
     referenceId: paymentIntentId,
   });
 
+  // Notify user
+  try {
+    const pro = await prisma.professional.findUnique({
+      where: { id: pendingTx.wallet.professionalId },
+      select: { userId: true }
+    });
+
+    if (pro) {
+      const { notifyWalletCredit } = await import('@/lib/services/notifications');
+      // Get new balance
+      const balance = await calculateWalletBalance(pendingTx.wallet.id);
+      await notifyWalletCredit(pro.userId, session.amount_total || 0, balance);
+    }
+  } catch (error) {
+    console.error('Failed to send deposit notification:', error);
+    // Don't fail the transaction just because notification failed
+  }
+
   return { status: 'completed', transaction: newTx };
 }

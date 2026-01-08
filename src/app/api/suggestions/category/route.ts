@@ -47,7 +47,9 @@ export async function POST(request: NextRequest) {
 
         const systemPrompt = `You are a category classifier for SkillFind.pro, a platform connecting clients with professionals.
 
-Given a job description, return the BEST matching category and subcategory from the list below.
+Given a job description, return the TOP 3 best matching categories and subcategories from the list below.
+If there is only one clear match, return just one.
+If the description is vague, provide reasonable alternatives.
 
 Available categories and subcategories:
 ${categoryList}
@@ -55,7 +57,12 @@ ${categoryList}
 IMPORTANT: Only return IDs that exist in the list above.
 
 Respond in this exact JSON format (no markdown, no extra text):
-{"categoryId": "actual_id_here", "subcategoryId": "actual_id_here", "confidence": 0.85, "reasoning": "brief reason"}`;
+{
+  "suggestions": [
+    { "categoryId": "actual_id_here", "subcategoryId": "actual_id_here", "confidence": 0.9, "reasoning": "Primary match" },
+    { "categoryId": "actual_id_here", "subcategoryId": "actual_id_here", "confidence": 0.4, "reasoning": "Alternative option" }
+  ]
+}`;
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -70,7 +77,7 @@ Respond in this exact JSON format (no markdown, no extra text):
                     { role: 'user', content: `Job description: "${description}"` }
                 ],
                 temperature: 0.3,
-                max_tokens: 200,
+                max_tokens: 500,
             }),
         });
 
@@ -78,7 +85,7 @@ Respond in this exact JSON format (no markdown, no extra text):
             const errorText = await response.text();
             console.error('OpenAI Suggestion API Error:', errorText);
             return successResponse({
-                suggestion: null,
+                suggestions: [],
                 message: 'AI suggestion failed'
             });
         }
@@ -88,7 +95,7 @@ Respond in this exact JSON format (no markdown, no extra text):
 
         if (!content) {
             return successResponse({
-                suggestion: null,
+                suggestions: [],
                 message: 'No suggestion generated'
             });
         }
@@ -98,27 +105,31 @@ Respond in this exact JSON format (no markdown, no extra text):
         try {
             parsed = JSON.parse(content);
         } catch (e) {
-            console.error('Failed to parse AI response:', content);
-            return successResponse({
-                suggestion: null,
-                message: 'Invalid AI response'
-            });
+            // Try to extract JSON if wrapped in markdown
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                try {
+                    parsed = JSON.parse(jsonMatch[0]);
+                } catch (e2) {
+                    console.error('Failed to parse AI response:', content);
+                    return successResponse({ suggestions: [], message: 'Invalid AI response' });
+                }
+            } else {
+                console.error('Failed to parse AI response:', content);
+                return successResponse({ suggestions: [], message: 'Invalid AI response' });
+            }
         }
 
-        // Validate the suggested IDs exist
-        const category = categories.find(c => c.id === parsed.categoryId);
-        const subcategory = category?.subcategories.find(s => s.id === parsed.subcategoryId);
+        const rawSuggestions = parsed.suggestions || (parsed.categoryId ? [parsed] : []);
 
-        if (!category || !subcategory) {
-            console.error('AI suggested invalid IDs:', parsed);
-            return successResponse({
-                suggestion: null,
-                message: 'AI suggested invalid category'
-            });
-        }
+        // Validate and format suggestions
+        const validSuggestions = rawSuggestions.map((s: any) => {
+            const category = categories.find(c => c.id === s.categoryId);
+            const subcategory = category?.subcategories.find(sub => sub.id === s.subcategoryId);
 
-        return successResponse({
-            suggestion: {
+            if (!category || !subcategory) return null;
+
+            return {
                 category: {
                     id: category.id,
                     name: category.nameEn,
@@ -127,9 +138,13 @@ Respond in this exact JSON format (no markdown, no extra text):
                     id: subcategory.id,
                     name: subcategory.nameEn,
                 },
-                confidence: parsed.confidence || 0.8,
-                reasoning: parsed.reasoning || '',
-            }
+                confidence: s.confidence || 0.5,
+                reasoning: s.reasoning || '',
+            };
+        }).filter(Boolean); // Remove nulls
+
+        return successResponse({
+            suggestions: validSuggestions
         });
 
     } catch (error) {

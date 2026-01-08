@@ -165,49 +165,8 @@ export default async function WalletPage() {
                     </Card>
                 </div>
 
-                {/* Right Column: Stats (1/3) */}
+                {/* Right Column: Info (1/3) */}
                 <div className="space-y-6">
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-1 gap-4">
-                        <Card padding="md" className="border-slate-200">
-                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">{t('stats.today')}</p>
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-2xl font-bold text-slate-900">{clicksToday}</p>
-                                    <p className="text-xs text-slate-500">{t('stats.clicks')}</p>
-                                </div>
-                                <div className="h-8 w-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                                    👁️
-                                </div>
-                            </div>
-                        </Card>
-
-                        <Card padding="md" className="border-slate-200">
-                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">{t('stats.spent')}</p>
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-2xl font-bold text-slate-900">€{totalSpent.toFixed(2)}</p>
-                                    <p className="text-xs text-slate-500">{t('stats.lastTxns')}</p>
-                                </div>
-                                <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
-                                    📉
-                                </div>
-                            </div>
-                        </Card>
-
-                        <Card padding="md" className="border-slate-200">
-                            <p className="text-xs font-semibold uppercase text-slate-500 mb-2">{t('stats.cpl')}</p>
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-2xl font-bold text-slate-900">€0.10</p>
-                                    <p className="text-xs text-slate-500">{t('stats.flatRate')}</p>
-                                </div>
-                                <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">
-                                    🏷️
-                                </div>
-                            </div>
-                        </Card>
-                    </div>
 
                     {/* Transaction History (Mobile Only - visible below lg) */}
                     <div className="lg:hidden">

@@ -162,7 +162,7 @@ export default function OfferForm({ requestId, requestTitle, clientName, request
                                             ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/30'
                                             : 'border-[#E5E7EB] focus:border-[#2563EB] focus:ring-[#2563EB]/10'
                                             }`}
-                                        placeholder="0.00"
+                                        placeholder={formData.pricingType === 'hourly' ? '0.00 /hr' : '0.00'}
                                     />
                                 </div>
                                 {priceError ? (

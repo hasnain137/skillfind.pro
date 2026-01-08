@@ -23,6 +23,7 @@ export default async function ClientProfilePage() {
         firstName: true,
         lastName: true,
         email: true,
+        termsAccepted: true,
       },
     },
   });

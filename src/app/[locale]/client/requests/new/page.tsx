@@ -26,12 +26,14 @@ export default function NewClientRequestPage() {
     subcategories: Array<{ id: string; nameEn: string }>;
   }>>([]);
 
-  const [suggestion, setSuggestion] = useState<{
+  const [suggestions, setSuggestions] = useState<Array<{
     categoryId: string;
     subcategoryId: string;
     categoryName: string;
     subcategoryName: string;
-  } | null>(null);
+    confidence: number;
+    reasoning?: string;
+  }>>([]);
 
   const [formData, setFormData] = useState({
     categoryId: '',
@@ -68,13 +70,16 @@ export default function NewClientRequestPage() {
         });
         if (res.ok) {
           const data = await res.json();
-          if (data.data?.suggestion) {
-            setSuggestion({
-              categoryId: data.data.suggestion.category.id,
-              subcategoryId: data.data.suggestion.subcategory.id,
-              categoryName: data.data.suggestion.category.name,
-              subcategoryName: data.data.suggestion.subcategory.name,
-            });
+          if (data.data?.suggestions && data.data.suggestions.length > 0) {
+            const formatted = data.data.suggestions.map((s: any) => ({
+              categoryId: s.category.id,
+              subcategoryId: s.subcategory.id,
+              categoryName: s.category.name,
+              subcategoryName: s.subcategory.name,
+              confidence: s.confidence,
+              reasoning: s.reasoning
+            }));
+            setSuggestions(formatted);
           }
         }
       } catch (e) {
@@ -393,52 +398,79 @@ export default function NewClientRequestPage() {
           </FormField>
 
           {/* AI Analyzing Indicator - appears below description */}
-          {isAnalyzing && !suggestion && (
-            <div className="animate-in fade-in rounded-lg bg-gray-50 border border-gray-200 p-3 flex items-center gap-3">
+          {isAnalyzing && suggestions.length === 0 && (
+            <div className="animate-in fade-in rounded-lg bg-gray-50 border border-gray-200 p-3 flex items-center gap-3 mt-2">
               <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 border-t-transparent"></div>
               <span className="text-sm text-gray-600">Analyzing your description...</span>
             </div>
           )}
 
-          {/* AI Suggestion Block */}
-          {suggestion && (
-            <div className="animate-in fade-in slide-in-from-top-2 rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
-              <div className="bg-white p-2 rounded-full shadow-sm text-blue-600 mt-0.5">
-                <Sparkles size={16} />
+          {/* AI Suggestions Block */}
+          {suggestions.length > 0 && (
+            <div className="animate-in fade-in slide-in-from-top-2 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 p-4 mt-4">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="bg-white p-2 rounded-full shadow-sm text-blue-600">
+                  <Sparkles size={16} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-blue-900">
+                    💡 Suggested Categories
+                  </h4>
+                  <p className="text-xs text-blue-700 mt-0.5">
+                    Select the best match for your request
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSuggestions([])}
+                  className="ml-auto text-xs text-blue-400 hover:text-blue-600"
+                >
+                  Dismiss
+                </button>
               </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-semibold text-blue-900 mb-1">
-                  💡 Suggested Category
-                </h4>
-                <p className="text-sm text-blue-800 mb-2">
-                  <span className="font-medium">
-                    {suggestion.categoryName} → {suggestion.subcategoryName}
-                  </span>
-                </p>
-                <div className="flex gap-2">
+
+              <div className="space-y-2">
+                {suggestions.map((s, idx) => (
                   <button
+                    key={`${s.categoryId}-${s.subcategoryId}`}
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({
                         ...prev,
-                        categoryId: suggestion.categoryId,
-                        subcategoryId: suggestion.subcategoryId
+                        categoryId: s.categoryId,
+                        subcategoryId: s.subcategoryId
                       }));
-                      setSuggestion(null);
+                      setSuggestions([]);
                       toast.success("Category applied!");
                     }}
-                    className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-blue-700 transition"
+                    className={`
+                      w-full text-left p-3 rounded-lg border transition-all flex items-center justify-between group
+                      ${idx === 0
+                        ? 'bg-white border-blue-200 shadow-sm hover:border-blue-300 hover:shadow-md'
+                        : 'bg-white/50 border-transparent hover:bg-white hover:border-blue-100'
+                      }
+                    `}
                   >
-                    ✓ Use This
+                    <div>
+                      <div className="flex items-center gap-2">
+                        {idx === 0 && (
+                          <span className="bg-blue-100 text-blue-700 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
+                            Best Match
+                          </span>
+                        )}
+                        <span className={`text-sm ${idx === 0 ? 'font-semibold text-gray-900' : 'font-medium text-gray-700'}`}>
+                          {s.subcategoryName}
+                        </span>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-0.5">
+                        In {s.categoryName} {s.reasoning && idx === 0 && `• ${s.reasoning}`}
+                      </div>
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity text-blue-600 text-sm font-medium">
+                      Select →
+                    </div>
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setSuggestion(null)}
-                    className="text-xs text-gray-500 px-2 py-1.5 hover:text-gray-700 transition"
-                  >
-                    Dismiss
-                  </button>
-                </div>
+                ))}
               </div>
             </div>
           )}

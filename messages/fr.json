@@ -51,9 +51,9 @@
             "title": "Gestion de compte",
             "links": {
                 "dashboard": "Tableau de bord",
-                "matchingRequests": "Demandes",
+                "matchingRequests": "Offres d'emploi",
                 "myOffers": "Mes offres",
-                "myJobs": "Jobs actifs",
+                "myJobs": "Mes jobs",
                 "myProfile": "Profil",
                 "wallet": "Porte-monnaie"
             }

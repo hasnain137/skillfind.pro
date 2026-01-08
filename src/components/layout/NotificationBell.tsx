@@ -111,6 +111,8 @@ export function NotificationBell() {
                 return 'bg-yellow-100 text-yellow-600';
             case 'LOW_BALANCE':
                 return 'bg-orange-100 text-orange-600';
+            case 'WALLET_CREDIT':
+                return 'bg-green-100 text-green-600';
             case 'MATCHING_REQUEST':
                 return 'bg-purple-100 text-purple-600';
             default:

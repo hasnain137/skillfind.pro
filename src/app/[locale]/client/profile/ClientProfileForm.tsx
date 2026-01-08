@@ -88,6 +88,7 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     lastName: personalData.lastName,
                     dateOfBirth: personalData.dateOfBirth,
                     phoneNumber: personalData.phoneNumber,
+                    termsAccepted: clientData.termsAccepted,
                 }),
             });
 
@@ -143,18 +144,18 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                     </FormField>
                     <div>
                         <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-[#7C7373]">
-                            {t('fields.email')}
+                            {t('fields.email')} <span className="text-gray-400">(managed by login provider)</span>
                         </label>
-                        <input
-                            id="email"
-                            type="email"
-                            value={initialClient.user?.email || ''}
-                            disabled
-                            className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2 text-sm bg-gray-50 text-gray-500 cursor-not-allowed"
-                        />
-                        <p className="mt-1 text-xs text-[#B0B0B0]">
-                            {t('fields.emailHint')}
-                        </p>
+                        <div className="relative">
+                            <input
+                                id="email"
+                                type="email"
+                                value={initialClient.user?.email || ''}
+                                disabled
+                                className="w-full rounded-xl border-0 bg-gray-100 px-3 py-2 text-sm text-gray-500 cursor-not-allowed pr-10"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
+                        </div>
                     </div>
                 </div>
             </div>
