@@ -1,0 +1,24 @@
+prisma.config.ts(7,9): error TS2353: Object literal may only specify known properties, and 'provider' does not exist in type '{ url: string; shadowDatabaseUrl?: string | undefined; }'.
+src/app/client/jobs/page.tsx(57,39): error TS2367: This comparison appears to be unintentional because the types 'JobStatus' and '"PENDING"' have no overlap.
+src/app/pro/profile/page.tsx(22,7): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(23,7): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(24,7): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(25,7): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(26,7): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(64,17): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(65,16): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(66,17): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(67,17): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(68,17): error TS2304: Cannot find name 'professional'.
+src/app/pro/profile/page.tsx(75,25): error TS2304: Cannot find name 'professional'.
+src/app/pro/requests/page.tsx(15,30): error TS2304: Cannot find name 'professional'.
+src/app/pro/requests/page.tsx(16,6): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/app/pro/requests/page.tsx(27,9): error TS2322: Type 'unknown[]' is not assignable to type 'string[] | FieldRef<"Request", "String[]"> | undefined'.
+  Type 'unknown[]' is not assignable to type 'string[]'.
+    Type 'unknown' is not assignable to type 'string'.
+src/app/pro/requests/page.tsx(82,63): error TS2304: Cannot find name 'professional'.
+src/app/pro/requests/page.tsx(106,47): error TS2339: Property '_count' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; city: string | null; region: string | null; country: string; clientId: string; categoryId: string; subcategoryId: string; title: string; ... 9 more ...; closedAt: Date | null; }'.
+src/app/pro/requests/page.tsx(135,39): error TS2551: Property 'category' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; city: string | null; region: string | null; country: string; clientId: string; categoryId: string; subcategoryId: string; title: string; ... 9 more ...; closedAt: Date | null; }'. Did you mean 'categoryId'?
+src/app/pro/requests/page.tsx(145,34): error TS2339: Property '_count' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; city: string | null; region: string | null; country: string; clientId: string; categoryId: string; subcategoryId: string; title: string; ... 9 more ...; closedAt: Date | null; }'.
+src/app/pro/requests/page.tsx(192,35): error TS2551: Property 'client' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; city: string | null; region: string | null; country: string; clientId: string; categoryId: string; subcategoryId: string; title: string; ... 9 more ...; closedAt: Date | null; }'. Did you mean 'clientId'?
+src/app/pro/requests/page.tsx(195,42): error TS2551: Property 'client' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; city: string | null; region: string | null; country: string; clientId: string; categoryId: string; subcategoryId: string; title: string; ... 9 more ...; closedAt: Date | null; }'. Did you mean 'clientId'?

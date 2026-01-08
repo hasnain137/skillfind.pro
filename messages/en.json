@@ -1,0 +1,1483 @@
+{
+    "Common": {
+        "welcome": "Welcome to SkillFind",
+        "dashboard": "Dashboard",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "signOut": "Sign Out",
+        "profile": "Profile",
+        "admin": "Admin",
+        "menu": "Menu",
+        "language": "Language",
+        "close": "Close"
+    },
+    "Landing": {
+        "heroTitle": "Find the perfect professional for your needs",
+        "heroSubtitle": "Connect with top-rated experts in seconds."
+    },
+    "Auth": {
+        "loginTitle": "Log in to your account",
+        "signupTitle": "Create an account",
+        "joinHeader": "Join SkillFind",
+        "joinSubheader": "Create your account to get started",
+        "welcomeHeader": "Welcome back",
+        "welcomeSubheader": "Sign in to your SkillFind account",
+        "forgotPassword": {
+            "title": "Reset password",
+            "subtitle": "Enter your email and we'll send you a reset link",
+            "emailLabel": "Email address",
+            "emailPlaceholder": "you@example.com",
+            "submit": "Send reset link",
+            "rememberPassword": "Remember your password?",
+            "signIn": "Sign in"
+        }
+    },
+    "Navbar": {
+        "howItWorks": "How it works",
+        "categories": "Categories",
+        "topProfessionals": "Top Pros",
+        "forProfessionals": "For Professionals",
+        "home": "Home",
+        "reviews": "Reviews",
+        "whyUs": "Why SkillFind?",
+        "login": "Login",
+        "signup": "Sign Up",
+        "search": "Search services"
+    },
+    "Sidebar": {
+        "more": "More",
+        "Pro": {
+            "eyebrow": "Professional Area",
+            "title": "Account Management",
+            "links": {
+                "dashboard": "Dashboard",
+                "matchingRequests": "Requests",
+                "myOffers": "My Offers",
+                "myJobs": "Active Jobs",
+                "myProfile": "Profile",
+                "wallet": "Wallet"
+            }
+        },
+        "Client": {
+            "eyebrow": "Client Area",
+            "title": "My Projects",
+            "description": "Manage your requests and hires.",
+            "links": {
+                "dashboard": "Dashboard",
+                "browse": "Find Professionals",
+                "requests": "My Requests",
+                "offers": "Offers Received",
+                "jobs": "My Hires",
+                "new": "New Request",
+                "profile": "Profile"
+            }
+        }
+    },
+    "Components": {
+        "AdminDashboard": {
+            "eyebrow": "Overview",
+            "title": "System Status",
+            "description": "Key metrics and system health monitoring.",
+            "metrics": {
+                "totalUsers": "Total Users",
+                "professionals": "Professionals",
+                "clients": "Clients",
+                "pendingVerifications": "Pending Verifications",
+                "totalRevenue": "Total Revenue"
+            },
+            "recentActivity": "Recent Activity",
+            "activityComingSoon": "Activity feed coming soon...",
+            "systemHealth": "System Health",
+            "allSystemsOperational": "All systems operational"
+        },
+        "AdminSidebar": {
+            "title": "Admin Panel",
+            "backToSite": "← Back to Site",
+            "nav": {
+                "overview": "Overview",
+                "professionals": "Professionals",
+                "clients": "Clients",
+                "categories": "Categories",
+                "reviews": "Reviews",
+                "transactions": "Transactions",
+                "translations": "Translations",
+                "settings": "Settings"
+            }
+        },
+        "ClientNavbar": {
+            "howItWorks": "How it works",
+            "categories": "Categories",
+            "topProfessionals": "Top professionals",
+            "forProfessionals": "For professionals",
+            "login": "Log in",
+            "signup": "Sign up"
+        },
+        "StatusBanner": {
+            "pendingReview": {
+                "title": "Account Under Review",
+                "description": "Your profile is currently being reviewed by our team. You can browse and update your profile, but cannot send offers yet."
+            },
+            "suspended": {
+                "title": "Account Suspended",
+                "description": "Your account has been suspended. Please contact support to resolve this issue."
+            },
+            "banned": {
+                "title": "Account Banned",
+                "description": "Your account has been deactivated. Please contact support for more information."
+            },
+            "incomplete": {
+                "title": "Complete Your Profile",
+                "description": "Please complete your profile details to get verified and start receiving requests."
+            }
+        },
+        "EmptyState": {
+            "defaultTitle": "No items yet",
+            "defaultDescription": "Items will appear here once available."
+        }
+    },
+    "Hero": {
+        "badge": "🚀 The #1 Marketplace for Professional Services",
+        "titlePrefix": "Find the perfect",
+        "titleHighlight": "expert",
+        "titleSuffix": "for any task.",
+        "subtitle": "Connect with verified tutors, developers, cleaners, and coaches in minutes. Trusted by 10,000+ clients worldwide.",
+        "verifiedPros": "Verified Pros",
+        "directContact": "Direct Contact",
+        "satisfactionGuarantee": "Satisfaction Guarantee",
+        "newProsBadge": "500+ New Pros",
+        "joinedThisWeek": "joined this week"
+    },
+    "Footer": {
+        "brandSlogan": "A trusted marketplace connecting clients with verified professionals for tutoring, tech, home services, and more.",
+        "forClients": "For clients",
+        "browseCategories": "Browse categories",
+        "featuredPros": "Featured professionals",
+        "howItWorks": "How it works",
+        "forProfessionals": "For professionals",
+        "becomePro": "Become a professional",
+        "pricing": "Pricing & visibility",
+        "help": "Help & support",
+        "company": "Company",
+        "about": "About",
+        "terms": "Terms",
+        "privacy": "Privacy",
+        "rightsReserved": "SkillFind. All rights reserved.",
+        "madeWithLove": "Made with ❤️ for the community."
+    },
+    "HowItWorks": {
+        "badge": "Simple & Transparent",
+        "title": "How SkillFind works.",
+        "subtitle": "Get the job done in three easy steps. No hidden fees, no hassle.",
+        "step1Title": "Create a request",
+        "step1Desc": "Tell us what you need, your budget, and delivery preference. It's free and takes 2 minutes.",
+        "step2Title": "Receive custom offers",
+        "step2Desc": "Verified professionals will review your request and send tailored offers with price and availability.",
+        "step3Title": "Hire & leave a review",
+        "step3Desc": "Choose the best fit, chat directly, and get the job done. Leave a review to help the community."
+    },
+    "TrustSection": {
+        "title": "Why 10,000+ clients trust SkillFind",
+        "subtitle": "We've built a marketplace where trust isn't an option—it's the foundation. From verified identities to secure transactions, we protect every step of your journey.",
+        "rating": "4.9/5 Average Rating",
+        "ratingSub": "from trusted reviews",
+        "vettedTitle": "Vetted Professionals",
+        "vettedDesc": "Every pro passes an identity check and profile review before joining.",
+        "connectTitle": "Direct Connections",
+        "connectDesc": "Connect directly with professionals. Negotiate terms that work for both of you.",
+        "pricingTitle": "Fair Pricing",
+        "pricingDesc": "Get multiple offers and choose the one that fits your budget. No hidden fees.",
+        "qualityTitle": "Quality Guaranteed",
+        "qualityDesc": "Not satisfied? We have a support team ready to help resolve any issues."
+    },
+    "PopularCategories": {
+        "badge": "Most In-Demand",
+        "title": "Popular services this week.",
+        "subtitle": "Find help for your daily needs or long-term projects.",
+        "cat1Name": "Tutoring",
+        "cat1Desc": "Math, languages, exam prep.",
+        "cat2Name": "Software & Tech",
+        "cat2Desc": "Websites, apps, tech support.",
+        "cat3Name": "Design",
+        "cat3Desc": "Logos, UI/UX, graphics.",
+        "cat4Name": "Health & Fitness",
+        "cat4Desc": "Training, nutrition, wellness.",
+        "cat5Name": "Home Services",
+        "cat5Desc": "Cleaning, repairs, moving.",
+        "cat6Name": "Business",
+        "cat6Desc": "Consulting, coaching, strategy.",
+        "cat7Name": "Writing",
+        "cat7Desc": "Content, copywriting, editing.",
+        "cat8Name": "Music & Audio",
+        "cat8Desc": "Lessons, production, mixing."
+    },
+    "FeaturedProfessionals": {
+        "verified": "Verified",
+        "contactForPricing": "Contact for pricing",
+        "startingFrom": "Starting from",
+        "viewProfile": "View profile",
+        "moreServices": "+{count} more services",
+        "moreService": "+{count} more service",
+        "badge": "Featured professionals",
+        "title": "Meet some of the experts clients are hiring on SkillFind.",
+        "subtitle": "These are just a few examples. You'll see even more matching professionals once you post a request or search by category.",
+        "reviews": "reviews",
+        "online": "Online available",
+        "emptyTitle": "No featured professionals yet",
+        "emptySubtitle": "Check back later or search for a specific service.",
+        "viewAll": "View all professionals"
+    },
+    "DualCTA": {
+        "unifiedTitle": "Ready to get started?",
+        "unifiedSubtitle": "Join our community today.",
+        "unifiedDesc": "Whether you're looking for help or looking for work, SkillFind is the place for you.",
+        "unifiedButton": "Get Started",
+        "learnMore": "Learn more"
+    },
+    "Testimonials": {
+        "badge": "Client Success Stories",
+        "title": "Trusted by clients and professionals.",
+        "subtitle": "See what our community has to say about their experience on SkillFind.",
+        "review1": "Amazing experience! Found a great tutor for my son within hours. The platform made it so easy to compare different professionals.",
+        "review2": "As a professional, SkillFind has transformed my business. I get quality leads and the payment system is transparent and fair.",
+        "review3": "Great platform! The verification process gave me confidence in choosing the right person for my home renovation project.",
+        "hiredFor": "Hired a pro for"
+    },
+    "Dashboard": {
+        "PerformanceMetrics": {
+            "profileViews": "Profile Views",
+            "offersSent": "Offers Sent",
+            "acceptanceRate": "Acceptance Rate",
+            "avgRating": "Avg. Rating",
+            "responseTime": "Response Time",
+            "reviews": "{count} reviews",
+            "na": "N/A"
+        },
+        "EarningsChart": {
+            "totalEarnings": "Total Estimated Earnings",
+            "viewHistory": "View history",
+            "thisMonth": "This Month",
+            "pending": "Pending",
+            "fromLastMonth": "from last month"
+        },
+        "ProfileCompletion": {
+            "titleLow": "Complete Your Profile",
+            "titleHigh": "Almost There!",
+            "descPro": "A complete profile gets more job offers",
+            "descClient": "Help professionals understand your needs better",
+            "label": "Profile completion",
+            "moreSteps": "+{count} more",
+            "completeNow": "Complete Now →"
+        },
+        "ActivityFeed": {
+            "emptyTitle": "No recent activity",
+            "emptyDesc": "Your activity will appear here once you start interacting with requests and offers.",
+            "justNow": "Just now",
+            "minAgo": "{count} min ago",
+            "hourAgo": "{count, plural, =1 {1 hour ago} other {# hours ago}}",
+            "hoursAgo": "{count} hours ago",
+            "dayAgo": "{count, plural, =1 {1 day ago} other {# days ago}}",
+            "daysAgo": "{count} days ago"
+        },
+        "MatchingRequests": {
+            "emptyTitle": "No matching requests",
+            "emptyDesc": "Complete your profile and add more services to get matched with clients.",
+            "updateProfile": "Update Profile",
+            "budgetNotSpecified": "Budget not specified",
+            "fromBudget": "From €{amount}",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "daysAgo": "{count} days ago",
+            "new": "🔥 NEW",
+            "sendOffer": "Send your offer",
+            "remote": "Remote",
+            "viewAll": "View all",
+            "offerSent": "Offer Sent",
+            "viewOffer": "View Offer"
+        }
+    },
+    "CategoryDirectory": {
+        "badge": "Browse all categories",
+        "title": "Explore everything on SkillFind.",
+        "subtitle": "From tutoring and tech to fitness, design, and home help — we bring all kinds of professionals together in one place.",
+        "Categories": {
+            "tutoring": "Tutoring & Education",
+            "tech": "Software & Tech",
+            "design": "Design & Creative",
+            "business": "Business & Career",
+            "wellness": "Health & Wellness",
+            "home": "Home & Everyday"
+        },
+        "Items": {
+            "math": "Math tutoring",
+            "science": "Science tutoring",
+            "language": "Language tutoring",
+            "exam": "Exam preparation",
+            "school": "School support",
+            "uni": "University subjects",
+            "web": "Website development",
+            "bug": "Bug fixing & troubleshooting",
+            "app": "App development",
+            "scripts": "Automation & scripts",
+            "techSupport": "Tech support",
+            "db": "Database help",
+            "logo": "Logo & brand design",
+            "ui": "UI/UX design",
+            "presentation": "Presentation design",
+            "social": "Social media visuals",
+            "photo": "Photo editing",
+            "illustration": "Illustration",
+            "cv": "CV & resume review",
+            "linkedin": "LinkedIn profile help",
+            "career": "Career coaching",
+            "consulting": "Business consulting",
+            "pitch": "Pitch deck help",
+            "interview": "Interview preparation",
+            "fitness": "Fitness coaching",
+            "nutrition": "Nutrition guidance",
+            "yoga": "Yoga & pilates",
+            "mental": "Mental wellbeing support",
+            "lifestyle": "Lifestyle coaching",
+            "rehab": "Rehabilitation exercises",
+            "cleaning": "Cleaning services",
+            "moving": "Moving & packing help",
+            "handyman": "Handyman services",
+            "furniture": "Furniture assembly",
+            "organization": "Home organisation",
+            "pet": "Pet care & walking"
+        }
+    },
+    "ProDashboard": {
+        "eyebrow": "Professional dashboard",
+        "welcome": "Good {period}, {name}",
+        "welcomeSimple": "Hi, {name}",
+        "description": "See matching requests, send tailored offers, and keep your profile ready for new opportunities.",
+        "metricsTitle": "Performance metrics",
+        "metricsDesc": "Track your success and visibility on the platform.",
+        "requestsTitle": "Matching requests",
+        "requestsDesc": "New opportunities that match your services.",
+        "viewAll": "View all",
+        "quickActionsTitle": "Quick actions",
+        "quickActionsDesc": "Shortcuts to the most common tasks.",
+        "nextStepsTitle": "Next steps",
+        "nextStepsDesc": "Suggested actions to grow your business.",
+        "periods": {
+            "morning": "morning",
+            "afternoon": "afternoon",
+            "evening": "evening",
+            "night": "night"
+        },
+        "Actions": {
+            "browseTitle": "Browse matching requests",
+            "browseDesc": "See new opportunities that match your services and skills.",
+            "browseCta": "View requests",
+            "offersTitle": "Manage your offers",
+            "offersDesc": "Track pending offers and see which ones got accepted.",
+            "offersCta": "View offers",
+            "jobsTitle": "Active jobs",
+            "jobsDesc": "Start work and mark jobs complete when finished.",
+            "jobsCta": "View jobs",
+            "profileTitle": "Profile",
+            "profileDesc": "Edit profile",
+            "profileCta": "Edit Profile"
+        },
+        "Alerts": {
+            "requirementsTitle": "Requirements to Send Offers",
+            "requirementsDescription": "Complete these steps to start sending offers to clients and winning jobs.",
+            "stepsComplete": "steps complete",
+            "readyToSendOffers": "You're Ready to Send Offers!",
+            "readyDescription": "All requirements complete. Start browsing job requests and winning clients.",
+            "browseRequests": "Browse Requests",
+            "steps": {
+                "servicesComplete": "Your services are set up and visible to clients.",
+                "qualificationsComplete": "Your qualifications have been verified.",
+                "qualificationsPending": "We're reviewing your documents. This usually takes 24-48 hours.",
+                "qualificationsRejected": "Some documents need attention. Please review and re-upload.",
+                "verificationComplete": "Your identity has been verified.",
+                "walletComplete": "Balance: {amount}. Ready to send offers.",
+                "lockedStep": "Complete previous steps first.",
+                "underReview": "Under Review",
+                "reuploadAction": "Re-upload Documents"
+            },
+            "servicesRequired": {
+                "title": "Add Your Services",
+                "description": "Add at least one service to your profile to start receiving relevant job requests.",
+                "action": "Add Services"
+            },
+            "qualificationRequired": {
+                "title": "Upload Qualifications",
+                "description": "Upload your professional diplomas and certificates for verification.",
+                "action": "Upload Documents"
+            },
+            "verificationRequired": {
+                "title": "Verify Your Identity",
+                "description": "Complete identity verification to unlock offer sending.",
+                "action": "Verify Now"
+            },
+            "lowBalance": {
+                "title": "Fund Your Wallet",
+                "description": "Your balance is {amount}. You need at least €2.00 to send offers.",
+                "action": "Add Funds"
+            },
+            "time": {
+                "services": "~2 min",
+                "qualifications": "~5 min + review",
+                "verification": "~3 min",
+                "wallet": "~1 min"
+            }
+        },
+        "KeyStats": {
+            "title": "Your Stats",
+            "activeJobs": "Active Jobs",
+            "pendingOffers": "Pending Offers",
+            "walletBalance": "Wallet Balance",
+            "avgRating": "Rating",
+            "completedJobs": "Completed",
+            "newRequestsToday": "New Today",
+            "reviews": "reviews"
+        },
+        "Highlights": {
+            "profile": "Profile Complete",
+            "wallet": "Wallet Balance",
+            "pending": "Pending Offers",
+            "allDone": "All done!",
+            "topUp": "Top up recommended",
+            "goodBalance": "Good balance",
+            "awaitingResponse": "Awaiting response",
+            "sendOffers": "Send more offers"
+        },
+        "Metrics": {
+            "responseTimeValue": "< 2 hours"
+        },
+        "Steps": {
+            "profile": "Complete your profile information",
+            "services": "Add your first service category",
+            "matching": "{count, plural, =1 {Respond to # matching request} other {Respond to # matching requests}}",
+            "offers": "{count, plural, =1 {Follow up on # pending offer} other {Follow up on # pending offers}}",
+            "jobs": "{count, plural, =1 {Complete # active job} other {Complete # active jobs}}",
+            "default": "Browse more requests"
+        }
+    },
+    "ProProfile": {
+        "title": "Keep your professional profile updated",
+        "description": "Clients want to understand your expertise, services, and availability before sending work.",
+        "error": "An error occurred. Please try again.",
+        "success": "Profile updated successfully.",
+        "serviceError": "Failed to add service. Please try again.",
+        "serviceAdded": "Service added successfully.",
+        "serviceUpdated": "Service updated successfully.",
+        "deleteError": "Failed to delete service.",
+        "serviceDeleted": "Service deleted successfully.",
+        "completion": {
+            "title": "Profile Completion",
+            "desc": "Complete profiles get 3x more offers!",
+            "missing": "Complete these to reach 100%:"
+        },
+        "tabs": {
+            "info": "Basic Info",
+            "services": "Services",
+            "qualifications": "Qualifications",
+            "verification": "Verification",
+            "identity": {
+                "title": "Identity Verification",
+                "description": "Verify your identity effectively and securely with Stripe.",
+                "status": "Verification Status",
+                "verified": "Identity Verified",
+                "notVerified": "Not Verified",
+                "button": "Verify with Stripe",
+                "pending": "Verification Pending",
+                "success": "Verification Successful",
+                "failed": "Verification Failed",
+                "secureNote": "Your data is securely processed by Stripe."
+            }
+        },
+        "Qualifications": {
+            "title": "Professional Qualifications",
+            "description": "Upload your professional documents (diplomas, certificates, degrees, resume, etc.) for admin review. This is required before you can verify your identity.",
+            "acceptedDocuments": "Accepted Documents",
+            "docTypes": {
+                "diploma": "Professional Diplomas",
+                "certificate": "Certifications & Licenses",
+                "degree": "Academic Degrees",
+                "resume": "Professional Resume/CV",
+                "portfolio": "Portfolio or Work Samples"
+            },
+            "uploadButton": "Upload Document",
+            "uploading": "Uploading...",
+            "uploadedDocuments": "Uploaded Documents",
+            "status": {
+                "pending": "Pending Review",
+                "approved": "Approved",
+                "rejected": "Rejected"
+            },
+            "rejectionReason": "Rejection reason"
+        },
+        "info": {
+            "titleLabel": "Professional Title",
+            "titlePlaceholder": "e.g. Senior Mathematics Tutor",
+            "yearsLabel": "Years of Experience",
+            "bioLabel": "Bio",
+            "bioPlaceholder": "Tell clients about your expertise and background...",
+            "personal": "Personal Information",
+            "location": "Location & Availability",
+            "isAvailable": "Available for new jobs",
+            "remoteLabel": "Remote Availability",
+            "remoteOptions": {
+                "YES_AND_ONSITE": "Remote & On-site",
+                "ONLY_REMOTE": "Remote Only",
+                "NO_REMOTE": "On-site Only"
+            }
+        },
+        "services": {
+            "title": "My Services",
+            "empty": "No services added yet. Add your first service to start receiving requests.",
+            "add": "Add Service",
+            "edit": "Edit Service",
+            "contact": "Contact",
+            "update": "Update Service",
+            "confirmDelete": "Are you sure you want to delete this service?",
+            "delete": "Delete",
+            "startsFrom": "Starts at €{price}",
+            "fields": {
+                "city": "City",
+                "country": "Country",
+                "category": "Category",
+                "selectCategory": "Select a category",
+                "subcategory": "Subcategory",
+                "selectSubcategory": "Select a subcategory",
+                "price": "Starting Price (€)",
+                "description": "Service Description",
+                "descriptionHint": "Briefly describe what's included in this service.",
+                "cancel": "Cancel"
+            }
+        }
+    },
+    "Layouts": {
+        "Pro": {
+            "badge": "Pro Area",
+            "title": "SkillFind Pro",
+            "description": "Manage your profile, respond to requests, and grow your business.",
+            "links": {
+                "dashboard": "Dashboard",
+                "requests": "Matching requests",
+                "offers": "My offers",
+                "jobs": "My jobs",
+                "profile": "My profile",
+                "wallet": "Wallet"
+            }
+        },
+        "Client": {
+            "badge": "Client Area",
+            "title": "Plan your projects",
+            "description": "Post new service needs, review offers from verified professionals, and keep every conversation in one place.",
+            "links": {
+                "dashboard": "Dashboard",
+                "requests": "Requests",
+                "jobs": "Jobs",
+                "new": "New",
+                "profile": "Profile"
+            }
+        }
+    },
+    "ClientDashboard": {
+        "eyebrow": "Client dashboard",
+        "welcome": "Welcome back, {name}",
+        "welcomeSimple": "Hi, {name}",
+        "description": "You're in control of every service request, from posting details to choosing the best professional.",
+        "highlights": {
+            "nextSteps": "Next steps",
+            "verification": "Verification",
+            "activity": "Activity",
+            "reviewOffers": "Review offers",
+            "waitingForOffers": "Waiting for offers",
+            "createRequest": "Create a request",
+            "offersToReview": "{count, plural, =1 {# offer to review} other {# offers to review}}",
+            "openRequests": "{count, plural, =1 {# open request} other {# open requests}}",
+            "getStarted": "Get started now",
+            "emailVerified": "Email verified",
+            "emailPending": "Email pending",
+            "phoneVerified": "Phone verified ✓",
+            "addPhone": "Add phone for trust",
+            "offersCount": "{count, plural, =1 {# offer} other {# offers}}",
+            "completedRequests": "{count} completed",
+            "noJobs": "No jobs yet"
+        },
+        "stats": {
+            "openRequests": "Open requests",
+            "totalOffers": "Total offers received",
+            "completedRequests": "Completed requests"
+        },
+        "sections": {
+            "quickActions": "Quick actions",
+            "quickActionsDesc": "Shortcuts to the most common tasks.",
+            "recentActivity": "Recent activity",
+            "recentActivityDesc": "Your latest updates and notifications.",
+            "yourRequests": "Your requests",
+            "yourRequestsDesc": "Track the progress of all your service requests.",
+            "recentOffers": "Recent Offers",
+            "recentOffersDesc": "The latest professionals interested in your requests."
+        },
+        "actions": {
+            "createTitle": "Create a new request",
+            "createDesc": "Describe what you need so professionals can send tailored offers.",
+            "createCta": "Start request",
+            "reviewTitle": "Review your requests",
+            "reviewDesc": "Check statuses, compare offers and keep work organised.",
+            "reviewCta": "View requests",
+            "offersTitle": "Offers Received",
+            "offersDesc": "See all current offers from pros in one place.",
+            "offersCta": "View All Offers"
+        },
+        "activity": {
+            "requestCreated": "Request created",
+            "offerReceivedTitle": "{count, plural, =1 {# offer received} other {# offers received}}",
+            "offerInterest": "Professionals are interested in: {title}"
+        }
+    },
+    "Search": {
+        "title": "Find Professionals",
+        "subtitle": "Browse verified professionals and find the perfect match for your needs.",
+        "filters": {
+            "title": "Filters",
+            "searchLabel": "Search",
+            "searchPlaceholder": "Keywords...",
+            "locationLabel": "Location",
+            "locationPlaceholder": "City or region...",
+            "categoryLabel": "Category",
+            "allCategories": "All categories",
+            "remoteLabel": "Remote only",
+            "ratingLabel": "Minimum rating",
+            "anyRating": "Any rating",
+            "stars": "{count}+ stars",
+            "priceLabel": "Max hourly rate (€)",
+            "pricePlaceholder": "e.g. 50",
+            "apply": "Apply filters",
+            "clear": "Clear all",
+            "showResults": "Show results"
+        },
+        "results": {
+            "searching": "Searching...",
+            "count": "{count, plural, =0 {No professionals found} =1 {1 professional found} other {# professionals found}}",
+            "forQuery": " for \"{query}\"",
+            "previous": "Previous",
+            "next": "Next",
+            "pageInfo": "Page {page} of {total}"
+        },
+        "empty": {
+            "title": "No professionals found",
+            "desc": "Try adjusting your search filters or browse all categories to find the right professional for your needs.",
+            "action": "Clear filters"
+        },
+        "placeholder": "Find a professional...",
+        "button": "Find",
+        "legal": "Clients don't pay any fees. Professionals pay only when you view their profile."
+    },
+    "SuggestedSkills": {
+        "badge": "Ideas to get started",
+        "title": "Not sure what to search for?",
+        "subtitle": "Here are some common things people use SkillFind for. Tap a skill to explore professionals in that area.",
+        "skills": {
+            "mathExam": "Math & exam prep",
+            "languageTutoring": "Language tutoring",
+            "careerCoaching": "CV & career coaching",
+            "frontendDebug": "Frontend bug fixing",
+            "brandDesign": "Logo & brand design",
+            "fitnessNutrition": "Fitness & nutrition",
+            "mentalWellbeing": "Mental wellbeing support",
+            "homeCleaning": "Home cleaning",
+            "movingHelp": "Moving & packing help",
+            "resumeReview": "Resume & LinkedIn review",
+            "websiteTroubleshoot": "Website troubleshooting",
+            "socialMedia": "Social media support"
+        }
+    },
+    "PublicProfile": {
+        "unavailable": {
+            "title": "Profile Unavailable",
+            "description": "This professional profile is not currently active.",
+            "cta": "Browse Other Professionals"
+        },
+        "hero": {
+            "verified": "Verified",
+            "reviews": "{count} reviews",
+            "remote": "Available remotely",
+            "memberSince": "Member since {date}",
+            "sendRequest": "Send Request",
+            "jobsDone": "Jobs Done",
+            "yearsExp": "Years Exp"
+        },
+        "sections": {
+            "about": "About Me",
+            "services": "Services Offered",
+            "reviews": "Recent Reviews ({count})",
+            "quickStats": "Quick Stats",
+            "location": "Location",
+            "experience": "Experience"
+        },
+        "services": {
+            "perProject": "per project",
+            "startsAt": "Starts at"
+        },
+        "reviews": {
+            "wouldRecommend": "Would recommend",
+            "responseFromPro": "Response from professional:"
+        },
+        "cta": {
+            "readyToHire": "Ready to hire {name}?",
+            "signInDesc": "Sign in to send a request or message this professional",
+            "getStarted": "Get Started",
+            "signInLink": "Already have an account? Sign in"
+        },
+        "stats": {
+            "completion": "Profile Completion",
+            "completedJobs": "Completed Jobs",
+            "avgRating": "Average Rating",
+            "noRatings": "No ratings yet",
+            "totalReviews": "Total Reviews"
+        },
+        "location": {
+            "remoteAvailable": "Available for remote work"
+        },
+        "experience": {
+            "years": "{count} years",
+            "desc": "of professional experience"
+        }
+    },
+    "ProfessionalCard": {
+        "priceFrom": "From €{price}/hr",
+        "contactForPricing": "Contact for pricing",
+        "defaultService": "Professional",
+        "reviews": "{count, plural, =1 {# review} other {# reviews}}",
+        "remote": "Remote",
+        "moreServices": "+{count} more",
+        "viewProfile": "View Profile"
+    },
+    "LiveStats": {
+        "verifiedPros": "Verified Professionals",
+        "trustedReviews": "Trusted Reviews",
+        "activeRequests": "Active Requests",
+        "jobsCompleted": "Jobs Completed"
+    },
+    "RequestForm": {
+        "eyebrow": "New request",
+        "title": "Describe what you need",
+        "description": "Share enough detail so professionals can respond with accurate offers. You can edit the request later if anything changes.",
+        "tips": {
+            "title": "Tips for Great Requests",
+            "specific": {
+                "title": "Be specific",
+                "desc": "Detail what you need done"
+            },
+            "budget": {
+                "title": "Set budget",
+                "desc": "Helps pros send accurate offers"
+            },
+            "timeline": {
+                "title": "Add timeline",
+                "desc": "When do you need it completed?"
+            },
+            "context": {
+                "title": "Include context",
+                "desc": "Share any relevant background"
+            }
+        },
+        "sections": {
+            "basics": {
+                "title": "Task basics",
+                "desc": "Pick the best matching category and give your request a clear title."
+            },
+            "details": {
+                "title": "Details",
+                "desc": "Add context, goals, expectations or anything else that helps a pro understand the job."
+            },
+            "location": {
+                "title": "Location and format",
+                "desc": "Tell us where you are and whether online sessions work."
+            },
+            "timing": {
+                "title": "Timing",
+                "desc": "How urgently do you need this completed?"
+            },
+            "budget": {
+                "title": "Budget (optional)",
+                "desc": "Optional, but helpful for professionals to tailor their offer."
+            }
+        },
+        "fields": {
+            "category": "Category",
+            "selectCategory": "Select a category",
+            "subcategory": "Subcategory",
+            "selectSubcategory": "Select a subcategory",
+            "title": "What exactly do you need?",
+            "titlePlaceholder": "e.g. Math tutor for 10th grade algebra",
+            "description": "Describe your task",
+            "descriptionPlaceholder": "Add any details that will help professionals understand what you need, your expectations, and any important context.",
+            "noContactInfo": "Avoid sharing phone numbers or email here. You can exchange contacts once you choose a professional.",
+            "location": "Location (city)",
+            "locationPlaceholder": "e.g. Berlin, Vienna, online only",
+            "format": "Preferred format",
+            "formats": {
+                "ONLINE_OR_OFFLINE": "Online or in person is fine",
+                "ONLINE_ONLY": "Online only",
+                "IN_PERSON_ONLY": "In person only"
+            },
+            "timings": {
+                "URGENT": "🔥 Urgent",
+                "URGENT_DESC": "Within 24-48 hours",
+                "SOON": "⚡ Soon",
+                "SOON_DESC": "Within a week",
+                "FLEXIBLE": "📅 Flexible",
+                "FLEXIBLE_DESC": "No rush, take your time",
+                "SCHEDULED": "🗓️ Specific date",
+                "SCHEDULED_DESC": "I have a deadline"
+            },
+            "preferredDate": "When do you need this?",
+            "budgetMin": "Min budget (EUR)",
+            "budgetMax": "Max budget (EUR)",
+            "budgetHint": "Leave blank if you prefer professionals to suggest a price."
+        },
+        "actions": {
+            "publish": "Publish request",
+            "publishing": "Publishing...",
+            "publishedDesc": "Once published, matching professionals will start receiving your request."
+        },
+        "success": {
+            "title": "Request published!",
+            "desc": "Matching professionals will start sending you offers."
+        },
+        "error": {
+            "title": "Failed to create request",
+            "generic": "Something went wrong"
+        }
+    },
+    "ProOffers": {
+        "eyebrow": "Offers",
+        "title": "My Offers",
+        "description": "Track all offers you've sent and their outcomes.",
+        "stats": {
+            "pending": "Pending",
+            "accepted": "Accepted",
+            "profileViewed": "Profile Viewed",
+            "successRate": "Success Rate"
+        },
+        "empty": {
+            "title": "No offers sent yet",
+            "desc": "Browse matching requests and send your first offer to get hired!",
+            "action": "Browse Requests"
+        },
+        "sections": {
+            "pending": "Pending Offers",
+            "accepted": "Accepted Offers",
+            "rejected": "Not Selected"
+        },
+        "status": {
+            "pending": "Pending",
+            "accepted": "Accepted ✓",
+            "rejected": "Not Selected",
+            "withdrawn": "Withdrawn"
+        },
+        "card": {
+            "viewed": "👁️ Viewed",
+            "messageLabel": "Your offer message:",
+            "waiting": "⏳ Waiting for response",
+            "acceptedCheckJobs": "✓ Accepted - View Jobs",
+            "tips": {
+                "title": "Tips for Winning More Offers",
+                "items": {
+                    "respond": {
+                        "title": "Respond Quickly",
+                        "desc": "Clients value fast replies. Be among the first to send an offer."
+                    },
+                    "personalize": {
+                        "title": "Personalize Messages",
+                        "desc": "Show you understand their specific needs in your offer."
+                    },
+                    "price": {
+                        "title": "Price Fairly",
+                        "desc": "Be competitive but reflect your expertise and value."
+                    },
+                    "trust": {
+                        "title": "Build Trust",
+                        "desc": "Complete profile with portfolio and collect positive reviews."
+                    }
+                }
+            }
+        }
+    },
+    "ClientRequests": {
+        "title": "My requests",
+        "eyebrow": "Requests",
+        "description": "Track everything you've posted, check offer counts, and keep conversations organised.",
+        "create": "Create Request",
+        "createFirst": "Create Your First Request",
+        "stats": {
+            "open": "Open",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "totalOffers": "Total Offers"
+        },
+        "empty": {
+            "title": "No requests yet",
+            "desc": "Start by describing what you need. Verified professionals will send you tailored offers with pricing."
+        },
+        "status": {
+            "open": "Open",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "closed": "Closed"
+        },
+        "card": {
+            "viewDetails": "View details",
+            "new": "NEW",
+            "offers": "{count, plural, =1 {1 offer} other {# offers}}",
+            "offers_zero": "0 offers",
+            "offers_one": "1 offer",
+            "offers_other": "{count} offers",
+            "budget": "Up to {amount}",
+            "posted": "Posted {date}"
+        },
+        "detail": {
+            "bread_dashboard": "Dashboard",
+            "bread_requests": "Requests",
+            "posted": "Posted {date}",
+            "section_details": "Request Details",
+            "desc_label": "Description",
+            "info_category": "Category",
+            "info_budget": "Budget",
+            "info_location": "Location",
+            "info_type": "Type",
+            "info_urgency": "Urgency",
+            "info_start": "Start Date",
+            "active_job": "Active Job",
+            "contact_info": "Contact Information",
+            "pro_label": "Professional",
+            "email_label": "Email",
+            "phone_label": "Phone",
+            "view_job": "View Job Details",
+            "current_status": "Current Status",
+            "overview": "Overview",
+            "offers_received": "Offers Received",
+            "created_label": "Created",
+            "updated_label": "Last Updated",
+            "offers_section": "Offers from Professionals",
+            "offers_hint": "Review each offer carefully and view the professional's profile to learn more.",
+            "no_offers": "No offers yet",
+            "no_offers_desc": "Professionals matching your request will be notified. You can update your request details or share more context to attract the right professionals.",
+            "sent_date": "Sent {date}",
+            "negotiable": "Negotiable"
+        },
+        "actions": {
+            "accept": {
+                "button": "Accept Offer",
+                "loading": "Accepting...",
+                "confirm": "Accept this offer? This will create a job and reject other offers.",
+                "success": "Offer accepted successfully!",
+                "error": "Failed to accept offer"
+            },
+            "close": {
+                "button": "Close Request",
+                "loading": "Closing...",
+                "confirm": "Close this request? You will no longer receive offers.",
+                "success": "Request closed",
+                "error": "Failed to close request"
+            },
+            "viewProfile": {
+                "button": "View Profile",
+                "loading": "Loading..."
+            }
+        }
+    },
+    "ProRequests": {
+        "title": "Newest opportunities",
+        "eyebrow": "Matching requests",
+        "description": "These requests match your services. Respond quickly to increase your chances.",
+        "stats": {
+            "matches": "Total Matches",
+            "new": "New Today",
+            "urgent": "Urgent",
+            "services": "Your Services"
+        },
+        "empty": {
+            "title": "No matching requests",
+            "desc": "Try adding more services to your profile to see more opportunities.",
+            "action": "Update Services"
+        },
+        "card": {
+            "new": "NEW",
+            "urgent": "URGENT",
+            "posted": "Posted {date}",
+            "offers_count": "{count} offers",
+            "client": "Client: {name}",
+            "sendOffer": "Send Offer",
+            "pending": "Pending Approval",
+            "inactive": "Account Inactive"
+        }
+    },
+    "ClientProfile": {
+        "title": "My Profile",
+        "description": "Manage your personal information and preferences.",
+        "sections": {
+            "basic": "Basic Information",
+            "personal": "Personal Information",
+            "location": "Location",
+            "preferences": "Preferences"
+        },
+        "fields": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email Address",
+            "emailHint": "Email cannot be changed",
+            "dob": "Date of Birth",
+            "phone": "Phone Number",
+            "phoneHint": "International format: +[country code][number]",
+            "city": "City",
+            "region": "Region/State",
+            "country": "Country",
+            "language": "Preferred Language",
+            "languageHint": "Language for notifications and communications"
+        },
+        "actions": {
+            "save": "Save Changes",
+            "saving": "Saving...",
+            "cancel": "Cancel"
+        },
+        "success": "Profile updated successfully",
+        "error": "Failed to update profile",
+        "updateError": "Failed to update personal information"
+    },
+    "Verification": {
+        "status": {
+            "active": {
+                "title": "Profile Verified",
+                "badge": "Active",
+                "desc": "Your profile is verified and active. You can receive job requests and send offers to clients."
+            },
+            "pending": {
+                "title": "Verification Pending",
+                "desc": "Your documents have been submitted and are currently under review by our team. You will be notified once the verification process is complete."
+            },
+            "rejected": {
+                "title": "Attention Required",
+                "desc": "Your verification request was rejected. Please check the rejection reason and upload a valid document to proceed with verification."
+            },
+            "notVerified": {
+                "title": "Profile Not Verified",
+                "desc": "Please upload at least one official identity document (ID Card, Passport, or Business License) to verify your account."
+            }
+        },
+        "upload": {
+            "title": "Upload Verification Documents",
+            "desc": "Please upload official documents to verify your identity and expertise. Once approved by our team, your profile will receive a \"Verified\" badge.",
+            "label": "Document Type",
+            "types": {
+                "IDENTITY_CARD": "Identity Card (ID)",
+                "PASSPORT": "Passport",
+                "DRIVERS_LICENSE": "Driver's License",
+                "BUSINESS_LICENSE": "Business License / Kbis",
+                "DIPLOMA": "Diploma / Degree",
+                "CERTIFICATION": "Professional Certification",
+                "PORTFOLIO_SAMPLE": "Portfolio Sample",
+                "OTHER": "Other Document"
+            },
+            "button": "Select File",
+            "uploading": "Uploading...",
+            "hint": "Accepted formats: PDF, JPG, PNG (Max 5MB)",
+            "uploadedTitle": "Uploaded Documents",
+            "empty": "No documents uploaded yet.",
+            "success": "Document uploaded successfully!",
+            "deleted": "Document deleted",
+            "error": "Failed to upload file",
+            "deleteError": "Could not delete document",
+            "confirmDelete": "Are you sure you want to delete this document?",
+            "tooLarge": "File is too large. Max 5MB allowed."
+        }
+    },
+    "Reviews": {
+        "title": "Rate your experience",
+        "modalTitle": "Write a Review",
+        "desc": "How was your experience with this professional?",
+        "ratings": {
+            "5": "Excellent!",
+            "4": "Very Good",
+            "3": "Good",
+            "2": "Fair",
+            "1": "Poor"
+        },
+        "label": "Your Review",
+        "placeholder": "What went well? What could be improved?",
+        "recommend": "I would recommend this professional",
+        "cancel": "Cancel",
+        "submit": "Submit Review",
+        "submitting": "Submitting...",
+        "success": "Review submitted successfully!",
+        "error": "Failed to submit review",
+        "selectRating": "Please select a rating"
+    },
+    "ClientJobs": {
+        "title": "My Jobs",
+        "eyebrow": "Jobs",
+        "description": "Track your active and completed jobs",
+        "stats": {
+            "active": "Active Jobs",
+            "completed": "Completed",
+            "total": "Total Jobs",
+            "spent": "Total Spent"
+        },
+        "empty": {
+            "title": "No jobs yet",
+            "desc": "Accept an offer on your requests to create a job and start working with a professional.",
+            "button": "View Requests"
+        },
+        "status": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "disputed": "Disputed"
+        },
+        "detail": {
+            "section_details": "Job Details",
+            "description_label": "Project Description",
+            "agreed_price": "Agreed Price",
+            "started_label": "Started",
+            "completed_label": "Completed",
+            "review_label": "Your Review",
+            "pro_section": "Professional",
+            "view_profile": "View Full Profile",
+            "current_status": "Current Status",
+            "actions_section": "Actions",
+            "leave_review": "Leave a Review",
+            "review_submitted": "Review submitted - Thank you!",
+            "view_pro_profile": "View Professional Profile",
+            "started_date": "Started {date}",
+            "completed_date": "Completed {date}",
+            "contact_exchanged": "Contact Exchanged",
+            "complete": {
+                "button": "Mark as Complete",
+                "loading": "Completing...",
+                "success": "Job completed",
+                "confirm": "Mark this job as complete? The professional will be notified.",
+                "error": "Failed to complete job"
+            }
+        }
+    },
+    "ProJobs": {
+        "title": "My Jobs",
+        "eyebrow": "Jobs",
+        "description": "Track your hired jobs, start work, and mark them complete when finished.",
+        "stats": {
+            "ready": "Ready to Start",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "earned": "Total Estimated Earned"
+        },
+        "active": "Active Jobs",
+        "empty": {
+            "title": "No jobs yet",
+            "desc": "Browse matching requests and send competitive offers to win your first job!",
+            "button": "Browse Requests"
+        },
+        "card": {
+            "ready": "Ready",
+            "viewDetails": "View details",
+            "reviewed": "Reviewed"
+        },
+        "status": {
+            "accepted": "Accepted - Ready to start",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "disputed": "Disputed"
+        },
+        "detail": {
+            "section_details": "Job Details",
+            "description_label": "Project Description",
+            "agreed_price": "Agreed Price",
+            "created_label": "Created",
+            "started_label": "Started",
+            "completed_label": "Completed",
+            "client_review": "Client Review",
+            "respond_review": "Respond to Review",
+            "original_request": "Original Request Details",
+            "budget_range": "Budget Range",
+            "location_type": "Location Type",
+            "urgency": "Urgency",
+            "preferred_start": "Preferred Start",
+            "client_section": "Client",
+            "client_label": "Client",
+            "actions_section": "Actions",
+            "start_hint": "This job has been accepted by the client. Start working when you're ready!",
+            "complete_hint": "You're currently working on this job. Mark it as complete when finished.",
+            "completed_hint": "Job completed! Waiting for client to leave a review.",
+            "job_id": "Job #{id}",
+            "started_date": "Started {date}",
+            "contact_exchanged": "Contact Exchanged"
+        },
+        "actions": {
+            "start": {
+                "button": "Start Job",
+                "loading": "Starting...",
+                "confirm": "Are you ready to start this job?",
+                "error": "Failed to start job"
+            },
+            "complete": {
+                "button": "Mark as Complete",
+                "loading": "Completing...",
+                "confirm": "Mark this job as complete? The client will be notified and asked to leave a review.",
+                "error": "Failed to complete job"
+            }
+        }
+    },
+    "Categories": {
+        "title": "Browse Categories",
+        "subtitle": "Find the right professional by exploring our service categories",
+        "professionals": "professionals",
+        "more": "more",
+        "backToCategories": "Back to Categories",
+        "subcategory": "Subcategory",
+        "professionalsAvailable": "professionals available",
+        "subcategories": "subcategories",
+        "subcategoriesTitle": "Subcategories",
+        "viewAllInCategory": "View all professionals →",
+        "topProfessionals": "Top Professionals",
+        "noProfessionals": "No professionals in this category yet",
+        "reviews": "reviews"
+    },
+    "ClientOffers": {
+        "eyebrow": "Offers",
+        "title": "Offers Received",
+        "description": "Manage and compare all offers received for your active requests in one place.",
+        "stats": {
+            "total": "Total Received",
+            "new": "New Today",
+            "accepted": "Accepted"
+        },
+        "card": {
+            "forRequest": "For: {title}",
+            "viewRequest": "View Request",
+            "viewProfile": "View Profile",
+            "accept": "Accept Offer"
+        },
+        "empty": {
+            "title": "No offers received yet",
+            "desc": "Once you post a request, professionals will send you tailored offers. You'll see them all right here.",
+            "action": "View My Requests"
+        }
+    },
+    "Notifications": {
+        "eyebrow": "Notifications",
+        "title": "Stay updated",
+        "description": "Track your requests, offers, and job updates.",
+        "backToDashboard": "Back to Dashboard",
+        "markAllAsRead": "Mark all as read",
+        "deleteAll": "Delete all",
+        "empty": {
+            "title": "No notifications yet",
+            "desc": "We'll notify you when someone responds to your request or when there's an update on your job."
+        },
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "earlier": "Earlier"
+    },
+    "Wallet": {
+        "eyebrow": "Wallet & Payments",
+        "title": "Manage your funds",
+        "description": "Add funds to your wallet to pay for leads and premium features.",
+        "balance": {
+            "available": "Available Balance",
+            "low": "Low Balance",
+            "active": "Active",
+            "addFunds": "Add Funds"
+        },
+        "stats": {
+            "today": "Today",
+            "clicks": "Clicks",
+            "spent": "Spent",
+            "lastTxns": "Last 20 txns",
+            "cpl": "Avg. CPL",
+            "flatRate": "Flat rate"
+        },
+        "transactions": {
+            "title": "Transaction History",
+            "export": "Export",
+            "empty": "No transactions yet",
+            "emptyDesc": "Your deposit and spending history will appear here.",
+            "recent": "Recent Transactions",
+            "completed": "Completed"
+        },
+        "about": {
+            "title": "About Billing",
+            "point1": "Funds never expire",
+            "point2": "Secure payments via Stripe",
+            "point3": "Download invoices from Settings"
+        },
+        "addFunds": {
+            "title": "Add Funds to Wallet",
+            "description": "Select an amount to credit to your professional account.",
+            "customAmount": "Custom Amount",
+            "minAmount": "Minimum amount is {amount}",
+            "confirm": "Pay €{amount}"
+        },
+        "messages": {
+            "depositSuccess": "Deposit successful! Your balance has been updated.",
+            "depositCanceled": "Deposit canceled.",
+            "verifyingDeposit": "Verifying transaction...",
+            "depositVerificationFailed": "Could not verify deposit. Please contact support if you were charged."
+        },
+        "common": {
+            "cancel": "Cancel"
+        }
+    },
+    "OfferForm": {
+        "page": {
+            "eyebrow": "Send an Offer",
+            "title": "Submit your proposal",
+            "description": "Review the request details and send your best offer to the client.",
+            "closedTitle": "Request Closed",
+            "closedDesc": "This request is no longer accepting offers.",
+            "closedMessage": "The client has already hired someone or cancelled the request.",
+            "budgetSpecified": "Budget not specified"
+        },
+        "restrictions": {
+            "eyebrow": "Action Required",
+            "notActive": "Account Not Active",
+            "lowBalance": "Low Balance",
+            "recharge": "Add Funds"
+        },
+        "title": "Send Offer",
+        "validation": {
+            "invalidPrice": "Please enter a valid price",
+            "minPrice": "Price must be at least €1.00",
+            "shortMessage": "Message is too short (min 50 chars)"
+        },
+        "pricing": {
+            "title": "Pricing",
+            "desc": "Set your price for this service.",
+            "proposedPrice": "Proposed Price",
+            "typeLabel": "Pricing Type",
+            "hint": "Clients see this as {type}",
+            "hintTotal": "a total project cost",
+            "hintHourly": "an estimated hourly rate",
+            "types": {
+                "fixed": "Fixed Price",
+                "hourly": "Hourly Rate"
+            }
+        },
+        "proposal": {
+            "title": "Your Proposal",
+            "desc": "Explain why you're the best fit for this job.",
+            "messageLabel": "Cover Message",
+            "messagePlaceholder": "Hello, I saw your request and I'd love to help...",
+            "minChars": "{count}/50 characters",
+            "chars": "{count} chars",
+            "templates": {
+                "label": "Use a template",
+                "quick": {
+                    "label": "⚡ Quick Response",
+                    "text": "Hi {name}, I saw your request for {category} and I'd be happy to help! I have experience with this and can start {availability}. Let me know if you have any questions."
+                },
+                "detailed": {
+                    "label": "📝 Detailed Proposal",
+                    "text": "Hi {name}, I'm interested in your {category} project. I specialize in this area and would approach it by first understanding your specific needs. I can start {availability} and ensure quality results. I look forward to discussing this further!"
+                },
+                "questions": {
+                    "label": "❓ Clarifying Questions",
+                    "text": "Hi {name}, I'd like to offer my services for your {category} request. Before I provide a final quote, could you share a few more details? I'm available to start {availability} once we clarify the scope."
+                }
+            }
+        },
+        "availability": {
+            "title": "Availability",
+            "desc": "When can you start?",
+            "startType": {
+                "label": "When can you start?",
+                "asap": "ASAP",
+                "tomorrow": "Tomorrow",
+                "fewDays": "In a few days",
+                "specific": "Specific Date"
+            },
+            "duration": "Estimated Duration",
+            "durationUnits": {
+                "hours": "Hours",
+                "days": "Days",
+                "weeks": "Weeks",
+                "months": "Months"
+            }
+        },
+        "tips": {
+            "title": "Tips for winning offers",
+            "items": {
+                "specific": "Be specific about your experience",
+                "needs": "Address the client's needs directly",
+                "approach": "Explain your approach or process",
+                "expectations": "Set clear expectations"
+            }
+        },
+        "actions": {
+            "ready": "Ready to send?",
+            "cancel": "Cancel",
+            "sending": "Sending...",
+            "send": "Send Offer",
+            "legal": "By sending this offer, you agree to our terms of service."
+        },
+        "summary": {
+            "title": "Request Summary",
+            "budget": "Client Budget",
+            "location": "Location",
+            "posted": "Posted {date}"
+        },
+        "success": {
+            "title": "Offer Sent!",
+            "desc": "The client has been notified."
+        },
+        "error": {
+            "title": "Error",
+            "generic": "Something went wrong. Please try again."
+        }
+    },
+    "errors": {
+        "minAmount": "Minimum amount is {amount}",
+        "depositFailed": "Failed to initialize deposit. Please try again."
+    },
+    "common": {
+        "cancel": "Cancel"
+    },
+    "ProRequests": {
+        "eyebrow": "Browse Requests",
+        "title": "New Opportunities",
+        "description": "Find new clients looking for your skills.",
+        "stats": {
+            "matches": "Exact Matches",
+            "new": "New Today",
+            "urgent": "Urgent",
+            "services": "Your Services"
+        },
+        "empty": {
+            "title": "No matching requests found",
+            "desc": "Try updating your services or checking back later.",
+            "action": "Update Services"
+        },
+        "card": {
+            "posted": "Posted {date}",
+            "offers_count": "{count, plural, =0 {No offers} =1 {1 offer} other {# offers}}",
+            "client": "Client: {name}",
+            "viewOffer": "View Offer",
+            "sendOffer": "Send Offer",
+            "offerSent": "Offer Sent",
+            "new": "NEW",
+            "urgent": "URGENT",
+            "pending": "Pending",
+            "inactive": "Inactive"
+        }
+    },
+    "ClientJobs": {
+        "actions": {
+            "complete": {
+                "confirm": "Are you sure you want to mark this job as complete?",
+                "error": "Failed to complete job. Please try again.",
+                "loading": "Completing...",
+                "button": "Mark as Complete"
+            }
+        }
+    }
+}

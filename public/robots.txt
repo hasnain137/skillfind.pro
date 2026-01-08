@@ -1,0 +1,16 @@
+# SkillFind.pro Robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth-redirect
+Disallow: /*?*  # Disallow query parameters for cleaner crawling
+
+# Sitemaps
+Sitemap: https://skillfind.pro/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

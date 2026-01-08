@@ -1,0 +1,917 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  extensions = [pg_trgm]
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id                String   @id @default(cuid())
+  clerkId           String   @unique
+  email             String   @unique
+  emailVerified     Boolean  @default(false)
+  role              UserRole @default(CLIENT)
+  
+  // Profile basics
+  firstName         String?
+  lastName          String?
+  dateOfBirth       DateTime?
+  isOver18          Boolean  @default(false)
+  phoneNumber       String?
+  phoneVerified     Boolean  @default(false)
+  phoneVerifiedAt   DateTime?
+  avatar            String?
+  
+  // Account status
+  isActive          Boolean  @default(true)
+  isBanned          Boolean  @default(false)
+  banReason         String?
+
+  // Legal Consent
+  termsAccepted     Boolean  @default(false)
+  termsAcceptedAt   DateTime?
+  
+  // Timestamps
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastLoginAt       DateTime?
+  
+  // Relations
+  clientProfile       Client?
+  professionalProfile Professional?
+  notifications       Notification[]
+  
+  @@index([clerkId])
+  @@index([email])
+  @@index([firstName])
+  @@index([lastName])
+  @@map("users")
+}
+
+enum UserRole {
+  CLIENT
+  PROFESSIONAL
+  ADMIN
+}
+
+// ============================================
+// CLIENT
+// ============================================
+
+model Client {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Client-specific fields
+  city              String?
+  region            String?
+  country           String   @default("FR")
+  preferredLanguage String   @default("en")
+  
+  // Relations
+  requests          Request[]
+  jobs              Job[]
+  reviews           Review[]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([userId])
+  @@map("clients")
+}
+
+// ============================================
+// PROFESSIONAL
+// ============================================
+
+model Professional {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Account status
+  status            ProfessionalStatus @default(INCOMPLETE)
+  
+  // Verification status
+  isVerified        Boolean  @default(false)
+  qualificationVerified Boolean @default(true) // Defaults to true for unregulated, set to false if service requires it
+  verificationMethod VerificationMethod @default(MANUAL)
+  verifiedAt        DateTime?
+  verifiedBy        String?
+  idenfyVerificationId String?
+  
+  // Profile completion (0-100%)
+  profileCompletion Int      @default(0)
+  
+  // Business info
+  businessName      String?
+  title             String?
+  bio               String?  @db.Text
+  yearsOfExperience Int?
+  
+  // Location
+  city              String?
+  region            String?
+  country           String   @default("FR")
+  
+  // Availability
+  isAvailable          Boolean              @default(true)
+  remoteAvailability   RemoteAvailability   @default(YES_AND_ONSITE)
+  
+  // Stats (calculated fields)
+  averageRating     Float    @default(0)
+  totalReviews      Int      @default(0)
+  completedJobs     Int      @default(0)
+  responseTime      Int?
+  
+  // Stripe integration
+  stripeCustomerId  String?
+  stripeIdentityVerificationId String?
+  
+  // Billing controls
+  dailyClickLimit   Int      @default(10)
+  
+  // Relations
+  profile           ProfessionalProfile?
+  wallet            Wallet?
+  offers            Offer[]
+  jobs              Job[]
+  services          ProfessionalService[]
+  documents         VerificationDocument[]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([isVerified])
+  @@index([averageRating])
+  @@index([city])
+  @@index([status, city])
+  @@index([businessName])
+  @@index([title])
+  @@index([bio])
+  @@map("professionals")
+}
+
+enum VerificationMethod {
+  MANUAL
+  IDENFY
+  STRIPE_IDENTITY
+}
+
+enum RemoteAvailability {
+  YES_AND_ONSITE
+  ONLY_REMOTE
+  NO_REMOTE
+}
+
+enum ProfessionalStatus {
+  INCOMPLETE
+  PENDING_REVIEW
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+model ProfessionalProfile {
+  id                String       @id @default(cuid())
+  professionalId    String       @unique
+  professional      Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  
+  // Portfolio
+  portfolioImages   String[]
+  
+  // Pricing
+  hourlyRateMin     Int?
+  hourlyRateMax     Int?
+  
+  // Social proof
+  websiteUrl        String?
+  linkedinUrl       String?
+  
+  // Preferences
+  preferredLanguage String       @default("en")
+  
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  
+  @@index([professionalId])
+  @@map("professional_profiles")
+}
+
+// ============================================
+// VERIFICATION DOCUMENTS
+// ============================================
+
+model VerificationDocument {
+  id                String         @id @default(cuid())
+  professionalId    String
+  professional      Professional   @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  
+  // Document details
+  type              DocumentType
+  fileUrl           String
+  fileName          String
+  fileSize          Int?
+  mimeType          String?
+  
+  // Verification status
+  status            DocumentStatus @default(PENDING)
+  
+  // Review details
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  rejectionReason   String?        @db.Text
+  adminNotes        String?        @db.Text
+  
+  // Metadata
+  uploadedAt        DateTime       @default(now())
+  expiresAt         DateTime?
+  
+  @@index([professionalId])
+  @@index([status])
+  @@index([type])
+  @@index([uploadedAt])
+  @@map("verification_documents")
+}
+
+enum DocumentType {
+  IDENTITY_CARD
+  PASSPORT
+  DRIVERS_LICENSE
+  BUSINESS_LICENSE
+  DIPLOMA
+  CERTIFICATION
+  PORTFOLIO_SAMPLE
+  OTHER
+}
+
+enum DocumentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+// ============================================
+// PROFESSIONAL SERVICES
+// ============================================
+
+model ProfessionalService {
+  id                String       @id @default(cuid())
+  professionalId    String
+  professional      Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  
+  subcategoryId     String
+  subcategory       Subcategory  @relation(fields: [subcategoryId], references: [id])
+  
+  // Service-specific details
+  description       String?      @db.Text
+  priceFrom         Int?
+  priceTo           Int?
+  
+  createdAt         DateTime     @default(now())
+  
+  @@unique([professionalId, subcategoryId])
+  @@index([professionalId])
+  @@index([subcategoryId])
+  @@index([description])
+  @@map("professional_services")
+}
+
+// ============================================
+// CATEGORIES & SUBCATEGORIES
+// ============================================
+
+model Category {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  nameEn          String
+  nameFr          String?
+  description     String?       @db.Text
+  icon            String?
+  sortOrder       Int           @default(0)
+  isActive        Boolean       @default(true)
+  
+  subcategories   Subcategory[]
+  requests        Request[]
+  adCampaigns     AdCampaign[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([slug])
+  @@index([sortOrder])
+  @@map("categories")
+}
+
+model Subcategory {
+  id              String        @id @default(cuid())
+  categoryId      String
+  category        Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  slug            String        @unique
+  nameEn          String
+  nameFr          String?
+  description     String?       @db.Text
+  sortOrder       Int           @default(0)
+  isActive        Boolean       @default(true)
+  
+  requests        Request[]
+  professionalServices ProfessionalService[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([categoryId])
+  @@index([slug])
+  @@map("subcategories")
+}
+
+// ============================================
+// REQUESTS
+// ============================================
+
+model Request {
+  id                String         @id @default(cuid())
+  clientId          String
+  client            Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  categoryId        String
+  category          Category       @relation(fields: [categoryId], references: [id])
+  
+  subcategoryId     String
+  subcategory       Subcategory    @relation(fields: [subcategoryId], references: [id])
+  
+  // Request details
+  title             String
+  description       String         @db.Text
+  
+  // Location
+  locationType      LocationType
+  city              String?
+  region            String?
+  country           String         @default("FR")
+  address           String?
+  
+  // Budget
+  budgetMin         Int?
+  budgetMax         Int?
+  
+  // Timeline
+  urgency           Urgency        @default(FLEXIBLE)
+  preferredStartDate DateTime?
+  
+  // Status
+  status            RequestStatus  @default(OPEN)
+  
+  // Offer tracking
+  offerCount        Int            @default(0)
+  
+  // Relations
+  offers            Offer[]
+  job               Job?
+  
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  closedAt          DateTime?
+  
+  @@index([clientId])
+  @@index([categoryId])
+  @@index([subcategoryId])
+  @@index([status])
+  @@index([categoryId, status])
+  @@index([city])
+  @@index([createdAt])
+  @@map("requests")
+}
+
+enum LocationType {
+  ON_SITE
+  REMOTE
+}
+
+enum Urgency {
+  URGENT
+  SOON
+  FLEXIBLE
+}
+
+enum RequestStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// ============================================
+// OFFERS
+// ============================================
+
+model Offer {
+  id                String       @id @default(cuid())
+  requestId         String
+  request           Request      @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  professionalId    String
+  professional      Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  
+  // Offer details
+  message           String       @db.Text
+  proposedPrice     Int?
+  estimatedDuration String?
+  availableTimeSlots String?     @db.Text
+  
+  // Status
+  status            OfferStatus  @default(PENDING)
+  
+  // Tracking
+  viewedByClient    Boolean      @default(false)
+  viewedAt          DateTime?
+  
+  // Click event (for billing)
+  clickEvent        ClickEvent?
+  
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  
+  @@unique([requestId, professionalId])
+  @@index([requestId])
+  @@index([professionalId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("offers")
+}
+
+enum OfferStatus {
+  PENDING
+  VIEWED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+  EXPIRED
+}
+
+// ============================================
+// CLICK EVENTS (PAY-PER-CLICK)
+// ============================================
+
+model ClickEvent {
+  id                String       @id @default(cuid())
+  offerId           String       @unique
+  offer             Offer        @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  
+  clientId          String
+  professionalId    String
+  
+  // Transaction
+  transactionId     String?      @unique
+  transaction       Transaction? @relation(fields: [transactionId], references: [id])
+  
+  // Tracking
+  clickedAt         DateTime     @default(now())
+  ipAddress         String?
+  userAgent         String?
+  
+  @@unique([offerId, clientId])
+  @@index([professionalId])
+  @@index([clickedAt])
+  @@index([ipAddress])
+  @@map("click_events")
+}
+
+// ============================================
+// WALLET & TRANSACTIONS
+// ============================================
+
+model Wallet {
+  id                String        @id @default(cuid())
+  professionalId    String        @unique
+  professional      Professional  @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  
+  // Balance
+  balance           Int           @default(0)
+  
+  // Tracking
+  totalDeposits     Int           @default(0)
+  totalSpent        Int           @default(0)
+  
+  // Relations
+  transactions      Transaction[]
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  @@index([professionalId])
+  @@map("wallets")
+}
+
+model Transaction {
+  id                String            @id @default(cuid())
+  walletId          String
+  wallet            Wallet            @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  // Transaction details
+  type              TransactionType
+  amount            Int
+  balanceBefore     Int
+  balanceAfter      Int
+  
+  // Reference
+  description       String
+  referenceId       String?
+  
+  // Click event relation (for debits)
+  clickEvent        ClickEvent?
+  
+  // Admin actions
+  adminId           String?
+  adminNote         String?
+  
+  createdAt         DateTime          @default(now())
+  
+  @@index([walletId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("transactions")
+}
+
+enum TransactionType {
+  DEPOSIT
+  DEBIT
+  REFUND
+  ADMIN_ADJUSTMENT
+}
+
+// ============================================
+// JOBS & REVIEWS
+// ============================================
+
+model Job {
+  id                String       @id @default(cuid())
+  requestId         String       @unique
+  request           Request      @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  clientId          String
+  client            Client       @relation(fields: [clientId], references: [id])
+  
+  professionalId    String
+  professional      Professional @relation(fields: [professionalId], references: [id])
+  
+  // Job details
+  agreedPrice       Int?
+  status            JobStatus    @default(ACCEPTED)
+  
+  // Timeline
+  startedAt         DateTime?
+  completedAt       DateTime?
+  
+  // Review
+  review            Review?
+  disputes          Dispute[]
+  
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  
+  @@index([clientId])
+  @@index([professionalId])
+  @@index([status])
+  @@map("jobs")
+}
+
+enum JobStatus {
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+// ============================================
+// DISPUTES
+// ============================================
+
+model Dispute {
+  id           String         @id @default(cuid())
+  jobId        String
+  job          Job            @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  reason       DisputeReason
+  description  String         @db.Text
+  evidenceUrls String[]
+
+  status       DisputeStatus  @default(OPEN)
+  raisedBy     DisputeRaisedBy
+  resolution   String?        @db.Text
+  resolvedAt   DateTime?
+
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([jobId])
+  @@index([status])
+  @@map("disputes")
+}
+
+enum DisputeReason {
+  WORK_NOT_COMPLETED
+  WORK_NOT_SATISFACTORY
+  PAYMENT_ISSUE
+  COMMUNICATION_BREAKDOWN
+  OTHER
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+}
+
+enum DisputeRaisedBy {
+  CLIENT
+  PROFESSIONAL
+}
+
+model Review {
+  id                  String              @id @default(cuid())
+  jobId               String              @unique
+  job                 Job                 @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  clientId            String
+  client              Client              @relation(fields: [clientId], references: [id])
+  
+  // Review content
+  rating              Int
+  title               String?
+  content             String              @db.Text
+  tags                String[]
+  wouldRecommend      Boolean             @default(true)
+  
+  // Moderation
+  moderationStatus    ModerationStatus    @default(PENDING)
+  moderatedBy         String?
+  moderatedAt         DateTime?
+  moderationNote      String?             @db.Text
+  
+  // Professional response
+  professionalResponse ReviewResponse?
+  
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  
+  @@index([clientId])
+  @@index([rating])
+  @@index([moderationStatus])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+model ReviewResponse {
+  id                String       @id @default(cuid())
+  reviewId          String       @unique
+  review            Review       @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  
+  response          String       @db.Text
+  
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  
+  @@index([reviewId])
+  @@map("review_responses")
+}
+
+enum ModerationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ============================================
+// PLATFORM SETTINGS
+// ============================================
+
+model PlatformSettings {
+  id                       String   @id @default(cuid())
+  
+  // Phone verification
+  phoneVerificationEnabled Boolean  @default(false)
+  
+  // Billing settings
+  clickFee                 Int      @default(10)
+  minimumWalletBalance     Int      @default(200)
+  
+  // Business rules
+  maxOffersPerRequest      Int      @default(10)
+  
+  // Audit
+  updatedAt                DateTime @updatedAt
+  updatedBy                String?
+  
+  @@map("platform_settings")
+}
+
+// ============================================
+// ADMIN ACTIONS
+// ============================================
+
+model AdminAction {
+  id                String       @id @default(cuid())
+  adminId           String
+  
+  // Action details
+  action            AdminActionType
+  targetType        String
+  targetId          String
+  
+  // Details
+  reason            String?      @db.Text
+  metadata          Json?
+  
+  createdAt         DateTime     @default(now())
+  
+  @@index([adminId])
+  @@index([targetType, targetId])
+  @@index([createdAt])
+  @@map("admin_actions")
+}
+
+enum AdminActionType {
+  USER_BANNED
+  USER_UNBANNED
+  USER_VERIFIED
+  USER_REJECTED
+  BALANCE_ADJUSTED
+  CONTENT_FLAGGED
+  CONTENT_APPROVED
+  CONTENT_REMOVED
+  REVIEW_MODERATED
+}
+
+// ============================================
+// SYSTEM SETTINGS
+// ============================================
+
+model SystemSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+  
+  @@map("system_settings")
+}
+
+// ============================================
+// TRANSLATIONS
+// ============================================
+
+model Translation {
+  id        String   @id @default(cuid())
+  key       String
+  locale    String
+  value     String
+  namespace String   @default("common")
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@unique([key, locale])
+  @@index([locale, namespace])
+  @@map("translations")
+}
+
+// ============================================
+// LOCALIZATION
+// ============================================
+
+// ============================================
+// NOTIFICATIONS
+// ============================================
+
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Notification content
+  type        NotificationType
+  title       String
+  message     String
+  
+  // Link to related entity
+  entityType  String?          // 'offer', 'job', 'review', 'request'
+  entityId    String?
+  actionUrl   String?
+  
+  // Status
+  isRead      Boolean          @default(false)
+  readAt      DateTime?
+  
+  createdAt   DateTime         @default(now())
+  
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+enum NotificationType {
+  NEW_OFFER           // Client receives offer on their request
+  OFFER_ACCEPTED      // Pro's offer was accepted
+  OFFER_REJECTED      // Pro's offer was rejected
+  JOB_STARTED         // Job has started
+  JOB_COMPLETED       // Job was marked complete
+  NEW_REVIEW          // Pro received a review
+  REVIEW_RESPONSE     // Client: pro responded to their review
+  PROFILE_VERIFIED    // Pro: profile was verified
+  LOW_BALANCE         // Pro: wallet balance is low
+  WALLET_DEBIT        // Pro: click charge applied
+  MATCHING_REQUEST    // Pro: new request matches their services
+  SYSTEM              // General system notification
+}
+
+// ============================================
+// ADVERTISEMENT CAMPAIGNS
+// ============================================
+
+model AdCampaign {
+  id          String           @id @default(cuid())
+  
+  // Campaign details
+  name        String
+  description String?          @db.Text
+  imageUrl    String?
+  linkUrl     String?
+  
+  // Targeting
+  categoryId  String?
+  category    Category?        @relation(fields: [categoryId], references: [id])
+  targetCity  String?
+  targetRegion String?
+  targetCountry String?
+  
+  // Budget and duration
+  budgetCents Int              @default(0)          // Total budget in cents
+  spentCents  Int              @default(0)          // Amount spent
+  costPerClick Int             @default(10)         // Cost per click in cents (€0.10 default)
+  startDate   DateTime
+  endDate     DateTime
+  
+  // Status
+  status      AdCampaignStatus @default(DRAFT)
+  
+  // Stats
+  impressions Int              @default(0)
+  clicks      Int              @default(0)
+  
+  // Audit
+  createdBy   String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  
+  // Relations
+  adClicks    AdClick[]
+  
+  @@index([status])
+  @@index([categoryId])
+  @@index([startDate, endDate])
+  @@index([targetCity])
+  @@map("ad_campaigns")
+}
+
+model AdClick {
+  id           String     @id @default(cuid())
+  campaignId   String
+  campaign     AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  // Tracking
+  userId       String?             // Logged in user (optional)
+  ipAddress    String?
+  userAgent    String?
+  referrer     String?
+  
+  clickedAt    DateTime   @default(now())
+  
+  @@index([campaignId])
+  @@index([clickedAt])
+  @@map("ad_clicks")
+}
+
+enum AdCampaignStatus {
+  DRAFT
+  PENDING_PAYMENT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+

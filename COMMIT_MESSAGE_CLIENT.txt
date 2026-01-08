@@ -1,0 +1,79 @@
+feat: Add comprehensive profile management for clients
+
+## Features Added
+
+### Client Profile Page (/client/profile)
+- Complete profile management interface with 4 sections:
+  - Basic Information (name, email)
+  - Personal Information (DOB, phone)
+  - Location (city, region, country)
+  - Preferences (language selection)
+- Consistent UX with professional profile
+- Real-time validation and success/error messages
+
+### API Endpoints
+- GET/PATCH /api/client/profile - Manage client location & preferences
+- Enhanced PATCH /api/user/profile - Added firstName/lastName updates
+
+### Helper Functions
+- Added getClientByClerkId() and getClientWithRelations()
+- Proper Clerk ID → User ID → Client profile lookups
+- Prevents database query errors
+
+### Navigation
+- Added "My profile" link to client dashboard sidebar
+
+## Technical Details
+
+### Data Updates
+- Dual API calls: User table (personal info) + Client table (location/prefs)
+- Atomic updates with proper error handling
+- Optional field support (region, preferences)
+
+### Profile Fields
+**User Table:**
+- firstName, lastName (new PATCH support)
+- dateOfBirth, phoneNumber
+
+**Client Table:**
+- city, region, country
+- preferredLanguage (en, fr, de, es)
+
+### Profile Completion
+- Works with existing check-profile logic
+- Requires: DOB + phone + city
+- Redirects incomplete profiles to onboarding
+- Skip option available
+
+## Files Changed
+
+### New Files (4)
+- src/app/client/profile/page.tsx
+- src/app/client/profile/ClientProfileForm.tsx
+- src/app/api/client/profile/route.ts
+- Documentation files (commit message, guide)
+
+### Modified Files (3)
+- src/lib/get-professional.ts (added client helpers)
+- src/app/client/layout.tsx (added profile nav link)
+- src/app/api/user/profile/route.ts (added name updates)
+
+## Benefits
+✅ Clients can manage complete profile from dashboard
+✅ Consistent experience across user types
+✅ Profile completion tracking
+✅ Better data quality for matching algorithms
+✅ Language preferences for localization
+
+## Testing
+✅ Profile page loads and displays data
+✅ All fields update and persist
+✅ Profile completion flow works
+✅ Skip onboarding functional
+✅ API endpoints validated
+✅ No breaking changes
+
+---
+
+Part of profile management system improvements
+Complements existing professional profile enhancements

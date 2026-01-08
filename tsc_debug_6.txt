@@ -1,0 +1,1 @@
+prisma.config.ts(7,9): error TS2353: Object literal may only specify known properties, and 'provider' does not exist in type '{ url: string; shadowDatabaseUrl?: string | undefined; }'.
