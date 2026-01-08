@@ -325,15 +325,24 @@ export default async function ClientRequestDetailPage({
 
                   {/* Actions */}
                   <div className="flex flex-wrap gap-2 pt-2 border-t border-[#E5E7EB]">
-                    <ViewOfferProfileButton
-                      offerId={offer.id}
-                      professionalId={offer.professionalId}
-                      className="border border-[#E5E7EB] px-4 py-2 text-xs hover:bg-gray-50"
-                    />
                     {offer.status === 'PENDING' && request.status === 'OPEN' && (
-                      <AcceptOfferButton
+                      <>
+                        <ViewOfferProfileButton
+                          offerId={offer.id}
+                          professionalId={offer.professionalId}
+                          className="border border-[#E5E7EB] px-4 py-2 text-xs hover:bg-gray-50"
+                        />
+                        <AcceptOfferButton
+                          offerId={offer.id}
+                          requestId={request.id}
+                        />
+                      </>
+                    )}
+                    {offer.status === 'ACCEPTED' && (
+                      <ViewOfferProfileButton
                         offerId={offer.id}
-                        requestId={request.id}
+                        professionalId={offer.professionalId}
+                        className="border border-[#E5E7EB] px-4 py-2 text-xs hover:bg-gray-50"
                       />
                     )}
                   </div>

@@ -33,7 +33,13 @@ export default function AcceptOfferButton({
 
       if (response.ok) {
         toast.success(t('success'));
-        router.refresh();
+        // Redirect to the new Job Page with 'accepted' flag
+        if (data.job?.id) {
+          router.push(`/client/jobs/${data.job.id}?accepted=true`);
+        } else {
+          // Fallback to refresh if no job ID (shouldn't happen)
+          router.refresh();
+        }
       } else {
         // Display the specific error message from the API
         let errorMessage = data.error?.message || data.message || t('error');
@@ -59,9 +65,9 @@ export default function AcceptOfferButton({
     <Button
       onClick={handleAccept}
       disabled={loading}
-      className="px-4 py-2 text-xs"
+      className="px-4 py-2 text-xs bg-green-600 hover:bg-green-700 text-white border-none shadow-md"
     >
-      {loading ? t('loading') : t('button')}
+      {loading ? t('loading') : '✅ Accept & View Contact'}
     </Button>
   );
 }

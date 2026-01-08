@@ -23,14 +23,18 @@ export default function ViewOfferProfileButton({
     async function handleClick() {
         setLoading(true);
         try {
+            // Attempt to charge €0.10 for viewing
+            // If already charged (idempotency), the API will return conflict but that's fine
             await fetch('/api/clicks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ offerId }),
             });
         } catch (error) {
-            console.error('Failed to record click:', error);
+            // Silent fail - don't block profile view if charging fails
+            console.error('Click billing failed (non-blocking):', error);
         } finally {
+            // Always navigate to profile regardless of billing outcome
             router.push(`/professionals/${professionalId}`);
         }
     }

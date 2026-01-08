@@ -1469,5 +1469,15 @@
             "pending": "Pending",
             "inactive": "Inactive"
         }
+    },
+    "ClientJobs": {
+        "actions": {
+            "complete": {
+                "confirm": "Are you sure you want to mark this job as complete?",
+                "error": "Failed to complete job. Please try again.",
+                "loading": "Completing...",
+                "button": "Mark as Complete"
+            }
+        }
     }
 }

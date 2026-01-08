@@ -160,15 +160,24 @@ export default async function ClientOffersPage() {
                                     </p>
 
                                     <div className="flex flex-wrap gap-2 justify-end">
-                                        <ViewOfferProfileButton
-                                            offerId={offer.id}
-                                            professionalId={offer.professional.id}
-                                            className="text-xs border border-gray-200"
-                                        />
                                         {offer.status === 'PENDING' && offer.request.status === 'OPEN' && (
-                                            <AcceptOfferButton
+                                            <>
+                                                <ViewOfferProfileButton
+                                                    offerId={offer.id}
+                                                    professionalId={offer.professional.id}
+                                                    className="text-xs border border-gray-200"
+                                                />
+                                                <AcceptOfferButton
+                                                    offerId={offer.id}
+                                                    requestId={offer.request.id}
+                                                />
+                                            </>
+                                        )}
+                                        {offer.status === 'ACCEPTED' && (
+                                            <ViewOfferProfileButton
                                                 offerId={offer.id}
-                                                requestId={offer.request.id}
+                                                professionalId={offer.professional.id}
+                                                className="text-xs border border-gray-200"
                                             />
                                         )}
                                     </div>

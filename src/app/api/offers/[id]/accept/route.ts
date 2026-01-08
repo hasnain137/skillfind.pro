@@ -5,6 +5,7 @@ import { requireClient } from '@/lib/auth';
 import { successResponse, handleApiError } from '@/lib/api-response';
 import { NotFoundError, ForbiddenError, BadRequestError } from '@/lib/errors';
 import { notifyOfferAccepted, notifyOfferRejected } from '@/lib/services/notifications';
+import { recordClickAndCharge } from '@/lib/services/click-billing';
 
 export async function POST(
   request: NextRequest,
@@ -48,8 +49,8 @@ export async function POST(
       throw new ForbiddenError('You can only accept offers on your own requests');
     }
 
-    // Check if offer is still pending
-    if (offer.status !== 'PENDING') {
+    // Check if offer can still be accepted (PENDING or VIEWED are valid)
+    if (!['PENDING', 'VIEWED'].includes(offer.status)) {
       throw new BadRequestError('This offer is no longer available');
     }
 
@@ -61,6 +62,35 @@ export async function POST(
     // Check if professional is active
     if (offer.professional.status !== 'ACTIVE') {
       throw new BadRequestError('This professional is no longer active on the platform');
+    }
+
+    // CHARGE LOGIC: Trigger the click fee if not already paid
+    // This is crucial: Accepting an offer "consumes" the lead just like viewing the profile
+    try {
+      await recordClickAndCharge({
+        offerId: offer.id,
+        clientId: client.id,
+        clickType: 'CONTACT_REVEAL', // Acceptance reveals contact info
+        clientName: `${client.user.firstName} ${client.user.lastName}`.trim(),
+      });
+    } catch (error: any) {
+      // If already charged (ConflictError), we proceed safely
+      // If insufficient balance, we block the acceptance
+      if (error.code === 'INSUFFICIENT_BALANCE' || error.name === 'InsufficientBalanceError') {
+        throw new BadRequestError('Professional has insufficient wallet balance to accept this job.');
+      }
+
+      // Ignore conflict error (already clicked/charged), re-throw others
+      if (error.name !== 'ConflictError' && error.code !== 'CONFLICT') {
+        // If it's the limit exceeded error, we might want to block too?
+        if (error.name === 'LimitExceededError') {
+          throw new BadRequestError('Professional has reached their daily new client limit.');
+        }
+        console.error('Click charge error during acceptance:', error);
+        // We arguably could continue if it's a system error, but money is involved, so fail safe?
+        // Let's decide to FAIL if we can't charge, unless it's just "Already Charged".
+        throw error;
+      }
     }
 
     // Accept offer and create job in transaction

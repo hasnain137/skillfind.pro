@@ -11,10 +11,14 @@ import CompleteJobButton from './CompleteJobButton';
 
 type JobDetailPageProps = {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function ClientJobDetailPage({ params }: JobDetailPageProps) {
+export default async function ClientJobDetailPage({ params, searchParams }: JobDetailPageProps) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const showSuccessBanner = resolvedSearchParams.accepted === 'true';
+
   const { userId } = await auth();
   const t = await getTranslations('ClientJobs');
 
@@ -68,6 +72,18 @@ export default async function ClientJobDetailPage({ params }: JobDetailPageProps
 
   return (
     <div className="space-y-6">
+      {/* Success Banner */}
+      {showSuccessBanner && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-start gap-4 shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="text-2xl">🎉</div>
+          <div>
+            <h3 className="text-emerald-800 font-bold text-lg mb-1">Offer Accepted!</h3>
+            <p className="text-emerald-700 text-sm">
+              You can now contact each other directly using the details below.
+            </p>
+          </div>
+        </div>
+      )}
       {/* Enhanced Header */}
       <Card className={`bg-gradient-to-br ${isCompleted ? 'from-green-50 to-white border-green-200' : 'from-blue-50 to-white border-blue-200'}`} padding="lg">
         <div className="flex items-start justify-between gap-4">

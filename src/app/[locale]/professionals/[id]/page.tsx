@@ -27,6 +27,8 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
                     lastName: true,
                     avatar: true,
                     createdAt: true,
+                    email: true,
+                    phoneNumber: true,
                 },
             },
             services: {
@@ -105,6 +107,22 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
     const currentUserClient = userId ? await prisma.client.findUnique({
         where: { userId },
     }) : null;
+
+    // Check if contact info should be unlocked (if client has hired pro)
+    let showContactInfo = false;
+    if (currentUserClient) {
+        // Check for completed/active job
+        const existingJob = await prisma.job.findFirst({
+            where: {
+                professionalId: professional.id,
+                clientId: currentUserClient.id
+            }
+        });
+
+        if (existingJob) {
+            showContactInfo = true;
+        }
+    }
 
     const memberSince = new Date(professional.user.createdAt).toLocaleDateString('en-US', {
         month: 'long',
@@ -213,6 +231,37 @@ export default async function ProPublicProfilePage({ params }: ProProfilePagePro
                 <div className="grid gap-6 lg:grid-cols-3">
                     {/* Left Column - Main Info */}
                     <div className="lg:col-span-2 space-y-6">
+                        {/* Contact Information (Unlocked) */}
+                        {showContactInfo && (
+                            <Card padding="lg" className="border-green-200 bg-green-50">
+                                <h2 className="text-lg font-bold text-green-800 mb-4 flex items-center gap-2">
+                                    <span>📞</span> Contact Information
+                                </h2>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3">
+                                        <div className="bg-white p-2 rounded-full shadow-sm">📧</div>
+                                        <div>
+                                            <p className="text-xs text-green-700 uppercase font-semibold">Email Address</p>
+                                            <a href={`mailto:${professional.user.email}`} className="text-[#333333] font-medium hover:underline">
+                                                {professional.user.email}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {professional.user.phoneNumber && (
+                                        <div className="flex items-center gap-3">
+                                            <div className="bg-white p-2 rounded-full shadow-sm">📱</div>
+                                            <div>
+                                                <p className="text-xs text-green-700 uppercase font-semibold">Phone Number</p>
+                                                <a href={`tel:${professional.user.phoneNumber}`} className="text-[#333333] font-medium hover:underline">
+                                                    {professional.user.phoneNumber}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </Card>
+                        )}
+
                         {/* About */}
                         {professional.bio && (
                             <Card padding="lg">
