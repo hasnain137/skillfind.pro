@@ -9,7 +9,8 @@ interface ModerationResult {
 
 export async function moderateContent(text: string): Promise<ModerationResult> {
     try {
-        const apiKey = await getConfig('OPENAI_API_KEY');
+        // Use dedicated moderation API key, fallback to general key
+        const apiKey = await getConfig('OPENAI_MODERATION_API_KEY') || await getConfig('OPENAI_API_KEY');
 
         // If no key is set, we log a warning but allow content to pass to avoid breaking the app.
         // In a strict environment, you might want to return safe: false here.

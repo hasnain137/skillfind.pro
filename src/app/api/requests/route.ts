@@ -185,6 +185,17 @@ export async function POST(request: NextRequest) {
       throw new BadRequestError('Subcategory does not belong to the specified category');
     }
 
+    // Content moderation check
+    if (data.description) {
+      const { moderateContent } = await import('@/lib/moderation');
+      const moderation = await moderateContent(data.description);
+      if (!moderation.safe) {
+        throw new BadRequestError(
+          `Your request description contains inappropriate content (${moderation.categories.join(', ')}). Please revise and try again.`
+        );
+      }
+    }
+
     // Create request
     const newRequest = await prisma.request.create({
       // ... same data and include as before

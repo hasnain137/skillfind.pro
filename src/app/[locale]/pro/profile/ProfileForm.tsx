@@ -162,8 +162,13 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(profileData),
             });
+            const profileResult = await profileResponse.json();
 
-            if (!profileResponse.ok) throw new Error(t('error'));
+            if (!profileResponse.ok) {
+                // Extract specific error message from API response
+                const errorMessage = profileResult.error?.message || profileResult.message || t('error');
+                throw new Error(errorMessage);
+            }
 
             // Update personal information (user table fields)
             const userResponse = await fetch('/api/user/profile', {
@@ -172,12 +177,15 @@ export default function ProfileForm({ initialProfile, categories, documents }: P
                 body: JSON.stringify(personalData),
             });
 
-            if (!userResponse.ok) throw new Error(t('error'));
+            if (!userResponse.ok) {
+                const userResult = await userResponse.json();
+                throw new Error(userResult.error?.message || userResult.message || t('error'));
+            }
 
             setSuccess(t('success'));
             router.refresh();
-        } catch (err) {
-            setError(t('error'));
+        } catch (err: any) {
+            setError(err.message || t('error'));
         } finally {
             setLoading(false);
         }

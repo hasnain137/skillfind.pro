@@ -48,6 +48,8 @@ export default function NewClientRequestPage() {
   });
 
   // AI Suggestion Debounce
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
   useEffect(() => {
     const text = formData.description;
 
@@ -58,22 +60,30 @@ export default function NewClientRequestPage() {
 
     const timer = setTimeout(async () => {
       try {
-        const res = await fetch('/api/categories/suggest', {
+        setIsAnalyzing(true);
+        const res = await fetch('/api/suggestions/category', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text })
+          body: JSON.stringify({ description: text })
         });
         if (res.ok) {
           const data = await res.json();
-          if (data.suggested) {
-            setSuggestion(data.suggested);
+          if (data.data?.suggestion) {
+            setSuggestion({
+              categoryId: data.data.suggestion.category.id,
+              subcategoryId: data.data.suggestion.subcategory.id,
+              categoryName: data.data.suggestion.category.name,
+              subcategoryName: data.data.suggestion.subcategory.name,
+            });
           }
         }
       } catch (e) {
         // Ignore errors (graceful degradation)
         console.error(e);
+      } finally {
+        setIsAnalyzing(false);
       }
-    }, 1500); // 1.5s debounce
+    }, 800); // 0.8s debounce
 
     return () => clearTimeout(timer);
   }, [formData.description, formData.categoryId]);
@@ -272,50 +282,6 @@ export default function NewClientRequestPage() {
             description={t('sections.basics.desc')}
           />
 
-          {/* AI Suggestion Block */}
-          {suggestion && (
-            <div className="animate-in fade-in slide-in-from-top-2 mb-4 rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
-              <div className="bg-white p-2 rounded-full shadow-sm text-blue-600 mt-1">
-                <Sparkles size={18} />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-semibold text-blue-900 mb-1">
-                  Recommendation
-                </h4>
-                <p className="text-sm text-blue-800 mb-3">
-                  Based on your description, we think you're looking for: <br />
-                  <span className="font-medium">
-                    {suggestion.categoryName} {' > '} {suggestion.subcategoryName}
-                  </span>
-                </p>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormData(prev => ({
-                        ...prev,
-                        categoryId: suggestion.categoryId,
-                        subcategoryId: suggestion.subcategoryId
-                      }));
-                      setSuggestion(null); // Dismiss after applying
-                      toast.success("Category applied!");
-                    }}
-                    className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-blue-700 transition"
-                  >
-                    Apply Suggestion
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setSuggestion(null)}
-                    className="text-xs bg-white text-blue-600 border border-blue-200 px-3 py-1.5 rounded-md font-medium hover:bg-gray-50 transition"
-                  >
-                    Dismiss
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
           <div className="grid gap-3 md:grid-cols-2">
             <FormField
               label={t('fields.category')}
@@ -425,6 +391,57 @@ export default function NewClientRequestPage() {
               placeholder={t('fields.descriptionPlaceholder')}
             />
           </FormField>
+
+          {/* AI Analyzing Indicator - appears below description */}
+          {isAnalyzing && !suggestion && (
+            <div className="animate-in fade-in rounded-lg bg-gray-50 border border-gray-200 p-3 flex items-center gap-3">
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 border-t-transparent"></div>
+              <span className="text-sm text-gray-600">Analyzing your description...</span>
+            </div>
+          )}
+
+          {/* AI Suggestion Block */}
+          {suggestion && (
+            <div className="animate-in fade-in slide-in-from-top-2 rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
+              <div className="bg-white p-2 rounded-full shadow-sm text-blue-600 mt-0.5">
+                <Sparkles size={16} />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-blue-900 mb-1">
+                  💡 Suggested Category
+                </h4>
+                <p className="text-sm text-blue-800 mb-2">
+                  <span className="font-medium">
+                    {suggestion.categoryName} → {suggestion.subcategoryName}
+                  </span>
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({
+                        ...prev,
+                        categoryId: suggestion.categoryId,
+                        subcategoryId: suggestion.subcategoryId
+                      }));
+                      setSuggestion(null);
+                      toast.success("Category applied!");
+                    }}
+                    className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-blue-700 transition"
+                  >
+                    ✓ Use This
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSuggestion(null)}
+                    className="text-xs text-gray-500 px-2 py-1.5 hover:text-gray-700 transition"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </Card>
 
         <Card className="space-y-4" padding="lg">

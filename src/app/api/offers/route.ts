@@ -299,6 +299,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Content moderation check
+    if (data.message) {
+      const { moderateContent } = await import('@/lib/moderation');
+      const moderation = await moderateContent(data.message);
+      if (!moderation.safe) {
+        throw new BadRequestError(
+          `Your message contains inappropriate content (${moderation.categories.join(', ')}). Please revise and try again.`
+        );
+      }
+    }
+
     // Create offer in transaction to ensure offer limit
     const offer = await prisma.$transaction(async (tx) => {
       // Recheck count with lock
