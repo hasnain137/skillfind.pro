@@ -17,6 +17,8 @@ interface LocationSelectorProps {
     required?: boolean;
 }
 
+import { useTranslations } from 'next-intl';
+
 export function LocationSelector({
     countryCode,
     cityName,
@@ -26,6 +28,7 @@ export function LocationSelector({
     countryError,
     required = false,
 }: LocationSelectorProps) {
+    const t = useTranslations('Forms');
     // Get allowed countries
     const countries = useMemo(() => {
         const allCountries = Country.getAllCountries();
@@ -67,25 +70,25 @@ export function LocationSelector({
 
     return (
         <div className="grid gap-4 md:grid-cols-2">
-            <FormField label="Country" required={required} error={countryError}>
+            <FormField label={t('countryLabel')} required={required} error={countryError}>
                 <Combobox
                     value={countryCode}
                     onChange={handleCountryChange}
                     options={countryOptions}
-                    placeholder="Select Country"
+                    placeholder={t('selectCountry')}
                     searchPlaceholder="Search country..."
                     hasError={!!countryError}
                 />
             </FormField>
 
-            <FormField label="City" required={required} error={cityError}>
+            <FormField label={t('cityLabel')} required={required} error={cityError}>
                 <Combobox
                     value={cityName}
                     onChange={handleCityChange}
                     options={cityOptions}
-                    placeholder="Select or type City"
-                    searchPlaceholder="Search city..."
-                    emptyText={countryCode ? "No cities found. Type to add yours." : "Select a country first"}
+                    placeholder={t('selectCity')}
+                    searchPlaceholder={t('searchCity')}
+                    emptyText={countryCode ? t('noCitiesFound') : "Select a country first"}
                     disabled={!countryCode}
                     hasError={!!cityError}
                     allowCustomValue={true}

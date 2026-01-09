@@ -44,6 +44,7 @@ export default async function ClientDashboardPage() {
   });
 
   const t = await getTranslations('ClientDashboard');
+  const tCommon = await getTranslations('Common');
 
   // Calculate stats
   const requests = dbUser?.clientProfile?.requests || [];
@@ -188,7 +189,7 @@ export default async function ClientDashboardPage() {
                           </span>
                         </div>
                         <p className="font-bold text-blue-600">
-                          {offer.proposedPrice ? `€${offer.proposedPrice}` : 'Negotiable'}
+                          {offer.proposedPrice ? `€${offer.proposedPrice}` : tCommon('negotiable')}
                         </p>
                       </div>
 
@@ -203,7 +204,7 @@ export default async function ClientDashboardPage() {
                         </div>
                         <Link href={`/client/offers`}>
                           <span className="text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                            View Offer →
+                            {tCommon('viewOffer')} →
                           </span>
                         </Link>
                       </div>
@@ -211,7 +212,7 @@ export default async function ClientDashboardPage() {
                   ))}
                   <div className="p-3 bg-gray-50 text-center border-t border-gray-100">
                     <Link href="/client/offers" className="text-xs font-semibold text-gray-600 hover:text-blue-600 transition-colors">
-                      View All Offers
+                      {tCommon('viewAll')} {t('sections.recentOffers')}
                     </Link>
                   </div>
                 </div>

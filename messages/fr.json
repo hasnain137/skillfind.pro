@@ -9,11 +9,99 @@
         "admin": "Admin",
         "menu": "Menu",
         "language": "Langue",
-        "close": "Fermer"
+        "close": "Fermer",
+        "loading": "Chargement...",
+        "saving": "Enregistrement...",
+        "cancel": "Annuler",
+        "saveChanges": "Enregistrer",
+        "submit": "Soumettre",
+        "viewOffer": "Voir l'offre",
+        "viewAll": "Voir tout",
+        "negotiable": "Négociable",
+        "submitting": "Envoi en cours...",
+        "error": "Une erreur s'est produite",
+        "success": "Succès"
+    },
+    "Request": {
+        "status": {
+            "open": "Ouvert",
+            "inProgress": "En Cours",
+            "completed": "Terminé",
+            "closed": "Fermé"
+        },
+        "details": "Détails de la demande",
+        "overview": "Aperçu",
+        "activeJob": "Job en cours",
+        "viewJob": "Voir les détails du job",
+        "viewProfile": "Voir le profil complet",
+        "tip": "Astuce : Les offres arrivent généralement sous 24 heures. Vérifiez vos emails pour les notifications.",
+        "noOffers": {
+            "title": "Aucune offre pour le moment",
+            "desc": "Les professionnels vérifiés répondent généralement sous 24h. Vous recevrez un email à réception des offres."
+        },
+        "fields": {
+            "category": "Catégorie",
+            "location": "Lieu",
+            "budget": "Budget",
+            "startDate": "Date de début",
+            "urgency": "Urgence",
+            "offers": "Offres",
+            "posted": "Publié le",
+            "received": "Reçu"
+        },
+        "budget": {
+            "notSpecified": "Non spécifié",
+            "from": "À partir de {amount}",
+            "upTo": "Jusqu'à {amount}",
+            "range": "{min}-{max}"
+        }
+    },
+    "Forms": {
+        "selectRegion": "Sélectionner Région/État",
+        "searchRegion": "Rechercher région...",
+        "noRegionsFound": "Aucune région trouvée.",
+        "selectCountryFirst": "Sélectionnez d'abord un pays",
+        "noCitiesFound": "Aucune ville trouvée. Tapez pour ajouter.",
+        "managedByLogin": "(géré par le fournisseur de connexion)",
+        "selectCity": "Sélectionner ou taper Ville",
+        "searchCity": "Rechercher ville...",
+        "selectCountry": "Sélectionner Pays",
+        "countryLabel": "Pays",
+        "cityLabel": "Ville"
+    },
+    "Legal": {
+        "termsAgreement": "J'ai lu et j'accepte les {termsLink} et la {privacyLink}. Je comprends que SkillFind.pro est une plateforme d'information et ne fournit pas de services directement.",
+        "termsOfService": "Conditions d'utilisation",
+        "privacyPolicy": "Politique de confidentialité"
     },
     "Landing": {
         "heroTitle": "Trouvez le professionnel idéal pour vos besoins",
         "heroSubtitle": "Entrez en contact avec des experts les mieux notés en quelques secondes."
+    },
+    "Testimonials": {
+        "badge": "Témoignages",
+        "title": "Ce que nos utilisateurs disent",
+        "subtitle": "Découvrez comment SkillFind aide les gens à réaliser leurs projets.",
+        "hiredFor": "Engagé pour",
+        "services": "Services",
+        "review1": "J'ai trouvé un tuteur incroyable pour mon fils en quelques heures. Hautement recommandé !",
+        "review2": "Super plateforme pour trouver des professionnels locaux. Très facile à utiliser.",
+        "review3": "Cela m'a fait gagner énormément de temps. Les professionnels sont vérifiés et fiables."
+    },
+    "FeaturedProfessionals": {
+        "badge": "Les mieux notés",
+        "title": "Professionnels en vedette",
+        "subtitle": "Engagez des experts vérifiés pour vos besoins.",
+        "emptyTitle": "Pas encore de professionnel",
+        "emptySubtitle": "Revenez plus tard ou recherchez des services spécifiques.",
+        "contactForPricing": "Contacter pour prix",
+        "verified": "Vérifié",
+        "moreServices": "+{count} autres services",
+        "startingFrom": "À partir de",
+        "viewProfile": "Voir le profil",
+        "viewAll": "Voir tous les professionnels",
+        "remote": "En ligne",
+        "reviews": "avis"
     },
     "Auth": {
         "loginTitle": "Connectez-vous à votre compte",
@@ -291,6 +379,19 @@
             "sendOffer": "Envoyer votre offre",
             "remote": "À distance",
             "viewAll": "Voir tout"
+        },
+        "RequestTimeline": {
+            "emptyTitle": "Pas encore de demandes",
+            "emptyDesc": "Créez votre première demande pour commencer et recevoir des offres de professionnels.",
+            "createRequest": "Créer une demande",
+            "offers": "offres",
+            "budget": "budget",
+            "status": {
+                "open": "Ouverte",
+                "inProgress": "En cours",
+                "completed": "Terminée",
+                "cancelled": "Annulée"
+            }
         }
     },
     "CategoryDirectory": {
@@ -970,6 +1071,14 @@
         }
     },
     "ClientRequests": {
+        "format": {
+            "budget_range": "€{min}-{max}",
+            "budget_from": "À partir de €{amount}",
+            "budget_up_to": "Jusqu'à €{amount}",
+            "not_specified": "Non spécifié",
+            "location_remote": "En ligne",
+            "location_onsite": "Sur place"
+        },
         "title": "Mes demandes",
         "eyebrow": "Demandes",
         "description": "Suivez tout ce que vous avez posté, vérifiez le nombre d'offres et gardez les conversations organisées.",
@@ -1034,7 +1143,7 @@
         },
         "actions": {
             "accept": {
-                "button": "Accepter l'offre",
+                "button": "Accepter et voir les coordonnées",
                 "loading": "Acceptation...",
                 "confirm": "Accepter cette offre ? Cela créera un job et rejettera les autres offres.",
                 "success": "Offre acceptée avec succès !",
@@ -1189,6 +1298,9 @@
             "total": "Total Jobs",
             "spent": "Total Dépensé"
         },
+        "activeSection": "Jobs Actifs",
+        "completedSection": "Jobs Terminés",
+        "waitingForCompletion": "En attente de terminaison",
         "empty": {
             "title": "Pas encore de job",
             "desc": "Acceptez une offre sur vos demandes pour créer un job et commencer à travailler avec un professionnel.",
@@ -1294,6 +1406,26 @@
                 "confirm": "Marquer ce job comme terminé ? Le client sera notifié et invité à laisser un avis.",
                 "error": "Échec de la terminaison du job"
             }
+        }
+    },
+    "ClientOffers": {
+        "eyebrow": "Offres reçues",
+        "title": "Offres sur vos demandes",
+        "description": "Examinez les propositions des professionnels, comparez les prix et engagez le meilleur candidat.",
+        "stats": {
+            "total": "Total Offres",
+            "new": "Nouvelles",
+            "accepted": "Acceptées"
+        },
+        "empty": {
+            "title": "Pas encore d'offres",
+            "desc": "Une fois que les professionnels commenceront à répondre à vos demandes, leurs propositions apparaîtront ici. Créez une demande pour commencer !",
+            "action": "Voir mes demandes"
+        },
+        "card": {
+            "forRequest": "Pour : {title}",
+            "received": "Reçu",
+            "viewRequest": "Voir demande complète"
         }
     },
     "Categories": {

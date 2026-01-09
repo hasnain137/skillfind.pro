@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { FormField, FormInput, FormSelect } from '@/components/ui/FormField';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import { LocationSelector } from '@/components/ui/LocationSelector';
 import { State } from 'country-state-city';
 import { Combobox } from '@/components/ui/Combobox';
@@ -31,6 +32,7 @@ type ClientProfileFormProps = {
 
 export default function ClientProfileForm({ initialClient }: ClientProfileFormProps) {
     const t = useTranslations('ClientProfile');
+    const tLegal = useTranslations('Legal');
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -274,7 +276,10 @@ export default function ClientProfileForm({ initialClient }: ClientProfileFormPr
                         required
                     />
                     <label htmlFor="terms" className="text-sm text-[#7C7373]">
-                        I have read and agree to the <a href="/legal" target="_blank" className="text-[#3B4D9D] hover:underline font-medium">Terms of Service</a> and <a href="/legal" target="_blank" className="text-[#3B4D9D] hover:underline font-medium">Privacy Policy</a>. I understand that SkillFind.pro is an information platform and does not provide services directly.
+                        {tLegal.rich('termsAgreement', {
+                            termsLink: (chunks) => <Link href="/legal" target="_blank" className="text-[#3B4D9D] hover:underline font-medium">{tLegal('termsOfService')}</Link>,
+                            privacyLink: (chunks) => <Link href="/legal" target="_blank" className="text-[#3B4D9D] hover:underline font-medium">{tLegal('privacyPolicy')}</Link>
+                        })}
                     </label>
                 </div>
             </div>

@@ -82,11 +82,11 @@ export default async function ClientRequestDetailPage({
   }
 
   const formatBudget = () => {
-    if (!request.budgetMin && !request.budgetMax) return 'Not specified';
-    if (request.budgetMin && request.budgetMax) return `€${request.budgetMin}-${request.budgetMax}`;
-    if (request.budgetMin) return `From €${request.budgetMin}`;
-    if (request.budgetMax) return `Up to €${request.budgetMax}`;
-    return 'Not specified';
+    if (!request.budgetMin && !request.budgetMax) return t('format.not_specified');
+    if (request.budgetMin && request.budgetMax) return t('format.budget_range', { min: request.budgetMin, max: request.budgetMax });
+    if (request.budgetMin) return t('format.budget_from', { amount: request.budgetMin });
+    if (request.budgetMax) return t('format.budget_up_to', { amount: request.budgetMax });
+    return t('format.not_specified');
   };
 
   const statusConfig = STATUS_CONFIG[request.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.OPEN;
@@ -150,8 +150,8 @@ export default async function ClientRequestDetailPage({
           <div className="grid gap-3 sm:grid-cols-2">
             <InfoBox icon="📂" label={t('detail.info_category')} value={request.category.nameEn} />
             <InfoBox icon="💰" label={t('detail.info_budget')} value={formatBudget()} />
-            <InfoBox icon="📍" label={t('detail.info_location')} value={request.city ? `${request.city}, ${request.country}` : 'Not specified'} />
-            <InfoBox icon="🏢" label={t('detail.info_type')} value={request.locationType === 'REMOTE' ? 'Remote' : 'On-site'} />
+            <InfoBox icon="📍" label={t('detail.info_location')} value={request.city ? `${request.city}, ${request.country}` : t('format.not_specified')} />
+            <InfoBox icon="🏢" label={t('detail.info_type')} value={request.locationType === 'REMOTE' ? t('format.location_remote') : t('format.location_onsite')} />
             {request.urgency && (
               <InfoBox icon="⚡" label={t('detail.info_urgency')} value={request.urgency} />
             )}
@@ -183,7 +183,7 @@ export default async function ClientRequestDetailPage({
                   <div>
                     <p className="text-xs text-green-600 font-medium">{t('detail.phone_label')}</p>
                     <p className="text-sm text-[#333333]">
-                      {request.job.professional.user.phoneNumber || 'Not provided'}
+                      {request.job.professional.user.phoneNumber || t('format.not_specified')}
                     </p>
                   </div>
                 </div>

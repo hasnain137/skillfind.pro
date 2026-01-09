@@ -8,22 +8,25 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import AcceptOfferButton from './AcceptOfferButton';
 import CloseRequestButton from './CloseRequestButton';
+import { getTranslations } from 'next-intl/server';
 
 type RequestDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const STATUS_CONFIG = {
-  OPEN: { variant: "primary" as const, label: "Open", icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
-  IN_PROGRESS: { variant: "warning" as const, label: "In Progress", icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
-  COMPLETED: { variant: "success" as const, label: "Completed", icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
-  CLOSED: { variant: "gray" as const, label: "Closed", icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
+const STATUS_STYLES = {
+  OPEN: { variant: "primary" as const, icon: "🔵", color: "text-blue-600", bgColor: "bg-blue-50" },
+  IN_PROGRESS: { variant: "warning" as const, icon: "🟡", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+  COMPLETED: { variant: "success" as const, icon: "🟢", color: "text-green-600", bgColor: "bg-green-50" },
+  CLOSED: { variant: "gray" as const, icon: "⚫", color: "text-gray-600", bgColor: "bg-gray-50" },
 };
 
 export default async function ClientRequestDetailPage({ params }: RequestDetailPageProps) {
   const resolvedParams = await params;
   const { userId } = await auth();
   if (!userId) redirect('/login');
+
+  const t = await getTranslations('Request');
 
   const request = await prisma.request.findUnique({
     where: { id: resolvedParams.id },
@@ -41,15 +44,27 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
   if (!request) notFound();
   if (request.client.user.clerkId !== userId) redirect('/client');
 
-  const statusConfig = STATUS_CONFIG[request.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.OPEN;
+  const statusStyle = STATUS_STYLES[request.status as keyof typeof STATUS_STYLES] || STATUS_STYLES.OPEN;
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'OPEN': return t('status.open');
+      case 'IN_PROGRESS': return t('status.inProgress');
+      case 'COMPLETED': return t('status.completed');
+      case 'CLOSED': return t('status.closed');
+      default: return status;
+    }
+  };
+
+  const statusLabel = getStatusLabel(request.status);
   const hasOffers = request.offers.length > 0;
 
   const formatBudget = () => {
-    if (!request.budgetMin && !request.budgetMax) return 'Not specified';
-    if (request.budgetMin && request.budgetMax) return `€${request.budgetMin}-${request.budgetMax}`;
-    if (request.budgetMin) return `From €${request.budgetMin}`;
-    if (request.budgetMax) return `Up to €${request.budgetMax}`;
-    return 'Not specified';
+    if (!request.budgetMin && !request.budgetMax) return t('budget.notSpecified');
+    if (request.budgetMin && request.budgetMax) return `€${t('budget.range', { min: request.budgetMin, max: request.budgetMax })}`;
+    if (request.budgetMin) return t('budget.from', { amount: `€${request.budgetMin}` });
+    if (request.budgetMax) return t('budget.upTo', { amount: `€${request.budgetMax}` });
+    return t('budget.notSpecified');
   };
 
   return (
@@ -59,8 +74,8 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-2xl">{statusConfig.icon}</span>
-              <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>
+              <span className="text-2xl">{statusStyle.icon}</span>
+              <Badge variant={statusStyle.variant}>{statusLabel}</Badge>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-[#333333] mb-2">
               {request.title}
@@ -68,7 +83,7 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
             <div className="flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
               <span className="flex items-center gap-1">📂 {request.category.nameEn}</span>
               <span>•</span>
-              <span className="flex items-center gap-1">📅 Posted {new Date(request.createdAt).toLocaleDateString()}</span>
+              <span className="flex items-center gap-1">📅 {t('fields.posted')} {new Date(request.createdAt).toLocaleDateString()}</span>
               {request.city && (
                 <>
                   <span>•</span>
@@ -85,7 +100,7 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2 space-y-4" padding="lg">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>📋</span> Request Details
+            <span>📋</span> {t('details')}
           </h2>
 
           {request.description && (
@@ -97,23 +112,23 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
           )}
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <InfoBox icon="📂" label="Category" value={request.category.nameEn} />
-            <InfoBox icon="📍" label="Location" value={`${request.city || 'Not specified'} · ${request.locationType === 'REMOTE' ? 'Remote' : 'On-site'}`} />
-            <InfoBox icon="💰" label="Budget" value={formatBudget()} />
+            <InfoBox icon="📂" label={t('fields.category')} value={request.category.nameEn} />
+            <InfoBox icon="📍" label={t('fields.location')} value={`${request.city || t('budget.notSpecified')} · ${request.locationType === 'REMOTE' ? 'Remote' : 'On-site'}`} />
+            <InfoBox icon="💰" label={t('fields.budget')} value={formatBudget()} />
             {request.preferredStartDate && (
-              <InfoBox icon="📅" label="Start Date" value={new Date(request.preferredStartDate).toLocaleDateString()} />
+              <InfoBox icon="📅" label={t('fields.startDate')} value={new Date(request.preferredStartDate).toLocaleDateString()} />
             )}
-            {request.urgency && <InfoBox icon="⏱️" label="Urgency" value={request.urgency} />}
-            <InfoBox icon="📬" label="Offers" value={`${request.offers.length} received`} />
+            {request.urgency && <InfoBox icon="⏱️" label={t('fields.urgency')} value={request.urgency} />}
+            <InfoBox icon="📬" label={t('fields.offers')} value={`${request.offers.length} ${t('fields.received').toLowerCase()}`} />
           </div>
 
           {request.job && (
             <div className="mt-4 pt-4 border-t border-[#E5E7EB]">
               <p className="text-sm font-semibold text-[#333333] mb-2 flex items-center gap-2">
-                <span>💼</span> Active Job
+                <span>💼</span> {t('activeJob')}
               </p>
               <Link href={`/client/jobs/${request.job.id}`}>
-                <Button variant="ghost" className="text-xs">View Job Details →</Button>
+                <Button variant="ghost" className="text-xs">{t('viewJob')} →</Button>
               </Link>
             </div>
           )}
@@ -121,20 +136,20 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
 
         <Card className="space-y-4" padding="lg">
           <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-            <span>📊</span> Overview
+            <span>📊</span> {t('overview')}
           </h2>
 
           <div className="space-y-3">
-            <div className={`rounded-lg ${statusConfig.bgColor} border border-[#E5E7EB] p-4 text-center`}>
-              <div className="text-2xl mb-1">{statusConfig.icon}</div>
-              <p className={`text-xl font-bold ${statusConfig.color} mb-1`}>{statusConfig.label}</p>
+            <div className={`rounded-lg ${statusStyle.bgColor} border border-[#E5E7EB] p-4 text-center`}>
+              <div className="text-2xl mb-1">{statusStyle.icon}</div>
+              <p className={`text-xl font-bold ${statusStyle.color} mb-1`}>{statusLabel}</p>
               <p className="text-xs text-[#7C7373]">Current Status</p>
             </div>
 
             <div className={`rounded-lg ${hasOffers ? 'bg-green-50' : 'bg-gray-50'} border border-[#E5E7EB] p-4 text-center`}>
               <div className="text-2xl mb-1">📬</div>
               <p className={`text-xl font-bold ${hasOffers ? 'text-green-600' : 'text-gray-600'} mb-1`}>{request.offers.length}</p>
-              <p className="text-xs text-[#7C7373]">Offers Received</p>
+              <p className="text-xs text-[#7C7373]">{t('fields.offers')} {t('fields.received')}</p>
             </div>
 
             <div className="rounded-lg bg-purple-50 border border-[#E5E7EB] p-4 text-center">
@@ -147,7 +162,7 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
           {request.status === 'OPEN' && !hasOffers && (
             <div className="pt-4 border-t border-[#E5E7EB]">
               <p className="text-xs text-[#7C7373]">
-                💡 <strong>Tip:</strong> Offers usually arrive within 24 hours. Check your email for notifications.
+                💡 <strong>{t('status.open')}</strong>: {t('noOffers.desc')}
               </p>
             </div>
           )}
@@ -157,15 +172,15 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
       {/* Offers Section */}
       <section className="space-y-4">
         <h2 className="text-lg font-bold text-[#333333] flex items-center gap-2">
-          <span>📬</span> Offers Received ({request.offers.length})
+          <span>📬</span> {t('fields.offers')} {t('fields.received')} ({request.offers.length})
         </h2>
 
         {request.offers.length === 0 ? (
           <Card level={1} padding="lg" className="text-center py-12 border-dashed">
             <div className="text-5xl mb-4">📬</div>
-            <h3 className="text-lg font-semibold text-[#333333] mb-2">No offers yet</h3>
+            <h3 className="text-lg font-semibold text-[#333333] mb-2">{t('noOffers.title')}</h3>
             <p className="text-sm text-[#7C7373] max-w-md mx-auto">
-              Verified professionals typically respond within 24 hours. You'll receive an email when offers arrive.
+              {t('noOffers.desc')}
             </p>
           </Card>
         ) : (
@@ -194,7 +209,7 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
                       </div>
                     </div>
                     <Badge variant={offer.status === 'PENDING' ? 'primary' : offer.status === 'ACCEPTED' ? 'success' : 'gray'}>
-                      {offer.status}
+                      {getStatusLabel(offer.status)}
                     </Badge>
                   </div>
 
@@ -209,14 +224,14 @@ export default async function ClientRequestDetailPage({ params }: RequestDetailP
                       </span>
                     )}
                     <span className="flex items-center gap-1 text-[#7C7373]">
-                      📅 Sent {new Date(offer.createdAt).toLocaleDateString()}
+                      📅 {t('fields.received')} {new Date(offer.createdAt).toLocaleDateString()}
                     </span>
                   </div>
 
                   <div className="flex flex-wrap gap-2 pt-3 border-t border-[#E5E7EB]">
                     <Link href={`/professionals/${offer.professionalId}`}>
                       <Button variant="ghost" className="border border-[#E5E7EB] px-4 py-2 text-xs hover:border-[#2563EB]">
-                        View Full Profile
+                        {t('viewProfile')}
                       </Button>
                     </Link>
                     {offer.status === 'PENDING' && request.status === 'OPEN' && (

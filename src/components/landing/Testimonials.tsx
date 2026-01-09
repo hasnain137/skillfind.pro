@@ -65,7 +65,7 @@ function TestimonialCard({ review, index, t }: { review: Review; index: number; 
             {review.client.user.firstName} {review.client.user.lastName[0]}.
           </p>
           <p className="text-xs text-[#7C7373]">
-            {t('hiredFor')} <span className="text-[#3B4D9D]">Services</span>
+            {t('hiredFor')} <span className="text-[#3B4D9D]">{t('services')}</span>
           </p>
         </div>
       </div>

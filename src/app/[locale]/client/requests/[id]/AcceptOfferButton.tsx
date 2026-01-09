@@ -67,7 +67,7 @@ export default function AcceptOfferButton({
       disabled={loading}
       className="px-4 py-2 text-xs bg-green-600 hover:bg-green-700 text-white border-none shadow-md"
     >
-      {loading ? t('loading') : '✅ Accept & View Contact'}
+      {loading ? t('loading') : t('button')}
     </Button>
   );
 }

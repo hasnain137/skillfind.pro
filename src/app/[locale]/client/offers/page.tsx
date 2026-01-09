@@ -13,6 +13,7 @@ import AcceptOfferButton from '../requests/[id]/AcceptOfferButton';
 export default async function ClientOffersPage() {
     const { userId } = await auth();
     const t = await getTranslations('ClientOffers');
+    const tCommon = await getTranslations('Common');
 
     if (!userId) {
         redirect('/login');
@@ -142,7 +143,7 @@ export default async function ClientOffersPage() {
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <p className="text-lg font-bold text-[#2563EB]">
-                                                {offer.proposedPrice ? `€${offer.proposedPrice}` : 'Negotiable'}
+                                                {offer.proposedPrice ? `€${offer.proposedPrice}` : tCommon('negotiable')}
                                             </p>
                                             {offer.estimatedDuration && (
                                                 <p className="text-xs text-[#7C7373] mt-1">
@@ -185,9 +186,9 @@ export default async function ClientOffersPage() {
                             </div>
 
                             <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-[#9CA3AF]">
-                                <span>Received {new Date(offer.createdAt).toLocaleDateString()}</span>
+                                <span>{t('card.received')} {new Date(offer.createdAt).toLocaleDateString()}</span>
                                 <Link href={`/client/requests/${offer.request.id}`} className="text-blue-600 hover:underline">
-                                    View Full Request →
+                                    {t('card.viewRequest')} →
                                 </Link>
                             </div>
                         </Card>

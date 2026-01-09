@@ -145,7 +145,7 @@ function ProfessionalCard({
           ))}
         </div>
         <span className="text-sm font-bold text-amber-900">{averageRating.toFixed(1)}</span>
-        <span className="text-xs text-amber-700 font-medium">({totalReviews} reviews)</span>
+        <span className="text-xs text-amber-700 font-medium">({totalReviews} {t('reviews')})</span>
       </div>
 
       {/* Bio snippet */}
@@ -164,7 +164,7 @@ function ProfessionalCard({
         )}
         {remoteAvailability !== 'NO_REMOTE' && (
           <span className="flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-            <span>💻</span> Remote
+            <span>💻</span> {t('remote')}
           </span>
         )}
       </div>

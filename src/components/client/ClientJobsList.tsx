@@ -46,8 +46,11 @@ const STATUS_VARIANT: Record<string, "primary" | "warning" | "success" | "gray">
     DISPUTED: "gray",
 };
 
+import { useTranslations } from 'next-intl';
+
 export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobsListProps) {
     const router = useRouter();
+    const t = useTranslations('ClientJobs');
     const [loadingId, setLoadingId] = useState<string | null>(null);
     const [reviewJobId, setReviewJobId] = useState<string | null>(null);
 
@@ -59,7 +62,7 @@ export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobs
             {activeJobs.length > 0 && (
                 <section className="space-y-4">
                     <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-                        <span>⚡</span> Active Jobs ({activeJobs.length})
+                        <span>⚡</span> {t('activeSection')} ({activeJobs.length})
                     </h2>
                     {activeJobs.map((job) => {
                         const statusConfig = STATUS_VARIANT[job.status] || "gray";
@@ -93,14 +96,14 @@ export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobs
                                                     💰 €{job.agreedPrice?.toFixed(2) || '0.00'}
                                                 </span>
                                                 <span className="flex items-center gap-1 text-[#7C7373]">
-                                                    📅 Started {new Date(job.startedAt || job.createdAt).toLocaleDateString()}
+                                                    📅 {t('detail.started_label')} {new Date(job.startedAt || job.createdAt).toLocaleDateString()}
                                                 </span>
                                             </div>
 
                                             {canComplete && (
                                                 <div className="z-10 relative">
                                                     <span className="text-xs font-medium text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
-                                                        ⏳ Waiting for completion
+                                                        ⏳ {t('waitingForCompletion')}
                                                     </span>
                                                 </div>
                                             )}
@@ -117,7 +120,7 @@ export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobs
             {completedJobs.length > 0 && (
                 <section className="space-y-4">
                     <h2 className="text-base font-bold text-[#333333] flex items-center gap-2">
-                        <span>🟢</span> Completed Jobs ({completedJobs.length})
+                        <span>🟢</span> {t('completedSection')} ({completedJobs.length})
                     </h2>
                     {completedJobs.map((job) => (
                         <div key={job.id} className="relative">
@@ -130,7 +133,7 @@ export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobs
                                             </h3>
                                             <div className="flex items-center gap-3 text-xs text-[#7C7373] mt-1">
                                                 <span className="flex items-center gap-1">
-                                                    ✅ Completed {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'}
+                                                    ✅ {t('detail.completed_label')} {job.completedAt ? new Date(job.completedAt).toLocaleDateString() : 'N/A'}
                                                 </span>
                                                 <span>•</span>
                                                 <span className="flex items-center gap-1 font-semibold text-green-600">
@@ -138,7 +141,7 @@ export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobs
                                                 </span>
                                             </div>
                                         </div>
-                                        <Badge variant="success">Completed</Badge>
+                                        <Badge variant="success">{t('status.completed')}</Badge>
                                     </div>
                                 </Card>
                             </Link>
@@ -154,7 +157,7 @@ export default function ClientJobsList({ activeJobs, completedJobs }: ClientJobs
                                             setReviewJobId(job.id);
                                         }}
                                     >
-                                        ⭐ Leave Review
+                                        ⭐ {t('actions.leaveReview')}
                                     </Button>
                                 </div>
                             )}

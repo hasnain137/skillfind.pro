@@ -10,45 +10,75 @@ interface TimelineRequest {
   budget?: number;
 }
 
-interface RequestTimelineProps {
-  requests: TimelineRequest[];
+interface RequestTimelineTranslations {
+  emptyTitle: string;
+  emptyDesc: string;
+  createRequest: string;
+  offers: string;
+  budget: string;
+  status: {
+    open: string;
+    inProgress: string;
+    completed: string;
+    cancelled: string;
+  };
 }
 
-const STATUS_CONFIG = {
-  OPEN: {
-    label: 'Open',
-    color: 'bg-blue-100 text-blue-700 border-blue-200',
-    icon: <Circle className="w-4 h-4 fill-current" />,
-  },
-  IN_PROGRESS: {
-    label: 'In Progress',
-    color: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-    icon: <Clock className="w-4 h-4" />,
-  },
-  COMPLETED: {
-    label: 'Completed',
-    color: 'bg-green-100 text-green-700 border-green-200',
-    icon: <CheckCircle className="w-4 h-4" />,
-  },
-  CANCELLED: {
-    label: 'Cancelled',
-    color: 'bg-gray-100 text-gray-700 border-gray-200',
-    icon: <XCircle className="w-4 h-4" />,
-  },
-};
+interface RequestTimelineProps {
+  requests: TimelineRequest[];
+  translations?: RequestTimelineTranslations;
+}
 
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Circle, Clock, CheckCircle, XCircle } from 'lucide-react';
 
-export function RequestTimeline({ requests }: RequestTimelineProps) {
+export function RequestTimeline({ requests, translations }: RequestTimelineProps) {
+  // Default translations fallback
+  const t = translations || {
+    emptyTitle: "No requests yet",
+    emptyDesc: "Create your first request to get started and receive offers from professionals.",
+    createRequest: "Create Request",
+    offers: "offers",
+    budget: "budget",
+    status: {
+      open: "Open",
+      inProgress: "In Progress",
+      completed: "Completed",
+      cancelled: "Cancelled"
+    }
+  };
+
+  const STATUS_CONFIG = {
+    OPEN: {
+      label: t.status.open,
+      color: 'bg-blue-100 text-blue-700 border-blue-200',
+      icon: <Circle className="w-4 h-4 fill-current" />,
+    },
+    IN_PROGRESS: {
+      label: t.status.inProgress,
+      color: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+      icon: <Clock className="w-4 h-4" />,
+    },
+    COMPLETED: {
+      label: t.status.completed,
+      color: 'bg-green-100 text-green-700 border-green-200',
+      icon: <CheckCircle className="w-4 h-4" />,
+    },
+    CANCELLED: {
+      label: t.status.cancelled,
+      color: 'bg-gray-100 text-gray-700 border-gray-200',
+      icon: <XCircle className="w-4 h-4" />,
+    },
+  };
+
   if (requests.length === 0) {
     return (
       <EmptyState
         icon={<span className="text-4xl">📋</span>}
-        title="No requests yet"
-        description="Create your first request to get started and receive offers from professionals."
+        title={t.emptyTitle}
+        description={t.emptyDesc}
         action={{
-          label: "Create Request",
+          label: t.createRequest,
           href: "/client/requests/new",
         }}
       />
@@ -84,12 +114,12 @@ export function RequestTimeline({ requests }: RequestTimelineProps) {
               <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-[#7C7373]">
                 <span className="flex items-center gap-1">
                   <span>📬</span>
-                  <span className="font-semibold text-[#333333]">{request.offerCount}</span> offers
+                  <span className="font-semibold text-[#333333]">{request.offerCount}</span> {t.offers}
                 </span>
                 {request.budget && (
                   <span className="flex items-center gap-1">
                     <span>💰</span>
-                    <span className="font-semibold text-[#333333]">€{request.budget}</span> budget
+                    <span className="font-semibold text-[#333333]">€{request.budget}</span> {t.budget}
                   </span>
                 )}
                 <span className="flex items-center gap-1">
@@ -109,3 +139,4 @@ export function RequestTimeline({ requests }: RequestTimelineProps) {
     </div>
   );
 }
+

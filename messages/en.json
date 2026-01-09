@@ -9,11 +9,99 @@
         "admin": "Admin",
         "menu": "Menu",
         "language": "Language",
-        "close": "Close"
+        "close": "Close",
+        "loading": "Loading...",
+        "saving": "Saving...",
+        "cancel": "Cancel",
+        "saveChanges": "Save Changes",
+        "submit": "Submit",
+        "viewOffer": "View Offer",
+        "viewAll": "View All",
+        "negotiable": "Negotiable",
+        "submitting": "Submitting...",
+        "error": "An error occurred",
+        "success": "Success"
+    },
+    "Request": {
+        "status": {
+            "open": "Open",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "closed": "Closed"
+        },
+        "details": "Request Details",
+        "overview": "Overview",
+        "activeJob": "Active Job",
+        "viewJob": "View Job Details",
+        "viewProfile": "View Full Profile",
+        "tip": "Tip: Offers usually arrive within 24 hours. Check your email for notifications.",
+        "noOffers": {
+            "title": "No offers yet",
+            "desc": "Verified professionals typically respond within 24 hours. You'll receive an email when offers arrive."
+        },
+        "fields": {
+            "category": "Category",
+            "location": "Location",
+            "budget": "Budget",
+            "startDate": "Start Date",
+            "urgency": "Urgency",
+            "offers": "Offers",
+            "posted": "Posted",
+            "received": "Received"
+        },
+        "budget": {
+            "notSpecified": "Not specified",
+            "from": "From {amount}",
+            "upTo": "Up to {amount}",
+            "range": "{min}-{max}"
+        }
+    },
+    "Forms": {
+        "selectRegion": "Select Region/State",
+        "searchRegion": "Search region...",
+        "noRegionsFound": "No regions found.",
+        "selectCountryFirst": "Select a country first",
+        "noCitiesFound": "No cities found. Type to add yours.",
+        "managedByLogin": "(managed by login provider)",
+        "selectCity": "Select or type City",
+        "searchCity": "Search city...",
+        "selectCountry": "Select Country",
+        "countryLabel": "Country",
+        "cityLabel": "City"
+    },
+    "Legal": {
+        "termsAgreement": "I have read and agree to the {termsLink} and {privacyLink}. I understand that SkillFind.pro is an information platform and does not provide services directly.",
+        "termsOfService": "Terms of Service",
+        "privacyPolicy": "Privacy Policy"
     },
     "Landing": {
         "heroTitle": "Find the perfect professional for your needs",
         "heroSubtitle": "Connect with top-rated experts in seconds."
+    },
+    "Testimonials": {
+        "badge": "Testimonials",
+        "title": "What Our Users Say",
+        "subtitle": "Discover how SkillFind helps people get things done.",
+        "hiredFor": "Hired for",
+        "services": "Services",
+        "review1": "Found an amazing tutor for my son within hours. Highly recommended!",
+        "review2": "Great platform for finding local professionals. Very easy to use.",
+        "review3": "Saved me so much time. The professionals are vetted and reliable."
+    },
+    "FeaturedProfessionals": {
+        "badge": "Top Rated",
+        "title": "Featured Professionals",
+        "subtitle": "Hire verified experts for your needs.",
+        "emptyTitle": "No professionals yet",
+        "emptySubtitle": "Check back later or search for specific services.",
+        "contactForPricing": "Contact for pricing",
+        "verified": "Verified",
+        "moreServices": "+{count} more services",
+        "startingFrom": "Starting from",
+        "viewProfile": "View Profile",
+        "viewAll": "View All Professionals",
+        "remote": "Remote",
+        "reviews": "reviews"
     },
     "Auth": {
         "loginTitle": "Log in to your account",
@@ -293,6 +381,19 @@
             "viewAll": "View all",
             "offerSent": "Offer Sent",
             "viewOffer": "View Offer"
+        },
+        "RequestTimeline": {
+            "emptyTitle": "No requests yet",
+            "emptyDesc": "Create your first request to get started and receive offers from professionals.",
+            "createRequest": "Create Request",
+            "offers": "offers",
+            "budget": "budget",
+            "status": {
+                "open": "Open",
+                "inProgress": "In Progress",
+                "completed": "Completed",
+                "cancelled": "Cancelled"
+            }
         }
     },
     "CategoryDirectory": {
@@ -926,6 +1027,14 @@
         }
     },
     "ClientRequests": {
+        "format": {
+            "budget_range": "€{min}-{max}",
+            "budget_from": "From €{amount}",
+            "budget_up_to": "Up to {amount}",
+            "not_specified": "Not specified",
+            "location_remote": "Remote",
+            "location_onsite": "On-site"
+        },
         "title": "My requests",
         "eyebrow": "Requests",
         "description": "Track everything you've posted, check offer counts, and keep conversations organised.",
@@ -990,7 +1099,7 @@
         },
         "actions": {
             "accept": {
-                "button": "Accept Offer",
+                "button": "Accept & View Contact",
                 "loading": "Accepting...",
                 "confirm": "Accept this offer? This will create a job and reject other offers.",
                 "success": "Offer accepted successfully!",
@@ -1145,6 +1254,9 @@
             "total": "Total Jobs",
             "spent": "Total Spent"
         },
+        "activeSection": "Active Jobs",
+        "completedSection": "Completed Jobs",
+        "waitingForCompletion": "Waiting for completion",
         "empty": {
             "title": "No jobs yet",
             "desc": "Accept an offer on your requests to create a job and start working with a professional.",
@@ -1365,7 +1477,29 @@
             "notActive": "Account Not Active",
             "lowBalance": "Low Balance",
             "recharge": "Add Funds"
+        }
+    },
+    "ClientOffers": {
+        "eyebrow": "Received Offers",
+        "title": "Offers on your requests",
+        "description": "Review proposals from professionals, compare prices, and hire the best fit.",
+        "stats": {
+            "total": "Total Offers",
+            "new": "New Today",
+            "accepted": "Accepted"
         },
+        "empty": {
+            "title": "No offers received yet",
+            "desc": "Once professionals start responding to your requests, their proposals will appear here. Create a request to get started!",
+            "action": "View My Requests"
+        },
+        "card": {
+            "forRequest": "For: {title}",
+            "received": "Received",
+            "viewRequest": "View Full Request"
+        }
+    },
+    "OfferForm": {
         "title": "Send Offer",
         "validation": {
             "invalidPrice": "Please enter a valid price",

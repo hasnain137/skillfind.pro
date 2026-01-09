@@ -1,4 +1,6 @@
-// src/components/ui/Spinner.tsx
+'use client';
+
+import { useTranslations } from 'next-intl';
 
 interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -12,23 +14,25 @@ const SIZES = {
 };
 
 export function Spinner({ size = 'md', className = '' }: SpinnerProps) {
+  const t = useTranslations('Common');
   return (
     <div
       className={`inline-block animate-spin rounded-full border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] ${SIZES[size]} ${className}`}
       role="status"
     >
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only">{t('loading')}</span>
     </div>
   );
 }
 
 export function LoadingButton({ children, loading, ...props }: any) {
+  const t = useTranslations('Common');
   return (
     <button {...props} disabled={loading || props.disabled}>
       {loading ? (
         <span className="flex items-center gap-2">
           <Spinner size="sm" />
-          <span>Loading...</span>
+          <span>{t('loading')}</span>
         </span>
       ) : (
         children
